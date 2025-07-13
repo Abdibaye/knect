@@ -1,9 +1,12 @@
+
+import ThemeToggle from '@/components/theme-toggle'
+import { Button } from '@/components/ui/button'
+import { Moon, Sun } from 'lucide-react'
 import React from 'react'
 
 export default function page() {
+
   return (
-    <div className='text-4xl mt-20 text-center'>
-    Wel come to Knect Page
-    </div>
+    <ThemeToggle />
   )
 }
