@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/logo-form";
 import ThemeToggle from "@/components/theme-toggle";
 import {
   NavigationMenu,
@@ -12,6 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Logo } from "./logo-form";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
