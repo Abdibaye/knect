@@ -3,11 +3,35 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+
+  const router = useRouter();
+     const [githubtransition, setGithubTransition] = useTransition();
+  
+     async function handleLoginWithGoogle() {
+        setGithubTransition(async () => {
+            await authClient.signIn.social({
+          provider: 'google',
+          callbackURL: '/',
+          fetchOptions: {
+            onSuccess: () => {
+                toast.success("signed with github successfully")
+            },
+            onError: (error) => {
+                toast.error("internal server error")    }
+          },
+       })
+        });
+       }
+       
   return (
     <form
       className={cn(
@@ -25,11 +49,11 @@ export function RegisterForm({
       <div className="grid gap-4">
         <div className="grid gap-3">
           <Label htmlFor="name">Full Name</Label>
-          <Input id="name" type="text" placeholder="Abdi Gashahun" required />
+          <Input id="name" type="text" placeholder="Abdi Gashahun"  />
         </div>
         <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input id="email" type="email" placeholder="m@example.com"  />
         </div>
         <div className="grid gap-3">
           <div className="flex items-center">
@@ -50,7 +74,7 @@ export function RegisterForm({
           </span>
         </div>
         <div className="grid gap-3">
-          <Button
+          <Button onClick={handleLoginWithGoogle}
             variant="outline"
             className="w-full flex items-center justify-center gap-2"
           >
