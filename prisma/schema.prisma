@@ -27,6 +27,11 @@ model User {
 
   @@unique([email])
   @@map("user")
+  Post Post[]
+  Resource Resource[]
+  Group Group[]
+  GroupMember GroupMember[]
+  Event Event[]
 }
 
 model Session {
@@ -72,4 +77,67 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+
+enum Role {
+  STUDENT
+  ADMIN
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  content   String
+  category  PostCategory
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+}
+
+enum PostCategory {
+  GENERAL
+  QUESTION
+  OPPORTUNITY
+  EVENT
+}
+
+model Resource {
+  id            String   @id @default(cuid())
+  title         String
+  fileUrl       String
+  course        String?
+  uploadedBy    User     @relation(fields: [uploadedById], references: [id])
+  uploadedById  String
+  createdAt     DateTime @default(now())
+}
+
+model Group {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById String
+
+  members     GroupMember[]
+  createdAt   DateTime @default(now())
+}
+
+model GroupMember {
+  id        String   @id @default(cuid())
+  group     Group    @relation(fields: [groupId], references: [id])
+  groupId   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  joinedAt  DateTime @default(now())
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  date        DateTime
+  posterUrl   String?
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById String
+  createdAt   DateTime @default(now())
 }
