@@ -1,5 +1,4 @@
 import Navbar from '@/components/shared/navbar-form';
-import CreatePost from '@/components/post/CreatePost';
 import Footer from '@/components/shared/Footer';
 import React from 'react'
 
@@ -11,7 +10,9 @@ export default function MainLayout({
   return (
     <>
     <div className='flex'>
-        <CreatePost />
+      <div>
+        test
+      </div>
       {children}
     </div>
               <Footer />
