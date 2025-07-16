@@ -1,11 +1,5 @@
-
-
 const page = () => {
-  return (
-    <div>
-      Knect
-    </div>
-  )
-}
+  return <div>Knect</div>;
+};
 
-export default page
+export default page;
