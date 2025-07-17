@@ -20,7 +20,7 @@ export default function SignedNavbar({ className }: SignedNavbarProps) {
         className ?? ""
       }`}
     >
-      <div className="flex h-16 items-center justify-between gap-30">
+      <div className="flex h-16 items-center justify-between gap-10">
         {/* Left side - just brand name */}
         <Logo />
 
