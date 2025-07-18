@@ -24,6 +24,8 @@ export function RegisterForm({
           fetchOptions: {
             onSuccess: () => {
                 toast.success("signed with google successfully")
+                router.push('/test')
+
             },
             onError: (error) => {
                 toast.error("internal server error")    }
