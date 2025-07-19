@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import {
   BoltIcon,
   BookOpenIcon,
@@ -20,24 +21,34 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function UserMenu() {
+export type UserMenuProps = {
+  name: string;
+  email: string;
+  image?: string;
+};
+
+export default function UserMenu({ name, email, image }: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
           <Avatar>
-            <AvatarImage src="./avatar.jpg" alt="Profile image" />
-            <AvatarFallback>KK</AvatarFallback>
+            <AvatarImage src={image || "./avatar.jpg"} alt="Profile image" />
+            <AvatarFallback>{
+              name && name.length > 0
+                ? name.charAt(0).toUpperCase()
+                : email.charAt(0).toUpperCase() || "U"
+            }</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="max-w-64" align="end">
         <DropdownMenuLabel className="flex min-w-0 flex-col">
           <span className="text-foreground truncate text-sm font-medium">
-            Abdi gashahun
+            {name && name.length > 0 ? name : email.split("@")[0]}
           </span>
           <span className="text-muted-foreground truncate text-xs font-normal">
-            knect@example.com
+            {email}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
