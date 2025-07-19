@@ -4,24 +4,17 @@ import SignedNavbar from "@/components/shared/signed-navbar";
 import React from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import FollowSidebar from "@/components/home/home-layout";
 
-export default function MainLayout({
+export default function HomeLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <>
-      <SignedNavbar className="fixed top-0 left-0 right-0 z-50 bg-background" />
-      <div className="pt-16">
-        <SidebarProvider>
-          <AppSidebar />
-
-          <main>
-            <SidebarTrigger className="sm:hidden" />
-            {children}
-          </main>
-        </SidebarProvider>
+      <div className="flex">
+        <main className="flex-1 lg:ml-64">{children}</main> <FollowSidebar />
       </div>
     </>
   );

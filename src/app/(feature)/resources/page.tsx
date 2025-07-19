@@ -1,10 +1,8 @@
-import React from 'react'
+import React from "react";
 
-export default function page() {
-  return (
-    <div>
-      recourse page
-    </div>
-  )
-}
-``
+const Resource = () => {
+  return <div>resource Page</div>;
+};
+
+export default Resource;
+
