@@ -6,11 +6,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const initialPeopleToFollow = [
   { name: "John Doe", handle: "@johndoe" },
   { name: "Jane Smith", handle: "@janesmith" },
+  { name: "Jbeka An", handle: "@mint" },
+  { name: "Kebek", handle: "@eyob" },
 ];
 
 const initialChannelsToFollow = [
   { name: "Tech News" },
   { name: "Frontend Devs" },
+  { name: "Backend dev" },
+  { name: "Solver Am" },
 ];
 
 export default function FollowSidebar() {

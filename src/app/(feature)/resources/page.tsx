@@ -1,7 +1,9 @@
+import ResourcesPage from "@/components/resource/resources";
 import React from "react";
 
 const Resource = () => {
-  return <div>resource Page</div>;
+  return <ResourcesPage />;
 };
 
 export default Resource;
+

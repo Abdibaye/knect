@@ -15,14 +15,17 @@ export default function MainLayout({
       <SignedNavbar className="fixed top-0 left-0 right-0 z-50 bg-background" />
       <div className="pt-16">
         <SidebarProvider>
-          <AppSidebar />
+          <div className="flex">
+            <AppSidebar />
 
-          <main>
-            <SidebarTrigger className="sm:hidden" />
-            {children}
-          </main>
+            <main className="flex-1 px-4">
+              <SidebarTrigger className="sm:hidden" />
+              {children}
+            </main>
+          </div>
         </SidebarProvider>
       </div>
+      <Footer />
     </>
   );
 }
