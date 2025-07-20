@@ -14,7 +14,7 @@ export default function HomeLayout({
   return (
     <>
       <div className="flex">
-        <main className="flex-1 lg:ml-64">{children}</main> <FollowSidebar />
+        <main className="flex-1 lg:mr-64">{children}</main> <FollowSidebar />
       </div>
     </>
   );
