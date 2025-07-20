@@ -20,6 +20,9 @@ model User {
   email         String
   emailVerified Boolean
   image         String?
+  bio         String?   
+  username    String?  
+  location    String? 
   createdAt     DateTime
   updatedAt     DateTime
   sessions      Session[]
