@@ -12,5 +12,8 @@ export default function FeatureLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <>
+  <FollowSidebar />
+  {children}
+  </>;
 }
