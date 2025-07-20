@@ -12,13 +12,13 @@ export default function MainLayout({
 }>) {
   return (
     <>
-      <SignedNavbar className="fixed top-0 left-0 right-0 z-50 bg-background" />
+      <SignedNavbar className="fixe top-0 left-0 right-0 z-50 bg-background" />
       <div className="pt-16">
         <SidebarProvider>
           <div className="flex">
             <AppSidebar />
 
-            <main className="flex-1 px-4">
+            <main className="flex-1 px-4 ">
               <SidebarTrigger className="sm:hidden" />
               {children}
             </main>
