@@ -43,7 +43,7 @@ export default function SignedNavbar({ className }: SignedNavbarProps) {
         {/* Right side - untouched */}
         <div className="flex flex-1 items-center justify-end gap-4">
           <ThemeToggle />
-          <ChatBubbleLeftIcon className="w-6 h-6 text-blue-600 border border-blue-200 rounded-full p-1 hover:bg-blue-100 dark:hover:bg-blue-900 transition cursor-pointer" />
+          <ChatBubbleLeftIcon  onClick={() => document.dispatchEvent(new Event("showChat"))} className="w-6 h-6 text-blue-600 border border-blue-200 rounded-full p-1 hover:bg-blue-100 dark:hover:bg-blue-900 transition cursor-pointer" />
 
           <Button
             size="sm"
