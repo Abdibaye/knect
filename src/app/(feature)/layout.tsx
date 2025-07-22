@@ -4,14 +4,14 @@ import SignedNavbar from "@/components/shared/signed-navbar";
 import React from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import { requireAdmin } from "../data/admin/require-admin";
+// import { requireAdmin } from "../data/admin/require-admin";
 
 export default async function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  await requireAdmin();
+  // await requireAdmin();
   return (
     <>
       <SignedNavbar className="fixe top-0 left-0 right-0 z-50 bg-background" />

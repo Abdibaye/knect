@@ -112,7 +112,7 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
   };
 
   return (
-    <div className="rounded-xl border bg-white dark:bg-zinc-900 mr-120 shadow-sm p-4 w-full">
+    <div className="rounded-xl border  bg-white dark:bg-zinc-900 lg:mr-120 mr-25 shadow-sm p-4 w-full">
       <h2 className="text-xl text-center font-bold mb-4">Create a Post</h2>
       <form onSubmit={handleSubmit} className="space-y-5 ">
         {/* Title */}

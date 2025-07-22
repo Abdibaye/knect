@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import PostCard from "@/components/post/PostCard";
 import CreatePost from "@/components/post/CreatePost";
 
-import ChatListPage from "@/components/chat-list/chat-list";
+
 
 type Mode = "posts" | "create" | "chat";
 
@@ -53,12 +53,14 @@ const Home = () => {
         {creating ? (
           <CreatePost onCancel={() => setCreating(false)} />
         ) : (
+          
           <div
-            className="cursor-pointer p-4 border rounded-xl bg-muted dark:bg-zinc-800 text-muted-foreground hover:bg-muted/50"
-            onClick={() => setCreating(true)}
-          >
-            What's on your mind?
-          </div>
+  className="cursor-pointer  mx-auto lg:mx-0 mt-2 lg:w-190 w-100 p-4 border rounded-xl bg-muted dark:bg-zinc-800 text-muted-foreground hover:bg-muted/50"
+  onClick={() => setCreating(true)}
+>
+  What's on your mind?
+</div>
+
         )}
 
         {loading && <div>Loading posts...</div>}
@@ -72,3 +74,7 @@ const Home = () => {
 };
 
 export default Home;
+
+function setMode(arg0: string) {
+  throw new Error("Function not implemented.");
+}
