@@ -34,11 +34,11 @@ export default function UserMenu({ name, email, image }: UserMenuProps) {
         <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
           <Avatar>
             <AvatarImage src={image || "./avatar.jpg"} alt="Profile image" />
-            <AvatarFallback>{
-              name && name.length > 0
+            <AvatarFallback>
+              {name && name.length > 0
                 ? name.charAt(0).toUpperCase()
-                : email.charAt(0).toUpperCase() || "U"
-            }</AvatarFallback>
+                : email.charAt(0).toUpperCase() || "U"}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -57,25 +57,25 @@ export default function UserMenu({ name, email, image }: UserMenuProps) {
             <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
             <span>Profile</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             <Layers2Icon size={16} className="opacity-60" aria-hidden="true" />
             <span>Followers</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <BookOpenIcon size={16} className="opacity-60" aria-hidden="true" />
+          </DropdownMenuItem> */}
+          <DropdownMenuItem  onClick={() => (window.location.href = "/setting")}>
+            <BookOpenIcon  size={16} className="opacity-60" aria-hidden="true" />
             <span>Settings</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             <PinIcon size={16} className="opacity-60" aria-hidden="true" />
             <span>Bio</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
+          </DropdownMenuItem> */}
+          {/* <DropdownMenuItem>
             <UserPenIcon size={16} className="opacity-60" aria-hidden="true" />
             <span>Post</span>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => (window.location.href = "/login")}>
