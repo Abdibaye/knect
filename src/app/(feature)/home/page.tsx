@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import PostCard from "@/components/post/PostCard";
 import CreatePost from "@/components/post/CreatePost";
+import FollowSidebar from "@/components/home/home-layout";
 
 const Home = () => {
   const [creating, setCreating] = useState(false);
@@ -37,7 +38,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center bg-amber-100">
       <div className="w-full max-w-2xl space-y-6">
         {creating ? (
           <CreatePost onCancel={() => setCreating(false)} />

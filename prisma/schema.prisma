@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -20,23 +17,23 @@ model User {
   email         String
   emailVerified Boolean
   image         String?
-  bio         String?   
-  username    String?  
-  location    String? 
+  bio           String?   
+  username      String?  
+  location      String? 
   createdAt     DateTime
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+  Post          Post[]
+  Resource      Resource[]
+  Group         Group[]
+  GroupMember   GroupMember[]
+  Event         Event[]
+  Comments      Comment[]
+  Likes         Like[]
 
   @@unique([email])
   @@map("user")
-  Post Post[]
-  Resource Resource[]
-  Group Group[]
-  GroupMember GroupMember[]
-  Event Event[]
-  Comments Comment[]
-  Likes Like[]
 }
 
 model Session {
@@ -83,7 +80,6 @@ model Verification {
 
   @@map("verification")
 }
-
 
 enum Role {
   STUDENT
@@ -136,14 +132,22 @@ enum PostCategory {
   EVENT
 }
 
+// Updated Resource model based on UI and requirements
 model Resource {
-  id            String   @id @default(cuid())
-  title         String
-  fileUrl       String
-  course        String?
-  uploadedBy    User     @relation(fields: [uploadedById], references: [id])
-  uploadedById  String
-  createdAt     DateTime @default(now())
+  id           String   @id @default(cuid())
+  title        String
+  rating       Float    @default(0)
+  downloads    Int      @default(0)
+  categories   String[] // e.g., ["React", "Guide"]
+  description  String
+  tags         String[] // e.g., ["React", "Hooks", "JavaScript", "Frontend"]
+  author       String
+  downloadUrl  String
+  externalUrl  String?
+  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
+  uploadedById String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Group {
