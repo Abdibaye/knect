@@ -42,24 +42,24 @@ export default function SignedNavbar({ className }: SignedNavbarProps) {
 
         {/* Right side - untouched */}
         <div className="flex flex-1 items-center justify-end gap-4">
-          <ThemeToggle />
+  <div className='hidden lg:block'><ThemeToggle  /></div>  
           {/* <ChatBubbleLeftIcon className="w-6 h-6 text-blue-600 border border-blue-200 rounded-full p-1 hover:bg-blue-100 dark:hover:bg-blue-900 transition cursor-pointer" /> */}
         
           <MessageCircle onClick={() => document.dispatchEvent(new Event("showChat"))} />
           <Button
             size="sm"
-            className="text-sm max-sm:aspect-square max-sm:p-0"
+            className="text-sm max-sm:aspect-square max-sm:p-0 hidden md:inline-flex "
             onClick={() => {
               const event = new Event("showCreatePost");
               document.dispatchEvent(event);
             }}
           >
             <PlusIcon
-              className="opacity-60 sm:-ms-1"
+              className="opacity-60 sm:-ms-1  "
               size={16}
               aria-hidden="true"
             />
-            <span className="max-sm:sr-only">Post</span>
+            <span className="max-sm:sr-only ">Post</span>
           </Button>
 
           <NotificationMenu />
