@@ -53,7 +53,7 @@ export default function UserMenu({ name, email, image }: UserMenuProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem  onClick={() => (window.location.href = "/profile")}>
             <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
             <span>Profile</span>
           </DropdownMenuItem>

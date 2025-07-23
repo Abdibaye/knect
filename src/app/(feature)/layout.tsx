@@ -1,5 +1,5 @@
 import Navbar from "@/components/shared/navbar-form";
-import Footer from "@/components/shared/Footer";
+
 import SignedNavbar from "@/components/shared/signed-navbar";
 import React from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -15,7 +15,7 @@ export default async function MainLayout({
   return (
     <>
       <SignedNavbar className="fixe top-0 left-0 right-0 z-50 bg-background" />
-      <div className="pt-16">
+      {/* <div className="pt-16">
         <SidebarProvider>
           <div className="flex">
             <AppSidebar />
@@ -26,8 +26,29 @@ export default async function MainLayout({
             </main>
           </div>
         </SidebarProvider>
+      </div> */}
+      <div className="pt-16">
+  <SidebarProvider>
+    <div className="flex">
+      {/* Sidebar only on large screens */}
+      <div className="hidden sm:block">
+        <AppSidebar />
       </div>
-      <Footer />
+
+      {/* Icon only on small screens */}
+      <div className="sm:hidden sticky top-0 left-0 z-50">
+        <SidebarTrigger />
+      </div>
+
+      {/* Main content always visible */}
+      <main className="flex-1 px-4">
+        {children}
+      </main>
+    </div>
+  </SidebarProvider>
+</div>
+
+     
     </>
   );
 }

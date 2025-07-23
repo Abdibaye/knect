@@ -89,9 +89,10 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="tech">Tech</SelectItem>
-                <SelectItem value="news">News</SelectItem>
-                <SelectItem value="fun">Fun</SelectItem>
+                <SelectItem value="tech">General</SelectItem>
+                <SelectItem value="news">Questions</SelectItem>
+                <SelectItem value="fun">Opportunity</SelectItem>
+                <SelectItem value="fun">Event</SelectItem>
               </SelectContent>
             </Select>
           </div>
