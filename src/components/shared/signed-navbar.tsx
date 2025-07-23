@@ -45,7 +45,7 @@ export default function SignedNavbar({ className }: SignedNavbarProps) {
           <ThemeToggle />
           {/* <ChatBubbleLeftIcon className="w-6 h-6 text-blue-600 border border-blue-200 rounded-full p-1 hover:bg-blue-100 dark:hover:bg-blue-900 transition cursor-pointer" /> */}
         
-          <MessageCircle />
+          <MessageCircle onClick={() => document.dispatchEvent(new Event("showChat"))} />
           <Button
             size="sm"
             className="text-sm max-sm:aspect-square max-sm:p-0"
