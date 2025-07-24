@@ -54,7 +54,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-full flex justify-center bg-amber-100">
+    <div className="w-full flex justify-center">
       <div className="w-full max-w-2xl space-y-6">
         {/* === CREATE POST MODE === */}
         {mode === "create" && (
