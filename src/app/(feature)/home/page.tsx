@@ -4,9 +4,13 @@
 import React, { useState, useEffect } from "react";
 import PostCard from "@/components/post/PostCard";
 import CreatePost from "@/components/post/CreatePost";
+
+import FollowSidebar from "@/components/home/home-layout";
+
 import ChatListPage from "@/components/chat-list/chat-list";
 
 type Mode = "posts" | "create" | "chat";
+
 
 const Home = () => {
   const [mode, setMode] = useState<Mode>("posts");
@@ -50,7 +54,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center bg-amber-100">
       <div className="w-full max-w-2xl space-y-6">
         {/* === CREATE POST MODE === */}
         {mode === "create" && (

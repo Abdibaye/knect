@@ -16,6 +16,5 @@ export default function FeatureLayout({
   return <>
   <FollowSidebar />
   {children}
- 
   </>;
 }
