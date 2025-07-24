@@ -8,6 +8,7 @@ import { useTransition } from "react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 
+
 export function RegisterForm({
   className,
   ...props
@@ -24,7 +25,7 @@ export function RegisterForm({
           fetchOptions: {
             onSuccess: () => {
                 toast.success("signed with google successfully")
-                router.push('/test')
+                router.push('/home')
 
             },
             onError: (error) => {
@@ -35,6 +36,7 @@ export function RegisterForm({
        }
        
   return (
+   
     <form
       className={cn(
         "w-full max-w-md flex flex-col gap-4 bg-white dark:bg-neutral-900 p-4 rounded-lg shadow-md",
