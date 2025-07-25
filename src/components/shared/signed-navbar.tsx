@@ -1,5 +1,4 @@
 "use client";
-"use client"
 
 import NotificationMenu from "@/components/navbar-components/notification-menu";
 // not used anymore
