@@ -3,14 +3,11 @@ import React from "react";
 import {
   BoltIcon,
   BookOpenIcon,
-  Layers2Icon,
   LogOutIcon,
-  PinIcon,
-  UserPenIcon,
 } from "lucide-react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth-client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +17,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
+
+
 
 export type UserMenuProps = {
   name: string;
@@ -27,7 +27,17 @@ export type UserMenuProps = {
   image?: string;
 };
 
+
 export default function UserMenu({ name, email, image }: UserMenuProps) {
+  const router = useRouter();
+  const handleLogout = async () => {
+await authClient.signOut({
+  fetchOptions: {
+    onSuccess: () => {
+      router.push("/login"); 
+    },
+  },
+});};
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -57,10 +67,7 @@ export default function UserMenu({ name, email, image }: UserMenuProps) {
             <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
             <span>Profile</span>
           </DropdownMenuItem>
-          {/* <DropdownMenuItem>
-            <Layers2Icon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Followers</span>
-          </DropdownMenuItem> */}
+       
           <DropdownMenuItem  onClick={() => (window.location.href = "/setting")}>
             <BookOpenIcon  size={16} className="opacity-60" aria-hidden="true" />
             <span>Settings</span>
@@ -68,17 +75,10 @@ export default function UserMenu({ name, email, image }: UserMenuProps) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {/* <DropdownMenuItem>
-            <PinIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Bio</span>
-          </DropdownMenuItem> */}
-          {/* <DropdownMenuItem>
-            <UserPenIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Post</span>
-          </DropdownMenuItem> */}
+         
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => (window.location.href = "/login")}>
+        <DropdownMenuItem onClick={handleLogout} >
           <LogOutIcon size={16} className="opacity-60" aria-hidden="true" />
           <span>Logout</span>
         </DropdownMenuItem>

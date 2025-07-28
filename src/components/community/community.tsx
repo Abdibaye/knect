@@ -118,7 +118,7 @@ export default function CommunityPage() {
   );
 
   return (
-    <div className="w-full bg-gray-50 dark:bg-black">
+    <div className="w-full bg-gray-50 dark:bg-black relative">
       {/* <Navbar 
         onMobileMenuToggle={toggleMobileMenu}isMobileMenuOpen={isMobileMenuOpen}
       /> */}

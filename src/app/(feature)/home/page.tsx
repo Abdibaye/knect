@@ -13,6 +13,7 @@ type Mode = "posts" | "create" | "chat";
 
 
 const Home = () => {
+   
   const [mode, setMode] = useState<Mode>("posts");
   const [posts, setPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,10 +53,12 @@ const Home = () => {
       document.removeEventListener("showPosts", handleShowPosts);
     };
   }, []);
+  
 
+  
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full max-w-2xl space-y-6">
+      <div className="w-full max-w-2xl space-y-4">
         {/* === CREATE POST MODE === */}
         {mode === "create" && (
           <CreatePost onCancel={() => setMode("posts")} />
@@ -69,7 +72,7 @@ const Home = () => {
           <>
             {/* Fake post input */}
             <div
-              className="cursor-pointer mx-auto lg:mx-0 mt-2 lg:w-190 w-100 p-4 border rounded-xl bg-muted dark:bg-zinc-800 text-muted-foreground hover:bg-muted/50"
+              className= " cursor-pointer w-full  lg:ml-14 mt-3  lg:w-170  p-4 border rounded-xl bg-muted dark:bg-zinc-800 text-muted-foreground "
               onClick={() => setMode("create")}
             >
               What's on your mind?
