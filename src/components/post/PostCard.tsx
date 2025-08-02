@@ -1,8 +1,9 @@
 "use client";
 
 import { useContructUrl } from "@/hooks/use-contruct";
-import { Share2 } from "lucide-react";
+import { Bookmark, ChartColumn, ChartNoAxesColumn, MessageCircle, Share2, ThumbsUp, View } from "lucide-react";
 import Image from "next/image";
+
 
 type PostCardProps = {
   post: {
@@ -94,15 +95,19 @@ export default function PostCard({ post }: PostCardProps) {
         </div>
       )}
       {/* Footer Icons */}
-      <div className="flex justify-around text-muted-foreground mt-3 text-sm">
+      <div className="flex justify-between mx-2 text-muted-foreground mt-3 text-sm">
         <div className="flex items-center gap-1">
-          <span>♡</span> <span>{post.likeCount ?? 0}</span>
+          <ThumbsUp className="size-5" />
         </div>
         <div className="flex items-center gap-1">
-          <span>💬</span> <span>{post.commentCount ?? 0}</span>
+          <MessageCircle className="size-5" />
         </div>
-        <div className="flex items-center gap-1">
-          <Share2 className="w-3 h-3 text-gray-600 dark:text-gray-300 cursor-pointer" /> <span>Share</span>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center">
+            <ChartNoAxesColumn className="size-5" />
+            <span>100</span>
+          </div>
+          <Bookmark className="size-5" />
         </div>
       </div>
     </div>
