@@ -38,7 +38,7 @@ export default function UserSettings() {
   };
 
   return (
-    <div className="w-full lg:mr-90 mt-2 mx-auto p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-md space-y-8">
+    <div className="w-full lg:mr-90 mt-2 mx-auto p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-md space-y-8 relative">
       <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
         User Settings
       </h1>

@@ -14,4 +14,3 @@ const signIn = async () => {
         provider: "google"
     })
 }
-

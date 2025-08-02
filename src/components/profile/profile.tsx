@@ -8,8 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { UploadIcon, PencilIcon } from "lucide-react";
 
 const mockUser = {
-  name: "John Doe",
-  username: "johndoe",
+  name: "Abdi Gashaun",
+  username: "abdi",
   bio: "Software engineer. I love TypeScript and building cool stuff.",
   location: "Addis Ababa, Ethiopia",
   image: "https://avatars.githubusercontent.com/u/583231?v=4",
@@ -67,13 +67,11 @@ export default function ProfilePage({ profile }: UserProps) {
     };
     reader.readAsDataURL(file);
   };
-
-  if (!user) return <div>Loading...</div>;
-
+  // w-full  p-4 space-y-6
   return (
-    <div className="w-full lg:mr-170 mx-auto p-4 space-y-6">
+    <div className="rounded-xl border  lg:mr-160 mt-3 bg-white dark:bg-zinc-900 shadow-sm p-4 w-full">
       {/* Profile Card */}
-      <div className="rounded-2xl border shadow-md bg-white dark:bg-zinc-900 p-6 relative">
+      <div className="rounded-2xl border w-full shadow-md bg-white dark:bg-zinc-900 p-6 relative">
         <div className="flex items-center gap-4">
           <div className="relative group cursor-pointer">
             <img
@@ -101,7 +99,9 @@ export default function ProfilePage({ profile }: UserProps) {
           </div>
         </div>
 
-        <p className="mt-4 text-sm text-zinc-700 dark:text-zinc-300">{user.bio}</p>
+        <p className="mt-4 text-sm text-zinc-700 dark:text-zinc-300">
+          {user.bio}
+        </p>
 
         <div className="flex justify-end gap-2 mt-4">
           <Dialog>
@@ -116,9 +116,21 @@ export default function ProfilePage({ profile }: UserProps) {
                 className="space-y-4"
               >
                 <h2 className="text-lg font-medium">Edit Profile</h2>
-                <Input name="name" defaultValue={user.name} placeholder="Full name" />
-                <Textarea name="bio" defaultValue={user.bio} placeholder="Bio" />
-                <Input name="location" defaultValue={user.location} placeholder="Location" />
+                <Input
+                  name="name"
+                  defaultValue={user.name}
+                  placeholder="Full name"
+                />
+                <Textarea
+                  name="bio"
+                  defaultValue={user.bio}
+                  placeholder="Bio"
+                />
+                <Input
+                  name="location"
+                  defaultValue={user.location}
+                  placeholder="Location"
+                />
                 <Button type="submit" className="w-full">
                   Save Changes
                 </Button>

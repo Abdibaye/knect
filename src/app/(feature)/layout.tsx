@@ -14,19 +14,8 @@ export default async function MainLayout({
   // await requireAdmin();
   return (
     <>
-      <SignedNavbar className="fixe top-0 left-0 right-0 z-50 bg-background" />
-      {/* <div className="pt-16">
-        <SidebarProvider>
-          <div className="flex">
-            <AppSidebar />
-
-            <main className="flex-1 px-4 ">
-              <SidebarTrigger className="sm:hidden" />
-              {children}
-            </main>
-          </div>
-        </SidebarProvider>
-      </div> */}
+      <SignedNavbar className="fixed top-0 left-0 right-0 z-50 bg-background" />
+      
       <div className="pt-16">
   <SidebarProvider>
     <div className="flex">
@@ -36,7 +25,7 @@ export default async function MainLayout({
       </div>
 
       {/* Icon only on small screens */}
-      <div className="sm:hidden sticky top-0 left-0 z-50">
+      <div className="md:hidden fixed top-15  left-0 z-50">
         <SidebarTrigger />
       </div>
 

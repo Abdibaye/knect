@@ -24,7 +24,7 @@ export default function PostCard({ post }: PostCardProps) {
   const imageUrl = useContructUrl(post.imageUrl);
   const authorName = post.author?.name || "Unknown";
   return (
-    <div className="rounded-xl border bg-white dark:bg-zinc-900 shadow-sm p-4 w-full">
+    <div className="rounded-xl border lg:ml-15 bg-white dark:bg-zinc-900 shadow-sm p-4 w-full">
       {/* Header */}
       <div className="flex justify-between items-start">
         <div className="flex items-start gap-3">
