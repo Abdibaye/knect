@@ -354,8 +354,8 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <Label htmlFor="title">Title</Label>
+          <div className="flex flex-col gap-1">
+            <Label className="ml-1" htmlFor="title">Title</Label>
             <Input
               id="title"
               value={title}
@@ -365,8 +365,8 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
             />
           </div>
 
-          <div>
-            <Label htmlFor="content">Content</Label>
+          <div className="flex flex-col gap-1">
+            <Label className="ml-1" htmlFor="content">Content</Label>
             <Textarea
               id="content"
               value={content}
@@ -377,8 +377,8 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
             />
           </div>
 
-          <div>
-            <Label htmlFor="visibility">Visibility</Label>
+          <div className="flex flex-col gap-1">
+            <Label className="ml-1" htmlFor="visibility">Visibility</Label>
             <Select onValueChange={setVisibility} value={visibility}>
               <SelectTrigger id="visibility">
                 <SelectValue placeholder="Select visibility" />
@@ -391,8 +391,8 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
             </Select>
           </div>
 
-          <div>
-            <Label htmlFor="tags">Tags (comma separated)</Label>
+          <div className="flex flex-col gap-1">
+            <Label className="ml-1" htmlFor="tags">Tags (comma separated)</Label>
             <Input
               id="tags"
               value={tags}
@@ -401,8 +401,8 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
             />
           </div>
 
-          <div>
-            <Label htmlFor="image">Upload Image (optional)</Label>
+          <div className="flex flex-col gap-2">
+            <Label className="ml-1" htmlFor="image">Upload Image (optional)</Label>
             <Input
               type="file"
               id="image"

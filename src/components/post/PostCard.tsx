@@ -1,8 +1,9 @@
 "use client";
 
 import { useContructUrl } from "@/hooks/use-contruct";
-import { Share2 } from "lucide-react";
+import { Bookmark, ChartColumn, ChartNoAxesColumn, MessageCircle, Share2, ThumbsUp, View } from "lucide-react";
 import Image from "next/image";
+
 
 type PostCardProps = {
   post: {
@@ -22,16 +23,18 @@ type PostCardProps = {
 
 export default function PostCard({ post }: PostCardProps) {
   const imageUrl = useContructUrl(post.imageUrl);
+  const authorImageUrl = post.author?.image ?? ""
   const authorName = post.author?.name || "Unknown";
+
   return (
     <div className="rounded-xl border lg:ml-15 bg-white dark:bg-zinc-900 shadow-sm p-4 w-full">
       {/* Header */}
       <div className="flex justify-between items-start">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center text-purple-700 font-bold overflow-hidden">
-            {imageUrl && typeof imageUrl === "string" && imageUrl !== "" ? (
+            {authorImageUrl ? (
               <Image
-                src={post.imageUrl}
+                src={authorImageUrl}
                 alt={authorName}
                 width={40}
                 height={40}
@@ -44,9 +47,12 @@ export default function PostCard({ post }: PostCardProps) {
             )}
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-sm text-foreground">
+           <div className="flex items-center gap-1">
+             <div className="font-semibold text-sm text-foreground">
               {authorName}
-            </span>
+            </div>
+            <p className="text-xs text-blue-500">verified</p>
+           </div>
             <span className="text-xs text-muted-foreground">
               {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : ""}
             </span>
@@ -92,15 +98,19 @@ export default function PostCard({ post }: PostCardProps) {
         </div>
       )}
       {/* Footer Icons */}
-      <div className="flex justify-around text-muted-foreground mt-3 text-sm">
+      <div className="flex justify-between mx-2 text-muted-foreground mt-3 text-sm">
         <div className="flex items-center gap-1">
-          <span>♡</span> <span>{post.likeCount ?? 0}</span>
+          <ThumbsUp className="size-5" />
         </div>
         <div className="flex items-center gap-1">
-          <span>💬</span> <span>{post.commentCount ?? 0}</span>
+          <MessageCircle className="size-5" />
         </div>
-        <div className="flex items-center gap-1">
-          <Share2 className="w-3 h-3 text-gray-600 dark:text-gray-300 cursor-pointer" /> <span>Share</span>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center">
+            <ChartNoAxesColumn className="size-5" />
+            <span>100</span>
+          </div>
+          <Bookmark className="size-5" />
         </div>
       </div>
     </div>
