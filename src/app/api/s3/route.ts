@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     const buffer = Buffer.from(arrayBuffer);
     // Use a fallback name if not present
     const fileName = `${Date.now()}-${(file as any).name || "upload"}`;
-    const bucket = process.env.AWS_BUCKET_NAME!;
+    const bucket = process.env.AWS_BUCKET_NAME || "knect"; // Fallback to "knect" if env variable is not set
     await s3.send(
       new PutObjectCommand({
         Bucket: bucket,
@@ -37,18 +37,16 @@ export async function POST(req: Request) {
         ACL: "public-read",
       })
     );
-    const url = `${process.env.AWS_ENDPOINT_URL_S3}/${bucket}/${fileName}`;
+    const url = `${process.env.AWS_ENDPOINT_URL_S3 || ""}/${bucket}/${fileName}`;
     return NextResponse.json({ url });
   } catch (error: any) {
     console.error("S3 upload error:", error);
     console.error("Env:", {
-      AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
-      AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY
-        ? "***"
-        : undefined,
-      AWS_ENDPOINT_URL_S3: process.env.AWS_ENDPOINT_URL_S3,
-      AWS_BUCKET_NAME: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
-      AWS_REGION: process.env.AWS_REGION,
+      AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || "",
+      AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY || "",
+      AWS_ENDPOINT_URL_S3: process.env.AWS_ENDPOINT_URL_S3 || "",
+      AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME || "",
+      AWS_REGION: process.env.AWS_REGION || "auto",
     });
     return NextResponse.json(
       { error: "Failed to upload file", details: error?.message },
