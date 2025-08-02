@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -13,24 +13,42 @@ const mockUser = {
   bio: "Software engineer. I love TypeScript and building cool stuff.",
   location: "Addis Ababa, Ethiopia",
   image: "https://avatars.githubusercontent.com/u/583231?v=4",
-  isFollowing: false,
 };
 
-export default function ProfilePage() {
-  const [user, setUser] = useState(mockUser);
-  const [isFollowing, setIsFollowing] = useState(user.isFollowing);
+export interface UserProps {
+  profile: {
+    id: string;
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    image?: string;
+    bio?: string;
+    username?: string;
+    location?: string;
+    createdAt: Date;
+    updatedAt: Date;
+  } | null; // Accepts null for loading states
+}
+
+export default function ProfilePage({ profile }: UserProps) {
+  // Always initialize with profile OR mockUser if not available
+  const [user, setUser] = useState(profile);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleFollowToggle = () => {
-    setIsFollowing(!isFollowing);
-    // 🔁 TODO: Send follow/unfollow to backend
-  };
+  // Update user state when fetched profile changes
+  useEffect(() => {
+    if (profile) {
+      setUser(profile);
+    }
+  }, [profile]);
+
+  
+  console.log(user)
 
   const handleUpdateProfile = (formData: FormData) => {
     const name = formData.get("name") as string;
     const bio = formData.get("bio") as string;
     const location = formData.get("location") as string;
-    setUser({ ...user, name, bio, location });
     // 🔁 TODO: Send to backend
   };
 
@@ -44,7 +62,7 @@ export default function ProfilePage() {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setUser((prev) => ({ ...prev, image: reader.result as string }));
+      
       // 🔁 TODO: Upload to backend or image service
     };
     reader.readAsDataURL(file);
@@ -57,7 +75,7 @@ export default function ProfilePage() {
         <div className="flex items-center gap-4">
           <div className="relative group cursor-pointer">
             <img
-              src={user.image}
+              src={user?.image ?? mockUser.image}
               alt="Avatar"
               className="w-20 h-20 rounded-full object-cover border"
               onClick={handleAvatarClick}
@@ -75,25 +93,17 @@ export default function ProfilePage() {
           </div>
 
           <div>
-            <h1 className="text-xl font-semibold">{user.name}</h1>
-            <p className="text-sm text-muted-foreground">@{user.username}</p>
-            <p className="text-sm text-muted-foreground">{user.location}</p>
+            <h1 className="text-xl font-semibold">{user?.name}</h1>
+            <p className="text-sm text-muted-foreground">@{user?.username}</p>
+            <p className="text-sm text-muted-foreground">{user?.location}</p>
           </div>
         </div>
 
         <p className="mt-4 text-sm text-zinc-700 dark:text-zinc-300">
-          {user.bio}
+          {user?.bio}
         </p>
 
         <div className="flex justify-end gap-2 mt-4">
-          <Button
-            variant={isFollowing ? "outline" : "default"}
-            onClick={handleFollowToggle}
-          >
-            {isFollowing ? "Following" : "Follow"}
-          </Button>
-
-          {/* Edit Profile Modal */}
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="secondary">
@@ -108,17 +118,17 @@ export default function ProfilePage() {
                 <h2 className="text-lg font-medium">Edit Profile</h2>
                 <Input
                   name="name"
-                  defaultValue={user.name}
+                  defaultValue={user?.name}
                   placeholder="Full name"
                 />
                 <Textarea
                   name="bio"
-                  defaultValue={user.bio}
+                  defaultValue={user?.bio}
                   placeholder="Bio"
                 />
                 <Input
                   name="location"
-                  defaultValue={user.location}
+                  defaultValue={user?.location}
                   placeholder="Location"
                 />
                 <Button type="submit" className="w-full">

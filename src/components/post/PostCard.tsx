@@ -19,8 +19,9 @@ type PostCardProps = {
   };
 };
 
+
 export default function PostCard({ post }: PostCardProps) {
-  const imageUrl = useContructUrl(post.imageUrl)
+  const imageUrl = useContructUrl(post.imageUrl);
   const authorName = post.author?.name || "Unknown";
   return (
     <div className="rounded-xl border lg:ml-15 bg-white dark:bg-zinc-900 shadow-sm p-4 w-full">
@@ -28,7 +29,7 @@ export default function PostCard({ post }: PostCardProps) {
       <div className="flex justify-between items-start">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center text-purple-700 font-bold overflow-hidden">
-            {imageUrl ? (
+            {imageUrl && typeof imageUrl === "string" && imageUrl !== "" ? (
               <Image
                 src={post.imageUrl}
                 alt={authorName}
