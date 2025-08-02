@@ -59,7 +59,7 @@ const Home = () => {
 
   
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center ml-0 lg:ml-9 mt-3">
       <div className="w-full max-w-2xl space-y-4">
         {/* === CREATE POST MODE === */}
         {mode === "create" && (

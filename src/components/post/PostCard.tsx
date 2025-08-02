@@ -22,16 +22,18 @@ type PostCardProps = {
 
 export default function PostCard({ post }: PostCardProps) {
   const imageUrl = useContructUrl(post.imageUrl);
+  const authorImageUrl = post.author?.image ?? ""
   const authorName = post.author?.name || "Unknown";
+
   return (
     <div className="rounded-xl border lg:ml-15 bg-white dark:bg-zinc-900 shadow-sm p-4 w-full">
       {/* Header */}
       <div className="flex justify-between items-start">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center text-purple-700 font-bold overflow-hidden">
-            {imageUrl && typeof imageUrl === "string" && imageUrl !== "" ? (
+            {authorImageUrl ? (
               <Image
-                src={post.imageUrl}
+                src={authorImageUrl}
                 alt={authorName}
                 width={40}
                 height={40}
