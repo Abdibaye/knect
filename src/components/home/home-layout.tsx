@@ -79,7 +79,7 @@ export default function FollowSidebar() {
       {/* Channels to follow section */}
       <section className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-xl shadow-sm">
         <h2 className="text-lg font-semibold mb-4 text-zinc-800 dark:text-white">
-          Channels to follow
+          Communities to follow
         </h2>
         <ul className="space-y-3">
           {initialChannelsToFollow.map((channel, i) => (

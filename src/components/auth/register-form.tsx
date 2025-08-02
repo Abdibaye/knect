@@ -20,15 +20,14 @@ export function RegisterForm({
       await authClient.signIn.social({
         provider: "google",
         callbackURL: "/home",
-        // fetchOptions: {
-        //   onSuccess: () => {
-        //       toast.success("Signed with google successfully")
-        //       router.push('/home')
+        fetchOptions: {
+          onSuccess: () => {
+              router.push('/home')
 
-        //   },
-        //   onError: (error) => {
-        //       toast.error("internal server error")    }
-        //  },
+          },
+          onError: (error) => {
+              toast.error("internal server error")    }
+         },
       });
     });
   }
