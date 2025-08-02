@@ -75,7 +75,7 @@ export default function ProfilePage({ profile }: UserProps) {
         <div className="flex items-center gap-4">
           <div className="relative group cursor-pointer">
             <img
-              src={user.image}
+              src={user?.image ?? mockUser.image}
               alt="Avatar"
               className="w-20 h-20 rounded-full object-cover border"
               onClick={handleAvatarClick}
@@ -93,14 +93,14 @@ export default function ProfilePage({ profile }: UserProps) {
           </div>
 
           <div>
-            <h1 className="text-xl font-semibold">{user.name}</h1>
-            <p className="text-sm text-muted-foreground">@{user.username}</p>
-            <p className="text-sm text-muted-foreground">{user.location}</p>
+            <h1 className="text-xl font-semibold">{user?.name}</h1>
+            <p className="text-sm text-muted-foreground">@{user?.username}</p>
+            <p className="text-sm text-muted-foreground">{user?.location}</p>
           </div>
         </div>
 
         <p className="mt-4 text-sm text-zinc-700 dark:text-zinc-300">
-          {user.bio}
+          {user?.bio}
         </p>
 
         <div className="flex justify-end gap-2 mt-4">
@@ -118,17 +118,17 @@ export default function ProfilePage({ profile }: UserProps) {
                 <h2 className="text-lg font-medium">Edit Profile</h2>
                 <Input
                   name="name"
-                  defaultValue={user.name}
+                  defaultValue={user?.name}
                   placeholder="Full name"
                 />
                 <Textarea
                   name="bio"
-                  defaultValue={user.bio}
+                  defaultValue={user?.bio}
                   placeholder="Bio"
                 />
                 <Input
                   name="location"
-                  defaultValue={user.location}
+                  defaultValue={user?.location}
                   placeholder="Location"
                 />
                 <Button type="submit" className="w-full">
