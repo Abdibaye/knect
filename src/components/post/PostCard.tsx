@@ -47,9 +47,12 @@ export default function PostCard({ post }: PostCardProps) {
             )}
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-sm text-foreground">
+           <div className="flex items-center gap-1">
+             <div className="font-semibold text-sm text-foreground">
               {authorName}
-            </span>
+            </div>
+            <p className="text-xs text-blue-500">verified</p>
+           </div>
             <span className="text-xs text-muted-foreground">
               {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : ""}
             </span>
