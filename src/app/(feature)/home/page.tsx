@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from "react";
 import PostCard from "@/components/post/PostCard";
 import CreatePost from "@/components/post/CreatePost";
+import PostCardSkeleton from "@/components/post/PostCardSkeleton";
 
 import FollowSidebar from "@/components/home/home-layout";
 
@@ -94,11 +95,16 @@ const Home = () => {
               </svg>
             </div>
 
-            {loading && <div>Loading posts...</div>}
+            {loading && (
+              <>
+                <PostCardSkeleton />
+                <PostCardSkeleton />
+                <PostCardSkeleton />
+              </>
+            )}
             {error && <div className="text-red-500">{error}</div>}
-            {posts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
+            {!loading &&
+              posts.map((post) => <PostCard key={post.id} post={post} />)}
           </>
         )}
       </div>
