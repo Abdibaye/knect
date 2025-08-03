@@ -1,8 +1,12 @@
 "use client";
 
 import { useContructUrl } from "@/hooks/use-contruct";
-import { Bookmark, ChartColumn, ChartNoAxesColumn, MessageCircle, Share2, ThumbsUp, View } from "lucide-react";
+import { Bookmark, ChartColumn, ChartNoAxesColumn, CheckIcon, Ellipsis, MessageCircle, Share2, ThumbsUp, View } from "lucide-react";
 import Image from "next/image";
+import { Badge } from "../ui/badge";
+import { useState } from "react";
+import PostMenu from "./postMenu";
+
 
 
 type PostCardProps = {
@@ -25,6 +29,9 @@ export default function PostCard({ post }: PostCardProps) {
   const imageUrl = useContructUrl(post.imageUrl);
   const authorImageUrl = post.author?.image ?? ""
   const authorName = post.author?.name || "Unknown";
+  const [menu, setMenu] = useState(false);
+  
+  
 
   return (
     <div className="rounded-xl border lg:ml-15 bg-white dark:bg-zinc-900 shadow-sm p-4 w-full">
@@ -51,7 +58,10 @@ export default function PostCard({ post }: PostCardProps) {
              <div className="font-semibold text-sm text-foreground">
               {authorName}
             </div>
-            <p className="text-xs text-blue-500">verified</p>
+            <Badge variant="outline" className="gap-1">
+      <CheckIcon className="text-emerald-500 items-center" size={12} aria-hidden="true" />
+      verified
+    </Badge>
            </div>
             <span className="text-xs text-muted-foreground">
               {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : ""}
@@ -64,7 +74,7 @@ export default function PostCard({ post }: PostCardProps) {
               {post.visibility}
             </span>
           )}
-          <button className="text-lg font-bold px-1">⋯</button>
+          <PostMenu  />
         </div>
       </div>
       {/* Title */}
