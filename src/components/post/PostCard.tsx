@@ -1,22 +1,13 @@
 "use client";
 
-
 import { useContructUrl } from "@/hooks/use-contruct";
-import { Bookmark, ChartColumn, ChartNoAxesColumn, CheckIcon, Ellipsis, MessageCircle, Share2, ThumbsUp, View } from "lucide-react";
+import { Bookmark, ChartNoAxesColumn, CheckIcon, MessageCircle, ThumbsUp } from "lucide-react";
 import Image from "next/image";
-<<<<<<< HEAD
-import { Badge } from "../ui/badge";
-import { useState } from "react";
-import PostMenu from "./postMenu";
-
-=======
 import { useState, useEffect } from "react";
 import { CommentForm } from "./CommentForm";
 import { CommentList, Comment as CommentType } from "./CommentList";
->>>>>>> c03b221 (feat: full comment & reply system with backend integration, nested replies, and live comment count)
-
-
-// Comment type is now imported from CommentList
+import { Badge } from "../ui/badge";
+import PostMenu from "./postMenu";
 
 type PostCardProps = {
   post: {
@@ -31,69 +22,13 @@ type PostCardProps = {
     commentCount?: number;
     createdAt?: string;
   };
-  // Optionally accept initial comments
   initialComments?: CommentType[];
 };
 
-
 export default function PostCard({ post, initialComments = [] }: PostCardProps) {
   const imageUrl = useContructUrl(post.imageUrl);
   const authorImageUrl = post.author?.image ?? "";
   const authorName = post.author?.name || "Unknown";
-<<<<<<< HEAD
-  const [menu, setMenu] = useState(false);
-  
-  
-=======
-  // Local state for comments
-  const [comments, setComments] = useState<CommentType[]>(initialComments);
-  const [showComments, setShowComments] = useState(false);
-  const [loadingComments, setLoadingComments] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  // Fetch comments from backend
-  useEffect(() => {
-    if (!showComments) return;
-    const fetchComments = async () => {
-      setLoadingComments(true);
-      setError(null);
-      try {
-import { Bookmark, ChartColumn, ChartNoAxesColumn, CheckIcon, Ellipsis, MessageCircle, Share2, ThumbsUp, View } from "lucide-react";
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { Badge } from "../ui/badge";
-import { CommentForm } from "./CommentForm";
-import { CommentList, Comment as CommentType } from "./CommentList";
-import PostMenu from "./postMenu";
-      } catch (err: any) {
-      } finally {
-import { useState, useEffect } from "react";
-        setLoadingComments(false);
-      }
-    };
-    fetchComments();
-  }, [showComments, post.id]);
-
-  // Add a new top-level comment
-  const handleAddComment = async (content: string) => {
-    try {
-      const res = await fetch(`/api/comments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content, postId: post.id }),
-  initialComments?: CommentType[];
-      if (!res.ok) throw new Error("Failed to post comment");
-      // Refetch comments after posting
-      const updated = await fetch(`/api/posts/${post.id}/comments`);
-      setComments(await updated.json());
-    } catch (err: any) {
-      setError(err.message || "Failed to post comment");
-    }
-export default function PostCard({ post, initialComments = [] }: PostCardProps) {
-  const imageUrl = useContructUrl(post.imageUrl);
-  const authorImageUrl = post.author?.image ?? "";
-  const authorName = post.author?.name || "Unknown";
-  // Local state for comments
   const [comments, setComments] = useState<CommentType[]>(initialComments);
   const [showComments, setShowComments] = useState(false);
   const [loadingComments, setLoadingComments] = useState(false);
@@ -220,7 +155,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
       {post.imageUrl && (
         <div className="mt-4 overflow-hidden rounded-xl border max-h-80">
           <Image
-            src={post.imageUrl}
+            src={imageUrl}
             alt="Post image"
             width={800}
             height={400}
@@ -253,27 +188,18 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
           <Bookmark className="size-5" />
         </div>
       </div>
-
       {/* Comments Section (hidden by default, toggled by button) */}
       {showComments && (
         <div className="mt-4">
-          <CommentForm onSubmit={handleAddComment} />
-          <CommentList comments={comments} onReply={handleReply} />
-        </div>
-      )}
-    </div>
-  );
-// removed extra closing brace
-          </div>
-          <Bookmark className="size-5" />
-        </div>
-      </div>
-
-      {/* Comments Section (hidden by default, toggled by button) */}
-      {showComments && (
-        <div className="mt-4">
-          <CommentForm onSubmit={handleAddComment} />
-          <CommentList comments={comments} onReply={handleReply} />
+          {error && <div className="text-red-500 mb-2">{error}</div>}
+          {loadingComments ? (
+            <div>Loading comments...</div>
+          ) : (
+            <>
+              <CommentForm onSubmit={handleAddComment} />
+              <CommentList comments={comments} onReply={handleReply} />
+            </>
+          )}
         </div>
       )}
     </div>
