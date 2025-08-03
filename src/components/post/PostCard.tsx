@@ -17,7 +17,8 @@ type PostCardProps = {
     imageUrl: string;
     tags?: string[];
     visibility?: string;
-    author?: { name?: string; image?: string };
+    author?: {name?: string; image?: string };
+    authorId?: string;
     likeCount?: number;
     commentCount?: number;
     createdAt?: string;
@@ -26,7 +27,7 @@ type PostCardProps = {
 };
 
 export default function PostCard({ post, initialComments = [] }: PostCardProps) {
-  const imageUrl = useContructUrl(post.imageUrl);
+  const imageUrl = post.imageUrl || "/placeholder-image.png";
   const authorImageUrl = post.author?.image ?? "";
   const authorName = post.author?.name || "Unknown";
   const [comments, setComments] = useState<CommentType[]>(initialComments);
@@ -57,7 +58,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   // Add a new top-level comment
   const handleAddComment = async (content: string) => {
     try {
-      const res = await fetch(`/api/comments`, {
+      const res = await fetch(`/api/posts/${post.id}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content, postId: post.id }),
@@ -111,15 +112,17 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
             )}
           </div>
           <div className="flex flex-col">
-            <div className="flex items-center gap-1">
+           <div className="flex items-center gap-1">
+             <button onClick={() => (window.location.href = `/profile/${post.authorId}`)} className="text-sm cursor-pointer font-semibold text-foreground hover:underline">
               <div className="font-semibold text-sm text-foreground">
-                {authorName}
-              </div>
-              <Badge variant="outline" className="gap-1">
-                <CheckIcon className="text-emerald-500 items-center" size={12} aria-hidden="true" />
-                verified
-              </Badge>
+              {authorName}
             </div>
+             </button>
+            <Badge variant="outline" className="gap-1">
+      <CheckIcon className="text-emerald-500 items-center" size={12} aria-hidden="true" />
+      verified
+    </Badge>
+           </div>
             <span className="text-xs text-muted-foreground">
               {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : ""}
             </span>
