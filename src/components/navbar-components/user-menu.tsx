@@ -22,13 +22,14 @@ import { useRouter } from "next/navigation";
 
 
 export type UserMenuProps = {
+  id: string;
   name: string;
   email: string;
   image?: string;
 };
 
 
-export default function UserMenu({ name, email, image }: UserMenuProps) {
+export default function UserMenu({ id,name, email, image }: UserMenuProps) {
   const router = useRouter();
   const handleLogout = async () => {
 await authClient.signOut({
@@ -63,7 +64,7 @@ await authClient.signOut({
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem  onClick={() => (window.location.href = "/profile")}>
+          <DropdownMenuItem  onClick={() => (window.location.href = `/profile/${id}`)}>
             <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
             <span>Profile</span>
           </DropdownMenuItem>
