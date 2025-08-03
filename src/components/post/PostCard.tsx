@@ -17,7 +17,8 @@ type PostCardProps = {
     imageUrl: string;
     tags?: string[];
     visibility?: string;
-    author?: { name?: string; image?: string };
+    author?: {name?: string; image?: string };
+    authorId?: string;
     likeCount?: number;
     commentCount?: number;
     createdAt?: string;
@@ -30,9 +31,8 @@ export default function PostCard({ post }: PostCardProps) {
   const authorImageUrl = post.author?.image ?? ""
   const authorName = post.author?.name || "Unknown";
   const [menu, setMenu] = useState(false);
-  
-  
 
+  
   return (
     <div className="rounded-xl border lg:ml-15 bg-white dark:bg-zinc-900 shadow-sm p-4 w-full">
       {/* Header */}
@@ -55,9 +55,11 @@ export default function PostCard({ post }: PostCardProps) {
           </div>
           <div className="flex flex-col">
            <div className="flex items-center gap-1">
-             <div className="font-semibold text-sm text-foreground">
+             <button onClick={() => (window.location.href = `/profile/${post.authorId}`)} className="text-sm cursor-pointer font-semibold text-foreground hover:underline">
+              <div className="font-semibold text-sm text-foreground">
               {authorName}
             </div>
+             </button>
             <Badge variant="outline" className="gap-1">
       <CheckIcon className="text-emerald-500 items-center" size={12} aria-hidden="true" />
       verified
