@@ -13,7 +13,9 @@ import {
   View,
 } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { CommentForm } from "./CommentForm";
+import { CommentList, Comment as CommentType } from "./CommentList";
 import { Badge } from "../ui/badge";
 import PostMenu from "./postMenu";
 
@@ -37,7 +39,59 @@ export default function PostCard({ post }: PostCardProps) {
   const imageUrl = useContructUrl(post.imageUrl);
   const authorImageUrl = post.author?.image ?? "";
   const authorName = post.author?.name || "Unknown";
-  const [menu, setMenu] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const [comments, setComments] = useState<CommentType[]>([]);
+  const [loadingComments, setLoadingComments] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch comments from backend when toggled open
+  useEffect(() => {
+    if (!showComments) return;
+    setLoadingComments(true);
+    setError(null);
+    fetch(`/api/posts/${post.id}/comments`)
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to fetch comments");
+        return res.json();
+      })
+      .then(data => setComments(data))
+      .catch(err => setError(err.message || "Failed to fetch comments"))
+      .finally(() => setLoadingComments(false));
+  }, [showComments, post.id]);
+
+  // Add a new comment via backend
+  const handleAddComment = async (content: string) => {
+    try {
+      const res = await fetch("/api/comments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content, postId: post.id }),
+      });
+      if (!res.ok) throw new Error("Failed to post comment");
+      // Refetch comments after posting
+      const updated = await fetch(`/api/posts/${post.id}/comments`);
+      setComments(await updated.json());
+    } catch (err: any) {
+      setError(err.message || "Failed to post comment");
+    }
+  };
+
+  // Add a reply to a comment via backend
+  const handleReply = async (parentId: string, reply: string) => {
+    try {
+      const res = await fetch("/api/comments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: reply, postId: post.id, parentId }),
+      });
+      if (!res.ok) throw new Error("Failed to post reply");
+      // Refetch comments after posting
+      const updated = await fetch(`/api/posts/${post.id}/comments`);
+      setComments(await updated.json());
+    } catch (err: any) {
+      setError(err.message || "Failed to post reply");
+    }
+  };
 
   return (
     <div className="rounded-xl border lg:ml-15 bg-white dark:bg-zinc-900 shadow-sm p-4 w-full">
@@ -136,11 +190,25 @@ export default function PostCard({ post }: PostCardProps) {
             type="button"
             className="flex items-center gap-1 focus:outline-none hover:text-primary"
             aria-label="Show comments"
-            onClick={() => setMenu((prev) => !prev)}
+            onClick={() => setShowComments((prev) => !prev)}
           >
             <MessageCircle className="size-5" />
-            <span>{post.commentCount || 0}</span>
+            <span>{post.commentCount || comments.length}</span>
           </button>
+      {/* Comments Section (hidden by default, toggled by button) */}
+      {showComments && (
+        <div className="mt-4 min-h-[120px]">
+          {loadingComments ? (
+            <div className="text-xs text-muted-foreground">Loading comments...</div>
+          ) : (
+            <>
+              {error && <div className="text-xs text-red-500">{error}</div>}
+              <CommentForm onSubmit={handleAddComment} />
+              <CommentList comments={comments} onReply={handleReply} />
+            </>
+          )}
+        </div>
+      )}
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center">
