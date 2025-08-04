@@ -9,7 +9,7 @@ interface LogoProps {
 
 export const Logo: React.FC<LogoProps> = ({
   size = 48,
-  className = "hidden lg:block",
+  className = " lg:block",
 }) => {
   return (
     <div

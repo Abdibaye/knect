@@ -1,9 +1,9 @@
-import React from 'react'
+import CommunityPage from "@/components/community/community";
+import Footer from "@/components/shared/Footer";
+import React from "react";
 
 export default function Community() {
-  return (
-    <div>
-      from community page
-    </div>
-  )
+  return <CommunityPage />
+ 
+  ;
 }

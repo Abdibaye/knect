@@ -1,11 +1,9 @@
-"use client";
-
 import Link from "next/link";
 import { Github, Linkedin, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800">
+    <footer className="bg-white lg:ml-70 text-center  dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800">
       <div className="mx-auto max-w-7xl px-6 py-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           {/* Column 1: Branding */}

@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
-import React from "react";
+import Link from "next/link";
 
+import React from "react";
+import Navbar from "@/components/shared/navbar-form";
 export default function Page() {
   return (
-    <section className="relative w-full h-[80vh] md:h-[90vh]">
+    <section className="relative w-full h-[80vh] md:h-[100vh]">
+      <Navbar />
       <img
         src="/image/login-photo.jpg"
         alt="Hero"
@@ -19,9 +22,11 @@ export default function Page() {
           Knect is the ultimate platform for Ethiopian university students to
           collaborate, share resources, and build the future together.
         </p>
-        <Button className="mt-6 px-6 py-3 text-base font-medium" size="lg">
-          Join the Community
-        </Button>
+        <Link href="/community" passHref>
+          <Button className="mt-6 px-6 py-3 text-base font-medium" size="lg">
+            Join the Community
+          </Button>
+        </Link>
       </div>
     </section>
   );
