@@ -20,7 +20,6 @@ type SignedNavbarProps = {
 
 export default function SignedNavbar({ className }: SignedNavbarProps) {
   const { data: session, isPending } = authClient.useSession()
-  console.log("SESSION", session);
 
   return (
     <header
@@ -65,9 +64,10 @@ export default function SignedNavbar({ className }: SignedNavbarProps) {
 
           <NotificationMenu />
           {isPending || !session?.user ? (
-            <UserMenu name="" email="" />
+            <UserMenu id="" name="" email="" />
           ) : (
             <UserMenu
+              id={session.user.id || ""}
               name={session.user.name || ""}
               email={session.user.email || ""}
               image={session.user.image || ""}

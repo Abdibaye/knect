@@ -103,7 +103,6 @@ const Home = () => {
               <FlaskConical className="w-5 h-5 text-red-400 dark:text-red-300" />
             </div>
             </div>
-
             {loading && (
               <>
                 <PostCardSkeleton />

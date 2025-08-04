@@ -8,6 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { ResourceForm } from "./resources-form";
+import Component from "./dropDown";
+
+
 
 const universities = [
   "Adama Science and Technology University",
@@ -69,6 +72,8 @@ export default function ResourcesPage() {
   const [ratings, setRatings] = useState<{ [id: string]: number }>(
     Object.fromEntries(resources.map((r) => [r.id, r.rating]))
   );
+
+    const [openfilter, setOpenFilter] = useState(false)
 
   const filteredResources = resources.filter(
     (resource) =>
@@ -135,10 +140,7 @@ export default function ResourcesPage() {
                     className="pl-10"
                   />
                 </div>
-                <Button variant="outline" className="flex items-center space-x-2">
-                  <Filter className="h-4 w-4" />
-                  <span>Filter</span>
-                </Button>
+                <Component />
                 {/* Add Resource Button */}
                 <Button
                   variant="default"

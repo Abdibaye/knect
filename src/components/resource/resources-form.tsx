@@ -20,6 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { MultiSelect } from "@/components/ui/multiselect";
 import { cn } from "@/lib/utils";
 
+
 const resourceSchema = z.object({
   title: z.string().min(2, "Title is required"),
   description: z.string().min(10, "Description is required"),
@@ -67,6 +68,8 @@ export function ResourceForm({
       externalUrl: "",
     },
   });
+
+
 
   return (
     <Form {...form}>
