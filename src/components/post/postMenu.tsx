@@ -1,4 +1,4 @@
-import { EllipsisIcon, EyeOff, Flag } from "lucide-react"
+import { Delete, EllipsisIcon, EyeOff, Flag } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -23,16 +23,22 @@ export default function PostMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
-            <div className="flex items-center gap-2">
-                <Flag className="mr-2" size={16} />
-                <p>Report Post</p>
-            </div>
+          <div className="flex items-center gap-2">
+            <Flag className="mr-2" size={16} />
+            <p>Report Post</p>
+          </div>
         </DropdownMenuItem>
         <DropdownMenuItem>
-            <div className="flex items-center gap-2">
-                <EyeOff className="mr-2" size={16} />
-                <p>Not Interested</p>
-            </div>
+          <div className="flex items-center gap-2">
+            <EyeOff className="mr-2" size={16} />
+            <p>Not Interested</p>
+          </div>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <div className="flex items-center gap-2">
+            <Delete className="mr-2" size={16} />
+            <p>Delete</p>
+          </div>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
