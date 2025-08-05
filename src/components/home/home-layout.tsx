@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "../ui/button";
 
 const initialPeopleToFollow = [
   { name: "John Doe", handle: "@johndoe" },
@@ -38,11 +39,11 @@ export default function FollowSidebar() {
   };
 
   return (
-    <aside className="hidden lg:block fixed top-0 right-0 h-screen w-64 mt-16 p-4 space-y-6 bg-white dark:bg-zinc-900 border-l border-gray-200 dark:border-zinc-800 z-40 overflow-y-auto">
+    <aside className="hidden lg:block fixed top-0 right-0 h-screen w-74 mt-16 p-4 space-y-6 bg-white dark:bg-zinc-900 border-l border-gray-200 dark:border-zinc-800 z-40 overflow-y-auto">
       {/* Who to follow section */}
       <section className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-xl shadow-sm">
         <h2 className="text-lg font-semibold mb-4 text-zinc-800 dark:text-white">
-          Who to follow
+          Who to connect with
         </h2>
         <ul className="space-y-4">
           {initialPeopleToFollow.map((person, i) => (
@@ -61,16 +62,16 @@ export default function FollowSidebar() {
                   </p>
                 </div>
               </div>
-              <button
+              <Button
                 onClick={() => togglePersonFollow(i)}
-                className={`text-sm font-medium ${
+                className={`text-sm font-medium bg-blue-500 ${
                   followedPeople[i]
-                    ? "text-green-600 hover:underline"
-                    : "text-blue-500 hover:underline"
+                    ? "text-white hover:underline"
+                    : "text-white  hover:underline"
                 }`}
               >
                 {followedPeople[i] ? "Following" : "Follow"}
-              </button>
+              </Button>
             </li>
           ))}
         </ul>
@@ -87,16 +88,16 @@ export default function FollowSidebar() {
               <span className="text-sm text-zinc-800 dark:text-white">
                 {channel.name}
               </span>
-              <button
+              <Button
                 onClick={() => toggleChannelFollow(i)}
-                className={`text-sm font-medium ${
+                className={`text-sm font-medium bg-blue-500 ${
                   followedChannels[i]
-                    ? "text-green-600 hover:underline"
-                    : "text-blue-500 hover:underline"
+                    ? "text-white hover:underline"
+                    : "text-white hover:underline"
                 }`}
               >
                 {followedChannels[i] ? "Following" : "Follow"}
-              </button>
+              </Button>
             </li>
           ))}
         </ul>
