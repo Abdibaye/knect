@@ -35,7 +35,7 @@ export default function SignedNavbar({ className }: SignedNavbarProps) {
         <div className="flex-1 max-w-md mx-auto w-full outline-none">
           <Input
             type="text"
-            placeholder="Search..."
+            placeholder="Search resources, users, researches..."
             className="w-full px-4 py-2 text-sm  rounded-md"
           />
         </div>
