@@ -48,7 +48,7 @@ export default function SignedNavbar({ className }: SignedNavbarProps) {
           <MessageCircle onClick={() => document.dispatchEvent(new Event("showChat"))} />
           <Button
             size="sm"
-            className="text-sm max-sm:aspect-square max-sm:p-0 hidden md:inline-flex "
+            className="text-sm max-sm:aspect-square max-sm:p-0 hidden md:inline-flex bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-800 dark:text-white font-medium rounded-md px-3 py-1.5"
             onClick={() => {
               const event = new Event("showCreatePost");
               document.dispatchEvent(event);
