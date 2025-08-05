@@ -4,29 +4,98 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
+import z from "zod";
 
-export function RegisterForm({
-  className,
-  ...props
-}: React.ComponentProps<"form">) {
+const registerSchema = z.object({
+  fullName: z.string().min(1, "Full name is required"),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  confirmPassword: z.string().min(8, "Please confirm your password"),
+  terms: z.literal(true, {
+    message: "You must accept the terms.",
+  }),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"],
+});
+
+export default function RegisterForm(){
   const router = useRouter();
-  const [githubtransition, setGithubTransition] = useTransition();
+  const [gogletransition, setGoogleTransition] = useTransition();
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    terms: false,
+  });
+
+  const handleInputChange = (
+    field: keyof typeof formData,
+    value: string | boolean
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+    setFormErrors((prev) => {
+      const updated = { ...prev };
+      delete updated[field as string];
+      return updated;
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const result = registerSchema.safeParse(formData);
+    if (!result.success) {
+      // Map zod errors to form fields
+      const errors: Record<string, string> = {};
+      result.error.issues.forEach((err) => {
+        if (err.path[0]) errors[err.path[0] as string] = err.message;
+      });
+      setFormErrors(errors);
+      if (Object.values(errors).length > 0) {
+        toast.error(Object.values(errors)[0]);
+      }
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Call your registration API here.
+      const response = await authClient.signUp.email({
+        name: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      });
+      toast.success("Account created successfully!");
+      router.push("/home");
+    } catch (error: any) {
+      toast.error(error?.message || "Failed to create account.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   async function handleLoginWithGoogle() {
-    setGithubTransition(async () => {
+    setGoogleTransition(async () => {
       await authClient.signIn.social({
         provider: "google",
         callbackURL: "/home",
         fetchOptions: {
           onSuccess: () => {
               router.push('/home')
-
           },
           onError: (error) => {
-              toast.error("internal server error")    }
+              toast.error("internal server error");
+          }
          },
       });
     });
@@ -34,11 +103,8 @@ export function RegisterForm({
 
   return (
     <form
-      className={cn(
-        "w-full max-w-md flex flex-col gap-4 bg-white dark:bg-neutral-900 p-4 rounded-lg shadow-md",
-        className
-      )}
-      {...props}
+      className="w-full max-w-md flex flex-col gap-4 bg-white dark:bg-neutral-900 p-4 rounded-lg shadow-md"
+      onSubmit={handleSubmit}
     >
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-bold">Create your account</h1>
@@ -49,11 +115,31 @@ export function RegisterForm({
       <div className="grid gap-4">
         <div className="grid gap-3">
           <Label htmlFor="name">Full Name</Label>
-          <Input id="name" type="text" placeholder="Abdi Gashahun" />
+          <Input
+            id="name"
+            type="text"
+            placeholder="Abdi Gashahun"
+            value={formData.fullName}
+            onChange={(e) => handleInputChange("fullName", e.target.value)}
+            disabled={loading}
+          />
+          {formErrors.fullName && (
+            <span className="text-red-500 text-xs">{formErrors.fullName}</span>
+          )}
         </div>
         <div className="grid gap-3">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" />
+          <Input
+            id="email"
+            type="email"
+            placeholder="m@example.com"
+            value={formData.email}
+            onChange={(e) => handleInputChange("email", e.target.value)}
+            disabled={loading}
+          />
+          {formErrors.email && (
+            <span className="text-red-500 text-xs">{formErrors.email}</span>
+          )}
         </div>
         <div className="grid gap-3">
           <div className="flex items-center">
@@ -63,10 +149,49 @@ export function RegisterForm({
               className="ml-auto text-sm underline-offset-4 hover:underline"
             ></a>
           </div>
-          <Input id="password" type="password" required />
+          <Input
+            id="password"
+            type="password"
+            required
+            value={formData.password}
+            onChange={(e) => handleInputChange("password", e.target.value)}
+            disabled={loading}
+          />
+          {formErrors.password && (
+            <span className="text-red-500 text-xs">{formErrors.password}</span>
+          )}
         </div>
-        <Button type="submit" className="w-full">
-          Login
+        <div className="grid gap-3">
+          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <Input
+            id="confirmPassword"
+            type="password"
+            value={formData.confirmPassword}
+            onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+            disabled={loading}
+          />
+          {formErrors.confirmPassword && (
+            <span className="text-red-500 text-xs">{formErrors.confirmPassword}</span>
+          )}
+        </div>
+        <div className="flex items-center gap-2">
+          <input
+            id="terms"
+            type="checkbox"
+            checked={formData.terms}
+            onChange={(e) => handleInputChange("terms", e.target.checked)}
+            disabled={loading}
+            className="accent-primary"
+          />
+          <Label htmlFor="terms">
+            I agree to the <a href="/terms" className="underline">terms and conditions</a>
+          </Label>
+        </div>
+        {formErrors.terms && (
+          <span className="text-red-500 text-xs">{formErrors.terms}</span>
+        )}
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? "Creating account..." : "Register"}
         </Button>
         <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
           <span className="bg-background text-muted-foreground relative z-10 px-2">
@@ -75,12 +200,13 @@ export function RegisterForm({
         </div>
         <div className="grid gap-3">
           <Button
-            disabled={githubtransition}
+            disabled={gogletransition}
             onClick={handleLoginWithGoogle}
             className="w-full"
             variant="outline"
+            type="button"
           >
-            {githubtransition ? (
+            {gogletransition ? (
               <span className="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path
@@ -106,6 +232,7 @@ export function RegisterForm({
           <Button
             variant="outline"
             className="w-full flex items-center justify-center gap-2"
+            type="button"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -11,6 +11,11 @@ export const auth = betterAuth({
     provider: "postgresql", // or "mysql", "postgresql", ...etc
   }),
 
+  emailAndPassword: {
+    	enabled: true,
+    	autoSignIn: false 
+  },
+
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID || "",
