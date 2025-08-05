@@ -8,6 +8,7 @@ import { CommentForm } from "./CommentForm";
 import { CommentList, Comment as CommentType } from "./CommentList";
 import { Badge } from "../ui/badge";
 import PostMenu from "./postMenu";
+import { authClient } from "@/lib/auth-client";
 
 type PostCardProps = {
   post: {
@@ -34,6 +35,9 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   const [showComments, setShowComments] = useState(false);
   const [loadingComments, setLoadingComments] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const { data: session, isPending } = authClient.useSession();
+  
 
   // Fetch comments from backend
   useEffect(() => {
@@ -134,7 +138,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
               {post.visibility}
             </span>
           )}
-          <PostMenu />
+          <PostMenu post={{ id: post.id, authorId: post.authorId }} currentUserId={session?.user.id} />
         </div>
       </div>
       {/* Title */}
