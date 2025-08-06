@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "../ui/button";
+import { Plus, User, UserPlus } from "lucide-react";
 
 const initialPeopleToFollow = [
   { name: "John Doe", handle: "@johndoe" },
@@ -37,8 +38,7 @@ export default function FollowSidebar() {
     updated[index] = !updated[index];
     setFollowedChannels(updated);
   };
-
-  return (
+ return (
     <aside className="hidden lg:block fixed top-0 right-0 h-screen w-74 mt-16 p-4 space-y-6 bg-white dark:bg-zinc-900 border-l border-gray-200 dark:border-zinc-800 z-40 overflow-y-auto">
       {/* Who to follow section */}
       <section className="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-xl shadow-sm">
@@ -64,13 +64,15 @@ export default function FollowSidebar() {
               </div>
               <Button
                 onClick={() => togglePersonFollow(i)}
-                className={`text-sm font-medium bg-blue-500 ${
+                className={`text-sm font-medium bg-blue-600 hover:bg-blue-600 ${
                   followedPeople[i]
                     ? "text-white hover:underline"
                     : "text-white  hover:underline"
                 }`}
               >
-                {followedPeople[i] ? "Following" : "Follow"}
+
+                <UserPlus className="w-4 h-4 mr-1" />
+                {followedPeople[i] ? "Requested" : "Connect"}
               </Button>
             </li>
           ))}
@@ -90,12 +92,13 @@ export default function FollowSidebar() {
               </span>
               <Button
                 onClick={() => toggleChannelFollow(i)}
-                className={`text-sm font-medium bg-blue-500 ${
+                className={`text-sm font-medium bg-blue-500 rounded-2xl ${
                   followedChannels[i]
                     ? "text-white hover:underline"
                     : "text-white hover:underline"
                 }`}
               >
+                <Plus className="w-4 h-4 mr-1" />
                 {followedChannels[i] ? "Following" : "Follow"}
               </Button>
             </li>
