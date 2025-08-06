@@ -92,7 +92,7 @@ export default function FollowSidebar() {
               </span>
               <Button
                 onClick={() => toggleChannelFollow(i)}
-                className={`text-sm font-medium bg-blue-500 ${
+                className={`text-sm font-medium bg-blue-500 rounded-2xl ${
                   followedChannels[i]
                     ? "text-white hover:underline"
                     : "text-white hover:underline"
