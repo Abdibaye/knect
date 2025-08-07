@@ -209,7 +209,7 @@
 "use client";
 
 import { useState } from "react";
-import { Calendar, MapPin, Clock, Users, Search, Filter } from "lucide-react";
+import { Calendar, MapPin, Clock, Users, Search, Filter, Plus } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -368,6 +368,14 @@ export default function EventsPage() {
             <Filter className="h-4 w-4" />
             <span>Filter</span>
           </Button>
+          <Button
+                  variant="default"
+                  className="flex items-center space-x-2"
+                  type="button"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span>Add Event</span>
+                </Button>
         </div>
 
         {/* Event cards */}
