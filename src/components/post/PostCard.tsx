@@ -1,9 +1,45 @@
 "use client";
 
+// Dummy education component
+function UserEducation() {
+  // In the future, this can be replaced with real user data
+  return (
+    <span className="text-xs text-blue-600 dark:text-blue-300 font-medium">Adama science and technology university || Electrical Engineering</span>
+  );
+}
+
+
 import { useContructUrl } from "@/hooks/use-contruct";
-import { Bookmark, ChartNoAxesColumn, CheckIcon, MessageCircle, ThumbsUp } from "lucide-react";
+import { Bookmark, ChartNoAxesColumn, CheckIcon, Clock, Dot, Globe, Globe2Icon, GlobeIcon, MessageCircle, ThumbsUp, WholeWord } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+// Utility to format relative time
+function getRelativeTime(dateString?: string) {
+  if (!dateString) return "";
+  const now = new Date();
+  const date = new Date(dateString);
+  const diff = (now.getTime() - date.getTime()) / 1000; // in seconds
+  if (isNaN(diff)) return "";
+  if (diff < 60) return "just now";
+  if (diff < 3600) {
+    const mins = Math.floor(diff / 60);
+    return `${mins} minute${mins !== 1 ? "s" : ""} ago`;
+  }
+  if (diff < 86400) {
+    const hours = Math.floor(diff / 3600);
+    return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
+  }
+  if (diff < 2592000) {
+    const days = Math.floor(diff / 86400);
+    return `${days} day${days !== 1 ? "s" : ""} ago`;
+  }
+  if (diff < 31536000) {
+    const months = Math.floor(diff / 2592000);
+    return `${months} month${months !== 1 ? "s" : ""} ago`;
+  }
+  const years = Math.floor(diff / 31536000);
+  return `${years} year${years !== 1 ? "s" : ""} ago`;
+}
 import { CommentForm } from "./CommentForm";
 import { CommentList, Comment as CommentType } from "./CommentList";
 import { Badge } from "../ui/badge";
@@ -127,8 +163,11 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
       verified
     </Badge>
            </div>
-            <span className="text-xs text-muted-foreground">
-              {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : ""}
+           {/* User education (university) */}
+           <UserEducation />
+           <span className="text-xs flex gap-2 text-muted-foreground">
+              {getRelativeTime(post.createdAt)} 
+              <Clock className="text-muted-foreground" size={12} aria-hidden="true" />
             </span>
           </div>
         </div>
