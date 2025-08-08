@@ -20,18 +20,12 @@ import {
   CheckIcon,
 } from "lucide-react"
 
-
-
-
 export default function ProfilePage({ profile }: { profile: any }) {
   if (!profile) return <ProfileSkeleton />;
   if (profile.error) return <div>Error: {profile.error}</div>;
   const user = profile.user;
   if (!user) return <div>User not found</div>;
   const { name, email, location, connections, image } = user;
-
-
-
 
   return (
     <div className="min-h-screen">
@@ -40,16 +34,15 @@ export default function ProfilePage({ profile }: { profile: any }) {
           {/* Left Column */}
           <div className="lg:col-span-2 space-y-6">
             {/* Profile Header Card */}
-            <Card className="bg-white py-0 dark:bg-zinc-900">
+            <Card className="py-0">
               <div className="relative">
                 {/* Cover Photo */}
-
-                  <img className="w-full h-48 object-cover rounded-t-lg" src="https://9426055.fs1.hubspotusercontent-na1.net/hubfs/9426055/tech-sales-career-image.jpg" alt="image" />
+                <img className="w-full h-48 object-cover rounded-t-lg" src="https://9426055.fs1.hubspotusercontent-na1.net/hubfs/9426055/tech-sales-career-image.jpg" alt="image" />
 
                 {/* Profile Info */}
                 <CardContent className="relative pt-2 pb-6">
                   <div className="flex flex-col sm:flex-row sm:items-end sm:space-x-6">
-                    <Avatar className="w-32 h-32 border-4 border-white dark:border-gray-700 -mt-16 mb-4 sm:mb-0">
+                    <Avatar className="w-32 h-32 border-4 border-card -mt-16 mb-4 sm:mb-0">
                       <AvatarImage src={image} alt="Profile" />
                       <AvatarFallback className="text-2xl">
                         {name ? name.charAt(0).toUpperCase() : "U"}
@@ -58,24 +51,24 @@ export default function ProfilePage({ profile }: { profile: any }) {
 
                     <div className="flex-1">
                       <div className="flex items-center gap-1">
-                      <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">{name}</h1>
-                      <Badge variant="outline" className="gap-1">
-                  <CheckIcon className="text-emerald-500 items-center" size={12} aria-hidden="true" />
-                  verified
-                      </Badge>
+                        <h1 className="text-2xl font-semibold">{name}</h1>
+                        <Badge variant="outline" className="gap-1">
+                          <CheckIcon className="text-emerald-500 items-center" size={12} aria-hidden="true" />
+                          verified
+                        </Badge>
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                      <p className="text-sm text-muted-foreground mt-1">
                         Student at Adama Science and Technology University
                       </p>
-                      <div className="flex items-center text-gray-500 dark:text-gray-400 mt-2">
+                      <div className="flex items-center text-muted-foreground mt-2">
                         <MapPin className="w-4 h-4 mr-1" />
                         <span>Adama, Ethiopia</span>
                         <span className="mx-2">•</span>
-                        <span className="text-blue-600 hover:underline cursor-pointer">250+ connections</span>
+                        <span className="text-primary hover:underline cursor-pointer">250+ connections</span>
                       </div>
 
                       <div className="flex flex-wrap gap-2 mt-4">
-                        <Button className="bg-blue-600 hover:bg-blue-700">
+                        <Button className="bg-primary hover:opacity-90">
                           <UserPlus className="w-4 h-4 mr-2" />
                           Connect
                         </Button>
@@ -94,18 +87,18 @@ export default function ProfilePage({ profile }: { profile: any }) {
             </Card>
 
             {/* About Section */}
-            <Card className="bg-white dark:bg-zinc-900">
+            <Card>
               <CardHeader>
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">About</h2>
+                <h2 className="text-xl font-semibold">About</h2>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
+                <p className="leading-relaxed">
                   A highly motivated and dedicated student at Adama Science and Technology University, pursuing a degree
                   in Computer Science. Passionate about leveraging technology to solve real-world problems and eager to
                   contribute to innovative projects. Actively seeking opportunities to expand knowledge and skills in
                   software development, data science, and artificial intelligence.
                 </p>
-                <p className="text-gray-700 dark:text-gray-200 leading-relaxed mt-4">
+                <p className="leading-relaxed mt-4">
                   Currently focused on developing machine learning models for image recognition and exploring the
                   applications of blockchain technology in secure data management.
                 </p>
@@ -113,33 +106,33 @@ export default function ProfilePage({ profile }: { profile: any }) {
             </Card>
 
             {/* Activity Section */}
-            <Card className="bg-white dark:bg-zinc-900">
+            <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Activity</h2>
+                  <h2 className="text-xl font-semibold">Activity</h2>
                   <Button variant="ghost" size="sm">
                     See all activity
                   </Button>
                 </div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">1,234 followers</p>
+                <p className="text-sm text-muted-foreground">1,234 followers</p>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="border-l-2 border-blue-600 pl-4">
-                  <p className="text-sm text-gray-600 dark:text-gray-300">Alex posted this • 2d</p>
-                  <p className="mt-2 text-gray-700 dark:text-gray-200">
+                <div className="border-l-2 border-primary pl-4">
+                  <p className="text-sm text-muted-foreground">Alex posted this • 2d</p>
+                  <p className="mt-2">
                     Excited to share that our team just launched a new feature that improves user experience by 40%! The
                     power of collaborative engineering never ceases to amaze me. 🚀
                   </p>
-                  <div className="flex items-center space-x-4 mt-3 text-sm text-gray-500 dark:text-gray-400">
-                    <button className="flex items-center space-x-1 hover:text-blue-600">
+                  <div className="flex items-center space-x-4 mt-3 text-sm text-muted-foreground">
+                    <button className="flex items-center space-x-1 hover:text-primary">
                       <ThumbsUp className="w-4 h-4" />
                       <span>24</span>
                     </button>
-                    <button className="flex items-center space-x-1 hover:text-blue-600">
+                    <button className="flex items-center space-x-1 hover:text-primary">
                       <MessageSquare className="w-4 h-4" />
                       <span>8 comments</span>
                     </button>
-                    <button className="flex items-center space-x-1 hover:text-blue-600">
+                    <button className="flex items-center space-x-1 hover:text-primary">
                       <Share2 className="w-4 h-4" />
                       <span>Share</span>
                     </button>
@@ -149,9 +142,9 @@ export default function ProfilePage({ profile }: { profile: any }) {
             </Card>
 
             {/* Experience Section */}
-            <Card className="bg-white dark:bg-zinc-900">
+            <Card>
               <CardHeader>
-                <h2 className="text-xl font-semibold flex items-center text-gray-900 dark:text-white">
+                <h2 className="text-xl font-semibold flex items-center">
                   <Briefcase className="w-5 h-5 mr-2" />
                   Academic Projects
                 </h2>
@@ -163,13 +156,13 @@ export default function ProfilePage({ profile }: { profile: any }) {
                     <AvatarFallback>TC</AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Smart Irrigation System</h3>
-                    <p className="text-gray-600 dark:text-gray-300">
+                    <h3 className="font-semibold">Smart Irrigation System</h3>
+                    <p className="text-muted-foreground">
                       Adama Science and Technology University • Group Project
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Sept 2023 - Dec 2023 • 4 mos</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Adama, Ethiopia</p>
-                    <p className="mt-2 text-gray-700 dark:text-gray-200">
+                    <p className="text-sm text-muted-foreground">Sept 2023 - Dec 2023 • 4 mos</p>
+                    <p className="text-sm text-muted-foreground">Adama, Ethiopia</p>
+                    <p className="mt-2">
                       Developed a smart irrigation system using Arduino and sensor technology to optimize water usage in
                       agriculture. Implemented a web interface for remote monitoring and control.
                     </p>
@@ -190,15 +183,15 @@ export default function ProfilePage({ profile }: { profile: any }) {
                     <AvatarFallback>SX</AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-900 dark:text-white">
+                    <h3 className="font-semibold">
                       Machine Learning-Based Plant Disease Detection
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-300">
+                    <p className="text-muted-foreground">
                       Adama Science and Technology University • Individual Project
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Jan 2024 - May 2024 • 5 mos</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Adama, Ethiopia</p>
-                    <p className="mt-2 text-gray-700 dark:text-gray-200">
+                    <p className="text-sm text-muted-foreground">Jan 2024 - May 2024 • 5 mos</p>
+                    <p className="text-sm text-muted-foreground">Adama, Ethiopia</p>
+                    <p className="mt-2">
                       Developed a machine learning model using Python and TensorFlow to detect plant diseases from
                       images. Achieved 90% accuracy in identifying common plant diseases.
                     </p>
@@ -217,22 +210,22 @@ export default function ProfilePage({ profile }: { profile: any }) {
           {/* Right Column */}
           <div className="space-y-6">
             {/* Contact Info */}
-            <Card className="bg-white dark:bg-gray-800">
+            <Card>
               <CardHeader>
-                <h3 className="font-semibold text-gray-900 dark:text-white">Contact info</h3>
+                <h3 className="font-semibold">Contact info</h3>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-center space-x-3">
-                  <Mail className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                  <span className="text-sm text-gray-600 dark:text-gray-300">alex.johnson@student.astu.edu.et</span>
+                  <Mail className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">alex.johnson@student.astu.edu.et</span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Phone className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                  <span className="text-sm text-gray-600 dark:text-gray-300">+251 911 123 456</span>
+                  <Phone className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">+251 911 123 456</span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Globe className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                  <span className="text-sm text-blue-600 hover:underline cursor-pointer">johnsmith.dev</span>
+                  <Globe className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-sm text-primary hover:underline cursor-pointer">johnsmith.dev</span>
                 </div>
               </CardContent>
             </Card>

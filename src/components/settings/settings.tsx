@@ -38,22 +38,17 @@ export default function UserSettings() {
   };
 
   return (
-    <div className="w-full lg:mr-90 mt-2 mx-auto p-6 bg-white dark:bg-zinc-900 rounded-lg shadow-md space-y-8 relative">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-        User Settings
-      </h1>
+    <div className="w-full lg:mr-90 mt-2 mx-auto p-6 bg-card text-card-foreground rounded-lg shadow-md space-y-8 relative">
+      <h1 className="text-3xl font-bold text-foreground">User Settings</h1>
 
       {/* Personal Info */}
       <section>
-        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+        <h2 className="text-xl font-semibold mb-4 text-foreground">
           Personal Information
         </h2>
 
         <div className="mb-4">
-          <Label
-            htmlFor="name"
-            className="mb-1 block text-gray-700 dark:text-gray-300"
-          >
+          <Label htmlFor="name" className="mb-1 block text-muted-foreground">
             Full Name
           </Label>
           <Input
@@ -66,10 +61,7 @@ export default function UserSettings() {
         </div>
 
         <div className="mb-4">
-          <Label
-            htmlFor="email"
-            className="mb-1 block text-gray-700 dark:text-gray-300"
-          >
+          <Label htmlFor="email" className="mb-1 block text-muted-foreground">
             Email Address
           </Label>
           <Input
@@ -84,14 +76,14 @@ export default function UserSettings() {
 
       {/* Password Change */}
       <section>
-        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+        <h2 className="text-xl font-semibold mb-4 text-foreground">
           Change Password
         </h2>
 
         <div className="mb-4">
           <Label
             htmlFor="currentPassword"
-            className="mb-1 block text-gray-700 dark:text-gray-300"
+            className="mb-1 block text-muted-foreground"
           >
             Current Password
           </Label>
@@ -104,10 +96,7 @@ export default function UserSettings() {
           />
         </div>
         <div className="mb-4">
-          <Label
-            htmlFor="newPassword"
-            className="mb-1 block text-gray-700 dark:text-gray-300"
-          >
+          <Label htmlFor="newPassword" className="mb-1 block text-muted-foreground">
             New Password
           </Label>
           <Input
@@ -122,21 +111,16 @@ export default function UserSettings() {
 
       {/* Privacy Settings */}
       <section>
-        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
-          Privacy
-        </h2>
+        <h2 className="text-xl font-semibold mb-4 text-foreground">Privacy</h2>
         <div className="flex items-center space-x-3 mb-3">
           <input
             id="privacyPublicProfile"
             type="checkbox"
             checked={privacyPublicProfile}
             onChange={() => setPrivacyPublicProfile(!privacyPublicProfile)}
-            className="w-5 h-5 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500"
+            className="w-5 h-5 rounded border-border bg-background focus:ring-2 focus:ring-ring"
           />
-          <Label
-            htmlFor="privacyPublicProfile"
-            className="text-gray-700 dark:text-gray-300 cursor-pointer"
-          >
+          <Label htmlFor="privacyPublicProfile" className="text-muted-foreground cursor-pointer">
             Public Profile (anyone can see your profile)
           </Label>
         </div>
@@ -144,21 +128,16 @@ export default function UserSettings() {
 
       {/* Two-Factor Authentication */}
       <section>
-        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
-          Security
-        </h2>
+        <h2 className="text-xl font-semibold mb-4 text-foreground">Security</h2>
         <div className="flex items-center space-x-3 mb-3">
           <input
             id="twoFactorAuth"
             type="checkbox"
             checked={twoFactorAuth}
             onChange={() => setTwoFactorAuth(!twoFactorAuth)}
-            className="w-5 h-5 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500"
+            className="w-5 h-5 rounded border-border bg-background focus:ring-2 focus:ring-ring"
           />
-          <Label
-            htmlFor="twoFactorAuth"
-            className="text-gray-700 dark:text-gray-300 cursor-pointer"
-          >
+          <Label htmlFor="twoFactorAuth" className="text-muted-foreground cursor-pointer">
             Enable Two-Factor Authentication (2FA)
           </Label>
         </div>
@@ -166,21 +145,16 @@ export default function UserSettings() {
 
       {/* Notifications */}
       <section>
-        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
-          Notifications
-        </h2>
+        <h2 className="text-xl font-semibold mb-4 text-foreground">Notifications</h2>
         <div className="flex items-center space-x-3 mb-3">
           <input
             id="notificationsGeneral"
             type="checkbox"
             checked={notificationsEnabled}
             onChange={() => setNotificationsEnabled(!notificationsEnabled)}
-            className="w-5 h-5 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500"
+            className="w-5 h-5 rounded border-border bg-background focus:ring-2 focus:ring-ring"
           />
-          <Label
-            htmlFor="notificationsGeneral"
-            className="text-gray-700 dark:text-gray-300 cursor-pointer"
-          >
+          <Label htmlFor="notificationsGeneral" className="text-muted-foreground cursor-pointer">
             Enable all email notifications
           </Label>
         </div>
@@ -191,12 +165,9 @@ export default function UserSettings() {
             checked={notifyMessages}
             onChange={() => setNotifyMessages(!notifyMessages)}
             disabled={!notificationsEnabled}
-            className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500"
+            className="w-4 h-4 rounded border-border bg-background focus:ring-2 focus:ring-ring"
           />
-          <Label
-            htmlFor="notifyMessages"
-            className="text-gray-600 dark:text-gray-400 cursor-pointer"
-          >
+          <Label htmlFor="notifyMessages" className="text-muted-foreground cursor-pointer">
             Messages
           </Label>
         </div>
@@ -207,12 +178,9 @@ export default function UserSettings() {
             checked={notifyFollows}
             onChange={() => setNotifyFollows(!notifyFollows)}
             disabled={!notificationsEnabled}
-            className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500"
+            className="w-4 h-4 rounded border-border bg-background focus:ring-2 focus:ring-ring"
           />
-          <Label
-            htmlFor="notifyFollows"
-            className="text-gray-600 dark:text-gray-400 cursor-pointer"
-          >
+          <Label htmlFor="notifyFollows" className="text-muted-foreground cursor-pointer">
             New Followers
           </Label>
         </div>
@@ -220,20 +188,15 @@ export default function UserSettings() {
 
       {/* Language and Theme */}
       <section>
-        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
-          Preferences
-        </h2>
+        <h2 className="text-xl font-semibold mb-4 text-foreground">Preferences</h2>
 
         <div className="mb-4">
-          <Label
-            htmlFor="language"
-            className="mb-1 block text-gray-700 dark:text-gray-300"
-          >
+          <Label htmlFor="language" className="mb-1 block text-muted-foreground">
             Language
           </Label>
           <select
             id="language"
-            className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100"
+            className="w-full p-2 rounded border border-border bg-background text-foreground"
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
           >
@@ -246,15 +209,12 @@ export default function UserSettings() {
         </div>
 
         <div className="mb-4">
-          <Label
-            htmlFor="theme"
-            className="mb-1 block text-gray-700 dark:text-gray-300"
-          >
+          <Label htmlFor="theme" className="mb-1 block text-muted-foreground">
             Theme
           </Label>
           <select
             id="theme"
-            className="w-full p-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100"
+            className="w-full p-2 rounded border border-border bg-background text-foreground"
             value={theme}
             onChange={(e) => setTheme(e.target.value)}
           >
@@ -266,10 +226,8 @@ export default function UserSettings() {
 
       {/* Account Deactivation */}
       <section>
-        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
-          Account
-        </h2>
-        <p className="mb-4 text-gray-700 dark:text-gray-300">
+        <h2 className="text-xl font-semibold mb-4 text-foreground">Account</h2>
+        <p className="mb-4 text-muted-foreground">
           If you want to deactivate your account, you can do so here. This
           action is irreversible.
         </p>
@@ -282,7 +240,7 @@ export default function UserSettings() {
       </section>
 
       {/* Save Button */}
-      <div className="pt-6 border-t border-gray-300 dark:border-gray-700">
+      <div className="pt-6 border-t border-border">
         <Button onClick={handleSave} disabled={saving}>
           {saving ? "Saving..." : "Save Settings"}
         </Button>

@@ -1814,8 +1814,8 @@ export namespace Prisma {
     accounts: number
     Post: number
     Resource: number
-    Group: number
-    GroupMember: number
+    createdGroups: number
+    groupMemberships: number
     Event: number
     Comments: number
     Likes: number
@@ -1826,8 +1826,8 @@ export namespace Prisma {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     Post?: boolean | UserCountOutputTypeCountPostArgs
     Resource?: boolean | UserCountOutputTypeCountResourceArgs
-    Group?: boolean | UserCountOutputTypeCountGroupArgs
-    GroupMember?: boolean | UserCountOutputTypeCountGroupMemberArgs
+    createdGroups?: boolean | UserCountOutputTypeCountCreatedGroupsArgs
+    groupMemberships?: boolean | UserCountOutputTypeCountGroupMembershipsArgs
     Event?: boolean | UserCountOutputTypeCountEventArgs
     Comments?: boolean | UserCountOutputTypeCountCommentsArgs
     Likes?: boolean | UserCountOutputTypeCountLikesArgs
@@ -1875,14 +1875,14 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountGroupArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountCreatedGroupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GroupWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountGroupMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountGroupMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GroupMemberWhereInput
   }
 
@@ -2002,6 +2002,10 @@ export namespace Prisma {
     bio: string | null
     username: string | null
     location: string | null
+    university: string | null
+    department: string | null
+    yearOfStudy: string | null
+    researchFocus: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2015,6 +2019,10 @@ export namespace Prisma {
     bio: string | null
     username: string | null
     location: string | null
+    university: string | null
+    department: string | null
+    yearOfStudy: string | null
+    researchFocus: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2028,6 +2036,12 @@ export namespace Prisma {
     bio: number
     username: number
     location: number
+    university: number
+    department: number
+    yearOfStudy: number
+    skills: number
+    researchFocus: number
+    publications: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2043,6 +2057,10 @@ export namespace Prisma {
     bio?: true
     username?: true
     location?: true
+    university?: true
+    department?: true
+    yearOfStudy?: true
+    researchFocus?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2056,6 +2074,10 @@ export namespace Prisma {
     bio?: true
     username?: true
     location?: true
+    university?: true
+    department?: true
+    yearOfStudy?: true
+    researchFocus?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2069,6 +2091,12 @@ export namespace Prisma {
     bio?: true
     username?: true
     location?: true
+    university?: true
+    department?: true
+    yearOfStudy?: true
+    skills?: true
+    researchFocus?: true
+    publications?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2155,6 +2183,12 @@ export namespace Prisma {
     bio: string | null
     username: string | null
     location: string | null
+    university: string | null
+    department: string | null
+    yearOfStudy: string | null
+    skills: string[]
+    researchFocus: string | null
+    publications: string[]
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -2185,14 +2219,20 @@ export namespace Prisma {
     bio?: boolean
     username?: boolean
     location?: boolean
+    university?: boolean
+    department?: boolean
+    yearOfStudy?: boolean
+    skills?: boolean
+    researchFocus?: boolean
+    publications?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
     Post?: boolean | User$PostArgs<ExtArgs>
     Resource?: boolean | User$ResourceArgs<ExtArgs>
-    Group?: boolean | User$GroupArgs<ExtArgs>
-    GroupMember?: boolean | User$GroupMemberArgs<ExtArgs>
+    createdGroups?: boolean | User$createdGroupsArgs<ExtArgs>
+    groupMemberships?: boolean | User$groupMembershipsArgs<ExtArgs>
     Event?: boolean | User$EventArgs<ExtArgs>
     Comments?: boolean | User$CommentsArgs<ExtArgs>
     Likes?: boolean | User$LikesArgs<ExtArgs>
@@ -2208,6 +2248,12 @@ export namespace Prisma {
     bio?: boolean
     username?: boolean
     location?: boolean
+    university?: boolean
+    department?: boolean
+    yearOfStudy?: boolean
+    skills?: boolean
+    researchFocus?: boolean
+    publications?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2221,6 +2267,12 @@ export namespace Prisma {
     bio?: boolean
     username?: boolean
     location?: boolean
+    university?: boolean
+    department?: boolean
+    yearOfStudy?: boolean
+    skills?: boolean
+    researchFocus?: boolean
+    publications?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2234,18 +2286,24 @@ export namespace Prisma {
     bio?: boolean
     username?: boolean
     location?: boolean
+    university?: boolean
+    department?: boolean
+    yearOfStudy?: boolean
+    skills?: boolean
+    researchFocus?: boolean
+    publications?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "bio" | "username" | "location" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "bio" | "username" | "location" | "university" | "department" | "yearOfStudy" | "skills" | "researchFocus" | "publications" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
     Post?: boolean | User$PostArgs<ExtArgs>
     Resource?: boolean | User$ResourceArgs<ExtArgs>
-    Group?: boolean | User$GroupArgs<ExtArgs>
-    GroupMember?: boolean | User$GroupMemberArgs<ExtArgs>
+    createdGroups?: boolean | User$createdGroupsArgs<ExtArgs>
+    groupMemberships?: boolean | User$groupMembershipsArgs<ExtArgs>
     Event?: boolean | User$EventArgs<ExtArgs>
     Comments?: boolean | User$CommentsArgs<ExtArgs>
     Likes?: boolean | User$LikesArgs<ExtArgs>
@@ -2261,8 +2319,8 @@ export namespace Prisma {
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       Post: Prisma.$PostPayload<ExtArgs>[]
       Resource: Prisma.$ResourcePayload<ExtArgs>[]
-      Group: Prisma.$GroupPayload<ExtArgs>[]
-      GroupMember: Prisma.$GroupMemberPayload<ExtArgs>[]
+      createdGroups: Prisma.$GroupPayload<ExtArgs>[]
+      groupMemberships: Prisma.$GroupMemberPayload<ExtArgs>[]
       Event: Prisma.$EventPayload<ExtArgs>[]
       Comments: Prisma.$CommentPayload<ExtArgs>[]
       Likes: Prisma.$LikePayload<ExtArgs>[]
@@ -2276,6 +2334,12 @@ export namespace Prisma {
       bio: string | null
       username: string | null
       location: string | null
+      university: string | null
+      department: string | null
+      yearOfStudy: string | null
+      skills: string[]
+      researchFocus: string | null
+      publications: string[]
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -2676,8 +2740,8 @@ export namespace Prisma {
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Post<T extends User$PostArgs<ExtArgs> = {}>(args?: Subset<T, User$PostArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Resource<T extends User$ResourceArgs<ExtArgs> = {}>(args?: Subset<T, User$ResourceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Group<T extends User$GroupArgs<ExtArgs> = {}>(args?: Subset<T, User$GroupArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    GroupMember<T extends User$GroupMemberArgs<ExtArgs> = {}>(args?: Subset<T, User$GroupMemberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    createdGroups<T extends User$createdGroupsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdGroupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    groupMemberships<T extends User$groupMembershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$groupMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Event<T extends User$EventArgs<ExtArgs> = {}>(args?: Subset<T, User$EventArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Comments<T extends User$CommentsArgs<ExtArgs> = {}>(args?: Subset<T, User$CommentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Likes<T extends User$LikesArgs<ExtArgs> = {}>(args?: Subset<T, User$LikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2718,6 +2782,12 @@ export namespace Prisma {
     readonly bio: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
     readonly location: FieldRef<"User", 'String'>
+    readonly university: FieldRef<"User", 'String'>
+    readonly department: FieldRef<"User", 'String'>
+    readonly yearOfStudy: FieldRef<"User", 'String'>
+    readonly skills: FieldRef<"User", 'String[]'>
+    readonly researchFocus: FieldRef<"User", 'String'>
+    readonly publications: FieldRef<"User", 'String[]'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -3204,9 +3274,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.Group
+   * User.createdGroups
    */
-  export type User$GroupArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$createdGroupsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Group
      */
@@ -3228,9 +3298,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.GroupMember
+   * User.groupMemberships
    */
-  export type User$GroupMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$groupMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the GroupMember
      */
@@ -6615,72 +6685,156 @@ export namespace Prisma {
 
   export type AggregatePost = {
     _count: PostCountAggregateOutputType | null
+    _avg: PostAvgAggregateOutputType | null
+    _sum: PostSumAggregateOutputType | null
     _min: PostMinAggregateOutputType | null
     _max: PostMaxAggregateOutputType | null
+  }
+
+  export type PostAvgAggregateOutputType = {
+    views: number | null
+    downloads: number | null
+  }
+
+  export type PostSumAggregateOutputType = {
+    views: number | null
+    downloads: number | null
   }
 
   export type PostMinAggregateOutputType = {
     id: string | null
     title: string | null
     content: string | null
+    summary: string | null
     imageUrl: string | null
+    resourceType: string | null
+    role: string | null
+    university: string | null
+    department: string | null
+    doi: string | null
+    citation: string | null
+    visibility: string | null
     createdAt: Date | null
     updatedAt: Date | null
     authorId: string | null
+    views: number | null
+    downloads: number | null
   }
 
   export type PostMaxAggregateOutputType = {
     id: string | null
     title: string | null
     content: string | null
+    summary: string | null
     imageUrl: string | null
+    resourceType: string | null
+    role: string | null
+    university: string | null
+    department: string | null
+    doi: string | null
+    citation: string | null
+    visibility: string | null
     createdAt: Date | null
     updatedAt: Date | null
     authorId: string | null
+    views: number | null
+    downloads: number | null
   }
 
   export type PostCountAggregateOutputType = {
     id: number
     title: number
     content: number
+    summary: number
     imageUrl: number
+    resourceType: number
+    role: number
+    university: number
+    department: number
+    doi: number
+    citation: number
+    attachments: number
+    visibility: number
     createdAt: number
     updatedAt: number
     authorId: number
     tags: number
+    views: number
+    downloads: number
     _all: number
   }
 
+
+  export type PostAvgAggregateInputType = {
+    views?: true
+    downloads?: true
+  }
+
+  export type PostSumAggregateInputType = {
+    views?: true
+    downloads?: true
+  }
 
   export type PostMinAggregateInputType = {
     id?: true
     title?: true
     content?: true
+    summary?: true
     imageUrl?: true
+    resourceType?: true
+    role?: true
+    university?: true
+    department?: true
+    doi?: true
+    citation?: true
+    visibility?: true
     createdAt?: true
     updatedAt?: true
     authorId?: true
+    views?: true
+    downloads?: true
   }
 
   export type PostMaxAggregateInputType = {
     id?: true
     title?: true
     content?: true
+    summary?: true
     imageUrl?: true
+    resourceType?: true
+    role?: true
+    university?: true
+    department?: true
+    doi?: true
+    citation?: true
+    visibility?: true
     createdAt?: true
     updatedAt?: true
     authorId?: true
+    views?: true
+    downloads?: true
   }
 
   export type PostCountAggregateInputType = {
     id?: true
     title?: true
     content?: true
+    summary?: true
     imageUrl?: true
+    resourceType?: true
+    role?: true
+    university?: true
+    department?: true
+    doi?: true
+    citation?: true
+    attachments?: true
+    visibility?: true
     createdAt?: true
     updatedAt?: true
     authorId?: true
     tags?: true
+    views?: true
+    downloads?: true
     _all?: true
   }
 
@@ -6722,6 +6876,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: PostAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PostSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: PostMinAggregateInputType
@@ -6752,6 +6918,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: PostCountAggregateInputType | true
+    _avg?: PostAvgAggregateInputType
+    _sum?: PostSumAggregateInputType
     _min?: PostMinAggregateInputType
     _max?: PostMaxAggregateInputType
   }
@@ -6760,12 +6928,25 @@ export namespace Prisma {
     id: string
     title: string
     content: string
+    summary: string | null
     imageUrl: string | null
+    resourceType: string | null
+    role: string | null
+    university: string | null
+    department: string | null
+    doi: string | null
+    citation: string | null
+    attachments: JsonValue | null
+    visibility: string | null
     createdAt: Date
     updatedAt: Date
     authorId: string
     tags: string[]
+    views: number
+    downloads: number
     _count: PostCountAggregateOutputType | null
+    _avg: PostAvgAggregateOutputType | null
+    _sum: PostSumAggregateOutputType | null
     _min: PostMinAggregateOutputType | null
     _max: PostMaxAggregateOutputType | null
   }
@@ -6788,11 +6969,22 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
+    summary?: boolean
     imageUrl?: boolean
+    resourceType?: boolean
+    role?: boolean
+    university?: boolean
+    department?: boolean
+    doi?: boolean
+    citation?: boolean
+    attachments?: boolean
+    visibility?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     authorId?: boolean
     tags?: boolean
+    views?: boolean
+    downloads?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     comments?: boolean | Post$commentsArgs<ExtArgs>
     likes?: boolean | Post$likesArgs<ExtArgs>
@@ -6803,11 +6995,22 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
+    summary?: boolean
     imageUrl?: boolean
+    resourceType?: boolean
+    role?: boolean
+    university?: boolean
+    department?: boolean
+    doi?: boolean
+    citation?: boolean
+    attachments?: boolean
+    visibility?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     authorId?: boolean
     tags?: boolean
+    views?: boolean
+    downloads?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -6815,11 +7018,22 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
+    summary?: boolean
     imageUrl?: boolean
+    resourceType?: boolean
+    role?: boolean
+    university?: boolean
+    department?: boolean
+    doi?: boolean
+    citation?: boolean
+    attachments?: boolean
+    visibility?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     authorId?: boolean
     tags?: boolean
+    views?: boolean
+    downloads?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -6827,14 +7041,25 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
+    summary?: boolean
     imageUrl?: boolean
+    resourceType?: boolean
+    role?: boolean
+    university?: boolean
+    department?: boolean
+    doi?: boolean
+    citation?: boolean
+    attachments?: boolean
+    visibility?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     authorId?: boolean
     tags?: boolean
+    views?: boolean
+    downloads?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "imageUrl" | "createdAt" | "updatedAt" | "authorId" | "tags", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "summary" | "imageUrl" | "resourceType" | "role" | "university" | "department" | "doi" | "citation" | "attachments" | "visibility" | "createdAt" | "updatedAt" | "authorId" | "tags" | "views" | "downloads", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     comments?: boolean | Post$commentsArgs<ExtArgs>
@@ -6859,11 +7084,22 @@ export namespace Prisma {
       id: string
       title: string
       content: string
+      summary: string | null
       imageUrl: string | null
+      resourceType: string | null
+      role: string | null
+      university: string | null
+      department: string | null
+      doi: string | null
+      citation: string | null
+      attachments: Prisma.JsonValue | null
+      visibility: string | null
       createdAt: Date
       updatedAt: Date
       authorId: string
       tags: string[]
+      views: number
+      downloads: number
     }, ExtArgs["result"]["post"]>
     composites: {}
   }
@@ -7293,11 +7529,22 @@ export namespace Prisma {
     readonly id: FieldRef<"Post", 'String'>
     readonly title: FieldRef<"Post", 'String'>
     readonly content: FieldRef<"Post", 'String'>
+    readonly summary: FieldRef<"Post", 'String'>
     readonly imageUrl: FieldRef<"Post", 'String'>
+    readonly resourceType: FieldRef<"Post", 'String'>
+    readonly role: FieldRef<"Post", 'String'>
+    readonly university: FieldRef<"Post", 'String'>
+    readonly department: FieldRef<"Post", 'String'>
+    readonly doi: FieldRef<"Post", 'String'>
+    readonly citation: FieldRef<"Post", 'String'>
+    readonly attachments: FieldRef<"Post", 'Json'>
+    readonly visibility: FieldRef<"Post", 'String'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
     readonly updatedAt: FieldRef<"Post", 'DateTime'>
     readonly authorId: FieldRef<"Post", 'String'>
     readonly tags: FieldRef<"Post", 'String[]'>
+    readonly views: FieldRef<"Post", 'Int'>
+    readonly downloads: FieldRef<"Post", 'Int'>
   }
     
 
@@ -14306,6 +14553,12 @@ export namespace Prisma {
     bio: 'bio',
     username: 'username',
     location: 'location',
+    university: 'university',
+    department: 'department',
+    yearOfStudy: 'yearOfStudy',
+    skills: 'skills',
+    researchFocus: 'researchFocus',
+    publications: 'publications',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -14362,11 +14615,22 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     content: 'content',
+    summary: 'summary',
     imageUrl: 'imageUrl',
+    resourceType: 'resourceType',
+    role: 'role',
+    university: 'university',
+    department: 'department',
+    doi: 'doi',
+    citation: 'citation',
+    attachments: 'attachments',
+    visibility: 'visibility',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     authorId: 'authorId',
-    tags: 'tags'
+    tags: 'tags',
+    views: 'views',
+    downloads: 'downloads'
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -14453,6 +14717,14 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
@@ -14467,6 +14739,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -14510,16 +14791,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Float'
+   * Reference to a field of type 'Json'
    */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
     
 
 
   /**
-   * Reference to a field of type 'Float[]'
+   * Reference to a field of type 'QueryMode'
    */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -14534,6 +14815,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -14552,14 +14847,20 @@ export namespace Prisma {
     bio?: StringNullableFilter<"User"> | string | null
     username?: StringNullableFilter<"User"> | string | null
     location?: StringNullableFilter<"User"> | string | null
+    university?: StringNullableFilter<"User"> | string | null
+    department?: StringNullableFilter<"User"> | string | null
+    yearOfStudy?: StringNullableFilter<"User"> | string | null
+    skills?: StringNullableListFilter<"User">
+    researchFocus?: StringNullableFilter<"User"> | string | null
+    publications?: StringNullableListFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
     Post?: PostListRelationFilter
     Resource?: ResourceListRelationFilter
-    Group?: GroupListRelationFilter
-    GroupMember?: GroupMemberListRelationFilter
+    createdGroups?: GroupListRelationFilter
+    groupMemberships?: GroupMemberListRelationFilter
     Event?: EventListRelationFilter
     Comments?: CommentListRelationFilter
     Likes?: LikeListRelationFilter
@@ -14574,14 +14875,20 @@ export namespace Prisma {
     bio?: SortOrderInput | SortOrder
     username?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
+    university?: SortOrderInput | SortOrder
+    department?: SortOrderInput | SortOrder
+    yearOfStudy?: SortOrderInput | SortOrder
+    skills?: SortOrder
+    researchFocus?: SortOrderInput | SortOrder
+    publications?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     sessions?: SessionOrderByRelationAggregateInput
     accounts?: AccountOrderByRelationAggregateInput
     Post?: PostOrderByRelationAggregateInput
     Resource?: ResourceOrderByRelationAggregateInput
-    Group?: GroupOrderByRelationAggregateInput
-    GroupMember?: GroupMemberOrderByRelationAggregateInput
+    createdGroups?: GroupOrderByRelationAggregateInput
+    groupMemberships?: GroupMemberOrderByRelationAggregateInput
     Event?: EventOrderByRelationAggregateInput
     Comments?: CommentOrderByRelationAggregateInput
     Likes?: LikeOrderByRelationAggregateInput
@@ -14599,14 +14906,20 @@ export namespace Prisma {
     bio?: StringNullableFilter<"User"> | string | null
     username?: StringNullableFilter<"User"> | string | null
     location?: StringNullableFilter<"User"> | string | null
+    university?: StringNullableFilter<"User"> | string | null
+    department?: StringNullableFilter<"User"> | string | null
+    yearOfStudy?: StringNullableFilter<"User"> | string | null
+    skills?: StringNullableListFilter<"User">
+    researchFocus?: StringNullableFilter<"User"> | string | null
+    publications?: StringNullableListFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
     Post?: PostListRelationFilter
     Resource?: ResourceListRelationFilter
-    Group?: GroupListRelationFilter
-    GroupMember?: GroupMemberListRelationFilter
+    createdGroups?: GroupListRelationFilter
+    groupMemberships?: GroupMemberListRelationFilter
     Event?: EventListRelationFilter
     Comments?: CommentListRelationFilter
     Likes?: LikeListRelationFilter
@@ -14621,6 +14934,12 @@ export namespace Prisma {
     bio?: SortOrderInput | SortOrder
     username?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
+    university?: SortOrderInput | SortOrder
+    department?: SortOrderInput | SortOrder
+    yearOfStudy?: SortOrderInput | SortOrder
+    skills?: SortOrder
+    researchFocus?: SortOrderInput | SortOrder
+    publications?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -14640,6 +14959,12 @@ export namespace Prisma {
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     username?: StringNullableWithAggregatesFilter<"User"> | string | null
     location?: StringNullableWithAggregatesFilter<"User"> | string | null
+    university?: StringNullableWithAggregatesFilter<"User"> | string | null
+    department?: StringNullableWithAggregatesFilter<"User"> | string | null
+    yearOfStudy?: StringNullableWithAggregatesFilter<"User"> | string | null
+    skills?: StringNullableListFilter<"User">
+    researchFocus?: StringNullableWithAggregatesFilter<"User"> | string | null
+    publications?: StringNullableListFilter<"User">
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -14873,11 +15198,22 @@ export namespace Prisma {
     id?: StringFilter<"Post"> | string
     title?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
+    summary?: StringNullableFilter<"Post"> | string | null
     imageUrl?: StringNullableFilter<"Post"> | string | null
+    resourceType?: StringNullableFilter<"Post"> | string | null
+    role?: StringNullableFilter<"Post"> | string | null
+    university?: StringNullableFilter<"Post"> | string | null
+    department?: StringNullableFilter<"Post"> | string | null
+    doi?: StringNullableFilter<"Post"> | string | null
+    citation?: StringNullableFilter<"Post"> | string | null
+    attachments?: JsonNullableFilter<"Post">
+    visibility?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     authorId?: StringFilter<"Post"> | string
     tags?: StringNullableListFilter<"Post">
+    views?: IntFilter<"Post"> | number
+    downloads?: IntFilter<"Post"> | number
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     comments?: CommentListRelationFilter
     likes?: LikeListRelationFilter
@@ -14887,11 +15223,22 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    summary?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    resourceType?: SortOrderInput | SortOrder
+    role?: SortOrderInput | SortOrder
+    university?: SortOrderInput | SortOrder
+    department?: SortOrderInput | SortOrder
+    doi?: SortOrderInput | SortOrder
+    citation?: SortOrderInput | SortOrder
+    attachments?: SortOrderInput | SortOrder
+    visibility?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
     tags?: SortOrder
+    views?: SortOrder
+    downloads?: SortOrder
     author?: UserOrderByWithRelationInput
     comments?: CommentOrderByRelationAggregateInput
     likes?: LikeOrderByRelationAggregateInput
@@ -14904,11 +15251,22 @@ export namespace Prisma {
     NOT?: PostWhereInput | PostWhereInput[]
     title?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
+    summary?: StringNullableFilter<"Post"> | string | null
     imageUrl?: StringNullableFilter<"Post"> | string | null
+    resourceType?: StringNullableFilter<"Post"> | string | null
+    role?: StringNullableFilter<"Post"> | string | null
+    university?: StringNullableFilter<"Post"> | string | null
+    department?: StringNullableFilter<"Post"> | string | null
+    doi?: StringNullableFilter<"Post"> | string | null
+    citation?: StringNullableFilter<"Post"> | string | null
+    attachments?: JsonNullableFilter<"Post">
+    visibility?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     authorId?: StringFilter<"Post"> | string
     tags?: StringNullableListFilter<"Post">
+    views?: IntFilter<"Post"> | number
+    downloads?: IntFilter<"Post"> | number
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     comments?: CommentListRelationFilter
     likes?: LikeListRelationFilter
@@ -14918,14 +15276,27 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    summary?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    resourceType?: SortOrderInput | SortOrder
+    role?: SortOrderInput | SortOrder
+    university?: SortOrderInput | SortOrder
+    department?: SortOrderInput | SortOrder
+    doi?: SortOrderInput | SortOrder
+    citation?: SortOrderInput | SortOrder
+    attachments?: SortOrderInput | SortOrder
+    visibility?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
     tags?: SortOrder
+    views?: SortOrder
+    downloads?: SortOrder
     _count?: PostCountOrderByAggregateInput
+    _avg?: PostAvgOrderByAggregateInput
     _max?: PostMaxOrderByAggregateInput
     _min?: PostMinOrderByAggregateInput
+    _sum?: PostSumOrderByAggregateInput
   }
 
   export type PostScalarWhereWithAggregatesInput = {
@@ -14935,11 +15306,22 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Post"> | string
     title?: StringWithAggregatesFilter<"Post"> | string
     content?: StringWithAggregatesFilter<"Post"> | string
+    summary?: StringNullableWithAggregatesFilter<"Post"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    resourceType?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    role?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    university?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    department?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    doi?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    citation?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    attachments?: JsonNullableWithAggregatesFilter<"Post">
+    visibility?: StringNullableWithAggregatesFilter<"Post"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     authorId?: StringWithAggregatesFilter<"Post"> | string
     tags?: StringNullableListFilter<"Post">
+    views?: IntWithAggregatesFilter<"Post"> | number
+    downloads?: IntWithAggregatesFilter<"Post"> | number
   }
 
   export type CommentWhereInput = {
@@ -15331,14 +15713,20 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Post?: PostCreateNestedManyWithoutAuthorInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
-    Group?: GroupCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberCreateNestedManyWithoutUserInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Event?: EventCreateNestedManyWithoutCreatedByInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -15353,14 +15741,20 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
-    Group?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -15375,14 +15769,20 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Post?: PostUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -15397,14 +15797,20 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -15419,6 +15825,12 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
   }
@@ -15432,6 +15844,12 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15445,6 +15863,12 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15703,10 +16127,21 @@ export namespace Prisma {
     id?: string
     title: string
     content: string
+    summary?: string | null
     imageUrl?: string | null
+    resourceType?: string | null
+    role?: string | null
+    university?: string | null
+    department?: string | null
+    doi?: string | null
+    citation?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
+    views?: number
+    downloads?: number
     author: UserCreateNestedOneWithoutPostInput
     comments?: CommentCreateNestedManyWithoutPostInput
     likes?: LikeCreateNestedManyWithoutPostInput
@@ -15716,11 +16151,22 @@ export namespace Prisma {
     id?: string
     title: string
     content: string
+    summary?: string | null
     imageUrl?: string | null
+    resourceType?: string | null
+    role?: string | null
+    university?: string | null
+    department?: string | null
+    doi?: string | null
+    citation?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     authorId: string
     tags?: PostCreatetagsInput | string[]
+    views?: number
+    downloads?: number
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
   }
@@ -15729,10 +16175,21 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
+    views?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
     author?: UserUpdateOneRequiredWithoutPostNestedInput
     comments?: CommentUpdateManyWithoutPostNestedInput
     likes?: LikeUpdateManyWithoutPostNestedInput
@@ -15742,11 +16199,22 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
     tags?: PostUpdatetagsInput | string[]
+    views?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -15755,32 +16223,65 @@ export namespace Prisma {
     id?: string
     title: string
     content: string
+    summary?: string | null
     imageUrl?: string | null
+    resourceType?: string | null
+    role?: string | null
+    university?: string | null
+    department?: string | null
+    doi?: string | null
+    citation?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     authorId: string
     tags?: PostCreatetagsInput | string[]
+    views?: number
+    downloads?: number
   }
 
   export type PostUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
+    views?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
   }
 
   export type PostUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
     tags?: PostUpdatetagsInput | string[]
+    views?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
   }
 
   export type CommentCreateInput = {
@@ -15993,7 +16494,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     createdAt?: Date | string
-    createdBy: UserCreateNestedOneWithoutGroupInput
+    createdBy: UserCreateNestedOneWithoutCreatedGroupsInput
     members?: GroupMemberCreateNestedManyWithoutGroupInput
   }
 
@@ -16011,7 +16512,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdBy?: UserUpdateOneRequiredWithoutGroupNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutCreatedGroupsNestedInput
     members?: GroupMemberUpdateManyWithoutGroupNestedInput
   }
 
@@ -16051,7 +16552,7 @@ export namespace Prisma {
     id?: string
     joinedAt?: Date | string
     group: GroupCreateNestedOneWithoutMembersInput
-    user: UserCreateNestedOneWithoutGroupMemberInput
+    user: UserCreateNestedOneWithoutGroupMembershipsInput
   }
 
   export type GroupMemberUncheckedCreateInput = {
@@ -16065,7 +16566,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     group?: GroupUpdateOneRequiredWithoutMembersNestedInput
-    user?: UserUpdateOneRequiredWithoutGroupMemberNestedInput
+    user?: UserUpdateOneRequiredWithoutGroupMembershipsNestedInput
   }
 
   export type GroupMemberUncheckedUpdateInput = {
@@ -16198,6 +16699,14 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -16313,6 +16822,12 @@ export namespace Prisma {
     bio?: SortOrder
     username?: SortOrder
     location?: SortOrder
+    university?: SortOrder
+    department?: SortOrder
+    yearOfStudy?: SortOrder
+    skills?: SortOrder
+    researchFocus?: SortOrder
+    publications?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -16326,6 +16841,10 @@ export namespace Prisma {
     bio?: SortOrder
     username?: SortOrder
     location?: SortOrder
+    university?: SortOrder
+    department?: SortOrder
+    yearOfStudy?: SortOrder
+    researchFocus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -16339,6 +16858,10 @@ export namespace Prisma {
     bio?: SortOrder
     username?: SortOrder
     location?: SortOrder
+    university?: SortOrder
+    department?: SortOrder
+    yearOfStudy?: SortOrder
+    researchFocus?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -16538,44 +17061,153 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type PostCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    summary?: SortOrder
     imageUrl?: SortOrder
+    resourceType?: SortOrder
+    role?: SortOrder
+    university?: SortOrder
+    department?: SortOrder
+    doi?: SortOrder
+    citation?: SortOrder
+    attachments?: SortOrder
+    visibility?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
     tags?: SortOrder
+    views?: SortOrder
+    downloads?: SortOrder
+  }
+
+  export type PostAvgOrderByAggregateInput = {
+    views?: SortOrder
+    downloads?: SortOrder
   }
 
   export type PostMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    summary?: SortOrder
     imageUrl?: SortOrder
+    resourceType?: SortOrder
+    role?: SortOrder
+    university?: SortOrder
+    department?: SortOrder
+    doi?: SortOrder
+    citation?: SortOrder
+    visibility?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
+    views?: SortOrder
+    downloads?: SortOrder
   }
 
   export type PostMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
+    summary?: SortOrder
     imageUrl?: SortOrder
+    resourceType?: SortOrder
+    role?: SortOrder
+    university?: SortOrder
+    department?: SortOrder
+    doi?: SortOrder
+    citation?: SortOrder
+    visibility?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
+    views?: SortOrder
+    downloads?: SortOrder
+  }
+
+  export type PostSumOrderByAggregateInput = {
+    views?: SortOrder
+    downloads?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type PostScalarRelationFilter = {
@@ -16639,17 +17271,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type ResourceCountOrderByAggregateInput = {
@@ -16720,22 +17341,6 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type GroupCountOrderByAggregateInput = {
@@ -16816,6 +17421,14 @@ export namespace Prisma {
     posterUrl?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type UserCreateskillsInput = {
+    set: string[]
+  }
+
+  export type UserCreatepublicationsInput = {
+    set: string[]
   }
 
   export type SessionCreateNestedManyWithoutUserInput = {
@@ -16954,6 +17567,16 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type UserUpdateskillsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdatepublicationsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -17287,6 +17910,14 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type UserUpdateOneRequiredWithoutPostNestedInput = {
     create?: XOR<UserCreateWithoutPostInput, UserUncheckedCreateWithoutPostInput>
     connectOrCreate?: UserCreateOrConnectWithoutPostInput
@@ -17429,14 +18060,6 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type ResourceUpdatecategoriesInput = {
     set?: string[]
     push?: string | string[]
@@ -17455,9 +18078,9 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResourceInput, UserUpdateWithoutResourceInput>, UserUncheckedUpdateWithoutResourceInput>
   }
 
-  export type UserCreateNestedOneWithoutGroupInput = {
-    create?: XOR<UserCreateWithoutGroupInput, UserUncheckedCreateWithoutGroupInput>
-    connectOrCreate?: UserCreateOrConnectWithoutGroupInput
+  export type UserCreateNestedOneWithoutCreatedGroupsInput = {
+    create?: XOR<UserCreateWithoutCreatedGroupsInput, UserUncheckedCreateWithoutCreatedGroupsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedGroupsInput
     connect?: UserWhereUniqueInput
   }
 
@@ -17475,12 +18098,12 @@ export namespace Prisma {
     connect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutGroupNestedInput = {
-    create?: XOR<UserCreateWithoutGroupInput, UserUncheckedCreateWithoutGroupInput>
-    connectOrCreate?: UserCreateOrConnectWithoutGroupInput
-    upsert?: UserUpsertWithoutGroupInput
+  export type UserUpdateOneRequiredWithoutCreatedGroupsNestedInput = {
+    create?: XOR<UserCreateWithoutCreatedGroupsInput, UserUncheckedCreateWithoutCreatedGroupsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedGroupsInput
+    upsert?: UserUpsertWithoutCreatedGroupsInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGroupInput, UserUpdateWithoutGroupInput>, UserUncheckedUpdateWithoutGroupInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedGroupsInput, UserUpdateWithoutCreatedGroupsInput>, UserUncheckedUpdateWithoutCreatedGroupsInput>
   }
 
   export type GroupMemberUpdateManyWithoutGroupNestedInput = {
@@ -17517,9 +18140,9 @@ export namespace Prisma {
     connect?: GroupWhereUniqueInput
   }
 
-  export type UserCreateNestedOneWithoutGroupMemberInput = {
-    create?: XOR<UserCreateWithoutGroupMemberInput, UserUncheckedCreateWithoutGroupMemberInput>
-    connectOrCreate?: UserCreateOrConnectWithoutGroupMemberInput
+  export type UserCreateNestedOneWithoutGroupMembershipsInput = {
+    create?: XOR<UserCreateWithoutGroupMembershipsInput, UserUncheckedCreateWithoutGroupMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGroupMembershipsInput
     connect?: UserWhereUniqueInput
   }
 
@@ -17531,12 +18154,12 @@ export namespace Prisma {
     update?: XOR<XOR<GroupUpdateToOneWithWhereWithoutMembersInput, GroupUpdateWithoutMembersInput>, GroupUncheckedUpdateWithoutMembersInput>
   }
 
-  export type UserUpdateOneRequiredWithoutGroupMemberNestedInput = {
-    create?: XOR<UserCreateWithoutGroupMemberInput, UserUncheckedCreateWithoutGroupMemberInput>
-    connectOrCreate?: UserCreateOrConnectWithoutGroupMemberInput
-    upsert?: UserUpsertWithoutGroupMemberInput
+  export type UserUpdateOneRequiredWithoutGroupMembershipsNestedInput = {
+    create?: XOR<UserCreateWithoutGroupMembershipsInput, UserUncheckedCreateWithoutGroupMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGroupMembershipsInput
+    upsert?: UserUpsertWithoutGroupMembershipsInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGroupMemberInput, UserUpdateWithoutGroupMemberInput>, UserUncheckedUpdateWithoutGroupMemberInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGroupMembershipsInput, UserUpdateWithoutGroupMembershipsInput>, UserUncheckedUpdateWithoutGroupMembershipsInput>
   }
 
   export type UserCreateNestedOneWithoutEventInput = {
@@ -17699,6 +18322,45 @@ export namespace Prisma {
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
 
   export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
@@ -17725,22 +18387,6 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type SessionCreateWithoutUserInput = {
@@ -17817,10 +18463,21 @@ export namespace Prisma {
     id?: string
     title: string
     content: string
+    summary?: string | null
     imageUrl?: string | null
+    resourceType?: string | null
+    role?: string | null
+    university?: string | null
+    department?: string | null
+    doi?: string | null
+    citation?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
+    views?: number
+    downloads?: number
     comments?: CommentCreateNestedManyWithoutPostInput
     likes?: LikeCreateNestedManyWithoutPostInput
   }
@@ -17829,10 +18486,21 @@ export namespace Prisma {
     id?: string
     title: string
     content: string
+    summary?: string | null
     imageUrl?: string | null
+    resourceType?: string | null
+    role?: string | null
+    university?: string | null
+    department?: string | null
+    doi?: string | null
+    citation?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
+    views?: number
+    downloads?: number
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
   }
@@ -18095,11 +18763,22 @@ export namespace Prisma {
     id?: StringFilter<"Post"> | string
     title?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
+    summary?: StringNullableFilter<"Post"> | string | null
     imageUrl?: StringNullableFilter<"Post"> | string | null
+    resourceType?: StringNullableFilter<"Post"> | string | null
+    role?: StringNullableFilter<"Post"> | string | null
+    university?: StringNullableFilter<"Post"> | string | null
+    department?: StringNullableFilter<"Post"> | string | null
+    doi?: StringNullableFilter<"Post"> | string | null
+    citation?: StringNullableFilter<"Post"> | string | null
+    attachments?: JsonNullableFilter<"Post">
+    visibility?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     authorId?: StringFilter<"Post"> | string
     tags?: StringNullableListFilter<"Post">
+    views?: IntFilter<"Post"> | number
+    downloads?: IntFilter<"Post"> | number
   }
 
   export type ResourceUpsertWithWhereUniqueWithoutUploadedByInput = {
@@ -18280,13 +18959,19 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     Post?: PostCreateNestedManyWithoutAuthorInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
-    Group?: GroupCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberCreateNestedManyWithoutUserInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Event?: EventCreateNestedManyWithoutCreatedByInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -18301,13 +18986,19 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
-    Group?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -18338,13 +19029,19 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Post?: PostUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -18359,13 +19056,19 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -18380,13 +19083,19 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     Post?: PostCreateNestedManyWithoutAuthorInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
-    Group?: GroupCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberCreateNestedManyWithoutUserInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Event?: EventCreateNestedManyWithoutCreatedByInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -18401,13 +19110,19 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
-    Group?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -18438,13 +19153,19 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     Post?: PostUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -18459,13 +19180,19 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -18480,13 +19207,19 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
-    Group?: GroupCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberCreateNestedManyWithoutUserInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Event?: EventCreateNestedManyWithoutCreatedByInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -18501,13 +19234,19 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
-    Group?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -18582,13 +19321,19 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -18603,13 +19348,19 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -18651,10 +19402,21 @@ export namespace Prisma {
     id?: string
     title: string
     content: string
+    summary?: string | null
     imageUrl?: string | null
+    resourceType?: string | null
+    role?: string | null
+    university?: string | null
+    department?: string | null
+    doi?: string | null
+    citation?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
+    views?: number
+    downloads?: number
     author: UserCreateNestedOneWithoutPostInput
     likes?: LikeCreateNestedManyWithoutPostInput
   }
@@ -18663,11 +19425,22 @@ export namespace Prisma {
     id?: string
     title: string
     content: string
+    summary?: string | null
     imageUrl?: string | null
+    resourceType?: string | null
+    role?: string | null
+    university?: string | null
+    department?: string | null
+    doi?: string | null
+    citation?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     authorId: string
     tags?: PostCreatetagsInput | string[]
+    views?: number
+    downloads?: number
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
   }
 
@@ -18685,14 +19458,20 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Post?: PostCreateNestedManyWithoutAuthorInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
-    Group?: GroupCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberCreateNestedManyWithoutUserInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Event?: EventCreateNestedManyWithoutCreatedByInput
     Likes?: LikeCreateNestedManyWithoutUserInput
   }
@@ -18706,14 +19485,20 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
-    Group?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
   }
@@ -18738,10 +19523,21 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
+    views?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
     author?: UserUpdateOneRequiredWithoutPostNestedInput
     likes?: LikeUpdateManyWithoutPostNestedInput
   }
@@ -18750,11 +19546,22 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
     tags?: PostUpdatetagsInput | string[]
+    views?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
     likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
   }
 
@@ -18778,14 +19585,20 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Post?: PostUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
   }
@@ -18799,14 +19612,20 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -18815,10 +19634,21 @@ export namespace Prisma {
     id?: string
     title: string
     content: string
+    summary?: string | null
     imageUrl?: string | null
+    resourceType?: string | null
+    role?: string | null
+    university?: string | null
+    department?: string | null
+    doi?: string | null
+    citation?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
+    views?: number
+    downloads?: number
     author: UserCreateNestedOneWithoutPostInput
     comments?: CommentCreateNestedManyWithoutPostInput
   }
@@ -18827,11 +19657,22 @@ export namespace Prisma {
     id?: string
     title: string
     content: string
+    summary?: string | null
     imageUrl?: string | null
+    resourceType?: string | null
+    role?: string | null
+    university?: string | null
+    department?: string | null
+    doi?: string | null
+    citation?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     authorId: string
     tags?: PostCreatetagsInput | string[]
+    views?: number
+    downloads?: number
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
   }
 
@@ -18849,14 +19690,20 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Post?: PostCreateNestedManyWithoutAuthorInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
-    Group?: GroupCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberCreateNestedManyWithoutUserInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Event?: EventCreateNestedManyWithoutCreatedByInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
   }
@@ -18870,14 +19717,20 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
-    Group?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
   }
@@ -18902,10 +19755,21 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
+    views?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
     author?: UserUpdateOneRequiredWithoutPostNestedInput
     comments?: CommentUpdateManyWithoutPostNestedInput
   }
@@ -18914,11 +19778,22 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
     tags?: PostUpdatetagsInput | string[]
+    views?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
   }
 
@@ -18942,14 +19817,20 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Post?: PostUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
   }
@@ -18963,14 +19844,20 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
   }
@@ -18984,13 +19871,19 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Post?: PostCreateNestedManyWithoutAuthorInput
-    Group?: GroupCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberCreateNestedManyWithoutUserInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Event?: EventCreateNestedManyWithoutCreatedByInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -19005,13 +19898,19 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
-    Group?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -19042,13 +19941,19 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Post?: PostUpdateManyWithoutAuthorNestedInput
-    Group?: GroupUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -19063,19 +19968,25 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-    Group?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type UserCreateWithoutGroupInput = {
+  export type UserCreateWithoutCreatedGroupsInput = {
     id: string
     name: string
     email: string
@@ -19084,19 +19995,25 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Post?: PostCreateNestedManyWithoutAuthorInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
-    GroupMember?: GroupMemberCreateNestedManyWithoutUserInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Event?: EventCreateNestedManyWithoutCreatedByInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutGroupInput = {
+  export type UserUncheckedCreateWithoutCreatedGroupsInput = {
     id: string
     name: string
     email: string
@@ -19105,27 +20022,33 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
-    GroupMember?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutGroupInput = {
+  export type UserCreateOrConnectWithoutCreatedGroupsInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutGroupInput, UserUncheckedCreateWithoutGroupInput>
+    create: XOR<UserCreateWithoutCreatedGroupsInput, UserUncheckedCreateWithoutCreatedGroupsInput>
   }
 
   export type GroupMemberCreateWithoutGroupInput = {
     id?: string
     joinedAt?: Date | string
-    user: UserCreateNestedOneWithoutGroupMemberInput
+    user: UserCreateNestedOneWithoutGroupMembershipsInput
   }
 
   export type GroupMemberUncheckedCreateWithoutGroupInput = {
@@ -19144,18 +20067,18 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutGroupInput = {
-    update: XOR<UserUpdateWithoutGroupInput, UserUncheckedUpdateWithoutGroupInput>
-    create: XOR<UserCreateWithoutGroupInput, UserUncheckedCreateWithoutGroupInput>
+  export type UserUpsertWithoutCreatedGroupsInput = {
+    update: XOR<UserUpdateWithoutCreatedGroupsInput, UserUncheckedUpdateWithoutCreatedGroupsInput>
+    create: XOR<UserCreateWithoutCreatedGroupsInput, UserUncheckedCreateWithoutCreatedGroupsInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutGroupInput = {
+  export type UserUpdateToOneWithWhereWithoutCreatedGroupsInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutGroupInput, UserUncheckedUpdateWithoutGroupInput>
+    data: XOR<UserUpdateWithoutCreatedGroupsInput, UserUncheckedUpdateWithoutCreatedGroupsInput>
   }
 
-  export type UserUpdateWithoutGroupInput = {
+  export type UserUpdateWithoutCreatedGroupsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -19164,19 +20087,25 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Post?: PostUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
-    GroupMember?: GroupMemberUpdateManyWithoutUserNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutGroupInput = {
+  export type UserUncheckedUpdateWithoutCreatedGroupsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -19185,13 +20114,19 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
-    GroupMember?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -19218,7 +20153,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     createdAt?: Date | string
-    createdBy: UserCreateNestedOneWithoutGroupInput
+    createdBy: UserCreateNestedOneWithoutCreatedGroupsInput
   }
 
   export type GroupUncheckedCreateWithoutMembersInput = {
@@ -19234,7 +20169,7 @@ export namespace Prisma {
     create: XOR<GroupCreateWithoutMembersInput, GroupUncheckedCreateWithoutMembersInput>
   }
 
-  export type UserCreateWithoutGroupMemberInput = {
+  export type UserCreateWithoutGroupMembershipsInput = {
     id: string
     name: string
     email: string
@@ -19243,19 +20178,25 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Post?: PostCreateNestedManyWithoutAuthorInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
-    Group?: GroupCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     Event?: EventCreateNestedManyWithoutCreatedByInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutGroupMemberInput = {
+  export type UserUncheckedCreateWithoutGroupMembershipsInput = {
     id: string
     name: string
     email: string
@@ -19264,21 +20205,27 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
-    Group?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutGroupMemberInput = {
+  export type UserCreateOrConnectWithoutGroupMembershipsInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutGroupMemberInput, UserUncheckedCreateWithoutGroupMemberInput>
+    create: XOR<UserCreateWithoutGroupMembershipsInput, UserUncheckedCreateWithoutGroupMembershipsInput>
   }
 
   export type GroupUpsertWithoutMembersInput = {
@@ -19297,7 +20244,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdBy?: UserUpdateOneRequiredWithoutGroupNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutCreatedGroupsNestedInput
   }
 
   export type GroupUncheckedUpdateWithoutMembersInput = {
@@ -19308,18 +20255,18 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserUpsertWithoutGroupMemberInput = {
-    update: XOR<UserUpdateWithoutGroupMemberInput, UserUncheckedUpdateWithoutGroupMemberInput>
-    create: XOR<UserCreateWithoutGroupMemberInput, UserUncheckedCreateWithoutGroupMemberInput>
+  export type UserUpsertWithoutGroupMembershipsInput = {
+    update: XOR<UserUpdateWithoutGroupMembershipsInput, UserUncheckedUpdateWithoutGroupMembershipsInput>
+    create: XOR<UserCreateWithoutGroupMembershipsInput, UserUncheckedCreateWithoutGroupMembershipsInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutGroupMemberInput = {
+  export type UserUpdateToOneWithWhereWithoutGroupMembershipsInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutGroupMemberInput, UserUncheckedUpdateWithoutGroupMemberInput>
+    data: XOR<UserUpdateWithoutGroupMembershipsInput, UserUncheckedUpdateWithoutGroupMembershipsInput>
   }
 
-  export type UserUpdateWithoutGroupMemberInput = {
+  export type UserUpdateWithoutGroupMembershipsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -19328,19 +20275,25 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Post?: PostUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutGroupMemberInput = {
+  export type UserUncheckedUpdateWithoutGroupMembershipsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -19349,13 +20302,19 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -19370,14 +20329,20 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Post?: PostCreateNestedManyWithoutAuthorInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
-    Group?: GroupCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberCreateNestedManyWithoutUserInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
   }
@@ -19391,14 +20356,20 @@ export namespace Prisma {
     bio?: string | null
     username?: string | null
     location?: string | null
+    university?: string | null
+    department?: string | null
+    yearOfStudy?: string | null
+    skills?: UserCreateskillsInput | string[]
+    researchFocus?: string | null
+    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
-    Group?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
-    GroupMember?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
   }
@@ -19428,14 +20399,20 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Post?: PostUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
   }
@@ -19449,14 +20426,20 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
-    Group?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
-    GroupMember?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -19490,10 +20473,21 @@ export namespace Prisma {
     id?: string
     title: string
     content: string
+    summary?: string | null
     imageUrl?: string | null
+    resourceType?: string | null
+    role?: string | null
+    university?: string | null
+    department?: string | null
+    doi?: string | null
+    citation?: string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
+    views?: number
+    downloads?: number
   }
 
   export type ResourceCreateManyUploadedByInput = {
@@ -19624,10 +20618,21 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
+    views?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
     comments?: CommentUpdateManyWithoutPostNestedInput
     likes?: LikeUpdateManyWithoutPostNestedInput
   }
@@ -19636,10 +20641,21 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
+    views?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -19648,10 +20664,21 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
+    views?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
   }
 
   export type ResourceUpdateWithoutUploadedByInput = {
@@ -19860,7 +20887,7 @@ export namespace Prisma {
   export type GroupMemberUpdateWithoutGroupInput = {
     id?: StringFieldUpdateOperationsInput | string
     joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutGroupMemberNestedInput
+    user?: UserUpdateOneRequiredWithoutGroupMembershipsNestedInput
   }
 
   export type GroupMemberUncheckedUpdateWithoutGroupInput = {

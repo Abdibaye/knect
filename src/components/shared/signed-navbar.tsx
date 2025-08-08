@@ -45,10 +45,10 @@ export default function SignedNavbar({ className }: SignedNavbarProps) {
   <div className='hidden lg:block'><ThemeToggle  /></div>  
           {/* <ChatBubbleLeftIcon className="w-6 h-6 text-blue-600 border border-blue-200 rounded-full p-1 hover:bg-blue-100 dark:hover:bg-blue-900 transition cursor-pointer" /> */}
         
-          <MessageCircle onClick={() => document.dispatchEvent(new Event("showChat"))} />
+          <MessageCircle onClick={() => document.dispatchEvent(new Event("showChat"))} className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer" />
           <Button
             size="sm"
-            className="text-sm max-sm:aspect-square max-sm:p-0 hidden md:inline-flex bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-gray-800 dark:text-white font-medium rounded-md px-3 py-1.5"
+            className="text-sm max-sm:aspect-square max-sm:p-0 hidden md:inline-flex bg-accent hover:bg-accent/80 text-foreground font-medium rounded-md px-3 py-1.5"
             onClick={() => {
               const event = new Event("showCreatePost");
               document.dispatchEvent(event);

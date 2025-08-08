@@ -129,6 +129,12 @@ exports.Prisma.UserScalarFieldEnum = {
   bio: 'bio',
   username: 'username',
   location: 'location',
+  university: 'university',
+  department: 'department',
+  yearOfStudy: 'yearOfStudy',
+  skills: 'skills',
+  researchFocus: 'researchFocus',
+  publications: 'publications',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -173,11 +179,22 @@ exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
+  summary: 'summary',
   imageUrl: 'imageUrl',
+  resourceType: 'resourceType',
+  role: 'role',
+  university: 'university',
+  department: 'department',
+  doi: 'doi',
+  citation: 'citation',
+  attachments: 'attachments',
+  visibility: 'visibility',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   authorId: 'authorId',
-  tags: 'tags'
+  tags: 'tags',
+  views: 'views',
+  downloads: 'downloads'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -240,6 +257,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -248,6 +270,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 
 

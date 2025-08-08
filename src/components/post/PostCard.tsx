@@ -1,18 +1,26 @@
 "use client";
 
-// Dummy education component
-function UserEducation() {
-  // In the future, this can be replaced with real user data
-  return (
-    <span className="text-xs text-blue-600 dark:text-blue-300 font-medium">Adama science and technology university || Electrical Engineering</span>
-  );
-}
-
-
-import { useContructUrl } from "@/hooks/use-contruct";
-import { Bookmark, ChartNoAxesColumn, CheckIcon, Clock, Dot, Globe, Globe2Icon, GlobeIcon, MessageCircle, ThumbsUp, WholeWord } from "lucide-react";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { Badge } from "../ui/badge";
+import PostMenu from "./postMenu";
+import {
+  Bookmark,
+  CheckIcon,
+  Clock,
+  FileDown,
+  FileText,
+  MessageCircle,
+  Share2,
+  ThumbsUp,
+  ChartNoAxesColumn,
+} from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CommentForm } from "./CommentForm";
+import { CommentList, Comment as CommentType } from "./CommentList";
+
 // Utility to format relative time
 function getRelativeTime(dateString?: string) {
   if (!dateString) return "";
@@ -40,11 +48,11 @@ function getRelativeTime(dateString?: string) {
   const years = Math.floor(diff / 31536000);
   return `${years} year${years !== 1 ? "s" : ""} ago`;
 }
-import { CommentForm } from "./CommentForm";
-import { CommentList, Comment as CommentType } from "./CommentList";
-import { Badge } from "../ui/badge";
-import PostMenu from "./postMenu";
-import { authClient } from "@/lib/auth-client";
+
+// Types
+type Collaborator = { id?: string; name?: string; image?: string };
+
+type Attachment = { name: string; url: string; type?: string };
 
 type PostCardProps = {
   post: {
@@ -54,26 +62,52 @@ type PostCardProps = {
     imageUrl: string;
     tags?: string[];
     visibility?: string;
-    author?: {name?: string; image?: string };
+    author?: { name?: string; image?: string };
     authorId?: string;
     likeCount?: number;
     commentCount?: number;
     createdAt?: string;
+    // Extended optional academic and content metadata
+    university?: string;
+    department?: string;
+    role?: string; // Student | Lecturer | Researcher | ...
+    resourceType?: string; // Research Paper | Event | Lab Material | Discussion | ...
+    attachments?: Attachment[];
+    views?: number;
+    downloads?: number;
+    collaborators?: Collaborator[];
+    doi?: string;
+    citation?: string;
+    authorVerified?: boolean;
+    summary?: string; // optional short summary separate from content
   };
   initialComments?: CommentType[];
 };
 
+// Choose an icon for file by extension
+function FileIcon({ ext }: { ext: string }) {
+  // Could be extended to map different icons
+  return <FileText className="size-4 text-muted-foreground" aria-hidden="true" />;
+}
+
 export default function PostCard({ post, initialComments = [] }: PostCardProps) {
+  const router = useRouter();
+  const postUrl = useMemo(() => `/posts/${post.id}`, [post.id]);
+
   const imageUrl = post.imageUrl || "/placeholder-image.png";
   const authorImageUrl = post.author?.image ?? "";
   const authorName = post.author?.name || "Unknown";
+
   const [comments, setComments] = useState<CommentType[]>(initialComments);
   const [showComments, setShowComments] = useState(false);
   const [loadingComments, setLoadingComments] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { data: session, isPending } = authClient.useSession();
-  
+  const [likeCount, setLikeCount] = useState<number>(post.likeCount ?? 0);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
+
+  const { data: session } = authClient.useSession();
 
   // Fetch comments from backend
   useEffect(() => {
@@ -104,7 +138,6 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
         body: JSON.stringify({ content, postId: post.id }),
       });
       if (!res.ok) throw new Error("Failed to post comment");
-      // Refetch comments after posting
       const updated = await fetch(`/api/posts/${post.id}/comments`);
       setComments(await updated.json());
     } catch (err: any) {
@@ -121,7 +154,6 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
         body: JSON.stringify({ content: reply, postId: post.id, parentId }),
       });
       if (!res.ok) throw new Error("Failed to post reply");
-      // Refetch comments after posting
       const updated = await fetch(`/api/posts/${post.id}/comments`);
       setComments(await updated.json());
     } catch (err: any) {
@@ -131,12 +163,38 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
 
   const handleToggleComments = () => setShowComments((prev) => !prev);
 
+  const toggleLike = () => {
+    setIsLiked((v) => !v);
+    setLikeCount((c) => (isLiked ? Math.max(0, c - 1) : c + 1));
+    // TODO: call like API
+  };
+
+  const onShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: post.title, text: post.summary || post.content, url: postUrl });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(location.origin + postUrl);
+        // optional toast
+      }
+    } catch {}
+  };
+
+  const filterBy = (key: string, value?: string) => {
+    if (!value) return;
+    const params = new URLSearchParams({ [key]: value });
+    // Navigate to home with filters applied
+    router.push(`/home?${params.toString()}`);
+  };
+
+  const summary = post.summary || (post.content ? post.content.slice(0, 180) + (post.content.length > 180 ? "…" : "") : "");
+
   return (
-    <div className="rounded-xl border lg:ml-15 bg-white dark:bg-zinc-900 shadow-sm p-4 w-full">
+    <article className="rounded-xl border bg-card text-card-foreground shadow-sm p-4 w-full">
       {/* Header */}
-      <div className="flex justify-between items-start">
+      <header className="flex justify-between items-start">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center text-purple-700 font-bold overflow-hidden">
+          <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-foreground font-bold overflow-hidden">
             {authorImageUrl ? (
               <Image
                 src={authorImageUrl}
@@ -146,98 +204,199 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
                 className="rounded-full object-cover"
               />
             ) : (
-              <span className="text-lg">
-                {authorName[0]?.toUpperCase() || "?"}
-              </span>
+              <span className="text-lg">{authorName[0]?.toUpperCase() || "?"}</span>
             )}
           </div>
-          <div className="flex flex-col">
-           <div className="flex items-center gap-1">
-             <button onClick={() => (window.location.href = `/profile/${post.authorId}`)} className="text-sm cursor-pointer font-semibold text-foreground hover:underline">
-              <div className="font-semibold text-sm text-foreground">
-              {authorName}
+          <div className="flex flex-col min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <button
+                onClick={() => (window.location.href = `/profile/${post.authorId}`)}
+                className="text-sm cursor-pointer font-semibold text-foreground hover:underline"
+                aria-label={`${authorName} profile`}
+              >
+                <span className="truncate max-w-[200px] sm:max-w-[280px] inline-block">{authorName}</span>
+              </button>
+              {post.authorVerified && (
+                <Badge variant="outline" className="gap-1">
+                  <CheckIcon className="text-emerald-500" size={12} aria-hidden="true" />
+                  Verified
+                </Badge>
+              )}
+              {post.role && (
+                <Badge variant="secondary" className="px-2 py-0.5">{post.role}</Badge>
+              )}
+              {post.resourceType && (
+                <Badge variant="secondary" className="px-2 py-0.5">{post.resourceType}</Badge>
+              )}
             </div>
-             </button>
-            <Badge variant="outline" className="gap-1">
-      <CheckIcon className="text-emerald-500 items-center" size={12} aria-hidden="true" />
-      verified
-    </Badge>
-           </div>
-           {/* User education (university) */}
-           <UserEducation />
-           <span className="text-xs flex gap-2 text-muted-foreground">
-              {getRelativeTime(post.createdAt)} 
-              <Clock className="text-muted-foreground" size={12} aria-hidden="true" />
-            </span>
+            <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mt-1">
+              {post.university && (
+                <button onClick={() => filterBy("university", post.university)} className="hover:underline text-primary">
+                  {post.university}
+                </button>
+              )}
+              {post.university && post.department && <span aria-hidden>•</span>}
+              {post.department && (
+                <button onClick={() => filterBy("department", post.department)} className="hover:underline text-primary">
+                  {post.department}
+                </button>
+              )}
+              <span aria-hidden>•</span>
+              <time dateTime={post.createdAt} className="inline-flex items-center gap-1">
+                {getRelativeTime(post.createdAt)}
+                <Clock className="text-muted-foreground" size={12} aria-hidden="true" />
+              </time>
+            </div>
           </div>
         </div>
         <div className="flex gap-2 items-center">
           {post.visibility && (
-            <span className="text-xs px-2 py-1 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium">
-              {post.visibility}
-            </span>
+            <Badge variant="outline" className="text-xs font-medium">{post.visibility}</Badge>
           )}
           <PostMenu post={{ id: post.id, authorId: post.authorId }} currentUserId={session?.user.id} />
         </div>
-      </div>
-      {/* Title */}
-      <h3 className="text-base font-bold mt-2 text-foreground">{post.title}</h3>
-      {/* Content */}
-      <p className="text-sm text-foreground mt-1 whitespace-pre-line">{post.content}</p>
+      </header>
+
+      {/* Title & Summary */}
+      <section className="mt-2">
+        <h2 className="text-xl md:text-2xl font-bold leading-snug">{post.title}</h2>
+        {summary && <p className="text-sm md:text-base text-foreground/90 mt-1">{summary}</p>}
+      </section>
+
       {/* Tags */}
       {post.tags && post.tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-2">
+        <ul className="flex flex-wrap gap-2 mt-3" aria-label="topics">
           {post.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200 px-2 py-0.5 rounded-full"
-            >
-              #{tag}
-            </span>
+            <li key={tag}>
+              <Badge variant="outline" className="rounded-full">#{tag}</Badge>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
-      {/* Image */}
+
+      {/* Image Preview */}
       {post.imageUrl && (
-        <div className="mt-4 overflow-hidden rounded-xl border max-h-80">
+        <figure className="mt-4 overflow-hidden rounded-xl border shadow-sm max-h-96">
           <Image
             src={imageUrl}
             alt="Post image"
-            width={800}
-            height={400}
+            width={1200}
+            height={630}
             className="w-full h-full object-cover"
-            style={{ maxHeight: 320 }}
+            style={{ maxHeight: 384 }}
           />
+        </figure>
+      )}
+
+      {/* Attachments */}
+      {post.attachments && post.attachments.length > 0 && (
+        <div className="mt-4 space-y-2" aria-label="attachments">
+          {post.attachments.map((f, idx) => {
+            const ext = (f.name.split(".").pop() || "").toLowerCase();
+            return (
+              <div key={idx} className="flex items-center justify-between rounded-lg border p-3 bg-muted/30">
+                <div className="flex items-center gap-3 min-w-0">
+                  <FileIcon ext={ext} />
+                  <span className="text-sm truncate">{f.name}</span>
+                </div>
+                <a
+                  href={f.url}
+                  download
+                  className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+                >
+                  <FileDown className="size-4" /> Download
+                </a>
+              </div>
+            );
+          })}
         </div>
       )}
-      {/* Footer Icons */}
-      <div className="flex justify-between mx-2 text-muted-foreground mt-3 text-sm">
-        <div className="flex items-center gap-1">
+
+      {/* Engagement Row */}
+      <nav className="mt-4 grid grid-cols-4 gap-2 text-sm" aria-label="post actions">
+        <button
+          type="button"
+          onClick={toggleLike}
+          className={`flex items-center justify-center gap-2 rounded-md px-3 py-2 transition-colors ${
+            isLiked ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent hover:text-foreground"
+          }`}
+          aria-pressed={isLiked}
+          aria-label="Like"
+        >
           <ThumbsUp className="size-5" />
-        </div>
-        <div className="flex items-center gap-1">
-          <button
-            type="button"
-            className="flex items-center gap-1 focus:outline-none hover:text-primary"
-            aria-label="Show comments"
-            onClick={handleToggleComments}
-          >
-            <MessageCircle className="size-5" />
-            <span>{typeof post.commentCount === 'number' ? post.commentCount : comments.length}</span>
-          </button>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center">
-            <ChartNoAxesColumn className="size-5" />
-            <span>100</span>
-          </div>
+          <span>{likeCount}</span>
+        </button>
+        <button
+          type="button"
+          className="flex items-center justify-center gap-2 rounded-md px-3 py-2 text-muted-foreground hover:bg-accent hover:text-foreground"
+          aria-label="Comments"
+          onClick={handleToggleComments}
+        >
+          <MessageCircle className="size-5" />
+          <span>{typeof post.commentCount === "number" ? post.commentCount : comments.length}</span>
+        </button>
+        <button
+          type="button"
+          onClick={onShare}
+          className="flex items-center justify-center gap-2 rounded-md px-3 py-2 text-muted-foreground hover:bg-accent hover:text-foreground"
+          aria-label="Share"
+        >
+          <Share2 className="size-5" />
+          <span>Share</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setIsSaved((v) => !v)}
+          className={`flex items-center justify-center gap-2 rounded-md px-3 py-2 transition-colors ${
+            isSaved ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent hover:text-foreground"
+          }`}
+          aria-pressed={isSaved}
+          aria-label="Save"
+        >
           <Bookmark className="size-5" />
+          <span>{isSaved ? "Saved" : "Save"}</span>
+        </button>
+      </nav>
+
+      {/* Footer Meta */}
+      <footer className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground">
+        <div className="flex items-center gap-4">
+          {typeof post.views === "number" && (
+            <span className="inline-flex items-center gap-1"><ChartNoAxesColumn className="size-4" />{post.views}</span>
+          )}
+          {typeof post.downloads === "number" && (
+            <span className="inline-flex items-center gap-1"><FileDown className="size-4" />{post.downloads}</span>
+          )}
         </div>
-      </div>
-      {/* Comments Section (hidden by default, toggled by button) */}
+        {post.collaborators && post.collaborators.length > 0 && (
+          <div className="flex -space-x-2">
+            {post.collaborators.slice(0, 5).map((c, i) => (
+              <Avatar key={i} className="h-6 w-6 ring-2 ring-background">
+                <AvatarImage src={c.image ?? undefined} />
+                <AvatarFallback>{c.name?.charAt(0) ?? "U"}</AvatarFallback>
+              </Avatar>
+            ))}
+          </div>
+        )}
+      </footer>
+
+      {/* Research identifiers */}
+      {(post.doi || post.citation) && (
+        <div className="mt-2 text-xs italic text-muted-foreground">
+          {post.doi && (
+            <span>
+              DOI: <a className="text-primary hover:underline" href={`https://doi.org/${post.doi}`} target="_blank" rel="noreferrer">{post.doi}</a>
+            </span>
+          )}
+          {post.doi && post.citation && <span className="mx-2">•</span>}
+          {post.citation && <span>{post.citation}</span>}
+        </div>
+      )}
+
+      {/* Comments Section */}
       {showComments && (
-        <div className="mt-4">
-          {error && <div className="text-red-500 mb-2">{error}</div>}
+        <section className="mt-4">
+          {error && <div className="text-destructive mb-2">{error}</div>}
           {loadingComments ? (
             <div>Loading comments...</div>
           ) : (
@@ -246,8 +405,8 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
               <CommentList comments={comments} onReply={handleReply} />
             </>
           )}
-        </div>
+        </section>
       )}
-    </div>
+    </article>
   );
 }

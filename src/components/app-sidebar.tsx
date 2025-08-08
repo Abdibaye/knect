@@ -91,8 +91,8 @@ export function AppSidebar() {
                         className={clsx(
                           "flex items-center gap-2 px-3 py-2 rounded-md transition-all",
                           isActive
-                            ? "bg-blue-600 text-white"
-                            : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                            ? "bg-primary text-primary-foreground"
+                            : "text-foreground/80 hover:bg-accent hover:text-foreground"
                         )}
                       >
                         <item.icon size={18} />
@@ -109,7 +109,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       {/* Footer area for secondary items */}
-      <div className="mt-auto dark:border-gray-700 p-3">
+      <div className="mt-auto border-t border-border p-3">
         <SidebarMenu>
           {SecondaryItems.map((item) => {
             const isActive = pathname.startsWith(item.url);
@@ -121,8 +121,8 @@ export function AppSidebar() {
                     className={clsx(
                       "flex items-center gap-2 px-3 py-2 rounded-md transition-all",
                       isActive
-                        ? "bg-blue-600 text-white"
-                        : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                        ? "bg-primary text-primary-foreground"
+                        : "text-foreground/80 hover:bg-accent hover:text-foreground"
                     )}
                   >
                     <item.icon size={18} />

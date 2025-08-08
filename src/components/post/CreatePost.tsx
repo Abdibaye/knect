@@ -210,7 +210,9 @@ import {
   SelectItem,
   SelectValue,
 } from "@/components/ui/select";
-import { XIcon } from "lucide-react";
+import { XIcon, FileDown, FileText } from "lucide-react";
+
+type Attachment = { name: string; url: string; type?: string };
 
 type CreatePostProps = {
   onSubmit?: (data: any) => void;
@@ -219,50 +221,73 @@ type CreatePostProps = {
 
 export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
   const [title, setTitle] = useState("");
+  const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
-  const [category, setCategory] = useState("");
   const [visibility, setVisibility] = useState("public");
   const [tags, setTags] = useState<string>("");
-  const [imageUrl, setImageUrl] = useState(""); // Final image URL
+  const [imageUrl, setImageUrl] = useState(""); // Cover image URL
   const [image, setImage] = useState<File | null>(null);
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
+
+  const [resourceType, setResourceType] = useState("");
+  const [role, setRole] = useState("");
+  const [university, setUniversity] = useState("");
+  const [department, setDepartment] = useState("");
+  const [doi, setDoi] = useState("");
+  const [citation, setCitation] = useState("");
+
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleImageUpload = async (file: File) => {
+  const uploadToS3 = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
 
+    const res = await fetch("/api/s3", { method: "POST", body: formData });
+    const contentType = res.headers.get("content-type");
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || "Upload failed");
+    }
+    if (!contentType?.includes("application/json")) {
+      const text = await res.text();
+      throw new Error(`Unexpected response: ${text}`);
+    }
+    const data = await res.json();
+    if (!data.url) throw new Error("Missing URL from upload response");
+    return data.url as string;
+  };
+
+  const handleImageUpload = async (file: File) => {
     try {
-      const res = await fetch("/api/s3", {
-        method: "POST",
-        body: formData,
-      });
-
-      const contentType = res.headers.get("content-type");
-
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`Upload failed: ${errorText}`);
-      }
-
-      if (contentType && contentType.includes("application/json")) {
-        const data = await res.json();
-
-        if (!data.url) {
-          throw new Error("Image upload response missing URL.");
-        }
-
-        setImageUrl(data.url); // update the image URL state
-        return data.url;
-      } else {
-        const text = await res.text();
-        throw new Error(`Unexpected response from upload API: ${text}`);
-      }
+      setUploading(true);
+      const url = await uploadToS3(file);
+      setImageUrl(url);
+      toast.success("Image uploaded");
+      return url;
     } catch (err: any) {
-      console.error("Image upload failed:", err.message);
       toast.error("Image upload failed: " + err.message);
       throw err;
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleAttachmentsUpload = async (files: FileList) => {
+    setUploading(true);
+    try {
+      const uploads: Attachment[] = [];
+      for (const file of Array.from(files)) {
+        const url = await uploadToS3(file);
+        uploads.push({ name: file.name, url, type: file.type });
+      }
+      setAttachments((prev) => [...prev, ...uploads]);
+      toast.success("Attachment(s) uploaded");
+    } catch (err: any) {
+      toast.error("Attachment upload failed: " + err.message);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -271,43 +296,33 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
     setLoading(true);
     setError(null);
 
-    let uploadedImageUrl = "";
-
-    // Upload the image if one is selected
-    if (image) {
-      const formData = new FormData();
-      formData.append("file", image);
-
-      try {
-        const res = await fetch("/api/s3", {
-          method: "POST",
-          body: formData,
-        });
-
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Image upload failed");
-
-        uploadedImageUrl = data.url;
-        setImageUrl(uploadedImageUrl);
-      } catch (err: any) {
-        setError("Image upload failed: " + err.message);
-        setLoading(false);
-        return;
-      }
-    }
-
-    const postData = {
-      title,
-      content,
-      imageUrl: uploadedImageUrl,
-      visibility,
-      tags: tags
-        .split(",")
-        .map((t) => t.trim())
-        .filter(Boolean),
-    };
-
     try {
+      // Upload cover image if selected but no URL yet
+      let coverUrl = imageUrl;
+      if (image && !imageUrl) {
+        coverUrl = await handleImageUpload(image);
+      }
+
+      const postData = {
+        title,
+        summary,
+        content,
+        imageUrl: coverUrl,
+        visibility,
+        tags: tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
+        // Optional academic metadata
+        resourceType: resourceType || undefined,
+        role: role || undefined,
+        university: university || undefined,
+        department: department || undefined,
+        doi: doi || undefined,
+        citation: citation || undefined,
+        attachments: attachments.length ? attachments : undefined,
+      };
+
       const res = await fetch("/api/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -315,21 +330,29 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
       });
 
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Failed to create post");
+        const data = await res.json().catch(() => ({}));
+        throw new Error((data as any).error || "Failed to create post");
       }
 
       const data = await res.json();
-      if (onSubmit) onSubmit(data);
+      onSubmit?.(data);
 
       // Reset form
       setTitle("");
+      setSummary("");
       setContent("");
-      setCategory("");
       setVisibility("public");
       setTags("");
       setImageUrl("");
       setImage(null);
+      setAttachments([]);
+      setResourceType("");
+      setRole("");
+      setUniversity("");
+      setDepartment("");
+      setDoi("");
+      setCitation("");
+      toast.success("Post created");
     } catch (err: any) {
       setError(err.message || "Failed to create post");
     } finally {
@@ -339,23 +362,24 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
-      <div className="relative bg-white dark:bg-zinc-900 rounded-xl shadow-lg w-full max-w-xl mx-auto p-6 max-h-[90vh] overflow-y-auto">
+      <div className="relative bg-card text-card-foreground rounded-xl shadow-lg w-full max-w-xl mx-auto p-6 max-h-[90vh] overflow-y-auto border border-border">
         {/* Close Button */}
         <button
           onClick={onCancel}
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+          className="absolute top-3 right-3 text-muted-foreground hover:text-foreground"
           aria-label="Close"
         >
           <XIcon size={18} />
         </button>
 
-        <h2 className="text-xl font-semibold text-center mb-4">
-          Create a Post
-        </h2>
+        <h2 className="text-xl font-semibold text-center mb-4">Create a Post</h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Title */}
           <div className="flex flex-col gap-1">
-            <Label className="ml-1" htmlFor="title">Title</Label>
+            <Label className="ml-1" htmlFor="title">
+              Title
+            </Label>
             <Input
               id="title"
               value={title}
@@ -365,8 +389,24 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
             />
           </div>
 
+          {/* Summary */}
           <div className="flex flex-col gap-1">
-            <Label className="ml-1" htmlFor="content">Content</Label>
+            <Label className="ml-1" htmlFor="summary">
+              Summary (1–2 sentences)
+            </Label>
+            <Input
+              id="summary"
+              value={summary}
+              onChange={(e) => setSummary(e.target.value)}
+              placeholder="Brief summary of your post..."
+            />
+          </div>
+
+          {/* Content */}
+          <div className="flex flex-col gap-1">
+            <Label className="ml-1" htmlFor="content">
+              Content
+            </Label>
             <Textarea
               id="content"
               value={content}
@@ -377,8 +417,100 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
             />
           </div>
 
+          {/* Resource Type & Role */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1">
+              <Label className="ml-1" htmlFor="resourceType">
+                Resource Type
+              </Label>
+              <Select value={resourceType} onValueChange={setResourceType}>
+                <SelectTrigger id="resourceType">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Research Paper">Research Paper</SelectItem>
+                  <SelectItem value="Event">Event</SelectItem>
+                  <SelectItem value="Lab Material">Lab Material</SelectItem>
+                  <SelectItem value="Discussion">Discussion</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex flex-col gap-1">
+              <Label className="ml-1" htmlFor="role">
+                Your Role
+              </Label>
+              <Select value={role} onValueChange={setRole}>
+                <SelectTrigger id="role">
+                  <SelectValue placeholder="Select role" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Student">Student</SelectItem>
+                  <SelectItem value="Lecturer">Lecturer</SelectItem>
+                  <SelectItem value="Researcher">Researcher</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* University & Department */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1">
+              <Label className="ml-1" htmlFor="university">
+                University
+              </Label>
+              <Input
+                id="university"
+                value={university}
+                onChange={(e) => setUniversity(e.target.value)}
+                placeholder="e.g. Addis Ababa University"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <Label className="ml-1" htmlFor="department">
+                Department
+              </Label>
+              <Input
+                id="department"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+                placeholder="e.g. Electrical Engineering"
+              />
+            </div>
+          </div>
+
+          {/* DOI & Citation */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1">
+              <Label className="ml-1" htmlFor="doi">
+                DOI (optional)
+              </Label>
+              <Input
+                id="doi"
+                value={doi}
+                onChange={(e) => setDoi(e.target.value)}
+                placeholder="e.g. 10.1000/xyz123"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <Label className="ml-1" htmlFor="citation">
+                Citation (optional)
+              </Label>
+              <Input
+                id="citation"
+                value={citation}
+                onChange={(e) => setCitation(e.target.value)}
+                placeholder="APA/IEEE citation..."
+              />
+            </div>
+          </div>
+
+          {/* Visibility */}
           <div className="flex flex-col gap-1">
-            <Label className="ml-1" htmlFor="visibility">Visibility</Label>
+            <Label className="ml-1" htmlFor="visibility">
+              Visibility
+            </Label>
             <Select onValueChange={setVisibility} value={visibility}>
               <SelectTrigger id="visibility">
                 <SelectValue placeholder="Select visibility" />
@@ -391,53 +523,82 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
             </Select>
           </div>
 
+          {/* Tags */}
           <div className="flex flex-col gap-1">
-            <Label className="ml-1" htmlFor="tags">Tags (comma separated)</Label>
+            <Label className="ml-1" htmlFor="tags">
+              Tags (comma separated)
+            </Label>
             <Input
               id="tags"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
-              placeholder="e.g. react, nextjs"
+              placeholder="e.g. AIResearch, Engineering, ML"
             />
           </div>
 
+          {/* Cover Image */}
           <div className="flex flex-col gap-2">
-            <Label className="ml-1" htmlFor="image">Upload Image (optional)</Label>
+            <Label className="ml-1" htmlFor="image">
+              Upload Cover Image (optional)
+            </Label>
             <Input
               type="file"
               id="image"
               accept="image/*"
-              onChange={(e) => {
+              onChange={async (e) => {
                 const file = e.target.files?.[0];
                 if (file) {
                   setImage(file);
-                  handleImageUpload(file); // upload immediately
+                  await handleImageUpload(file);
                 }
               }}
             />
             {image && (
-              <p className="text-sm text-gray-500 mt-1">
-                Selected: {image.name}
-              </p>
+              <p className="text-sm text-muted-foreground mt-1">Selected: {image.name}</p>
             )}
             {imageUrl && (
-              <img
-                src={imageUrl}
-                alt="Uploaded"
-                className="mt-3 max-h-48 rounded shadow"
-              />
+              <img src={imageUrl} alt="Uploaded" className="mt-3 max-h-48 rounded-xl border shadow-sm" />
             )}
           </div>
 
-          {error && <div className="text-red-500 text-sm">{error}</div>}
+          {/* Attachments */}
+          <div className="flex flex-col gap-2">
+            <Label className="ml-1" htmlFor="attachments">
+              Attach Files (PDF, PPT, DOC)
+            </Label>
+            <Input
+              type="file"
+              id="attachments"
+              accept=".pdf,.ppt,.pptx,.doc,.docx,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              multiple
+              onChange={async (e) => {
+                const files = e.target.files;
+                if (files && files.length) {
+                  await handleAttachmentsUpload(files);
+                }
+              }}
+            />
+            {attachments.length > 0 && (
+              <ul className="mt-2 space-y-2">
+                {attachments.map((a, i) => (
+                  <li key={i} className="flex items-center justify-between rounded-lg border p-2 bg-muted/30">
+                    <span className="flex items-center gap-2 text-sm truncate">
+                      <FileText className="size-4 text-muted-foreground" /> {a.name}
+                    </span>
+                    <a href={a.url} download className="text-sm text-primary hover:underline inline-flex items-center gap-1">
+                      <FileDown className="size-4" /> Download
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
+          {error && <div className="text-destructive text-sm">{error}</div>}
+
+          {/* Submit & Cancel */}
           <div className="flex justify-end gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onCancel}
-              disabled={loading}
-            >
+            <Button type="button" variant="outline" onClick={onCancel} disabled={loading}>
               Cancel
             </Button>
             <Button type="submit" disabled={loading || uploading}>
