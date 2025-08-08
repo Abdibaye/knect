@@ -3,12 +3,12 @@ import { Github, Linkedin, Mail } from "lucide-react";
 
 export default function FooterHome() {
   return (
-    <footer className="bg-white lg:ml-30 lg:mr-60 text-center  dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800">
+    <footer className="bg-background lg:ml-30 lg:mr-60 text-center border-t border-border">
       <div className="mx-auto max-w-7xl px-6 py-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           {/* Column 1: Branding */}
           <div>
-            <h2 className="text-xl font-semibold text-zinc-800 dark:text-white mb-2">
+            <h2 className="text-xl font-semibold text-foreground mb-2">
               Knect
             </h2>
             <p className="text-sm text-muted-foreground">
@@ -19,7 +19,7 @@ export default function FooterHome() {
 
           {/* Column 2: Product */}
           <div>
-            <h3 className="text-sm font-semibold text-zinc-800 dark:text-white mb-3">
+            <h3 className="text-sm font-semibold text-foreground mb-3">
               Product
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -48,7 +48,7 @@ export default function FooterHome() {
 
           {/* Column 3: Company */}
           <div>
-            <h3 className="text-sm font-semibold text-zinc-800 dark:text-white mb-3">
+            <h3 className="text-sm font-semibold text-foreground mb-3">
               Company
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -77,7 +77,7 @@ export default function FooterHome() {
 
           {/* Column 4: Legal & Social */}
           <div>
-            <h3 className="text-sm font-semibold text-zinc-800 dark:text-white mb-3">
+            <h3 className="text-sm font-semibold text-foreground mb-3">
               Legal & Social
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -120,7 +120,7 @@ export default function FooterHome() {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-12 border-t border-zinc-100 dark:border-zinc-800 pt-6 text-center text-xs text-muted-foreground">
+        <div className="mt-12 border-t border-border pt-6 text-center text-xs text-muted-foreground">
           © {new Date().getFullYear()} Knect. Built by students, for students.
         </div>
       </div>

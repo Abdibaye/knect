@@ -103,11 +103,11 @@ export default function ChatListPage() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
       {/* Chat page container */}
-      <div className="relative bg-white mt-2 mb-2 dark:bg-zinc-900 rounded-xl shadow-lg w-full max-w-2xl mx-auto h-[500px] overflow-hidden flex flex-col">
+      <div className="relative bg-card mt-2 mb-2 rounded-xl shadow-lg w-full max-w-2xl mx-auto h-[500px] overflow-hidden flex flex-col">
         {/* Chat List or Chat Box */}
         {!selectedUser && (
           <>
-            <h2 className="p-4 text-xl text-center font-bold border-b border-gray-200 dark:border-zinc-700">
+            <h2 className="p-4 text-xl text-center font-bold border-b border-border">
               Chats
             </h2>
             <ul className="flex-1 overflow-y-auto">
@@ -119,7 +119,7 @@ export default function ChatListPage() {
                     e.stopPropagation();
                     setSelectedUser(user);
                   }}
-                  className="cursor-pointer px-4 py-3 hover:bg-gray-100 dark:hover:bg-zinc-800 border-b border-gray-200 dark:border-zinc-700 flex items-center gap-3"
+                  className="cursor-pointer px-4 py-3 hover:bg-accent border-b border-border flex items-center gap-3"
                   tabIndex={0}
                 >
                   <img
@@ -129,7 +129,7 @@ export default function ChatListPage() {
                   />
                   <div className="flex flex-col">
                     <span className="font-medium">{user.name}</span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                    <span className="text-sm text-muted-foreground">
                       {user.lastMessage}
                     </span>
                   </div>
@@ -138,7 +138,7 @@ export default function ChatListPage() {
             </ul>
 
             {/* Go Home Button */}
-            <div className="p-4 border-t border-gray-200 dark:border-zinc-700">
+            <div className="p-4 border-t border-border">
     <Button
   className="w-full"
   variant="outline"
@@ -154,7 +154,7 @@ export default function ChatListPage() {
         {selectedUser && (
           <div className="flex flex-col h-full">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-zinc-700">
+            <div className="flex items-center justify-between p-4 border-b border-border">
               <div className="flex items-center gap-3">
                 <img
                   src={selectedUser.avatarUrl}
@@ -169,9 +169,9 @@ export default function ChatListPage() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-2 bg-gray-50 dark:bg-zinc-800">
+            <div className="flex-1 overflow-y-auto p-4 space-y-2 bg-muted/30">
               {(messages[selectedUser.id] || []).length === 0 && (
-                <p className="text-center text-sm text-gray-500 mt-10">
+                <p className="text-center text-sm text-muted-foreground mt-10">
                   Say hi to start chat with {selectedUser.name}
                 </p>
               )}
@@ -180,8 +180,8 @@ export default function ChatListPage() {
                   key={msg.id}
                   className={`max-w-[70%] px-4 py-2 rounded-lg text-sm break-words ${
                     msg.sender === "me"
-                      ? "ml-auto bg-blue-600 text-white rounded-br-none"
-                      : "mr-auto bg-gray-200 dark:bg-zinc-700 text-black dark:text-white rounded-bl-none"
+                      ? "ml-auto bg-primary text-primary-foreground rounded-br-none"
+                      : "mr-auto bg-muted text-foreground rounded-bl-none"
                   }`}
                 >
                   {msg.text}
@@ -196,7 +196,7 @@ export default function ChatListPage() {
                 e.preventDefault();
                 sendMessage();
               }}
-              className="flex p-3 border-t border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900"
+              className="flex p-3 border-t border-border bg-card"
             >
               <Input
                 placeholder="Type a message..."

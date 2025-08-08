@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, Home, Inbox, Search, Settings, User } from "lucide-react";
+import { Calendar, CircleQuestionMarkIcon, Home, Inbox, Info, MailQuestionIcon, MessageCircle, Scroll, Search, Settings, Telescope, TestTube2, User, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
@@ -16,11 +16,16 @@ import {
 } from "@/components/ui/sidebar";
 
 // Menu items
-const items = [
+const MainItems = [
   {
     title: "Home",
     url: "/home",
     icon: Home,
+  },
+  {
+    title: "Opportunities",
+    url: "/Opportunities",
+    icon: Telescope,
   },
   {
     title: "Resources",
@@ -35,18 +40,36 @@ const items = [
   {
     title: "Community",
     url: "/community",
-    icon: Search,
+    icon: Users,
   },
   {
+    title: "Research",
+    url: "/research",
+    icon: Scroll,
+  },
+  {
+    title: "Labs & Materials",
+    url: "/labs",
+    icon: TestTube2,
+  }
+];
+
+const SecondaryItems = [
+   {
     title: "Settings",
     url: "/setting",
     icon: Settings,
   },
   {
-    title: "Admin",
-    url: "/user",
-    icon: User,
+    title: "About",
+    url: "/about",
+    icon: Info,
   },
+  {
+    title: "get help",
+    url: "/help",
+    icon: CircleQuestionMarkIcon  
+  }
 ];
 
 export function AppSidebar() {
@@ -54,12 +77,11 @@ export function AppSidebar() {
 
   return (
     <Sidebar>
-      <SidebarContent>
+      <SidebarContent className="mt-2">
         <SidebarGroup>
-          <SidebarGroupLabel>Knect</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => {
+              {MainItems.map((item) => {
                 const isActive = pathname.startsWith(item.url);
                 return (
                   <SidebarMenuItem key={item.title}>
@@ -69,8 +91,8 @@ export function AppSidebar() {
                         className={clsx(
                           "flex items-center gap-2 px-3 py-2 rounded-md transition-all",
                           isActive
-                            ? "bg-blue-600 text-white"
-                            : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                            ? "bg-primary text-primary-foreground"
+                            : "text-foreground/80 hover:bg-accent hover:text-foreground"
                         )}
                       >
                         <item.icon size={18} />
@@ -86,7 +108,34 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarContent />
+      {/* Footer area for secondary items */}
+      <div className="mt-auto border-t border-border p-3">
+        <SidebarMenu>
+          {SecondaryItems.map((item) => {
+            const isActive = pathname.startsWith(item.url);
+            return (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton asChild>
+                  <a
+                    href={item.url}
+                    className={clsx(
+                      "flex items-center gap-2 px-3 py-2 rounded-md transition-all",
+                      isActive
+                        ? "bg-primary text-primary-foreground"
+                        : "text-foreground/80 hover:bg-accent hover:text-foreground"
+                    )}
+                  >
+                    <item.icon size={18} />
+                    <span className="text-sm font-medium">
+                      {item.title}
+                    </span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            );
+          })}
+        </SidebarMenu>
+      </div>
     </Sidebar>
   );
 }

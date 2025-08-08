@@ -12,25 +12,34 @@ datasource db {
 }
 
 model User {
-  id            String        @id
-  name          String
-  email         String
-  emailVerified Boolean
-  image         String?
-  bio           String?
-  username      String?
-  location      String?
-  createdAt     DateTime
-  updatedAt     DateTime
-  sessions      Session[]
-  accounts      Account[]
-  Post          Post[]
-  Resource      Resource[]
-  Group         Group[]
-  GroupMember   GroupMember[]
-  Event         Event[]
-  Comments      Comment[]
-  Likes         Like[]
+  id               String        @id
+  name             String
+  email            String
+  emailVerified    Boolean
+  image            String?
+  bio              String?
+  username         String?
+  location         String?
+  // academic profile fields
+  university       String?
+  department       String?
+  yearOfStudy      String?
+  skills           String[]      @default([])
+  researchFocus    String?
+  publications     String[]      @default([])
+  createdAt        DateTime
+  updatedAt        DateTime
+  sessions         Session[]
+  accounts         Account[]
+  Post             Post[]
+  Resource         Resource[]
+  // groups created by this user
+  createdGroups    Group[]       @relation("UserCreatedGroups")
+  // group memberships for this user
+  groupMemberships GroupMember[] @relation("UserGroupMemberships")
+  Event            Event[]
+  Comments         Comment[]
+  Likes            Like[]
 
   @@unique([email])
   @@map("user")
@@ -87,17 +96,28 @@ enum Role {
 }
 
 model Post {
-  id        String    @id @default(cuid())
-  title     String
-  content   String
-  imageUrl  String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  author    User      @relation(fields: [authorId], references: [id])
-  authorId  String
-  tags      String[]
-  comments  Comment[]
-  likes     Like[]
+  id           String    @id @default(cuid())
+  title        String
+  content      String
+  summary      String?
+  imageUrl     String?
+  resourceType String?
+  role         String?
+  university   String?
+  department   String?
+  doi          String?
+  citation     String?
+  attachments  Json?
+  visibility   String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  author       User      @relation(fields: [authorId], references: [id])
+  authorId     String
+  tags         String[]
+  comments     Comment[]
+  likes        Like[]
+  views        Int       @default(0)
+  downloads    Int       @default(0)
 
   @@map("post")
 }
@@ -154,18 +174,18 @@ model Group {
   id          String  @id @default(cuid())
   name        String
   description String?
-  createdBy   User    @relation(fields: [createdById], references: [id])
+  createdBy   User    @relation("UserCreatedGroups", fields: [createdById], references: [id])
   createdById String
 
-  members   GroupMember[]
+  members   GroupMember[] @relation("GroupMembers")
   createdAt DateTime      @default(now())
 }
 
 model GroupMember {
   id       String   @id @default(cuid())
-  group    Group    @relation(fields: [groupId], references: [id])
+  group    Group    @relation("GroupMembers", fields: [groupId], references: [id])
   groupId  String
-  user     User     @relation(fields: [userId], references: [id])
+  user     User     @relation("UserGroupMemberships", fields: [userId], references: [id])
   userId   String
   joinedAt DateTime @default(now())
 }
