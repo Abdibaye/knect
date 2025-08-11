@@ -223,10 +223,10 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
                 </Badge>
               )}
               {post.role && (
-                <Badge variant="secondary" className="px-2 py-0.5">{post.role}</Badge>
+                <Badge  variant="outline" className="px-2 py-0.5">{post.role}</Badge>
               )}
               {post.resourceType && (
-                <Badge variant="secondary" className="px-2 py-0.5">{post.resourceType}</Badge>
+                <Badge variant="outline" className="px-2 py-0.5">{post.resourceType}</Badge>
               )}
             </div>
             <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mt-1">
