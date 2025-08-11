@@ -104,9 +104,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                   )}
 
                   <div className="flex items-center gap-3 pt-1">
-                    <Badge variant="secondary">Posts: {profile.contributions.posts}</Badge>
-                    <Badge variant="secondary">Resources: {profile.contributions.resources}</Badge>
-                    <Badge variant="secondary">Events: {profile.contributions.events}</Badge>
+                    <Badge variant="outline">Posts: {profile.contributions.posts}</Badge>
+                    <Badge variant="outline">Resources: {profile.contributions.resources}</Badge>
+                    <Badge variant="outline">Events: {profile.contributions.events}</Badge>
                   </div>
                 </div>
                 {isOwner && (
