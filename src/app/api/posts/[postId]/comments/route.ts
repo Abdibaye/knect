@@ -52,6 +52,18 @@ export async function POST(req: NextRequest) {
         author: { select: { id: true, name: true, image: true } },
       },
     });
+    // Create notification for post author (if not commenting on own post)
+    const post = await prisma.post.findUnique({ where: { id: postId } });
+    if (post && post.authorId !== session.session.userId) {
+      await prisma.notification.create({
+        data: {
+          type: 'comment',
+          message: 'Someone commented on your post',
+          userId: post.authorId,
+          postId: postId,
+        },
+      });
+    }
     return NextResponse.json(comment, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to create comment' }, { status: 500 });
