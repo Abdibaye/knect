@@ -9,20 +9,22 @@ import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import z from "zod";
 
-const registerSchema = z.object({
-  fullName: z.string().min(1, "Full name is required"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  confirmPassword: z.string().min(8, "Please confirm your password"),
-  terms: z.literal(true, {
-    message: "You must accept the terms.",
-  }),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+const registerSchema = z
+  .object({
+    fullName: z.string().min(1, "Full name is required"),
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(8, "Password must be at least 8 characters"),
+    confirmPassword: z.string().min(8, "Please confirm your password"),
+    terms: z.literal(true, {
+      message: "You must accept the terms.",
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
-export default function RegisterForm(){
+export default function RegisterForm() {
   const router = useRouter();
   const [gogletransition, setGoogleTransition] = useTransition();
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -89,14 +91,14 @@ export default function RegisterForm(){
       await authClient.signIn.social({
         provider: "google",
         callbackURL: "/home",
-        fetchOptions: {
-          onSuccess: () => {
-              router.push('/home')
-          },
-          onError: (error) => {
-              toast.error("internal server error");
-          }
-         },
+        // fetchOptions: {
+        //   onSuccess: () => {
+        //       router.push('/home')
+        //   },
+        //   onError: (error) => {
+        //       toast.error("internal server error");
+        //   }
+        //  },
       });
     });
   }
@@ -167,11 +169,15 @@ export default function RegisterForm(){
             id="confirmPassword"
             type="password"
             value={formData.confirmPassword}
-            onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+            onChange={(e) =>
+              handleInputChange("confirmPassword", e.target.value)
+            }
             disabled={loading}
           />
           {formErrors.confirmPassword && (
-            <span className="text-red-500 text-xs">{formErrors.confirmPassword}</span>
+            <span className="text-red-500 text-xs">
+              {formErrors.confirmPassword}
+            </span>
           )}
         </div>
         <div className="flex items-center gap-2">
@@ -184,7 +190,10 @@ export default function RegisterForm(){
             className="accent-primary"
           />
           <Label htmlFor="terms">
-            I agree to the <a href="/terms" className="underline">terms and conditions</a>
+            I agree to the{" "}
+            <a href="/terms" className="underline">
+              terms and conditions
+            </a>
           </Label>
         </div>
         {formErrors.terms && (
