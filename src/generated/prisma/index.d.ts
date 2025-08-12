@@ -14,6 +14,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
+ * Model Notification
+ * 
+ */
+export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
+/**
  * Model User
  * 
  */
@@ -75,7 +80,8 @@ export type Event = $Result.DefaultSelection<Prisma.$EventPayload>
 export namespace $Enums {
   export const Role: {
   STUDENT: 'STUDENT',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  TEACHER: 'TEACHER'
 };
 
 export type Role = (typeof Role)[keyof typeof Role]
@@ -107,8 +113,8 @@ export const PostCategory: typeof $Enums.PostCategory
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more Notifications
+ * const notifications = await prisma.notification.findMany()
  * ```
  *
  *
@@ -128,8 +134,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Users
-   * const users = await prisma.user.findMany()
+   * // Fetch zero or more Notifications
+   * const notifications = await prisma.notification.findMany()
    * ```
    *
    *
@@ -226,6 +232,16 @@ export class PrismaClient<
   }>>
 
       /**
+   * `prisma.notification`: Exposes CRUD operations for the **Notification** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Notifications
+    * const notifications = await prisma.notification.findMany()
+    * ```
+    */
+  get notification(): Prisma.NotificationDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
@@ -774,6 +790,7 @@ export namespace Prisma {
 
 
   export const ModelName: {
+    Notification: 'Notification',
     User: 'User',
     Session: 'Session',
     Account: 'Account',
@@ -803,10 +820,84 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "account" | "verification" | "post" | "comment" | "like" | "resource" | "group" | "groupMember" | "event"
+      modelProps: "notification" | "user" | "session" | "account" | "verification" | "post" | "comment" | "like" | "resource" | "group" | "groupMember" | "event"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
+      Notification: {
+        payload: Prisma.$NotificationPayload<ExtArgs>
+        fields: Prisma.NotificationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NotificationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NotificationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          findFirst: {
+            args: Prisma.NotificationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NotificationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          findMany: {
+            args: Prisma.NotificationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+          }
+          create: {
+            args: Prisma.NotificationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          createMany: {
+            args: Prisma.NotificationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.NotificationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+          }
+          delete: {
+            args: Prisma.NotificationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          update: {
+            args: Prisma.NotificationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          deleteMany: {
+            args: Prisma.NotificationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NotificationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.NotificationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+          }
+          upsert: {
+            args: Prisma.NotificationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          aggregate: {
+            args: Prisma.NotificationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNotification>
+          }
+          groupBy: {
+            args: Prisma.NotificationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NotificationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NotificationCountArgs<ExtArgs>
+            result: $Utils.Optional<NotificationCountAggregateOutputType> | number
+          }
+        }
+      }
       User: {
         payload: Prisma.$UserPayload<ExtArgs>
         fields: Prisma.UserFieldRefs
@@ -1705,6 +1796,7 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
+    notification?: NotificationOmit
     user?: UserOmit
     session?: SessionOmit
     account?: AccountOmit
@@ -1810,27 +1902,29 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    sessions: number
-    accounts: number
-    Post: number
-    Resource: number
+    Event: number
     createdGroups: number
     groupMemberships: number
-    Event: number
+    Resource: number
+    accounts: number
     Comments: number
     Likes: number
+    Post: number
+    sessions: number
+    notifications: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    sessions?: boolean | UserCountOutputTypeCountSessionsArgs
-    accounts?: boolean | UserCountOutputTypeCountAccountsArgs
-    Post?: boolean | UserCountOutputTypeCountPostArgs
-    Resource?: boolean | UserCountOutputTypeCountResourceArgs
+    Event?: boolean | UserCountOutputTypeCountEventArgs
     createdGroups?: boolean | UserCountOutputTypeCountCreatedGroupsArgs
     groupMemberships?: boolean | UserCountOutputTypeCountGroupMembershipsArgs
-    Event?: boolean | UserCountOutputTypeCountEventArgs
+    Resource?: boolean | UserCountOutputTypeCountResourceArgs
+    accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     Comments?: boolean | UserCountOutputTypeCountCommentsArgs
     Likes?: boolean | UserCountOutputTypeCountLikesArgs
+    Post?: boolean | UserCountOutputTypeCountPostArgs
+    sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+    notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   }
 
   // Custom InputTypes
@@ -1847,29 +1941,8 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SessionWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AccountWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountPostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PostWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountResourceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ResourceWhereInput
+  export type UserCountOutputTypeCountEventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventWhereInput
   }
 
   /**
@@ -1889,8 +1962,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountEventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EventWhereInput
+  export type UserCountOutputTypeCountResourceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResourceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccountWhereInput
   }
 
   /**
@@ -1907,6 +1987,27 @@ export namespace Prisma {
     where?: LikeWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PostWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SessionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
 
   /**
    * Count Type PostCountOutputType
@@ -1915,11 +2016,13 @@ export namespace Prisma {
   export type PostCountOutputType = {
     comments: number
     likes: number
+    notifications: number
   }
 
   export type PostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     comments?: boolean | PostCountOutputTypeCountCommentsArgs
     likes?: boolean | PostCountOutputTypeCountLikesArgs
+    notifications?: boolean | PostCountOutputTypeCountNotificationsArgs
   }
 
   // Custom InputTypes
@@ -1945,6 +2048,44 @@ export namespace Prisma {
    */
   export type PostCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LikeWhereInput
+  }
+
+  /**
+   * PostCountOutputType without action
+   */
+  export type PostCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+  }
+
+
+  /**
+   * Count Type CommentCountOutputType
+   */
+
+  export type CommentCountOutputType = {
+    notifications: number
+  }
+
+  export type CommentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notifications?: boolean | CommentCountOutputTypeCountNotificationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CommentCountOutputType without action
+   */
+  export type CommentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentCountOutputType
+     */
+    select?: CommentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CommentCountOutputType without action
+   */
+  export type CommentCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
   }
 
 
@@ -1984,6 +2125,1157 @@ export namespace Prisma {
    */
 
   /**
+   * Model Notification
+   */
+
+  export type AggregateNotification = {
+    _count: NotificationCountAggregateOutputType | null
+    _min: NotificationMinAggregateOutputType | null
+    _max: NotificationMaxAggregateOutputType | null
+  }
+
+  export type NotificationMinAggregateOutputType = {
+    id: string | null
+    type: string | null
+    message: string | null
+    userId: string | null
+    postId: string | null
+    commentId: string | null
+    read: boolean | null
+    createdAt: Date | null
+  }
+
+  export type NotificationMaxAggregateOutputType = {
+    id: string | null
+    type: string | null
+    message: string | null
+    userId: string | null
+    postId: string | null
+    commentId: string | null
+    read: boolean | null
+    createdAt: Date | null
+  }
+
+  export type NotificationCountAggregateOutputType = {
+    id: number
+    type: number
+    message: number
+    userId: number
+    postId: number
+    commentId: number
+    read: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type NotificationMinAggregateInputType = {
+    id?: true
+    type?: true
+    message?: true
+    userId?: true
+    postId?: true
+    commentId?: true
+    read?: true
+    createdAt?: true
+  }
+
+  export type NotificationMaxAggregateInputType = {
+    id?: true
+    type?: true
+    message?: true
+    userId?: true
+    postId?: true
+    commentId?: true
+    read?: true
+    createdAt?: true
+  }
+
+  export type NotificationCountAggregateInputType = {
+    id?: true
+    type?: true
+    message?: true
+    userId?: true
+    postId?: true
+    commentId?: true
+    read?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type NotificationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Notification to aggregate.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Notifications
+    **/
+    _count?: true | NotificationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NotificationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NotificationMaxAggregateInputType
+  }
+
+  export type GetNotificationAggregateType<T extends NotificationAggregateArgs> = {
+        [P in keyof T & keyof AggregateNotification]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNotification[P]>
+      : GetScalarType<T[P], AggregateNotification[P]>
+  }
+
+
+
+
+  export type NotificationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithAggregationInput | NotificationOrderByWithAggregationInput[]
+    by: NotificationScalarFieldEnum[] | NotificationScalarFieldEnum
+    having?: NotificationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NotificationCountAggregateInputType | true
+    _min?: NotificationMinAggregateInputType
+    _max?: NotificationMaxAggregateInputType
+  }
+
+  export type NotificationGroupByOutputType = {
+    id: string
+    type: string
+    message: string
+    userId: string
+    postId: string | null
+    commentId: string | null
+    read: boolean
+    createdAt: Date
+    _count: NotificationCountAggregateOutputType | null
+    _min: NotificationMinAggregateOutputType | null
+    _max: NotificationMaxAggregateOutputType | null
+  }
+
+  type GetNotificationGroupByPayload<T extends NotificationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NotificationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NotificationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NotificationGroupByOutputType[P]>
+            : GetScalarType<T[P], NotificationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NotificationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    message?: boolean
+    userId?: boolean
+    postId?: boolean
+    commentId?: boolean
+    read?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | Notification$postArgs<ExtArgs>
+    comment?: boolean | Notification$commentArgs<ExtArgs>
+  }, ExtArgs["result"]["notification"]>
+
+  export type NotificationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    message?: boolean
+    userId?: boolean
+    postId?: boolean
+    commentId?: boolean
+    read?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | Notification$postArgs<ExtArgs>
+    comment?: boolean | Notification$commentArgs<ExtArgs>
+  }, ExtArgs["result"]["notification"]>
+
+  export type NotificationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    message?: boolean
+    userId?: boolean
+    postId?: boolean
+    commentId?: boolean
+    read?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | Notification$postArgs<ExtArgs>
+    comment?: boolean | Notification$commentArgs<ExtArgs>
+  }, ExtArgs["result"]["notification"]>
+
+  export type NotificationSelectScalar = {
+    id?: boolean
+    type?: boolean
+    message?: boolean
+    userId?: boolean
+    postId?: boolean
+    commentId?: boolean
+    read?: boolean
+    createdAt?: boolean
+  }
+
+  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "message" | "userId" | "postId" | "commentId" | "read" | "createdAt", ExtArgs["result"]["notification"]>
+  export type NotificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | Notification$postArgs<ExtArgs>
+    comment?: boolean | Notification$commentArgs<ExtArgs>
+  }
+  export type NotificationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | Notification$postArgs<ExtArgs>
+    comment?: boolean | Notification$commentArgs<ExtArgs>
+  }
+  export type NotificationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | Notification$postArgs<ExtArgs>
+    comment?: boolean | Notification$commentArgs<ExtArgs>
+  }
+
+  export type $NotificationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Notification"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      post: Prisma.$PostPayload<ExtArgs> | null
+      comment: Prisma.$CommentPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      type: string
+      message: string
+      userId: string
+      postId: string | null
+      commentId: string | null
+      read: boolean
+      createdAt: Date
+    }, ExtArgs["result"]["notification"]>
+    composites: {}
+  }
+
+  type NotificationGetPayload<S extends boolean | null | undefined | NotificationDefaultArgs> = $Result.GetResult<Prisma.$NotificationPayload, S>
+
+  type NotificationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<NotificationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: NotificationCountAggregateInputType | true
+    }
+
+  export interface NotificationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Notification'], meta: { name: 'Notification' } }
+    /**
+     * Find zero or one Notification that matches the filter.
+     * @param {NotificationFindUniqueArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NotificationFindUniqueArgs>(args: SelectSubset<T, NotificationFindUniqueArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Notification that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {NotificationFindUniqueOrThrowArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NotificationFindUniqueOrThrowArgs>(args: SelectSubset<T, NotificationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Notification that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationFindFirstArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NotificationFindFirstArgs>(args?: SelectSubset<T, NotificationFindFirstArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Notification that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationFindFirstOrThrowArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NotificationFindFirstOrThrowArgs>(args?: SelectSubset<T, NotificationFindFirstOrThrowArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Notifications that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Notifications
+     * const notifications = await prisma.notification.findMany()
+     * 
+     * // Get first 10 Notifications
+     * const notifications = await prisma.notification.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const notificationWithIdOnly = await prisma.notification.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends NotificationFindManyArgs>(args?: SelectSubset<T, NotificationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Notification.
+     * @param {NotificationCreateArgs} args - Arguments to create a Notification.
+     * @example
+     * // Create one Notification
+     * const Notification = await prisma.notification.create({
+     *   data: {
+     *     // ... data to create a Notification
+     *   }
+     * })
+     * 
+     */
+    create<T extends NotificationCreateArgs>(args: SelectSubset<T, NotificationCreateArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Notifications.
+     * @param {NotificationCreateManyArgs} args - Arguments to create many Notifications.
+     * @example
+     * // Create many Notifications
+     * const notification = await prisma.notification.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NotificationCreateManyArgs>(args?: SelectSubset<T, NotificationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Notifications and returns the data saved in the database.
+     * @param {NotificationCreateManyAndReturnArgs} args - Arguments to create many Notifications.
+     * @example
+     * // Create many Notifications
+     * const notification = await prisma.notification.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Notifications and only return the `id`
+     * const notificationWithIdOnly = await prisma.notification.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends NotificationCreateManyAndReturnArgs>(args?: SelectSubset<T, NotificationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Notification.
+     * @param {NotificationDeleteArgs} args - Arguments to delete one Notification.
+     * @example
+     * // Delete one Notification
+     * const Notification = await prisma.notification.delete({
+     *   where: {
+     *     // ... filter to delete one Notification
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NotificationDeleteArgs>(args: SelectSubset<T, NotificationDeleteArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Notification.
+     * @param {NotificationUpdateArgs} args - Arguments to update one Notification.
+     * @example
+     * // Update one Notification
+     * const notification = await prisma.notification.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NotificationUpdateArgs>(args: SelectSubset<T, NotificationUpdateArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Notifications.
+     * @param {NotificationDeleteManyArgs} args - Arguments to filter Notifications to delete.
+     * @example
+     * // Delete a few Notifications
+     * const { count } = await prisma.notification.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NotificationDeleteManyArgs>(args?: SelectSubset<T, NotificationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Notifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Notifications
+     * const notification = await prisma.notification.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NotificationUpdateManyArgs>(args: SelectSubset<T, NotificationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Notifications and returns the data updated in the database.
+     * @param {NotificationUpdateManyAndReturnArgs} args - Arguments to update many Notifications.
+     * @example
+     * // Update many Notifications
+     * const notification = await prisma.notification.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Notifications and only return the `id`
+     * const notificationWithIdOnly = await prisma.notification.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends NotificationUpdateManyAndReturnArgs>(args: SelectSubset<T, NotificationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Notification.
+     * @param {NotificationUpsertArgs} args - Arguments to update or create a Notification.
+     * @example
+     * // Update or create a Notification
+     * const notification = await prisma.notification.upsert({
+     *   create: {
+     *     // ... data to create a Notification
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Notification we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NotificationUpsertArgs>(args: SelectSubset<T, NotificationUpsertArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Notifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationCountArgs} args - Arguments to filter Notifications to count.
+     * @example
+     * // Count the number of Notifications
+     * const count = await prisma.notification.count({
+     *   where: {
+     *     // ... the filter for the Notifications we want to count
+     *   }
+     * })
+    **/
+    count<T extends NotificationCountArgs>(
+      args?: Subset<T, NotificationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NotificationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Notification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NotificationAggregateArgs>(args: Subset<T, NotificationAggregateArgs>): Prisma.PrismaPromise<GetNotificationAggregateType<T>>
+
+    /**
+     * Group by Notification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NotificationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NotificationGroupByArgs['orderBy'] }
+        : { orderBy?: NotificationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NotificationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNotificationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Notification model
+   */
+  readonly fields: NotificationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Notification.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NotificationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    post<T extends Notification$postArgs<ExtArgs> = {}>(args?: Subset<T, Notification$postArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    comment<T extends Notification$commentArgs<ExtArgs> = {}>(args?: Subset<T, Notification$commentArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Notification model
+   */
+  interface NotificationFieldRefs {
+    readonly id: FieldRef<"Notification", 'String'>
+    readonly type: FieldRef<"Notification", 'String'>
+    readonly message: FieldRef<"Notification", 'String'>
+    readonly userId: FieldRef<"Notification", 'String'>
+    readonly postId: FieldRef<"Notification", 'String'>
+    readonly commentId: FieldRef<"Notification", 'String'>
+    readonly read: FieldRef<"Notification", 'Boolean'>
+    readonly createdAt: FieldRef<"Notification", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Notification findUnique
+   */
+  export type NotificationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where: NotificationWhereUniqueInput
+  }
+
+  /**
+   * Notification findUniqueOrThrow
+   */
+  export type NotificationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where: NotificationWhereUniqueInput
+  }
+
+  /**
+   * Notification findFirst
+   */
+  export type NotificationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Notifications.
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Notifications.
+     */
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Notification findFirstOrThrow
+   */
+  export type NotificationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Notifications.
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Notifications.
+     */
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Notification findMany
+   */
+  export type NotificationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notifications to fetch.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Notifications.
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * Notification create
+   */
+  export type NotificationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Notification.
+     */
+    data: XOR<NotificationCreateInput, NotificationUncheckedCreateInput>
+  }
+
+  /**
+   * Notification createMany
+   */
+  export type NotificationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Notifications.
+     */
+    data: NotificationCreateManyInput | NotificationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Notification createManyAndReturn
+   */
+  export type NotificationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Notifications.
+     */
+    data: NotificationCreateManyInput | NotificationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Notification update
+   */
+  export type NotificationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Notification.
+     */
+    data: XOR<NotificationUpdateInput, NotificationUncheckedUpdateInput>
+    /**
+     * Choose, which Notification to update.
+     */
+    where: NotificationWhereUniqueInput
+  }
+
+  /**
+   * Notification updateMany
+   */
+  export type NotificationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Notifications.
+     */
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyInput>
+    /**
+     * Filter which Notifications to update
+     */
+    where?: NotificationWhereInput
+    /**
+     * Limit how many Notifications to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Notification updateManyAndReturn
+   */
+  export type NotificationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * The data used to update Notifications.
+     */
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyInput>
+    /**
+     * Filter which Notifications to update
+     */
+    where?: NotificationWhereInput
+    /**
+     * Limit how many Notifications to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Notification upsert
+   */
+  export type NotificationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Notification to update in case it exists.
+     */
+    where: NotificationWhereUniqueInput
+    /**
+     * In case the Notification found by the `where` argument doesn't exist, create a new Notification with this data.
+     */
+    create: XOR<NotificationCreateInput, NotificationUncheckedCreateInput>
+    /**
+     * In case the Notification was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NotificationUpdateInput, NotificationUncheckedUpdateInput>
+  }
+
+  /**
+   * Notification delete
+   */
+  export type NotificationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter which Notification to delete.
+     */
+    where: NotificationWhereUniqueInput
+  }
+
+  /**
+   * Notification deleteMany
+   */
+  export type NotificationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Notifications to delete
+     */
+    where?: NotificationWhereInput
+    /**
+     * Limit how many Notifications to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Notification.post
+   */
+  export type Notification$postArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Post
+     */
+    select?: PostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Post
+     */
+    omit?: PostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    where?: PostWhereInput
+  }
+
+  /**
+   * Notification.comment
+   */
+  export type Notification$commentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+  }
+
+  /**
+   * Notification without action
+   */
+  export type NotificationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model User
    */
 
@@ -1999,15 +3291,16 @@ export namespace Prisma {
     email: string | null
     emailVerified: boolean | null
     image: string | null
-    bio: string | null
-    username: string | null
-    location: string | null
-    university: string | null
-    department: string | null
-    yearOfStudy: string | null
-    researchFocus: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    bio: string | null
+    location: string | null
+    username: string | null
+    department: string | null
+    researchFocus: string | null
+    university: string | null
+    yearOfStudy: string | null
+    role: $Enums.Role | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -2016,15 +3309,16 @@ export namespace Prisma {
     email: string | null
     emailVerified: boolean | null
     image: string | null
-    bio: string | null
-    username: string | null
-    location: string | null
-    university: string | null
-    department: string | null
-    yearOfStudy: string | null
-    researchFocus: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    bio: string | null
+    location: string | null
+    username: string | null
+    department: string | null
+    researchFocus: string | null
+    university: string | null
+    yearOfStudy: string | null
+    role: $Enums.Role | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -2033,17 +3327,18 @@ export namespace Prisma {
     email: number
     emailVerified: number
     image: number
-    bio: number
-    username: number
-    location: number
-    university: number
-    department: number
-    yearOfStudy: number
-    skills: number
-    researchFocus: number
-    publications: number
     createdAt: number
     updatedAt: number
+    bio: number
+    location: number
+    username: number
+    department: number
+    publications: number
+    researchFocus: number
+    skills: number
+    university: number
+    yearOfStudy: number
+    role: number
     _all: number
   }
 
@@ -2054,15 +3349,16 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
-    bio?: true
-    username?: true
-    location?: true
-    university?: true
-    department?: true
-    yearOfStudy?: true
-    researchFocus?: true
     createdAt?: true
     updatedAt?: true
+    bio?: true
+    location?: true
+    username?: true
+    department?: true
+    researchFocus?: true
+    university?: true
+    yearOfStudy?: true
+    role?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -2071,15 +3367,16 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
-    bio?: true
-    username?: true
-    location?: true
-    university?: true
-    department?: true
-    yearOfStudy?: true
-    researchFocus?: true
     createdAt?: true
     updatedAt?: true
+    bio?: true
+    location?: true
+    username?: true
+    department?: true
+    researchFocus?: true
+    university?: true
+    yearOfStudy?: true
+    role?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -2088,17 +3385,18 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
-    bio?: true
-    username?: true
-    location?: true
-    university?: true
-    department?: true
-    yearOfStudy?: true
-    skills?: true
-    researchFocus?: true
-    publications?: true
     createdAt?: true
     updatedAt?: true
+    bio?: true
+    location?: true
+    username?: true
+    department?: true
+    publications?: true
+    researchFocus?: true
+    skills?: true
+    university?: true
+    yearOfStudy?: true
+    role?: true
     _all?: true
   }
 
@@ -2180,17 +3478,18 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image: string | null
-    bio: string | null
-    username: string | null
-    location: string | null
-    university: string | null
-    department: string | null
-    yearOfStudy: string | null
-    skills: string[]
-    researchFocus: string | null
-    publications: string[]
     createdAt: Date
     updatedAt: Date
+    bio: string | null
+    location: string | null
+    username: string | null
+    department: string | null
+    publications: string[]
+    researchFocus: string | null
+    skills: string[]
+    university: string | null
+    yearOfStudy: string | null
+    role: $Enums.Role
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -2216,26 +3515,28 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
-    bio?: boolean
-    username?: boolean
-    location?: boolean
-    university?: boolean
-    department?: boolean
-    yearOfStudy?: boolean
-    skills?: boolean
-    researchFocus?: boolean
-    publications?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    sessions?: boolean | User$sessionsArgs<ExtArgs>
-    accounts?: boolean | User$accountsArgs<ExtArgs>
-    Post?: boolean | User$PostArgs<ExtArgs>
-    Resource?: boolean | User$ResourceArgs<ExtArgs>
+    bio?: boolean
+    location?: boolean
+    username?: boolean
+    department?: boolean
+    publications?: boolean
+    researchFocus?: boolean
+    skills?: boolean
+    university?: boolean
+    yearOfStudy?: boolean
+    role?: boolean
+    Event?: boolean | User$EventArgs<ExtArgs>
     createdGroups?: boolean | User$createdGroupsArgs<ExtArgs>
     groupMemberships?: boolean | User$groupMembershipsArgs<ExtArgs>
-    Event?: boolean | User$EventArgs<ExtArgs>
+    Resource?: boolean | User$ResourceArgs<ExtArgs>
+    accounts?: boolean | User$accountsArgs<ExtArgs>
     Comments?: boolean | User$CommentsArgs<ExtArgs>
     Likes?: boolean | User$LikesArgs<ExtArgs>
+    Post?: boolean | User$PostArgs<ExtArgs>
+    sessions?: boolean | User$sessionsArgs<ExtArgs>
+    notifications?: boolean | User$notificationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2245,17 +3546,18 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
-    bio?: boolean
-    username?: boolean
-    location?: boolean
-    university?: boolean
-    department?: boolean
-    yearOfStudy?: boolean
-    skills?: boolean
-    researchFocus?: boolean
-    publications?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    bio?: boolean
+    location?: boolean
+    username?: boolean
+    department?: boolean
+    publications?: boolean
+    researchFocus?: boolean
+    skills?: boolean
+    university?: boolean
+    yearOfStudy?: boolean
+    role?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2264,17 +3566,18 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
-    bio?: boolean
-    username?: boolean
-    location?: boolean
-    university?: boolean
-    department?: boolean
-    yearOfStudy?: boolean
-    skills?: boolean
-    researchFocus?: boolean
-    publications?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    bio?: boolean
+    location?: boolean
+    username?: boolean
+    department?: boolean
+    publications?: boolean
+    researchFocus?: boolean
+    skills?: boolean
+    university?: boolean
+    yearOfStudy?: boolean
+    role?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2283,30 +3586,32 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
-    bio?: boolean
-    username?: boolean
-    location?: boolean
-    university?: boolean
-    department?: boolean
-    yearOfStudy?: boolean
-    skills?: boolean
-    researchFocus?: boolean
-    publications?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    bio?: boolean
+    location?: boolean
+    username?: boolean
+    department?: boolean
+    publications?: boolean
+    researchFocus?: boolean
+    skills?: boolean
+    university?: boolean
+    yearOfStudy?: boolean
+    role?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "bio" | "username" | "location" | "university" | "department" | "yearOfStudy" | "skills" | "researchFocus" | "publications" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "bio" | "location" | "username" | "department" | "publications" | "researchFocus" | "skills" | "university" | "yearOfStudy" | "role", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    sessions?: boolean | User$sessionsArgs<ExtArgs>
-    accounts?: boolean | User$accountsArgs<ExtArgs>
-    Post?: boolean | User$PostArgs<ExtArgs>
-    Resource?: boolean | User$ResourceArgs<ExtArgs>
+    Event?: boolean | User$EventArgs<ExtArgs>
     createdGroups?: boolean | User$createdGroupsArgs<ExtArgs>
     groupMemberships?: boolean | User$groupMembershipsArgs<ExtArgs>
-    Event?: boolean | User$EventArgs<ExtArgs>
+    Resource?: boolean | User$ResourceArgs<ExtArgs>
+    accounts?: boolean | User$accountsArgs<ExtArgs>
     Comments?: boolean | User$CommentsArgs<ExtArgs>
     Likes?: boolean | User$LikesArgs<ExtArgs>
+    Post?: boolean | User$PostArgs<ExtArgs>
+    sessions?: boolean | User$sessionsArgs<ExtArgs>
+    notifications?: boolean | User$notificationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2315,15 +3620,16 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      sessions: Prisma.$SessionPayload<ExtArgs>[]
-      accounts: Prisma.$AccountPayload<ExtArgs>[]
-      Post: Prisma.$PostPayload<ExtArgs>[]
-      Resource: Prisma.$ResourcePayload<ExtArgs>[]
+      Event: Prisma.$EventPayload<ExtArgs>[]
       createdGroups: Prisma.$GroupPayload<ExtArgs>[]
       groupMemberships: Prisma.$GroupMemberPayload<ExtArgs>[]
-      Event: Prisma.$EventPayload<ExtArgs>[]
+      Resource: Prisma.$ResourcePayload<ExtArgs>[]
+      accounts: Prisma.$AccountPayload<ExtArgs>[]
       Comments: Prisma.$CommentPayload<ExtArgs>[]
       Likes: Prisma.$LikePayload<ExtArgs>[]
+      Post: Prisma.$PostPayload<ExtArgs>[]
+      sessions: Prisma.$SessionPayload<ExtArgs>[]
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2331,17 +3637,18 @@ export namespace Prisma {
       email: string
       emailVerified: boolean
       image: string | null
-      bio: string | null
-      username: string | null
-      location: string | null
-      university: string | null
-      department: string | null
-      yearOfStudy: string | null
-      skills: string[]
-      researchFocus: string | null
-      publications: string[]
       createdAt: Date
       updatedAt: Date
+      bio: string | null
+      location: string | null
+      username: string | null
+      department: string | null
+      publications: string[]
+      researchFocus: string | null
+      skills: string[]
+      university: string | null
+      yearOfStudy: string | null
+      role: $Enums.Role
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2736,15 +4043,16 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Post<T extends User$PostArgs<ExtArgs> = {}>(args?: Subset<T, User$PostArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Resource<T extends User$ResourceArgs<ExtArgs> = {}>(args?: Subset<T, User$ResourceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Event<T extends User$EventArgs<ExtArgs> = {}>(args?: Subset<T, User$EventArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     createdGroups<T extends User$createdGroupsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdGroupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     groupMemberships<T extends User$groupMembershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$groupMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Event<T extends User$EventArgs<ExtArgs> = {}>(args?: Subset<T, User$EventArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Resource<T extends User$ResourceArgs<ExtArgs> = {}>(args?: Subset<T, User$ResourceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Comments<T extends User$CommentsArgs<ExtArgs> = {}>(args?: Subset<T, User$CommentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Likes<T extends User$LikesArgs<ExtArgs> = {}>(args?: Subset<T, User$LikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Post<T extends User$PostArgs<ExtArgs> = {}>(args?: Subset<T, User$PostArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2779,17 +4087,18 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly emailVerified: FieldRef<"User", 'Boolean'>
     readonly image: FieldRef<"User", 'String'>
-    readonly bio: FieldRef<"User", 'String'>
-    readonly username: FieldRef<"User", 'String'>
-    readonly location: FieldRef<"User", 'String'>
-    readonly university: FieldRef<"User", 'String'>
-    readonly department: FieldRef<"User", 'String'>
-    readonly yearOfStudy: FieldRef<"User", 'String'>
-    readonly skills: FieldRef<"User", 'String[]'>
-    readonly researchFocus: FieldRef<"User", 'String'>
-    readonly publications: FieldRef<"User", 'String[]'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly bio: FieldRef<"User", 'String'>
+    readonly location: FieldRef<"User", 'String'>
+    readonly username: FieldRef<"User", 'String'>
+    readonly department: FieldRef<"User", 'String'>
+    readonly publications: FieldRef<"User", 'String[]'>
+    readonly researchFocus: FieldRef<"User", 'String'>
+    readonly skills: FieldRef<"User", 'String[]'>
+    readonly university: FieldRef<"User", 'String'>
+    readonly yearOfStudy: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'Role'>
   }
     
 
@@ -3178,99 +4487,27 @@ export namespace Prisma {
   }
 
   /**
-   * User.sessions
+   * User.Event
    */
-  export type User$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$EventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Session
+     * Select specific fields to fetch from the Event
      */
-    select?: SessionSelect<ExtArgs> | null
+    select?: EventSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Session
+     * Omit specific fields from the Event
      */
-    omit?: SessionOmit<ExtArgs> | null
+    omit?: EventOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SessionInclude<ExtArgs> | null
-    where?: SessionWhereInput
-    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
-    cursor?: SessionWhereUniqueInput
+    include?: EventInclude<ExtArgs> | null
+    where?: EventWhereInput
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    cursor?: EventWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
-  }
-
-  /**
-   * User.accounts
-   */
-  export type User$accountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Account
-     */
-    select?: AccountSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Account
-     */
-    omit?: AccountOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AccountInclude<ExtArgs> | null
-    where?: AccountWhereInput
-    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
-    cursor?: AccountWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
-  }
-
-  /**
-   * User.Post
-   */
-  export type User$PostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    where?: PostWhereInput
-    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
-    cursor?: PostWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
-  }
-
-  /**
-   * User.Resource
-   */
-  export type User$ResourceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Resource
-     */
-    select?: ResourceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Resource
-     */
-    omit?: ResourceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ResourceInclude<ExtArgs> | null
-    where?: ResourceWhereInput
-    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
-    cursor?: ResourceWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
   }
 
   /**
@@ -3322,27 +4559,51 @@ export namespace Prisma {
   }
 
   /**
-   * User.Event
+   * User.Resource
    */
-  export type User$EventArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$ResourceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Event
+     * Select specific fields to fetch from the Resource
      */
-    select?: EventSelect<ExtArgs> | null
+    select?: ResourceSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Event
+     * Omit specific fields from the Resource
      */
-    omit?: EventOmit<ExtArgs> | null
+    omit?: ResourceOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: EventInclude<ExtArgs> | null
-    where?: EventWhereInput
-    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
-    cursor?: EventWhereUniqueInput
+    include?: ResourceInclude<ExtArgs> | null
+    where?: ResourceWhereInput
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    cursor?: ResourceWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+  }
+
+  /**
+   * User.accounts
+   */
+  export type User$accountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    where?: AccountWhereInput
+    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
+    cursor?: AccountWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
   }
 
   /**
@@ -3391,6 +4652,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: LikeScalarFieldEnum | LikeScalarFieldEnum[]
+  }
+
+  /**
+   * User.Post
+   */
+  export type User$PostArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Post
+     */
+    select?: PostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Post
+     */
+    omit?: PostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    where?: PostWhereInput
+    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
+    cursor?: PostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
+  }
+
+  /**
+   * User.sessions
+   */
+  export type User$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    where?: SessionWhereInput
+    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    cursor?: SessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
+   * User.notifications
+   */
+  export type User$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
   }
 
   /**
@@ -6692,149 +8025,149 @@ export namespace Prisma {
   }
 
   export type PostAvgAggregateOutputType = {
-    views: number | null
     downloads: number | null
+    views: number | null
   }
 
   export type PostSumAggregateOutputType = {
-    views: number | null
     downloads: number | null
+    views: number | null
   }
 
   export type PostMinAggregateOutputType = {
     id: string | null
     title: string | null
     content: string | null
-    summary: string | null
     imageUrl: string | null
-    resourceType: string | null
-    role: string | null
-    university: string | null
-    department: string | null
-    doi: string | null
-    citation: string | null
-    visibility: string | null
     createdAt: Date | null
     updatedAt: Date | null
     authorId: string | null
-    views: number | null
+    citation: string | null
+    department: string | null
+    doi: string | null
     downloads: number | null
+    resourceType: string | null
+    role: string | null
+    summary: string | null
+    university: string | null
+    views: number | null
+    visibility: string | null
   }
 
   export type PostMaxAggregateOutputType = {
     id: string | null
     title: string | null
     content: string | null
-    summary: string | null
     imageUrl: string | null
-    resourceType: string | null
-    role: string | null
-    university: string | null
-    department: string | null
-    doi: string | null
-    citation: string | null
-    visibility: string | null
     createdAt: Date | null
     updatedAt: Date | null
     authorId: string | null
-    views: number | null
+    citation: string | null
+    department: string | null
+    doi: string | null
     downloads: number | null
+    resourceType: string | null
+    role: string | null
+    summary: string | null
+    university: string | null
+    views: number | null
+    visibility: string | null
   }
 
   export type PostCountAggregateOutputType = {
     id: number
     title: number
     content: number
-    summary: number
     imageUrl: number
-    resourceType: number
-    role: number
-    university: number
-    department: number
-    doi: number
-    citation: number
-    attachments: number
-    visibility: number
     createdAt: number
     updatedAt: number
     authorId: number
     tags: number
-    views: number
+    attachments: number
+    citation: number
+    department: number
+    doi: number
     downloads: number
+    resourceType: number
+    role: number
+    summary: number
+    university: number
+    views: number
+    visibility: number
     _all: number
   }
 
 
   export type PostAvgAggregateInputType = {
-    views?: true
     downloads?: true
+    views?: true
   }
 
   export type PostSumAggregateInputType = {
-    views?: true
     downloads?: true
+    views?: true
   }
 
   export type PostMinAggregateInputType = {
     id?: true
     title?: true
     content?: true
-    summary?: true
     imageUrl?: true
-    resourceType?: true
-    role?: true
-    university?: true
-    department?: true
-    doi?: true
-    citation?: true
-    visibility?: true
     createdAt?: true
     updatedAt?: true
     authorId?: true
-    views?: true
+    citation?: true
+    department?: true
+    doi?: true
     downloads?: true
+    resourceType?: true
+    role?: true
+    summary?: true
+    university?: true
+    views?: true
+    visibility?: true
   }
 
   export type PostMaxAggregateInputType = {
     id?: true
     title?: true
     content?: true
-    summary?: true
     imageUrl?: true
-    resourceType?: true
-    role?: true
-    university?: true
-    department?: true
-    doi?: true
-    citation?: true
-    visibility?: true
     createdAt?: true
     updatedAt?: true
     authorId?: true
-    views?: true
+    citation?: true
+    department?: true
+    doi?: true
     downloads?: true
+    resourceType?: true
+    role?: true
+    summary?: true
+    university?: true
+    views?: true
+    visibility?: true
   }
 
   export type PostCountAggregateInputType = {
     id?: true
     title?: true
     content?: true
-    summary?: true
     imageUrl?: true
-    resourceType?: true
-    role?: true
-    university?: true
-    department?: true
-    doi?: true
-    citation?: true
-    attachments?: true
-    visibility?: true
     createdAt?: true
     updatedAt?: true
     authorId?: true
     tags?: true
-    views?: true
+    attachments?: true
+    citation?: true
+    department?: true
+    doi?: true
     downloads?: true
+    resourceType?: true
+    role?: true
+    summary?: true
+    university?: true
+    views?: true
+    visibility?: true
     _all?: true
   }
 
@@ -6928,22 +8261,22 @@ export namespace Prisma {
     id: string
     title: string
     content: string
-    summary: string | null
     imageUrl: string | null
-    resourceType: string | null
-    role: string | null
-    university: string | null
-    department: string | null
-    doi: string | null
-    citation: string | null
-    attachments: JsonValue | null
-    visibility: string | null
     createdAt: Date
     updatedAt: Date
     authorId: string
     tags: string[]
-    views: number
+    attachments: JsonValue | null
+    citation: string | null
+    department: string | null
+    doi: string | null
     downloads: number
+    resourceType: string | null
+    role: string | null
+    summary: string | null
+    university: string | null
+    views: number
+    visibility: string | null
     _count: PostCountAggregateOutputType | null
     _avg: PostAvgAggregateOutputType | null
     _sum: PostSumAggregateOutputType | null
@@ -6969,25 +8302,26 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
-    summary?: boolean
     imageUrl?: boolean
-    resourceType?: boolean
-    role?: boolean
-    university?: boolean
-    department?: boolean
-    doi?: boolean
-    citation?: boolean
-    attachments?: boolean
-    visibility?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     authorId?: boolean
     tags?: boolean
-    views?: boolean
+    attachments?: boolean
+    citation?: boolean
+    department?: boolean
+    doi?: boolean
     downloads?: boolean
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    resourceType?: boolean
+    role?: boolean
+    summary?: boolean
+    university?: boolean
+    views?: boolean
+    visibility?: boolean
     comments?: boolean | Post$commentsArgs<ExtArgs>
     likes?: boolean | Post$likesArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+    notifications?: boolean | Post$notificationsArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -6995,22 +8329,22 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
-    summary?: boolean
     imageUrl?: boolean
-    resourceType?: boolean
-    role?: boolean
-    university?: boolean
-    department?: boolean
-    doi?: boolean
-    citation?: boolean
-    attachments?: boolean
-    visibility?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     authorId?: boolean
     tags?: boolean
-    views?: boolean
+    attachments?: boolean
+    citation?: boolean
+    department?: boolean
+    doi?: boolean
     downloads?: boolean
+    resourceType?: boolean
+    role?: boolean
+    summary?: boolean
+    university?: boolean
+    views?: boolean
+    visibility?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -7018,22 +8352,22 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
-    summary?: boolean
     imageUrl?: boolean
-    resourceType?: boolean
-    role?: boolean
-    university?: boolean
-    department?: boolean
-    doi?: boolean
-    citation?: boolean
-    attachments?: boolean
-    visibility?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     authorId?: boolean
     tags?: boolean
-    views?: boolean
+    attachments?: boolean
+    citation?: boolean
+    department?: boolean
+    doi?: boolean
     downloads?: boolean
+    resourceType?: boolean
+    role?: boolean
+    summary?: boolean
+    university?: boolean
+    views?: boolean
+    visibility?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -7041,29 +8375,30 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     content?: boolean
-    summary?: boolean
     imageUrl?: boolean
-    resourceType?: boolean
-    role?: boolean
-    university?: boolean
-    department?: boolean
-    doi?: boolean
-    citation?: boolean
-    attachments?: boolean
-    visibility?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     authorId?: boolean
     tags?: boolean
-    views?: boolean
+    attachments?: boolean
+    citation?: boolean
+    department?: boolean
+    doi?: boolean
     downloads?: boolean
+    resourceType?: boolean
+    role?: boolean
+    summary?: boolean
+    university?: boolean
+    views?: boolean
+    visibility?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "summary" | "imageUrl" | "resourceType" | "role" | "university" | "department" | "doi" | "citation" | "attachments" | "visibility" | "createdAt" | "updatedAt" | "authorId" | "tags" | "views" | "downloads", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "imageUrl" | "createdAt" | "updatedAt" | "authorId" | "tags" | "attachments" | "citation" | "department" | "doi" | "downloads" | "resourceType" | "role" | "summary" | "university" | "views" | "visibility", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    author?: boolean | UserDefaultArgs<ExtArgs>
     comments?: boolean | Post$commentsArgs<ExtArgs>
     likes?: boolean | Post$likesArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+    notifications?: boolean | Post$notificationsArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7076,30 +8411,31 @@ export namespace Prisma {
   export type $PostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Post"
     objects: {
-      author: Prisma.$UserPayload<ExtArgs>
       comments: Prisma.$CommentPayload<ExtArgs>[]
       likes: Prisma.$LikePayload<ExtArgs>[]
+      author: Prisma.$UserPayload<ExtArgs>
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
       content: string
-      summary: string | null
       imageUrl: string | null
-      resourceType: string | null
-      role: string | null
-      university: string | null
-      department: string | null
-      doi: string | null
-      citation: string | null
-      attachments: Prisma.JsonValue | null
-      visibility: string | null
       createdAt: Date
       updatedAt: Date
       authorId: string
       tags: string[]
-      views: number
+      attachments: Prisma.JsonValue | null
+      citation: string | null
+      department: string | null
+      doi: string | null
       downloads: number
+      resourceType: string | null
+      role: string | null
+      summary: string | null
+      university: string | null
+      views: number
+      visibility: string | null
     }, ExtArgs["result"]["post"]>
     composites: {}
   }
@@ -7494,9 +8830,10 @@ export namespace Prisma {
    */
   export interface Prisma__PostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     comments<T extends Post$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Post$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     likes<T extends Post$likesArgs<ExtArgs> = {}>(args?: Subset<T, Post$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    notifications<T extends Post$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Post$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7529,22 +8866,22 @@ export namespace Prisma {
     readonly id: FieldRef<"Post", 'String'>
     readonly title: FieldRef<"Post", 'String'>
     readonly content: FieldRef<"Post", 'String'>
-    readonly summary: FieldRef<"Post", 'String'>
     readonly imageUrl: FieldRef<"Post", 'String'>
-    readonly resourceType: FieldRef<"Post", 'String'>
-    readonly role: FieldRef<"Post", 'String'>
-    readonly university: FieldRef<"Post", 'String'>
-    readonly department: FieldRef<"Post", 'String'>
-    readonly doi: FieldRef<"Post", 'String'>
-    readonly citation: FieldRef<"Post", 'String'>
-    readonly attachments: FieldRef<"Post", 'Json'>
-    readonly visibility: FieldRef<"Post", 'String'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
     readonly updatedAt: FieldRef<"Post", 'DateTime'>
     readonly authorId: FieldRef<"Post", 'String'>
     readonly tags: FieldRef<"Post", 'String[]'>
-    readonly views: FieldRef<"Post", 'Int'>
+    readonly attachments: FieldRef<"Post", 'Json'>
+    readonly citation: FieldRef<"Post", 'String'>
+    readonly department: FieldRef<"Post", 'String'>
+    readonly doi: FieldRef<"Post", 'String'>
     readonly downloads: FieldRef<"Post", 'Int'>
+    readonly resourceType: FieldRef<"Post", 'String'>
+    readonly role: FieldRef<"Post", 'String'>
+    readonly summary: FieldRef<"Post", 'String'>
+    readonly university: FieldRef<"Post", 'String'>
+    readonly views: FieldRef<"Post", 'Int'>
+    readonly visibility: FieldRef<"Post", 'String'>
   }
     
 
@@ -7989,6 +9326,30 @@ export namespace Prisma {
   }
 
   /**
+   * Post.notifications
+   */
+  export type Post$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
    * Post without action
    */
   export type PostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8171,8 +9532,10 @@ export namespace Prisma {
     createdAt?: boolean
     postId?: boolean
     authorId?: boolean
-    post?: boolean | PostDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | PostDefaultArgs<ExtArgs>
+    notifications?: boolean | Comment$notificationsArgs<ExtArgs>
+    _count?: boolean | CommentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8181,8 +9544,8 @@ export namespace Prisma {
     createdAt?: boolean
     postId?: boolean
     authorId?: boolean
-    post?: boolean | PostDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | PostDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8191,8 +9554,8 @@ export namespace Prisma {
     createdAt?: boolean
     postId?: boolean
     authorId?: boolean
-    post?: boolean | PostDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | PostDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectScalar = {
@@ -8205,23 +9568,26 @@ export namespace Prisma {
 
   export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "createdAt" | "postId" | "authorId", ExtArgs["result"]["comment"]>
   export type CommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    post?: boolean | PostDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | PostDefaultArgs<ExtArgs>
+    notifications?: boolean | Comment$notificationsArgs<ExtArgs>
+    _count?: boolean | CommentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CommentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    post?: boolean | PostDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | PostDefaultArgs<ExtArgs>
   }
   export type CommentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    post?: boolean | PostDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
+    post?: boolean | PostDefaultArgs<ExtArgs>
   }
 
   export type $CommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Comment"
     objects: {
-      post: Prisma.$PostPayload<ExtArgs>
       author: Prisma.$UserPayload<ExtArgs>
+      post: Prisma.$PostPayload<ExtArgs>
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8623,8 +9989,9 @@ export namespace Prisma {
    */
   export interface Prisma__CommentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    post<T extends PostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PostDefaultArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    post<T extends PostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PostDefaultArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    notifications<T extends Comment$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Comment$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9052,6 +10419,30 @@ export namespace Prisma {
      * Limit how many Comments to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Comment.notifications
+   */
+  export type Comment$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
   }
 
   /**
@@ -10126,112 +11517,112 @@ export namespace Prisma {
   }
 
   export type ResourceAvgAggregateOutputType = {
-    rating: number | null
     downloads: number | null
+    rating: number | null
   }
 
   export type ResourceSumAggregateOutputType = {
-    rating: number | null
     downloads: number | null
+    rating: number | null
   }
 
   export type ResourceMinAggregateOutputType = {
     id: string | null
     title: string | null
-    rating: number | null
-    downloads: number | null
-    description: string | null
-    author: string | null
-    downloadUrl: string | null
-    externalUrl: string | null
     uploadedById: string | null
     createdAt: Date | null
+    author: string | null
+    description: string | null
+    downloadUrl: string | null
+    downloads: number | null
+    externalUrl: string | null
+    rating: number | null
     updatedAt: Date | null
   }
 
   export type ResourceMaxAggregateOutputType = {
     id: string | null
     title: string | null
-    rating: number | null
-    downloads: number | null
-    description: string | null
-    author: string | null
-    downloadUrl: string | null
-    externalUrl: string | null
     uploadedById: string | null
     createdAt: Date | null
+    author: string | null
+    description: string | null
+    downloadUrl: string | null
+    downloads: number | null
+    externalUrl: string | null
+    rating: number | null
     updatedAt: Date | null
   }
 
   export type ResourceCountAggregateOutputType = {
     id: number
     title: number
-    rating: number
-    downloads: number
-    categories: number
-    description: number
-    tags: number
-    author: number
-    downloadUrl: number
-    externalUrl: number
     uploadedById: number
     createdAt: number
+    author: number
+    categories: number
+    description: number
+    downloadUrl: number
+    downloads: number
+    externalUrl: number
+    rating: number
+    tags: number
     updatedAt: number
     _all: number
   }
 
 
   export type ResourceAvgAggregateInputType = {
-    rating?: true
     downloads?: true
+    rating?: true
   }
 
   export type ResourceSumAggregateInputType = {
-    rating?: true
     downloads?: true
+    rating?: true
   }
 
   export type ResourceMinAggregateInputType = {
     id?: true
     title?: true
-    rating?: true
-    downloads?: true
-    description?: true
-    author?: true
-    downloadUrl?: true
-    externalUrl?: true
     uploadedById?: true
     createdAt?: true
+    author?: true
+    description?: true
+    downloadUrl?: true
+    downloads?: true
+    externalUrl?: true
+    rating?: true
     updatedAt?: true
   }
 
   export type ResourceMaxAggregateInputType = {
     id?: true
     title?: true
-    rating?: true
-    downloads?: true
-    description?: true
-    author?: true
-    downloadUrl?: true
-    externalUrl?: true
     uploadedById?: true
     createdAt?: true
+    author?: true
+    description?: true
+    downloadUrl?: true
+    downloads?: true
+    externalUrl?: true
+    rating?: true
     updatedAt?: true
   }
 
   export type ResourceCountAggregateInputType = {
     id?: true
     title?: true
-    rating?: true
-    downloads?: true
-    categories?: true
-    description?: true
-    tags?: true
-    author?: true
-    downloadUrl?: true
-    externalUrl?: true
     uploadedById?: true
     createdAt?: true
+    author?: true
+    categories?: true
+    description?: true
+    downloadUrl?: true
+    downloads?: true
+    externalUrl?: true
+    rating?: true
+    tags?: true
     updatedAt?: true
     _all?: true
   }
@@ -10325,16 +11716,16 @@ export namespace Prisma {
   export type ResourceGroupByOutputType = {
     id: string
     title: string
-    rating: number
-    downloads: number
-    categories: string[]
-    description: string
-    tags: string[]
-    author: string
-    downloadUrl: string
-    externalUrl: string | null
     uploadedById: string
     createdAt: Date
+    author: string
+    categories: string[]
+    description: string
+    downloadUrl: string
+    downloads: number
+    externalUrl: string | null
+    rating: number
+    tags: string[]
     updatedAt: Date
     _count: ResourceCountAggregateOutputType | null
     _avg: ResourceAvgAggregateOutputType | null
@@ -10360,16 +11751,16 @@ export namespace Prisma {
   export type ResourceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    rating?: boolean
-    downloads?: boolean
-    categories?: boolean
-    description?: boolean
-    tags?: boolean
-    author?: boolean
-    downloadUrl?: boolean
-    externalUrl?: boolean
     uploadedById?: boolean
     createdAt?: boolean
+    author?: boolean
+    categories?: boolean
+    description?: boolean
+    downloadUrl?: boolean
+    downloads?: boolean
+    externalUrl?: boolean
+    rating?: boolean
+    tags?: boolean
     updatedAt?: boolean
     uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["resource"]>
@@ -10377,16 +11768,16 @@ export namespace Prisma {
   export type ResourceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    rating?: boolean
-    downloads?: boolean
-    categories?: boolean
-    description?: boolean
-    tags?: boolean
-    author?: boolean
-    downloadUrl?: boolean
-    externalUrl?: boolean
     uploadedById?: boolean
     createdAt?: boolean
+    author?: boolean
+    categories?: boolean
+    description?: boolean
+    downloadUrl?: boolean
+    downloads?: boolean
+    externalUrl?: boolean
+    rating?: boolean
+    tags?: boolean
     updatedAt?: boolean
     uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["resource"]>
@@ -10394,16 +11785,16 @@ export namespace Prisma {
   export type ResourceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    rating?: boolean
-    downloads?: boolean
-    categories?: boolean
-    description?: boolean
-    tags?: boolean
-    author?: boolean
-    downloadUrl?: boolean
-    externalUrl?: boolean
     uploadedById?: boolean
     createdAt?: boolean
+    author?: boolean
+    categories?: boolean
+    description?: boolean
+    downloadUrl?: boolean
+    downloads?: boolean
+    externalUrl?: boolean
+    rating?: boolean
+    tags?: boolean
     updatedAt?: boolean
     uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["resource"]>
@@ -10411,20 +11802,20 @@ export namespace Prisma {
   export type ResourceSelectScalar = {
     id?: boolean
     title?: boolean
-    rating?: boolean
-    downloads?: boolean
-    categories?: boolean
-    description?: boolean
-    tags?: boolean
-    author?: boolean
-    downloadUrl?: boolean
-    externalUrl?: boolean
     uploadedById?: boolean
     createdAt?: boolean
+    author?: boolean
+    categories?: boolean
+    description?: boolean
+    downloadUrl?: boolean
+    downloads?: boolean
+    externalUrl?: boolean
+    rating?: boolean
+    tags?: boolean
     updatedAt?: boolean
   }
 
-  export type ResourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "rating" | "downloads" | "categories" | "description" | "tags" | "author" | "downloadUrl" | "externalUrl" | "uploadedById" | "createdAt" | "updatedAt", ExtArgs["result"]["resource"]>
+  export type ResourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "uploadedById" | "createdAt" | "author" | "categories" | "description" | "downloadUrl" | "downloads" | "externalUrl" | "rating" | "tags" | "updatedAt", ExtArgs["result"]["resource"]>
   export type ResourceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -10443,16 +11834,16 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
-      rating: number
-      downloads: number
-      categories: string[]
-      description: string
-      tags: string[]
-      author: string
-      downloadUrl: string
-      externalUrl: string | null
       uploadedById: string
       createdAt: Date
+      author: string
+      categories: string[]
+      description: string
+      downloadUrl: string
+      downloads: number
+      externalUrl: string | null
+      rating: number
+      tags: string[]
       updatedAt: Date
     }, ExtArgs["result"]["resource"]>
     composites: {}
@@ -10880,16 +12271,16 @@ export namespace Prisma {
   interface ResourceFieldRefs {
     readonly id: FieldRef<"Resource", 'String'>
     readonly title: FieldRef<"Resource", 'String'>
-    readonly rating: FieldRef<"Resource", 'Float'>
-    readonly downloads: FieldRef<"Resource", 'Int'>
-    readonly categories: FieldRef<"Resource", 'String[]'>
-    readonly description: FieldRef<"Resource", 'String'>
-    readonly tags: FieldRef<"Resource", 'String[]'>
-    readonly author: FieldRef<"Resource", 'String'>
-    readonly downloadUrl: FieldRef<"Resource", 'String'>
-    readonly externalUrl: FieldRef<"Resource", 'String'>
     readonly uploadedById: FieldRef<"Resource", 'String'>
     readonly createdAt: FieldRef<"Resource", 'DateTime'>
+    readonly author: FieldRef<"Resource", 'String'>
+    readonly categories: FieldRef<"Resource", 'String[]'>
+    readonly description: FieldRef<"Resource", 'String'>
+    readonly downloadUrl: FieldRef<"Resource", 'String'>
+    readonly downloads: FieldRef<"Resource", 'Int'>
+    readonly externalUrl: FieldRef<"Resource", 'String'>
+    readonly rating: FieldRef<"Resource", 'Float'>
+    readonly tags: FieldRef<"Resource", 'String[]'>
     readonly updatedAt: FieldRef<"Resource", 'DateTime'>
   }
     
@@ -14544,23 +15935,38 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+  export const NotificationScalarFieldEnum: {
+    id: 'id',
+    type: 'type',
+    message: 'message',
+    userId: 'userId',
+    postId: 'postId',
+    commentId: 'commentId',
+    read: 'read',
+    createdAt: 'createdAt'
+  };
+
+  export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
   export const UserScalarFieldEnum: {
     id: 'id',
     name: 'name',
     email: 'email',
     emailVerified: 'emailVerified',
     image: 'image',
-    bio: 'bio',
-    username: 'username',
-    location: 'location',
-    university: 'university',
-    department: 'department',
-    yearOfStudy: 'yearOfStudy',
-    skills: 'skills',
-    researchFocus: 'researchFocus',
-    publications: 'publications',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    bio: 'bio',
+    location: 'location',
+    username: 'username',
+    department: 'department',
+    publications: 'publications',
+    researchFocus: 'researchFocus',
+    skills: 'skills',
+    university: 'university',
+    yearOfStudy: 'yearOfStudy',
+    role: 'role'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -14615,22 +16021,22 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     content: 'content',
-    summary: 'summary',
     imageUrl: 'imageUrl',
-    resourceType: 'resourceType',
-    role: 'role',
-    university: 'university',
-    department: 'department',
-    doi: 'doi',
-    citation: 'citation',
-    attachments: 'attachments',
-    visibility: 'visibility',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     authorId: 'authorId',
     tags: 'tags',
+    attachments: 'attachments',
+    citation: 'citation',
+    department: 'department',
+    doi: 'doi',
+    downloads: 'downloads',
+    resourceType: 'resourceType',
+    role: 'role',
+    summary: 'summary',
+    university: 'university',
     views: 'views',
-    downloads: 'downloads'
+    visibility: 'visibility'
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -14659,16 +16065,16 @@ export namespace Prisma {
   export const ResourceScalarFieldEnum: {
     id: 'id',
     title: 'title',
-    rating: 'rating',
-    downloads: 'downloads',
-    categories: 'categories',
-    description: 'description',
-    tags: 'tags',
-    author: 'author',
-    downloadUrl: 'downloadUrl',
-    externalUrl: 'externalUrl',
     uploadedById: 'uploadedById',
     createdAt: 'createdAt',
+    author: 'author',
+    categories: 'categories',
+    description: 'description',
+    downloadUrl: 'downloadUrl',
+    downloads: 'downloads',
+    externalUrl: 'externalUrl',
+    rating: 'rating',
+    tags: 'tags',
     updatedAt: 'updatedAt'
   };
 
@@ -14791,6 +16197,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Role'
+   */
+  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+  /**
+   * Reference to a field of type 'Role[]'
+   */
+  export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Json'
    */
   export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -14835,6 +16255,82 @@ export namespace Prisma {
    */
 
 
+  export type NotificationWhereInput = {
+    AND?: NotificationWhereInput | NotificationWhereInput[]
+    OR?: NotificationWhereInput[]
+    NOT?: NotificationWhereInput | NotificationWhereInput[]
+    id?: StringFilter<"Notification"> | string
+    type?: StringFilter<"Notification"> | string
+    message?: StringFilter<"Notification"> | string
+    userId?: StringFilter<"Notification"> | string
+    postId?: StringNullableFilter<"Notification"> | string | null
+    commentId?: StringNullableFilter<"Notification"> | string | null
+    read?: BoolFilter<"Notification"> | boolean
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    post?: XOR<PostNullableScalarRelationFilter, PostWhereInput> | null
+    comment?: XOR<CommentNullableScalarRelationFilter, CommentWhereInput> | null
+  }
+
+  export type NotificationOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    message?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrderInput | SortOrder
+    commentId?: SortOrderInput | SortOrder
+    read?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    post?: PostOrderByWithRelationInput
+    comment?: CommentOrderByWithRelationInput
+  }
+
+  export type NotificationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: NotificationWhereInput | NotificationWhereInput[]
+    OR?: NotificationWhereInput[]
+    NOT?: NotificationWhereInput | NotificationWhereInput[]
+    type?: StringFilter<"Notification"> | string
+    message?: StringFilter<"Notification"> | string
+    userId?: StringFilter<"Notification"> | string
+    postId?: StringNullableFilter<"Notification"> | string | null
+    commentId?: StringNullableFilter<"Notification"> | string | null
+    read?: BoolFilter<"Notification"> | boolean
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    post?: XOR<PostNullableScalarRelationFilter, PostWhereInput> | null
+    comment?: XOR<CommentNullableScalarRelationFilter, CommentWhereInput> | null
+  }, "id">
+
+  export type NotificationOrderByWithAggregationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    message?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrderInput | SortOrder
+    commentId?: SortOrderInput | SortOrder
+    read?: SortOrder
+    createdAt?: SortOrder
+    _count?: NotificationCountOrderByAggregateInput
+    _max?: NotificationMaxOrderByAggregateInput
+    _min?: NotificationMinOrderByAggregateInput
+  }
+
+  export type NotificationScalarWhereWithAggregatesInput = {
+    AND?: NotificationScalarWhereWithAggregatesInput | NotificationScalarWhereWithAggregatesInput[]
+    OR?: NotificationScalarWhereWithAggregatesInput[]
+    NOT?: NotificationScalarWhereWithAggregatesInput | NotificationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Notification"> | string
+    type?: StringWithAggregatesFilter<"Notification"> | string
+    message?: StringWithAggregatesFilter<"Notification"> | string
+    userId?: StringWithAggregatesFilter<"Notification"> | string
+    postId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    commentId?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    read?: BoolWithAggregatesFilter<"Notification"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
+  }
+
   export type UserWhereInput = {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -14844,26 +16340,28 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
-    bio?: StringNullableFilter<"User"> | string | null
-    username?: StringNullableFilter<"User"> | string | null
-    location?: StringNullableFilter<"User"> | string | null
-    university?: StringNullableFilter<"User"> | string | null
-    department?: StringNullableFilter<"User"> | string | null
-    yearOfStudy?: StringNullableFilter<"User"> | string | null
-    skills?: StringNullableListFilter<"User">
-    researchFocus?: StringNullableFilter<"User"> | string | null
-    publications?: StringNullableListFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    sessions?: SessionListRelationFilter
-    accounts?: AccountListRelationFilter
-    Post?: PostListRelationFilter
-    Resource?: ResourceListRelationFilter
+    bio?: StringNullableFilter<"User"> | string | null
+    location?: StringNullableFilter<"User"> | string | null
+    username?: StringNullableFilter<"User"> | string | null
+    department?: StringNullableFilter<"User"> | string | null
+    publications?: StringNullableListFilter<"User">
+    researchFocus?: StringNullableFilter<"User"> | string | null
+    skills?: StringNullableListFilter<"User">
+    university?: StringNullableFilter<"User"> | string | null
+    yearOfStudy?: StringNullableFilter<"User"> | string | null
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    Event?: EventListRelationFilter
     createdGroups?: GroupListRelationFilter
     groupMemberships?: GroupMemberListRelationFilter
-    Event?: EventListRelationFilter
+    Resource?: ResourceListRelationFilter
+    accounts?: AccountListRelationFilter
     Comments?: CommentListRelationFilter
     Likes?: LikeListRelationFilter
+    Post?: PostListRelationFilter
+    sessions?: SessionListRelationFilter
+    notifications?: NotificationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -14872,26 +16370,28 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrderInput | SortOrder
-    bio?: SortOrderInput | SortOrder
-    username?: SortOrderInput | SortOrder
-    location?: SortOrderInput | SortOrder
-    university?: SortOrderInput | SortOrder
-    department?: SortOrderInput | SortOrder
-    yearOfStudy?: SortOrderInput | SortOrder
-    skills?: SortOrder
-    researchFocus?: SortOrderInput | SortOrder
-    publications?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    sessions?: SessionOrderByRelationAggregateInput
-    accounts?: AccountOrderByRelationAggregateInput
-    Post?: PostOrderByRelationAggregateInput
-    Resource?: ResourceOrderByRelationAggregateInput
+    bio?: SortOrderInput | SortOrder
+    location?: SortOrderInput | SortOrder
+    username?: SortOrderInput | SortOrder
+    department?: SortOrderInput | SortOrder
+    publications?: SortOrder
+    researchFocus?: SortOrderInput | SortOrder
+    skills?: SortOrder
+    university?: SortOrderInput | SortOrder
+    yearOfStudy?: SortOrderInput | SortOrder
+    role?: SortOrder
+    Event?: EventOrderByRelationAggregateInput
     createdGroups?: GroupOrderByRelationAggregateInput
     groupMemberships?: GroupMemberOrderByRelationAggregateInput
-    Event?: EventOrderByRelationAggregateInput
+    Resource?: ResourceOrderByRelationAggregateInput
+    accounts?: AccountOrderByRelationAggregateInput
     Comments?: CommentOrderByRelationAggregateInput
     Likes?: LikeOrderByRelationAggregateInput
+    Post?: PostOrderByRelationAggregateInput
+    sessions?: SessionOrderByRelationAggregateInput
+    notifications?: NotificationOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -14903,26 +16403,28 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     emailVerified?: BoolFilter<"User"> | boolean
     image?: StringNullableFilter<"User"> | string | null
-    bio?: StringNullableFilter<"User"> | string | null
-    username?: StringNullableFilter<"User"> | string | null
-    location?: StringNullableFilter<"User"> | string | null
-    university?: StringNullableFilter<"User"> | string | null
-    department?: StringNullableFilter<"User"> | string | null
-    yearOfStudy?: StringNullableFilter<"User"> | string | null
-    skills?: StringNullableListFilter<"User">
-    researchFocus?: StringNullableFilter<"User"> | string | null
-    publications?: StringNullableListFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    sessions?: SessionListRelationFilter
-    accounts?: AccountListRelationFilter
-    Post?: PostListRelationFilter
-    Resource?: ResourceListRelationFilter
+    bio?: StringNullableFilter<"User"> | string | null
+    location?: StringNullableFilter<"User"> | string | null
+    username?: StringNullableFilter<"User"> | string | null
+    department?: StringNullableFilter<"User"> | string | null
+    publications?: StringNullableListFilter<"User">
+    researchFocus?: StringNullableFilter<"User"> | string | null
+    skills?: StringNullableListFilter<"User">
+    university?: StringNullableFilter<"User"> | string | null
+    yearOfStudy?: StringNullableFilter<"User"> | string | null
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    Event?: EventListRelationFilter
     createdGroups?: GroupListRelationFilter
     groupMemberships?: GroupMemberListRelationFilter
-    Event?: EventListRelationFilter
+    Resource?: ResourceListRelationFilter
+    accounts?: AccountListRelationFilter
     Comments?: CommentListRelationFilter
     Likes?: LikeListRelationFilter
+    Post?: PostListRelationFilter
+    sessions?: SessionListRelationFilter
+    notifications?: NotificationListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -14931,17 +16433,18 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrderInput | SortOrder
-    bio?: SortOrderInput | SortOrder
-    username?: SortOrderInput | SortOrder
-    location?: SortOrderInput | SortOrder
-    university?: SortOrderInput | SortOrder
-    department?: SortOrderInput | SortOrder
-    yearOfStudy?: SortOrderInput | SortOrder
-    skills?: SortOrder
-    researchFocus?: SortOrderInput | SortOrder
-    publications?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    bio?: SortOrderInput | SortOrder
+    location?: SortOrderInput | SortOrder
+    username?: SortOrderInput | SortOrder
+    department?: SortOrderInput | SortOrder
+    publications?: SortOrder
+    researchFocus?: SortOrderInput | SortOrder
+    skills?: SortOrder
+    university?: SortOrderInput | SortOrder
+    yearOfStudy?: SortOrderInput | SortOrder
+    role?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -14956,17 +16459,18 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     emailVerified?: BoolWithAggregatesFilter<"User"> | boolean
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
-    bio?: StringNullableWithAggregatesFilter<"User"> | string | null
-    username?: StringNullableWithAggregatesFilter<"User"> | string | null
-    location?: StringNullableWithAggregatesFilter<"User"> | string | null
-    university?: StringNullableWithAggregatesFilter<"User"> | string | null
-    department?: StringNullableWithAggregatesFilter<"User"> | string | null
-    yearOfStudy?: StringNullableWithAggregatesFilter<"User"> | string | null
-    skills?: StringNullableListFilter<"User">
-    researchFocus?: StringNullableWithAggregatesFilter<"User"> | string | null
-    publications?: StringNullableListFilter<"User">
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    bio?: StringNullableWithAggregatesFilter<"User"> | string | null
+    location?: StringNullableWithAggregatesFilter<"User"> | string | null
+    username?: StringNullableWithAggregatesFilter<"User"> | string | null
+    department?: StringNullableWithAggregatesFilter<"User"> | string | null
+    publications?: StringNullableListFilter<"User">
+    researchFocus?: StringNullableWithAggregatesFilter<"User"> | string | null
+    skills?: StringNullableListFilter<"User">
+    university?: StringNullableWithAggregatesFilter<"User"> | string | null
+    yearOfStudy?: StringNullableWithAggregatesFilter<"User"> | string | null
+    role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   }
 
   export type SessionWhereInput = {
@@ -15198,50 +16702,52 @@ export namespace Prisma {
     id?: StringFilter<"Post"> | string
     title?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
-    summary?: StringNullableFilter<"Post"> | string | null
     imageUrl?: StringNullableFilter<"Post"> | string | null
-    resourceType?: StringNullableFilter<"Post"> | string | null
-    role?: StringNullableFilter<"Post"> | string | null
-    university?: StringNullableFilter<"Post"> | string | null
-    department?: StringNullableFilter<"Post"> | string | null
-    doi?: StringNullableFilter<"Post"> | string | null
-    citation?: StringNullableFilter<"Post"> | string | null
-    attachments?: JsonNullableFilter<"Post">
-    visibility?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     authorId?: StringFilter<"Post"> | string
     tags?: StringNullableListFilter<"Post">
-    views?: IntFilter<"Post"> | number
+    attachments?: JsonNullableFilter<"Post">
+    citation?: StringNullableFilter<"Post"> | string | null
+    department?: StringNullableFilter<"Post"> | string | null
+    doi?: StringNullableFilter<"Post"> | string | null
     downloads?: IntFilter<"Post"> | number
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    resourceType?: StringNullableFilter<"Post"> | string | null
+    role?: StringNullableFilter<"Post"> | string | null
+    summary?: StringNullableFilter<"Post"> | string | null
+    university?: StringNullableFilter<"Post"> | string | null
+    views?: IntFilter<"Post"> | number
+    visibility?: StringNullableFilter<"Post"> | string | null
     comments?: CommentListRelationFilter
     likes?: LikeListRelationFilter
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    notifications?: NotificationListRelationFilter
   }
 
   export type PostOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    summary?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
-    resourceType?: SortOrderInput | SortOrder
-    role?: SortOrderInput | SortOrder
-    university?: SortOrderInput | SortOrder
-    department?: SortOrderInput | SortOrder
-    doi?: SortOrderInput | SortOrder
-    citation?: SortOrderInput | SortOrder
-    attachments?: SortOrderInput | SortOrder
-    visibility?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
     tags?: SortOrder
-    views?: SortOrder
+    attachments?: SortOrderInput | SortOrder
+    citation?: SortOrderInput | SortOrder
+    department?: SortOrderInput | SortOrder
+    doi?: SortOrderInput | SortOrder
     downloads?: SortOrder
-    author?: UserOrderByWithRelationInput
+    resourceType?: SortOrderInput | SortOrder
+    role?: SortOrderInput | SortOrder
+    summary?: SortOrderInput | SortOrder
+    university?: SortOrderInput | SortOrder
+    views?: SortOrder
+    visibility?: SortOrderInput | SortOrder
     comments?: CommentOrderByRelationAggregateInput
     likes?: LikeOrderByRelationAggregateInput
+    author?: UserOrderByWithRelationInput
+    notifications?: NotificationOrderByRelationAggregateInput
   }
 
   export type PostWhereUniqueInput = Prisma.AtLeast<{
@@ -15251,47 +16757,48 @@ export namespace Prisma {
     NOT?: PostWhereInput | PostWhereInput[]
     title?: StringFilter<"Post"> | string
     content?: StringFilter<"Post"> | string
-    summary?: StringNullableFilter<"Post"> | string | null
     imageUrl?: StringNullableFilter<"Post"> | string | null
-    resourceType?: StringNullableFilter<"Post"> | string | null
-    role?: StringNullableFilter<"Post"> | string | null
-    university?: StringNullableFilter<"Post"> | string | null
-    department?: StringNullableFilter<"Post"> | string | null
-    doi?: StringNullableFilter<"Post"> | string | null
-    citation?: StringNullableFilter<"Post"> | string | null
-    attachments?: JsonNullableFilter<"Post">
-    visibility?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     authorId?: StringFilter<"Post"> | string
     tags?: StringNullableListFilter<"Post">
-    views?: IntFilter<"Post"> | number
+    attachments?: JsonNullableFilter<"Post">
+    citation?: StringNullableFilter<"Post"> | string | null
+    department?: StringNullableFilter<"Post"> | string | null
+    doi?: StringNullableFilter<"Post"> | string | null
     downloads?: IntFilter<"Post"> | number
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    resourceType?: StringNullableFilter<"Post"> | string | null
+    role?: StringNullableFilter<"Post"> | string | null
+    summary?: StringNullableFilter<"Post"> | string | null
+    university?: StringNullableFilter<"Post"> | string | null
+    views?: IntFilter<"Post"> | number
+    visibility?: StringNullableFilter<"Post"> | string | null
     comments?: CommentListRelationFilter
     likes?: LikeListRelationFilter
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    notifications?: NotificationListRelationFilter
   }, "id">
 
   export type PostOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    summary?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
-    resourceType?: SortOrderInput | SortOrder
-    role?: SortOrderInput | SortOrder
-    university?: SortOrderInput | SortOrder
-    department?: SortOrderInput | SortOrder
-    doi?: SortOrderInput | SortOrder
-    citation?: SortOrderInput | SortOrder
-    attachments?: SortOrderInput | SortOrder
-    visibility?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
     tags?: SortOrder
-    views?: SortOrder
+    attachments?: SortOrderInput | SortOrder
+    citation?: SortOrderInput | SortOrder
+    department?: SortOrderInput | SortOrder
+    doi?: SortOrderInput | SortOrder
     downloads?: SortOrder
+    resourceType?: SortOrderInput | SortOrder
+    role?: SortOrderInput | SortOrder
+    summary?: SortOrderInput | SortOrder
+    university?: SortOrderInput | SortOrder
+    views?: SortOrder
+    visibility?: SortOrderInput | SortOrder
     _count?: PostCountOrderByAggregateInput
     _avg?: PostAvgOrderByAggregateInput
     _max?: PostMaxOrderByAggregateInput
@@ -15306,22 +16813,22 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Post"> | string
     title?: StringWithAggregatesFilter<"Post"> | string
     content?: StringWithAggregatesFilter<"Post"> | string
-    summary?: StringNullableWithAggregatesFilter<"Post"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"Post"> | string | null
-    resourceType?: StringNullableWithAggregatesFilter<"Post"> | string | null
-    role?: StringNullableWithAggregatesFilter<"Post"> | string | null
-    university?: StringNullableWithAggregatesFilter<"Post"> | string | null
-    department?: StringNullableWithAggregatesFilter<"Post"> | string | null
-    doi?: StringNullableWithAggregatesFilter<"Post"> | string | null
-    citation?: StringNullableWithAggregatesFilter<"Post"> | string | null
-    attachments?: JsonNullableWithAggregatesFilter<"Post">
-    visibility?: StringNullableWithAggregatesFilter<"Post"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     authorId?: StringWithAggregatesFilter<"Post"> | string
     tags?: StringNullableListFilter<"Post">
-    views?: IntWithAggregatesFilter<"Post"> | number
+    attachments?: JsonNullableWithAggregatesFilter<"Post">
+    citation?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    department?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    doi?: StringNullableWithAggregatesFilter<"Post"> | string | null
     downloads?: IntWithAggregatesFilter<"Post"> | number
+    resourceType?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    role?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    summary?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    university?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    views?: IntWithAggregatesFilter<"Post"> | number
+    visibility?: StringNullableWithAggregatesFilter<"Post"> | string | null
   }
 
   export type CommentWhereInput = {
@@ -15333,8 +16840,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     postId?: StringFilter<"Comment"> | string
     authorId?: StringFilter<"Comment"> | string
-    post?: XOR<PostScalarRelationFilter, PostWhereInput>
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    post?: XOR<PostScalarRelationFilter, PostWhereInput>
+    notifications?: NotificationListRelationFilter
   }
 
   export type CommentOrderByWithRelationInput = {
@@ -15343,8 +16851,9 @@ export namespace Prisma {
     createdAt?: SortOrder
     postId?: SortOrder
     authorId?: SortOrder
-    post?: PostOrderByWithRelationInput
     author?: UserOrderByWithRelationInput
+    post?: PostOrderByWithRelationInput
+    notifications?: NotificationOrderByRelationAggregateInput
   }
 
   export type CommentWhereUniqueInput = Prisma.AtLeast<{
@@ -15356,8 +16865,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Comment"> | Date | string
     postId?: StringFilter<"Comment"> | string
     authorId?: StringFilter<"Comment"> | string
-    post?: XOR<PostScalarRelationFilter, PostWhereInput>
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    post?: XOR<PostScalarRelationFilter, PostWhereInput>
+    notifications?: NotificationListRelationFilter
   }, "id">
 
   export type CommentOrderByWithAggregationInput = {
@@ -15437,16 +16947,16 @@ export namespace Prisma {
     NOT?: ResourceWhereInput | ResourceWhereInput[]
     id?: StringFilter<"Resource"> | string
     title?: StringFilter<"Resource"> | string
-    rating?: FloatFilter<"Resource"> | number
-    downloads?: IntFilter<"Resource"> | number
-    categories?: StringNullableListFilter<"Resource">
-    description?: StringFilter<"Resource"> | string
-    tags?: StringNullableListFilter<"Resource">
-    author?: StringFilter<"Resource"> | string
-    downloadUrl?: StringFilter<"Resource"> | string
-    externalUrl?: StringNullableFilter<"Resource"> | string | null
     uploadedById?: StringFilter<"Resource"> | string
     createdAt?: DateTimeFilter<"Resource"> | Date | string
+    author?: StringFilter<"Resource"> | string
+    categories?: StringNullableListFilter<"Resource">
+    description?: StringFilter<"Resource"> | string
+    downloadUrl?: StringFilter<"Resource"> | string
+    downloads?: IntFilter<"Resource"> | number
+    externalUrl?: StringNullableFilter<"Resource"> | string | null
+    rating?: FloatFilter<"Resource"> | number
+    tags?: StringNullableListFilter<"Resource">
     updatedAt?: DateTimeFilter<"Resource"> | Date | string
     uploadedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -15454,16 +16964,16 @@ export namespace Prisma {
   export type ResourceOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
-    rating?: SortOrder
-    downloads?: SortOrder
-    categories?: SortOrder
-    description?: SortOrder
-    tags?: SortOrder
-    author?: SortOrder
-    downloadUrl?: SortOrder
-    externalUrl?: SortOrderInput | SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
+    author?: SortOrder
+    categories?: SortOrder
+    description?: SortOrder
+    downloadUrl?: SortOrder
+    downloads?: SortOrder
+    externalUrl?: SortOrderInput | SortOrder
+    rating?: SortOrder
+    tags?: SortOrder
     updatedAt?: SortOrder
     uploadedBy?: UserOrderByWithRelationInput
   }
@@ -15474,16 +16984,16 @@ export namespace Prisma {
     OR?: ResourceWhereInput[]
     NOT?: ResourceWhereInput | ResourceWhereInput[]
     title?: StringFilter<"Resource"> | string
-    rating?: FloatFilter<"Resource"> | number
-    downloads?: IntFilter<"Resource"> | number
-    categories?: StringNullableListFilter<"Resource">
-    description?: StringFilter<"Resource"> | string
-    tags?: StringNullableListFilter<"Resource">
-    author?: StringFilter<"Resource"> | string
-    downloadUrl?: StringFilter<"Resource"> | string
-    externalUrl?: StringNullableFilter<"Resource"> | string | null
     uploadedById?: StringFilter<"Resource"> | string
     createdAt?: DateTimeFilter<"Resource"> | Date | string
+    author?: StringFilter<"Resource"> | string
+    categories?: StringNullableListFilter<"Resource">
+    description?: StringFilter<"Resource"> | string
+    downloadUrl?: StringFilter<"Resource"> | string
+    downloads?: IntFilter<"Resource"> | number
+    externalUrl?: StringNullableFilter<"Resource"> | string | null
+    rating?: FloatFilter<"Resource"> | number
+    tags?: StringNullableListFilter<"Resource">
     updatedAt?: DateTimeFilter<"Resource"> | Date | string
     uploadedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
@@ -15491,16 +17001,16 @@ export namespace Prisma {
   export type ResourceOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
-    rating?: SortOrder
-    downloads?: SortOrder
-    categories?: SortOrder
-    description?: SortOrder
-    tags?: SortOrder
-    author?: SortOrder
-    downloadUrl?: SortOrder
-    externalUrl?: SortOrderInput | SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
+    author?: SortOrder
+    categories?: SortOrder
+    description?: SortOrder
+    downloadUrl?: SortOrder
+    downloads?: SortOrder
+    externalUrl?: SortOrderInput | SortOrder
+    rating?: SortOrder
+    tags?: SortOrder
     updatedAt?: SortOrder
     _count?: ResourceCountOrderByAggregateInput
     _avg?: ResourceAvgOrderByAggregateInput
@@ -15515,16 +17025,16 @@ export namespace Prisma {
     NOT?: ResourceScalarWhereWithAggregatesInput | ResourceScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Resource"> | string
     title?: StringWithAggregatesFilter<"Resource"> | string
-    rating?: FloatWithAggregatesFilter<"Resource"> | number
-    downloads?: IntWithAggregatesFilter<"Resource"> | number
-    categories?: StringNullableListFilter<"Resource">
-    description?: StringWithAggregatesFilter<"Resource"> | string
-    tags?: StringNullableListFilter<"Resource">
-    author?: StringWithAggregatesFilter<"Resource"> | string
-    downloadUrl?: StringWithAggregatesFilter<"Resource"> | string
-    externalUrl?: StringNullableWithAggregatesFilter<"Resource"> | string | null
     uploadedById?: StringWithAggregatesFilter<"Resource"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
+    author?: StringWithAggregatesFilter<"Resource"> | string
+    categories?: StringNullableListFilter<"Resource">
+    description?: StringWithAggregatesFilter<"Resource"> | string
+    downloadUrl?: StringWithAggregatesFilter<"Resource"> | string
+    downloads?: IntWithAggregatesFilter<"Resource"> | number
+    externalUrl?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    rating?: FloatWithAggregatesFilter<"Resource"> | number
+    tags?: StringNullableListFilter<"Resource">
     updatedAt?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
   }
 
@@ -15704,32 +17214,108 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
   }
 
+  export type NotificationCreateInput = {
+    id?: string
+    type: string
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutNotificationsInput
+    post?: PostCreateNestedOneWithoutNotificationsInput
+    comment?: CommentCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateInput = {
+    id?: string
+    type: string
+    message: string
+    userId: string
+    postId?: string | null
+    commentId?: string | null
+    read?: boolean
+    createdAt?: Date | string
+  }
+
+  export type NotificationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutNotificationsNestedInput
+    post?: PostUpdateOneWithoutNotificationsNestedInput
+    comment?: CommentUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    commentId?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationCreateManyInput = {
+    id?: string
+    type: string
+    message: string
+    userId: string
+    postId?: string | null
+    commentId?: string | null
+    read?: boolean
+    createdAt?: Date | string
+  }
+
+  export type NotificationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    commentId?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateInput = {
     id: string
     name: string
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    Post?: PostCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Event?: EventCreateNestedManyWithoutCreatedByInput
+    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -15738,26 +17324,28 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -15766,26 +17354,28 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    Post?: PostUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -15794,26 +17384,28 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -15822,17 +17414,18 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
   }
 
   export type UserUpdateManyMutationInput = {
@@ -15841,17 +17434,18 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -15860,17 +17454,18 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
   export type SessionCreateInput = {
@@ -16127,169 +17722,174 @@ export namespace Prisma {
     id?: string
     title: string
     content: string
-    summary?: string | null
     imageUrl?: string | null
-    resourceType?: string | null
-    role?: string | null
-    university?: string | null
-    department?: string | null
-    doi?: string | null
-    citation?: string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
-    views?: number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: string | null
+    department?: string | null
+    doi?: string | null
     downloads?: number
-    author: UserCreateNestedOneWithoutPostInput
+    resourceType?: string | null
+    role?: string | null
+    summary?: string | null
+    university?: string | null
+    views?: number
+    visibility?: string | null
     comments?: CommentCreateNestedManyWithoutPostInput
     likes?: LikeCreateNestedManyWithoutPostInput
+    author: UserCreateNestedOneWithoutPostInput
+    notifications?: NotificationCreateNestedManyWithoutPostInput
   }
 
   export type PostUncheckedCreateInput = {
     id?: string
     title: string
     content: string
-    summary?: string | null
     imageUrl?: string | null
-    resourceType?: string | null
-    role?: string | null
-    university?: string | null
-    department?: string | null
-    doi?: string | null
-    citation?: string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     authorId: string
     tags?: PostCreatetagsInput | string[]
-    views?: number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: string | null
+    department?: string | null
+    doi?: string | null
     downloads?: number
+    resourceType?: string | null
+    role?: string | null
+    summary?: string | null
+    university?: string | null
+    views?: number
+    visibility?: string | null
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type PostUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    citation?: NullableStringFieldUpdateOperationsInput | string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
-    views?: IntFieldUpdateOperationsInput | number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     downloads?: IntFieldUpdateOperationsInput | number
-    author?: UserUpdateOneRequiredWithoutPostNestedInput
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUpdateManyWithoutPostNestedInput
     likes?: LikeUpdateManyWithoutPostNestedInput
+    author?: UserUpdateOneRequiredWithoutPostNestedInput
+    notifications?: NotificationUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    citation?: NullableStringFieldUpdateOperationsInput | string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
     tags?: PostUpdatetagsInput | string[]
-    views?: IntFieldUpdateOperationsInput | number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     downloads?: IntFieldUpdateOperationsInput | number
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type PostCreateManyInput = {
     id?: string
     title: string
     content: string
-    summary?: string | null
     imageUrl?: string | null
-    resourceType?: string | null
-    role?: string | null
-    university?: string | null
-    department?: string | null
-    doi?: string | null
-    citation?: string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     authorId: string
     tags?: PostCreatetagsInput | string[]
-    views?: number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: string | null
+    department?: string | null
+    doi?: string | null
     downloads?: number
+    resourceType?: string | null
+    role?: string | null
+    summary?: string | null
+    university?: string | null
+    views?: number
+    visibility?: string | null
   }
 
   export type PostUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    citation?: NullableStringFieldUpdateOperationsInput | string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
-    views?: IntFieldUpdateOperationsInput | number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     downloads?: IntFieldUpdateOperationsInput | number
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PostUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    citation?: NullableStringFieldUpdateOperationsInput | string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
     tags?: PostUpdatetagsInput | string[]
-    views?: IntFieldUpdateOperationsInput | number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     downloads?: IntFieldUpdateOperationsInput | number
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CommentCreateInput = {
     id?: string
     content: string
     createdAt?: Date | string
-    post: PostCreateNestedOneWithoutCommentsInput
     author: UserCreateNestedOneWithoutCommentsInput
+    post: PostCreateNestedOneWithoutCommentsInput
+    notifications?: NotificationCreateNestedManyWithoutCommentInput
   }
 
   export type CommentUncheckedCreateInput = {
@@ -16298,14 +17898,16 @@ export namespace Prisma {
     createdAt?: Date | string
     postId: string
     authorId: string
+    notifications?: NotificationUncheckedCreateNestedManyWithoutCommentInput
   }
 
   export type CommentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    post?: PostUpdateOneRequiredWithoutCommentsNestedInput
     author?: UserUpdateOneRequiredWithoutCommentsNestedInput
+    post?: PostUpdateOneRequiredWithoutCommentsNestedInput
+    notifications?: NotificationUpdateManyWithoutCommentNestedInput
   }
 
   export type CommentUncheckedUpdateInput = {
@@ -16314,6 +17916,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     postId?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
+    notifications?: NotificationUncheckedUpdateManyWithoutCommentNestedInput
   }
 
   export type CommentCreateManyInput = {
@@ -16381,15 +17984,15 @@ export namespace Prisma {
   export type ResourceCreateInput = {
     id?: string
     title: string
-    rating?: number
-    downloads?: number
+    createdAt?: Date | string
+    author: string
     categories?: ResourceCreatecategoriesInput | string[]
     description: string
-    tags?: ResourceCreatetagsInput | string[]
-    author: string
     downloadUrl: string
+    downloads?: number
     externalUrl?: string | null
-    createdAt?: Date | string
+    rating?: number
+    tags?: ResourceCreatetagsInput | string[]
     updatedAt?: Date | string
     uploadedBy: UserCreateNestedOneWithoutResourceInput
   }
@@ -16397,31 +18000,31 @@ export namespace Prisma {
   export type ResourceUncheckedCreateInput = {
     id?: string
     title: string
-    rating?: number
-    downloads?: number
-    categories?: ResourceCreatecategoriesInput | string[]
-    description: string
-    tags?: ResourceCreatetagsInput | string[]
-    author: string
-    downloadUrl: string
-    externalUrl?: string | null
     uploadedById: string
     createdAt?: Date | string
+    author: string
+    categories?: ResourceCreatecategoriesInput | string[]
+    description: string
+    downloadUrl: string
+    downloads?: number
+    externalUrl?: string | null
+    rating?: number
+    tags?: ResourceCreatetagsInput | string[]
     updatedAt?: Date | string
   }
 
   export type ResourceUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    rating?: FloatFieldUpdateOperationsInput | number
-    downloads?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: StringFieldUpdateOperationsInput | string
     categories?: ResourceUpdatecategoriesInput | string[]
     description?: StringFieldUpdateOperationsInput | string
-    tags?: ResourceUpdatetagsInput | string[]
-    author?: StringFieldUpdateOperationsInput | string
     downloadUrl?: StringFieldUpdateOperationsInput | string
+    downloads?: IntFieldUpdateOperationsInput | number
     externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    tags?: ResourceUpdatetagsInput | string[]
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploadedBy?: UserUpdateOneRequiredWithoutResourceNestedInput
   }
@@ -16429,63 +18032,63 @@ export namespace Prisma {
   export type ResourceUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    rating?: FloatFieldUpdateOperationsInput | number
-    downloads?: IntFieldUpdateOperationsInput | number
-    categories?: ResourceUpdatecategoriesInput | string[]
-    description?: StringFieldUpdateOperationsInput | string
-    tags?: ResourceUpdatetagsInput | string[]
-    author?: StringFieldUpdateOperationsInput | string
-    downloadUrl?: StringFieldUpdateOperationsInput | string
-    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: StringFieldUpdateOperationsInput | string
+    categories?: ResourceUpdatecategoriesInput | string[]
+    description?: StringFieldUpdateOperationsInput | string
+    downloadUrl?: StringFieldUpdateOperationsInput | string
+    downloads?: IntFieldUpdateOperationsInput | number
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: FloatFieldUpdateOperationsInput | number
+    tags?: ResourceUpdatetagsInput | string[]
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ResourceCreateManyInput = {
     id?: string
     title: string
-    rating?: number
-    downloads?: number
-    categories?: ResourceCreatecategoriesInput | string[]
-    description: string
-    tags?: ResourceCreatetagsInput | string[]
-    author: string
-    downloadUrl: string
-    externalUrl?: string | null
     uploadedById: string
     createdAt?: Date | string
+    author: string
+    categories?: ResourceCreatecategoriesInput | string[]
+    description: string
+    downloadUrl: string
+    downloads?: number
+    externalUrl?: string | null
+    rating?: number
+    tags?: ResourceCreatetagsInput | string[]
     updatedAt?: Date | string
   }
 
   export type ResourceUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    rating?: FloatFieldUpdateOperationsInput | number
-    downloads?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: StringFieldUpdateOperationsInput | string
     categories?: ResourceUpdatecategoriesInput | string[]
     description?: StringFieldUpdateOperationsInput | string
-    tags?: ResourceUpdatetagsInput | string[]
-    author?: StringFieldUpdateOperationsInput | string
     downloadUrl?: StringFieldUpdateOperationsInput | string
+    downloads?: IntFieldUpdateOperationsInput | number
     externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    tags?: ResourceUpdatetagsInput | string[]
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ResourceUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
-    rating?: FloatFieldUpdateOperationsInput | number
-    downloads?: IntFieldUpdateOperationsInput | number
-    categories?: ResourceUpdatecategoriesInput | string[]
-    description?: StringFieldUpdateOperationsInput | string
-    tags?: ResourceUpdatetagsInput | string[]
-    author?: StringFieldUpdateOperationsInput | string
-    downloadUrl?: StringFieldUpdateOperationsInput | string
-    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
     uploadedById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: StringFieldUpdateOperationsInput | string
+    categories?: ResourceUpdatecategoriesInput | string[]
+    description?: StringFieldUpdateOperationsInput | string
+    downloadUrl?: StringFieldUpdateOperationsInput | string
+    downloads?: IntFieldUpdateOperationsInput | number
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: FloatFieldUpdateOperationsInput | number
+    tags?: ResourceUpdatetagsInput | string[]
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -16679,11 +18282,6 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -16699,12 +18297,9 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -16718,58 +18313,19 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type SessionListRelationFilter = {
-    every?: SessionWhereInput
-    some?: SessionWhereInput
-    none?: SessionWhereInput
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
-  export type AccountListRelationFilter = {
-    every?: AccountWhereInput
-    some?: AccountWhereInput
-    none?: AccountWhereInput
+  export type PostNullableScalarRelationFilter = {
+    is?: PostWhereInput | null
+    isNot?: PostWhereInput | null
   }
 
-  export type PostListRelationFilter = {
-    every?: PostWhereInput
-    some?: PostWhereInput
-    none?: PostWhereInput
-  }
-
-  export type ResourceListRelationFilter = {
-    every?: ResourceWhereInput
-    some?: ResourceWhereInput
-    none?: ResourceWhereInput
-  }
-
-  export type GroupListRelationFilter = {
-    every?: GroupWhereInput
-    some?: GroupWhereInput
-    none?: GroupWhereInput
-  }
-
-  export type GroupMemberListRelationFilter = {
-    every?: GroupMemberWhereInput
-    some?: GroupMemberWhereInput
-    none?: GroupMemberWhereInput
-  }
-
-  export type EventListRelationFilter = {
-    every?: EventWhereInput
-    some?: EventWhereInput
-    none?: EventWhereInput
-  }
-
-  export type CommentListRelationFilter = {
-    every?: CommentWhereInput
-    some?: CommentWhereInput
-    none?: CommentWhereInput
-  }
-
-  export type LikeListRelationFilter = {
-    every?: LikeWhereInput
-    some?: LikeWhereInput
-    none?: LikeWhereInput
+  export type CommentNullableScalarRelationFilter = {
+    is?: CommentWhereInput | null
+    isNot?: CommentWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -16777,93 +18333,37 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type SessionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AccountOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type PostOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ResourceOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type GroupOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type GroupMemberOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type EventOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type CommentOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type LikeOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type UserCountOrderByAggregateInput = {
+  export type NotificationCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    emailVerified?: SortOrder
-    image?: SortOrder
-    bio?: SortOrder
-    username?: SortOrder
-    location?: SortOrder
-    university?: SortOrder
-    department?: SortOrder
-    yearOfStudy?: SortOrder
-    skills?: SortOrder
-    researchFocus?: SortOrder
-    publications?: SortOrder
+    type?: SortOrder
+    message?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+    commentId?: SortOrder
+    read?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
-  export type UserMaxOrderByAggregateInput = {
+  export type NotificationMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    emailVerified?: SortOrder
-    image?: SortOrder
-    bio?: SortOrder
-    username?: SortOrder
-    location?: SortOrder
-    university?: SortOrder
-    department?: SortOrder
-    yearOfStudy?: SortOrder
-    researchFocus?: SortOrder
+    type?: SortOrder
+    message?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+    commentId?: SortOrder
+    read?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
-  export type UserMinOrderByAggregateInput = {
+  export type NotificationMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    emailVerified?: SortOrder
-    image?: SortOrder
-    bio?: SortOrder
-    username?: SortOrder
-    location?: SortOrder
-    university?: SortOrder
-    department?: SortOrder
-    yearOfStudy?: SortOrder
-    researchFocus?: SortOrder
+    type?: SortOrder
+    message?: SortOrder
+    userId?: SortOrder
+    postId?: SortOrder
+    commentId?: SortOrder
+    read?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -16884,14 +18384,6 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -16910,6 +18402,14 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -16924,9 +18424,185 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type EnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
+  export type EventListRelationFilter = {
+    every?: EventWhereInput
+    some?: EventWhereInput
+    none?: EventWhereInput
+  }
+
+  export type GroupListRelationFilter = {
+    every?: GroupWhereInput
+    some?: GroupWhereInput
+    none?: GroupWhereInput
+  }
+
+  export type GroupMemberListRelationFilter = {
+    every?: GroupMemberWhereInput
+    some?: GroupMemberWhereInput
+    none?: GroupMemberWhereInput
+  }
+
+  export type ResourceListRelationFilter = {
+    every?: ResourceWhereInput
+    some?: ResourceWhereInput
+    none?: ResourceWhereInput
+  }
+
+  export type AccountListRelationFilter = {
+    every?: AccountWhereInput
+    some?: AccountWhereInput
+    none?: AccountWhereInput
+  }
+
+  export type CommentListRelationFilter = {
+    every?: CommentWhereInput
+    some?: CommentWhereInput
+    none?: CommentWhereInput
+  }
+
+  export type LikeListRelationFilter = {
+    every?: LikeWhereInput
+    some?: LikeWhereInput
+    none?: LikeWhereInput
+  }
+
+  export type PostListRelationFilter = {
+    every?: PostWhereInput
+    some?: PostWhereInput
+    none?: PostWhereInput
+  }
+
+  export type SessionListRelationFilter = {
+    every?: SessionWhereInput
+    some?: SessionWhereInput
+    none?: SessionWhereInput
+  }
+
+  export type NotificationListRelationFilter = {
+    every?: NotificationWhereInput
+    some?: NotificationWhereInput
+    none?: NotificationWhereInput
+  }
+
+  export type EventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GroupOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GroupMemberOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ResourceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AccountOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CommentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LikeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PostOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type NotificationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    emailVerified?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    bio?: SortOrder
+    location?: SortOrder
+    username?: SortOrder
+    department?: SortOrder
+    publications?: SortOrder
+    researchFocus?: SortOrder
+    skills?: SortOrder
+    university?: SortOrder
+    yearOfStudy?: SortOrder
+    role?: SortOrder
+  }
+
+  export type UserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    emailVerified?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    bio?: SortOrder
+    location?: SortOrder
+    username?: SortOrder
+    department?: SortOrder
+    researchFocus?: SortOrder
+    university?: SortOrder
+    yearOfStudy?: SortOrder
+    role?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    emailVerified?: SortOrder
+    image?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    bio?: SortOrder
+    location?: SortOrder
+    username?: SortOrder
+    department?: SortOrder
+    researchFocus?: SortOrder
+    university?: SortOrder
+    yearOfStudy?: SortOrder
+    role?: SortOrder
+  }
+
+  export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
   export type SessionCountOrderByAggregateInput = {
@@ -17100,72 +18776,72 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    summary?: SortOrder
     imageUrl?: SortOrder
-    resourceType?: SortOrder
-    role?: SortOrder
-    university?: SortOrder
-    department?: SortOrder
-    doi?: SortOrder
-    citation?: SortOrder
-    attachments?: SortOrder
-    visibility?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
     tags?: SortOrder
-    views?: SortOrder
+    attachments?: SortOrder
+    citation?: SortOrder
+    department?: SortOrder
+    doi?: SortOrder
     downloads?: SortOrder
+    resourceType?: SortOrder
+    role?: SortOrder
+    summary?: SortOrder
+    university?: SortOrder
+    views?: SortOrder
+    visibility?: SortOrder
   }
 
   export type PostAvgOrderByAggregateInput = {
-    views?: SortOrder
     downloads?: SortOrder
+    views?: SortOrder
   }
 
   export type PostMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    summary?: SortOrder
     imageUrl?: SortOrder
-    resourceType?: SortOrder
-    role?: SortOrder
-    university?: SortOrder
-    department?: SortOrder
-    doi?: SortOrder
-    citation?: SortOrder
-    visibility?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
-    views?: SortOrder
+    citation?: SortOrder
+    department?: SortOrder
+    doi?: SortOrder
     downloads?: SortOrder
+    resourceType?: SortOrder
+    role?: SortOrder
+    summary?: SortOrder
+    university?: SortOrder
+    views?: SortOrder
+    visibility?: SortOrder
   }
 
   export type PostMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
-    summary?: SortOrder
     imageUrl?: SortOrder
-    resourceType?: SortOrder
-    role?: SortOrder
-    university?: SortOrder
-    department?: SortOrder
-    doi?: SortOrder
-    citation?: SortOrder
-    visibility?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
-    views?: SortOrder
+    citation?: SortOrder
+    department?: SortOrder
+    doi?: SortOrder
     downloads?: SortOrder
+    resourceType?: SortOrder
+    role?: SortOrder
+    summary?: SortOrder
+    university?: SortOrder
+    views?: SortOrder
+    visibility?: SortOrder
   }
 
   export type PostSumOrderByAggregateInput = {
-    views?: SortOrder
     downloads?: SortOrder
+    views?: SortOrder
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -17276,55 +18952,55 @@ export namespace Prisma {
   export type ResourceCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    rating?: SortOrder
-    downloads?: SortOrder
-    categories?: SortOrder
-    description?: SortOrder
-    tags?: SortOrder
-    author?: SortOrder
-    downloadUrl?: SortOrder
-    externalUrl?: SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
+    author?: SortOrder
+    categories?: SortOrder
+    description?: SortOrder
+    downloadUrl?: SortOrder
+    downloads?: SortOrder
+    externalUrl?: SortOrder
+    rating?: SortOrder
+    tags?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type ResourceAvgOrderByAggregateInput = {
-    rating?: SortOrder
     downloads?: SortOrder
+    rating?: SortOrder
   }
 
   export type ResourceMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    rating?: SortOrder
-    downloads?: SortOrder
-    description?: SortOrder
-    author?: SortOrder
-    downloadUrl?: SortOrder
-    externalUrl?: SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
+    author?: SortOrder
+    description?: SortOrder
+    downloadUrl?: SortOrder
+    downloads?: SortOrder
+    externalUrl?: SortOrder
+    rating?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type ResourceMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    rating?: SortOrder
-    downloads?: SortOrder
-    description?: SortOrder
-    author?: SortOrder
-    downloadUrl?: SortOrder
-    externalUrl?: SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
+    author?: SortOrder
+    description?: SortOrder
+    downloadUrl?: SortOrder
+    downloads?: SortOrder
+    externalUrl?: SortOrder
+    rating?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type ResourceSumOrderByAggregateInput = {
-    rating?: SortOrder
     downloads?: SortOrder
+    rating?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -17423,40 +19099,81 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
-  export type UserCreateskillsInput = {
-    set: string[]
+  export type UserCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNotificationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type PostCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<PostCreateWithoutNotificationsInput, PostUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: PostCreateOrConnectWithoutNotificationsInput
+    connect?: PostWhereUniqueInput
+  }
+
+  export type CommentCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<CommentCreateWithoutNotificationsInput, CommentUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: CommentCreateOrConnectWithoutNotificationsInput
+    connect?: CommentWhereUniqueInput
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+    create?: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNotificationsInput
+    upsert?: UserUpsertWithoutNotificationsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotificationsInput, UserUpdateWithoutNotificationsInput>, UserUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type PostUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<PostCreateWithoutNotificationsInput, PostUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: PostCreateOrConnectWithoutNotificationsInput
+    upsert?: PostUpsertWithoutNotificationsInput
+    disconnect?: PostWhereInput | boolean
+    delete?: PostWhereInput | boolean
+    connect?: PostWhereUniqueInput
+    update?: XOR<XOR<PostUpdateToOneWithWhereWithoutNotificationsInput, PostUpdateWithoutNotificationsInput>, PostUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type CommentUpdateOneWithoutNotificationsNestedInput = {
+    create?: XOR<CommentCreateWithoutNotificationsInput, CommentUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: CommentCreateOrConnectWithoutNotificationsInput
+    upsert?: CommentUpsertWithoutNotificationsInput
+    disconnect?: CommentWhereInput | boolean
+    delete?: CommentWhereInput | boolean
+    connect?: CommentWhereUniqueInput
+    update?: XOR<XOR<CommentUpdateToOneWithWhereWithoutNotificationsInput, CommentUpdateWithoutNotificationsInput>, CommentUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type UserCreatepublicationsInput = {
     set: string[]
   }
 
-  export type SessionCreateNestedManyWithoutUserInput = {
-    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
-    createMany?: SessionCreateManyUserInputEnvelope
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  export type UserCreateskillsInput = {
+    set: string[]
   }
 
-  export type AccountCreateNestedManyWithoutUserInput = {
-    create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
-    createMany?: AccountCreateManyUserInputEnvelope
-    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
-  }
-
-  export type PostCreateNestedManyWithoutAuthorInput = {
-    create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
-    connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
-    createMany?: PostCreateManyAuthorInputEnvelope
-    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
-  }
-
-  export type ResourceCreateNestedManyWithoutUploadedByInput = {
-    create?: XOR<ResourceCreateWithoutUploadedByInput, ResourceUncheckedCreateWithoutUploadedByInput> | ResourceCreateWithoutUploadedByInput[] | ResourceUncheckedCreateWithoutUploadedByInput[]
-    connectOrCreate?: ResourceCreateOrConnectWithoutUploadedByInput | ResourceCreateOrConnectWithoutUploadedByInput[]
-    createMany?: ResourceCreateManyUploadedByInputEnvelope
-    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  export type EventCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
+    createMany?: EventCreateManyCreatedByInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
   }
 
   export type GroupCreateNestedManyWithoutCreatedByInput = {
@@ -17473,11 +19190,18 @@ export namespace Prisma {
     connect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
   }
 
-  export type EventCreateNestedManyWithoutCreatedByInput = {
-    create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
-    connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
-    createMany?: EventCreateManyCreatedByInputEnvelope
-    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  export type ResourceCreateNestedManyWithoutUploadedByInput = {
+    create?: XOR<ResourceCreateWithoutUploadedByInput, ResourceUncheckedCreateWithoutUploadedByInput> | ResourceCreateWithoutUploadedByInput[] | ResourceUncheckedCreateWithoutUploadedByInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutUploadedByInput | ResourceCreateOrConnectWithoutUploadedByInput[]
+    createMany?: ResourceCreateManyUploadedByInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type AccountCreateNestedManyWithoutUserInput = {
+    create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
+    createMany?: AccountCreateManyUserInputEnvelope
+    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
   }
 
   export type CommentCreateNestedManyWithoutAuthorInput = {
@@ -17494,32 +19218,32 @@ export namespace Prisma {
     connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
   }
 
-  export type SessionUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
-    createMany?: SessionCreateManyUserInputEnvelope
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-  }
-
-  export type AccountUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
-    createMany?: AccountCreateManyUserInputEnvelope
-    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
-  }
-
-  export type PostUncheckedCreateNestedManyWithoutAuthorInput = {
+  export type PostCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
     createMany?: PostCreateManyAuthorInputEnvelope
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
-  export type ResourceUncheckedCreateNestedManyWithoutUploadedByInput = {
-    create?: XOR<ResourceCreateWithoutUploadedByInput, ResourceUncheckedCreateWithoutUploadedByInput> | ResourceCreateWithoutUploadedByInput[] | ResourceUncheckedCreateWithoutUploadedByInput[]
-    connectOrCreate?: ResourceCreateOrConnectWithoutUploadedByInput | ResourceCreateOrConnectWithoutUploadedByInput[]
-    createMany?: ResourceCreateManyUploadedByInputEnvelope
-    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  export type SessionCreateNestedManyWithoutUserInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
+  export type NotificationCreateNestedManyWithoutUserInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type EventUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
+    createMany?: EventCreateManyCreatedByInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
   }
 
   export type GroupUncheckedCreateNestedManyWithoutCreatedByInput = {
@@ -17536,11 +19260,18 @@ export namespace Prisma {
     connect?: GroupMemberWhereUniqueInput | GroupMemberWhereUniqueInput[]
   }
 
-  export type EventUncheckedCreateNestedManyWithoutCreatedByInput = {
-    create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
-    connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
-    createMany?: EventCreateManyCreatedByInputEnvelope
-    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  export type ResourceUncheckedCreateNestedManyWithoutUploadedByInput = {
+    create?: XOR<ResourceCreateWithoutUploadedByInput, ResourceUncheckedCreateWithoutUploadedByInput> | ResourceCreateWithoutUploadedByInput[] | ResourceUncheckedCreateWithoutUploadedByInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutUploadedByInput | ResourceCreateOrConnectWithoutUploadedByInput[]
+    createMany?: ResourceCreateManyUploadedByInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type AccountUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
+    createMany?: AccountCreateManyUserInputEnvelope
+    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
   }
 
   export type CommentUncheckedCreateNestedManyWithoutAuthorInput = {
@@ -17557,21 +19288,25 @@ export namespace Prisma {
     connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
   }
 
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
+  export type PostUncheckedCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
+    createMany?: PostCreateManyAuthorInputEnvelope
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
+  export type SessionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
-  export type UserUpdateskillsInput = {
-    set?: string[]
-    push?: string | string[]
+  export type NotificationUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type UserUpdatepublicationsInput = {
@@ -17579,64 +19314,27 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
+  export type UserUpdateskillsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
-  export type SessionUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
-    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SessionCreateManyUserInputEnvelope
-    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  export type EnumRoleFieldUpdateOperationsInput = {
+    set?: $Enums.Role
   }
 
-  export type AccountUpdateManyWithoutUserNestedInput = {
-    create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
-    upsert?: AccountUpsertWithWhereUniqueWithoutUserInput | AccountUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: AccountCreateManyUserInputEnvelope
-    set?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
-    disconnect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
-    delete?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
-    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
-    update?: AccountUpdateWithWhereUniqueWithoutUserInput | AccountUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: AccountUpdateManyWithWhereWithoutUserInput | AccountUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
-  }
-
-  export type PostUpdateManyWithoutAuthorNestedInput = {
-    create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
-    connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
-    upsert?: PostUpsertWithWhereUniqueWithoutAuthorInput | PostUpsertWithWhereUniqueWithoutAuthorInput[]
-    createMany?: PostCreateManyAuthorInputEnvelope
-    set?: PostWhereUniqueInput | PostWhereUniqueInput[]
-    disconnect?: PostWhereUniqueInput | PostWhereUniqueInput[]
-    delete?: PostWhereUniqueInput | PostWhereUniqueInput[]
-    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
-    update?: PostUpdateWithWhereUniqueWithoutAuthorInput | PostUpdateWithWhereUniqueWithoutAuthorInput[]
-    updateMany?: PostUpdateManyWithWhereWithoutAuthorInput | PostUpdateManyWithWhereWithoutAuthorInput[]
-    deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
-  }
-
-  export type ResourceUpdateManyWithoutUploadedByNestedInput = {
-    create?: XOR<ResourceCreateWithoutUploadedByInput, ResourceUncheckedCreateWithoutUploadedByInput> | ResourceCreateWithoutUploadedByInput[] | ResourceUncheckedCreateWithoutUploadedByInput[]
-    connectOrCreate?: ResourceCreateOrConnectWithoutUploadedByInput | ResourceCreateOrConnectWithoutUploadedByInput[]
-    upsert?: ResourceUpsertWithWhereUniqueWithoutUploadedByInput | ResourceUpsertWithWhereUniqueWithoutUploadedByInput[]
-    createMany?: ResourceCreateManyUploadedByInputEnvelope
-    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    update?: ResourceUpdateWithWhereUniqueWithoutUploadedByInput | ResourceUpdateWithWhereUniqueWithoutUploadedByInput[]
-    updateMany?: ResourceUpdateManyWithWhereWithoutUploadedByInput | ResourceUpdateManyWithWhereWithoutUploadedByInput[]
-    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  export type EventUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutCreatedByInput | EventUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: EventCreateManyCreatedByInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutCreatedByInput | EventUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutCreatedByInput | EventUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
   }
 
   export type GroupUpdateManyWithoutCreatedByNestedInput = {
@@ -17667,18 +19365,32 @@ export namespace Prisma {
     deleteMany?: GroupMemberScalarWhereInput | GroupMemberScalarWhereInput[]
   }
 
-  export type EventUpdateManyWithoutCreatedByNestedInput = {
-    create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
-    connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
-    upsert?: EventUpsertWithWhereUniqueWithoutCreatedByInput | EventUpsertWithWhereUniqueWithoutCreatedByInput[]
-    createMany?: EventCreateManyCreatedByInputEnvelope
-    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    update?: EventUpdateWithWhereUniqueWithoutCreatedByInput | EventUpdateWithWhereUniqueWithoutCreatedByInput[]
-    updateMany?: EventUpdateManyWithWhereWithoutCreatedByInput | EventUpdateManyWithWhereWithoutCreatedByInput[]
-    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  export type ResourceUpdateManyWithoutUploadedByNestedInput = {
+    create?: XOR<ResourceCreateWithoutUploadedByInput, ResourceUncheckedCreateWithoutUploadedByInput> | ResourceCreateWithoutUploadedByInput[] | ResourceUncheckedCreateWithoutUploadedByInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutUploadedByInput | ResourceCreateOrConnectWithoutUploadedByInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutUploadedByInput | ResourceUpsertWithWhereUniqueWithoutUploadedByInput[]
+    createMany?: ResourceCreateManyUploadedByInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutUploadedByInput | ResourceUpdateWithWhereUniqueWithoutUploadedByInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutUploadedByInput | ResourceUpdateManyWithWhereWithoutUploadedByInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type AccountUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
+    upsert?: AccountUpsertWithWhereUniqueWithoutUserInput | AccountUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AccountCreateManyUserInputEnvelope
+    set?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    disconnect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    delete?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    update?: AccountUpdateWithWhereUniqueWithoutUserInput | AccountUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AccountUpdateManyWithWhereWithoutUserInput | AccountUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
   }
 
   export type CommentUpdateManyWithoutAuthorNestedInput = {
@@ -17709,35 +19421,7 @@ export namespace Prisma {
     deleteMany?: LikeScalarWhereInput | LikeScalarWhereInput[]
   }
 
-  export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
-    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SessionCreateManyUserInputEnvelope
-    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
-  }
-
-  export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
-    upsert?: AccountUpsertWithWhereUniqueWithoutUserInput | AccountUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: AccountCreateManyUserInputEnvelope
-    set?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
-    disconnect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
-    delete?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
-    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
-    update?: AccountUpdateWithWhereUniqueWithoutUserInput | AccountUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: AccountUpdateManyWithWhereWithoutUserInput | AccountUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
-  }
-
-  export type PostUncheckedUpdateManyWithoutAuthorNestedInput = {
+  export type PostUpdateManyWithoutAuthorNestedInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
     upsert?: PostUpsertWithWhereUniqueWithoutAuthorInput | PostUpsertWithWhereUniqueWithoutAuthorInput[]
@@ -17751,18 +19435,46 @@ export namespace Prisma {
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
   }
 
-  export type ResourceUncheckedUpdateManyWithoutUploadedByNestedInput = {
-    create?: XOR<ResourceCreateWithoutUploadedByInput, ResourceUncheckedCreateWithoutUploadedByInput> | ResourceCreateWithoutUploadedByInput[] | ResourceUncheckedCreateWithoutUploadedByInput[]
-    connectOrCreate?: ResourceCreateOrConnectWithoutUploadedByInput | ResourceCreateOrConnectWithoutUploadedByInput[]
-    upsert?: ResourceUpsertWithWhereUniqueWithoutUploadedByInput | ResourceUpsertWithWhereUniqueWithoutUploadedByInput[]
-    createMany?: ResourceCreateManyUploadedByInputEnvelope
-    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
-    update?: ResourceUpdateWithWhereUniqueWithoutUploadedByInput | ResourceUpdateWithWhereUniqueWithoutUploadedByInput[]
-    updateMany?: ResourceUpdateManyWithWhereWithoutUploadedByInput | ResourceUpdateManyWithWhereWithoutUploadedByInput[]
-    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  export type SessionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
+  export type NotificationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type EventUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutCreatedByInput | EventUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: EventCreateManyCreatedByInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutCreatedByInput | EventUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutCreatedByInput | EventUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
   }
 
   export type GroupUncheckedUpdateManyWithoutCreatedByNestedInput = {
@@ -17793,18 +19505,32 @@ export namespace Prisma {
     deleteMany?: GroupMemberScalarWhereInput | GroupMemberScalarWhereInput[]
   }
 
-  export type EventUncheckedUpdateManyWithoutCreatedByNestedInput = {
-    create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
-    connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
-    upsert?: EventUpsertWithWhereUniqueWithoutCreatedByInput | EventUpsertWithWhereUniqueWithoutCreatedByInput[]
-    createMany?: EventCreateManyCreatedByInputEnvelope
-    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
-    update?: EventUpdateWithWhereUniqueWithoutCreatedByInput | EventUpdateWithWhereUniqueWithoutCreatedByInput[]
-    updateMany?: EventUpdateManyWithWhereWithoutCreatedByInput | EventUpdateManyWithWhereWithoutCreatedByInput[]
-    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  export type ResourceUncheckedUpdateManyWithoutUploadedByNestedInput = {
+    create?: XOR<ResourceCreateWithoutUploadedByInput, ResourceUncheckedCreateWithoutUploadedByInput> | ResourceCreateWithoutUploadedByInput[] | ResourceUncheckedCreateWithoutUploadedByInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutUploadedByInput | ResourceCreateOrConnectWithoutUploadedByInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutUploadedByInput | ResourceUpsertWithWhereUniqueWithoutUploadedByInput[]
+    createMany?: ResourceCreateManyUploadedByInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutUploadedByInput | ResourceUpdateWithWhereUniqueWithoutUploadedByInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutUploadedByInput | ResourceUpdateManyWithWhereWithoutUploadedByInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
+    upsert?: AccountUpsertWithWhereUniqueWithoutUserInput | AccountUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AccountCreateManyUserInputEnvelope
+    set?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    disconnect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    delete?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+    update?: AccountUpdateWithWhereUniqueWithoutUserInput | AccountUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AccountUpdateManyWithWhereWithoutUserInput | AccountUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
   }
 
   export type CommentUncheckedUpdateManyWithoutAuthorNestedInput = {
@@ -17833,6 +19559,48 @@ export namespace Prisma {
     update?: LikeUpdateWithWhereUniqueWithoutUserInput | LikeUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: LikeUpdateManyWithWhereWithoutUserInput | LikeUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: LikeScalarWhereInput | LikeScalarWhereInput[]
+  }
+
+  export type PostUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
+    upsert?: PostUpsertWithWhereUniqueWithoutAuthorInput | PostUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: PostCreateManyAuthorInputEnvelope
+    set?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    disconnect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    delete?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    update?: PostUpdateWithWhereUniqueWithoutAuthorInput | PostUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: PostUpdateManyWithWhereWithoutAuthorInput | PostUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
+  }
+
+  export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput> | NotificationCreateWithoutUserInput[] | NotificationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutUserInput | NotificationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: NotificationCreateManyUserInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutSessionsInput = {
@@ -17871,12 +19639,6 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type UserCreateNestedOneWithoutPostInput = {
-    create?: XOR<UserCreateWithoutPostInput, UserUncheckedCreateWithoutPostInput>
-    connectOrCreate?: UserCreateOrConnectWithoutPostInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type CommentCreateNestedManyWithoutPostInput = {
     create?: XOR<CommentCreateWithoutPostInput, CommentUncheckedCreateWithoutPostInput> | CommentCreateWithoutPostInput[] | CommentUncheckedCreateWithoutPostInput[]
     connectOrCreate?: CommentCreateOrConnectWithoutPostInput | CommentCreateOrConnectWithoutPostInput[]
@@ -17889,6 +19651,19 @@ export namespace Prisma {
     connectOrCreate?: LikeCreateOrConnectWithoutPostInput | LikeCreateOrConnectWithoutPostInput[]
     createMany?: LikeCreateManyPostInputEnvelope
     connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedOneWithoutPostInput = {
+    create?: XOR<UserCreateWithoutPostInput, UserUncheckedCreateWithoutPostInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPostInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type NotificationCreateNestedManyWithoutPostInput = {
+    create?: XOR<NotificationCreateWithoutPostInput, NotificationUncheckedCreateWithoutPostInput> | NotificationCreateWithoutPostInput[] | NotificationUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutPostInput | NotificationCreateOrConnectWithoutPostInput[]
+    createMany?: NotificationCreateManyPostInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type CommentUncheckedCreateNestedManyWithoutPostInput = {
@@ -17905,6 +19680,13 @@ export namespace Prisma {
     connect?: LikeWhereUniqueInput | LikeWhereUniqueInput[]
   }
 
+  export type NotificationUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<NotificationCreateWithoutPostInput, NotificationUncheckedCreateWithoutPostInput> | NotificationCreateWithoutPostInput[] | NotificationUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutPostInput | NotificationCreateOrConnectWithoutPostInput[]
+    createMany?: NotificationCreateManyPostInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type PostUpdatetagsInput = {
     set?: string[]
     push?: string | string[]
@@ -17916,14 +19698,6 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type UserUpdateOneRequiredWithoutPostNestedInput = {
-    create?: XOR<UserCreateWithoutPostInput, UserUncheckedCreateWithoutPostInput>
-    connectOrCreate?: UserCreateOrConnectWithoutPostInput
-    upsert?: UserUpsertWithoutPostInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPostInput, UserUpdateWithoutPostInput>, UserUncheckedUpdateWithoutPostInput>
   }
 
   export type CommentUpdateManyWithoutPostNestedInput = {
@@ -17954,6 +19728,28 @@ export namespace Prisma {
     deleteMany?: LikeScalarWhereInput | LikeScalarWhereInput[]
   }
 
+  export type UserUpdateOneRequiredWithoutPostNestedInput = {
+    create?: XOR<UserCreateWithoutPostInput, UserUncheckedCreateWithoutPostInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPostInput
+    upsert?: UserUpsertWithoutPostInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPostInput, UserUpdateWithoutPostInput>, UserUncheckedUpdateWithoutPostInput>
+  }
+
+  export type NotificationUpdateManyWithoutPostNestedInput = {
+    create?: XOR<NotificationCreateWithoutPostInput, NotificationUncheckedCreateWithoutPostInput> | NotificationCreateWithoutPostInput[] | NotificationUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutPostInput | NotificationCreateOrConnectWithoutPostInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutPostInput | NotificationUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: NotificationCreateManyPostInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutPostInput | NotificationUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutPostInput | NotificationUpdateManyWithWhereWithoutPostInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type CommentUncheckedUpdateManyWithoutPostNestedInput = {
     create?: XOR<CommentCreateWithoutPostInput, CommentUncheckedCreateWithoutPostInput> | CommentCreateWithoutPostInput[] | CommentUncheckedCreateWithoutPostInput[]
     connectOrCreate?: CommentCreateOrConnectWithoutPostInput | CommentCreateOrConnectWithoutPostInput[]
@@ -17982,16 +19778,52 @@ export namespace Prisma {
     deleteMany?: LikeScalarWhereInput | LikeScalarWhereInput[]
   }
 
-  export type PostCreateNestedOneWithoutCommentsInput = {
-    create?: XOR<PostCreateWithoutCommentsInput, PostUncheckedCreateWithoutCommentsInput>
-    connectOrCreate?: PostCreateOrConnectWithoutCommentsInput
-    connect?: PostWhereUniqueInput
+  export type NotificationUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<NotificationCreateWithoutPostInput, NotificationUncheckedCreateWithoutPostInput> | NotificationCreateWithoutPostInput[] | NotificationUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutPostInput | NotificationCreateOrConnectWithoutPostInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutPostInput | NotificationUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: NotificationCreateManyPostInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutPostInput | NotificationUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutPostInput | NotificationUpdateManyWithWhereWithoutPostInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutCommentsInput = {
     create?: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutCommentsInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type PostCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<PostCreateWithoutCommentsInput, PostUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: PostCreateOrConnectWithoutCommentsInput
+    connect?: PostWhereUniqueInput
+  }
+
+  export type NotificationCreateNestedManyWithoutCommentInput = {
+    create?: XOR<NotificationCreateWithoutCommentInput, NotificationUncheckedCreateWithoutCommentInput> | NotificationCreateWithoutCommentInput[] | NotificationUncheckedCreateWithoutCommentInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutCommentInput | NotificationCreateOrConnectWithoutCommentInput[]
+    createMany?: NotificationCreateManyCommentInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutCommentInput = {
+    create?: XOR<NotificationCreateWithoutCommentInput, NotificationUncheckedCreateWithoutCommentInput> | NotificationCreateWithoutCommentInput[] | NotificationUncheckedCreateWithoutCommentInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutCommentInput | NotificationCreateOrConnectWithoutCommentInput[]
+    createMany?: NotificationCreateManyCommentInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutCommentsNestedInput = {
+    create?: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCommentsInput
+    upsert?: UserUpsertWithoutCommentsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommentsInput, UserUpdateWithoutCommentsInput>, UserUncheckedUpdateWithoutCommentsInput>
   }
 
   export type PostUpdateOneRequiredWithoutCommentsNestedInput = {
@@ -18002,12 +19834,32 @@ export namespace Prisma {
     update?: XOR<XOR<PostUpdateToOneWithWhereWithoutCommentsInput, PostUpdateWithoutCommentsInput>, PostUncheckedUpdateWithoutCommentsInput>
   }
 
-  export type UserUpdateOneRequiredWithoutCommentsNestedInput = {
-    create?: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutCommentsInput
-    upsert?: UserUpsertWithoutCommentsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommentsInput, UserUpdateWithoutCommentsInput>, UserUncheckedUpdateWithoutCommentsInput>
+  export type NotificationUpdateManyWithoutCommentNestedInput = {
+    create?: XOR<NotificationCreateWithoutCommentInput, NotificationUncheckedCreateWithoutCommentInput> | NotificationCreateWithoutCommentInput[] | NotificationUncheckedCreateWithoutCommentInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutCommentInput | NotificationCreateOrConnectWithoutCommentInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutCommentInput | NotificationUpsertWithWhereUniqueWithoutCommentInput[]
+    createMany?: NotificationCreateManyCommentInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutCommentInput | NotificationUpdateWithWhereUniqueWithoutCommentInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutCommentInput | NotificationUpdateManyWithWhereWithoutCommentInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutCommentNestedInput = {
+    create?: XOR<NotificationCreateWithoutCommentInput, NotificationUncheckedCreateWithoutCommentInput> | NotificationCreateWithoutCommentInput[] | NotificationUncheckedCreateWithoutCommentInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutCommentInput | NotificationCreateOrConnectWithoutCommentInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutCommentInput | NotificationUpsertWithWhereUniqueWithoutCommentInput[]
+    createMany?: NotificationCreateManyCommentInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutCommentInput | NotificationUpdateWithWhereUniqueWithoutCommentInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutCommentInput | NotificationUpdateManyWithWhereWithoutCommentInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type PostCreateNestedOneWithoutLikesInput = {
@@ -18052,17 +19904,17 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type ResourceUpdatecategoriesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type ResourceUpdatecategoriesInput = {
-    set?: string[]
-    push?: string | string[]
   }
 
   export type ResourceUpdatetagsInput = {
@@ -18190,11 +20042,6 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -18207,6 +20054,11 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -18248,14 +20100,6 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -18284,6 +20128,14 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -18296,6 +20148,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
+  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -18389,169 +20258,323 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type SessionCreateWithoutUserInput = {
+  export type UserCreateWithoutNotificationsInput = {
     id: string
-    expiresAt: Date | string
-    token: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    ipAddress?: string | null
-    userAgent?: string | null
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    Comments?: CommentCreateNestedManyWithoutAuthorInput
+    Likes?: LikeCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
-  export type SessionUncheckedCreateWithoutUserInput = {
+  export type UserUncheckedCreateWithoutNotificationsInput = {
     id: string
-    expiresAt: Date | string
-    token: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    ipAddress?: string | null
-    userAgent?: string | null
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type SessionCreateOrConnectWithoutUserInput = {
-    where: SessionWhereUniqueInput
-    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
+  export type UserCreateOrConnectWithoutNotificationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
   }
 
-  export type SessionCreateManyUserInputEnvelope = {
-    data: SessionCreateManyUserInput | SessionCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AccountCreateWithoutUserInput = {
-    id: string
-    accountId: string
-    providerId: string
-    accessToken?: string | null
-    refreshToken?: string | null
-    idToken?: string | null
-    accessTokenExpiresAt?: Date | string | null
-    refreshTokenExpiresAt?: Date | string | null
-    scope?: string | null
-    password?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
-  }
-
-  export type AccountUncheckedCreateWithoutUserInput = {
-    id: string
-    accountId: string
-    providerId: string
-    accessToken?: string | null
-    refreshToken?: string | null
-    idToken?: string | null
-    accessTokenExpiresAt?: Date | string | null
-    refreshTokenExpiresAt?: Date | string | null
-    scope?: string | null
-    password?: string | null
-    createdAt: Date | string
-    updatedAt: Date | string
-  }
-
-  export type AccountCreateOrConnectWithoutUserInput = {
-    where: AccountWhereUniqueInput
-    create: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput>
-  }
-
-  export type AccountCreateManyUserInputEnvelope = {
-    data: AccountCreateManyUserInput | AccountCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type PostCreateWithoutAuthorInput = {
+  export type PostCreateWithoutNotificationsInput = {
     id?: string
     title: string
     content: string
-    summary?: string | null
     imageUrl?: string | null
-    resourceType?: string | null
-    role?: string | null
-    university?: string | null
-    department?: string | null
-    doi?: string | null
-    citation?: string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
-    views?: number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: string | null
+    department?: string | null
+    doi?: string | null
     downloads?: number
+    resourceType?: string | null
+    role?: string | null
+    summary?: string | null
+    university?: string | null
+    views?: number
+    visibility?: string | null
     comments?: CommentCreateNestedManyWithoutPostInput
     likes?: LikeCreateNestedManyWithoutPostInput
+    author: UserCreateNestedOneWithoutPostInput
   }
 
-  export type PostUncheckedCreateWithoutAuthorInput = {
+  export type PostUncheckedCreateWithoutNotificationsInput = {
     id?: string
     title: string
     content: string
-    summary?: string | null
     imageUrl?: string | null
-    resourceType?: string | null
-    role?: string | null
-    university?: string | null
-    department?: string | null
-    doi?: string | null
-    citation?: string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    authorId: string
     tags?: PostCreatetagsInput | string[]
-    views?: number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: string | null
+    department?: string | null
+    doi?: string | null
     downloads?: number
+    resourceType?: string | null
+    role?: string | null
+    summary?: string | null
+    university?: string | null
+    views?: number
+    visibility?: string | null
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
   }
 
-  export type PostCreateOrConnectWithoutAuthorInput = {
+  export type PostCreateOrConnectWithoutNotificationsInput = {
     where: PostWhereUniqueInput
-    create: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput>
+    create: XOR<PostCreateWithoutNotificationsInput, PostUncheckedCreateWithoutNotificationsInput>
   }
 
-  export type PostCreateManyAuthorInputEnvelope = {
-    data: PostCreateManyAuthorInput | PostCreateManyAuthorInput[]
-    skipDuplicates?: boolean
+  export type CommentCreateWithoutNotificationsInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    author: UserCreateNestedOneWithoutCommentsInput
+    post: PostCreateNestedOneWithoutCommentsInput
   }
 
-  export type ResourceCreateWithoutUploadedByInput = {
+  export type CommentUncheckedCreateWithoutNotificationsInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    postId: string
+    authorId: string
+  }
+
+  export type CommentCreateOrConnectWithoutNotificationsInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutNotificationsInput, CommentUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type UserUpsertWithoutNotificationsInput = {
+    update: XOR<UserUpdateWithoutNotificationsInput, UserUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<UserCreateWithoutNotificationsInput, UserUncheckedCreateWithoutNotificationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutNotificationsInput, UserUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type UserUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    Comments?: CommentUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type PostUpsertWithoutNotificationsInput = {
+    update: XOR<PostUpdateWithoutNotificationsInput, PostUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<PostCreateWithoutNotificationsInput, PostUncheckedCreateWithoutNotificationsInput>
+    where?: PostWhereInput
+  }
+
+  export type PostUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: PostWhereInput
+    data: XOR<PostUpdateWithoutNotificationsInput, PostUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type PostUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: PostUpdatetagsInput | string[]
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    downloads?: IntFieldUpdateOperationsInput | number
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: CommentUpdateManyWithoutPostNestedInput
+    likes?: LikeUpdateManyWithoutPostNestedInput
+    author?: UserUpdateOneRequiredWithoutPostNestedInput
+  }
+
+  export type PostUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    tags?: PostUpdatetagsInput | string[]
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    downloads?: IntFieldUpdateOperationsInput | number
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
+    likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type CommentUpsertWithoutNotificationsInput = {
+    update: XOR<CommentUpdateWithoutNotificationsInput, CommentUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<CommentCreateWithoutNotificationsInput, CommentUncheckedCreateWithoutNotificationsInput>
+    where?: CommentWhereInput
+  }
+
+  export type CommentUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: CommentWhereInput
+    data: XOR<CommentUpdateWithoutNotificationsInput, CommentUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type CommentUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: UserUpdateOneRequiredWithoutCommentsNestedInput
+    post?: PostUpdateOneRequiredWithoutCommentsNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutNotificationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    postId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventCreateWithoutCreatedByInput = {
     id?: string
     title: string
-    rating?: number
-    downloads?: number
-    categories?: ResourceCreatecategoriesInput | string[]
     description: string
-    tags?: ResourceCreatetagsInput | string[]
-    author: string
-    downloadUrl: string
-    externalUrl?: string | null
+    date: Date | string
+    posterUrl?: string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
-  export type ResourceUncheckedCreateWithoutUploadedByInput = {
+  export type EventUncheckedCreateWithoutCreatedByInput = {
     id?: string
     title: string
-    rating?: number
-    downloads?: number
-    categories?: ResourceCreatecategoriesInput | string[]
     description: string
-    tags?: ResourceCreatetagsInput | string[]
-    author: string
-    downloadUrl: string
-    externalUrl?: string | null
+    date: Date | string
+    posterUrl?: string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
-  export type ResourceCreateOrConnectWithoutUploadedByInput = {
-    where: ResourceWhereUniqueInput
-    create: XOR<ResourceCreateWithoutUploadedByInput, ResourceUncheckedCreateWithoutUploadedByInput>
+  export type EventCreateOrConnectWithoutCreatedByInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput>
   }
 
-  export type ResourceCreateManyUploadedByInputEnvelope = {
-    data: ResourceCreateManyUploadedByInput | ResourceCreateManyUploadedByInput[]
+  export type EventCreateManyCreatedByInputEnvelope = {
+    data: EventCreateManyCreatedByInput | EventCreateManyCreatedByInput[]
     skipDuplicates?: boolean
   }
 
@@ -18603,31 +20626,83 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type EventCreateWithoutCreatedByInput = {
+  export type ResourceCreateWithoutUploadedByInput = {
     id?: string
     title: string
-    description: string
-    date: Date | string
-    posterUrl?: string | null
     createdAt?: Date | string
+    author: string
+    categories?: ResourceCreatecategoriesInput | string[]
+    description: string
+    downloadUrl: string
+    downloads?: number
+    externalUrl?: string | null
+    rating?: number
+    tags?: ResourceCreatetagsInput | string[]
+    updatedAt?: Date | string
   }
 
-  export type EventUncheckedCreateWithoutCreatedByInput = {
+  export type ResourceUncheckedCreateWithoutUploadedByInput = {
     id?: string
     title: string
-    description: string
-    date: Date | string
-    posterUrl?: string | null
     createdAt?: Date | string
+    author: string
+    categories?: ResourceCreatecategoriesInput | string[]
+    description: string
+    downloadUrl: string
+    downloads?: number
+    externalUrl?: string | null
+    rating?: number
+    tags?: ResourceCreatetagsInput | string[]
+    updatedAt?: Date | string
   }
 
-  export type EventCreateOrConnectWithoutCreatedByInput = {
-    where: EventWhereUniqueInput
-    create: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput>
+  export type ResourceCreateOrConnectWithoutUploadedByInput = {
+    where: ResourceWhereUniqueInput
+    create: XOR<ResourceCreateWithoutUploadedByInput, ResourceUncheckedCreateWithoutUploadedByInput>
   }
 
-  export type EventCreateManyCreatedByInputEnvelope = {
-    data: EventCreateManyCreatedByInput | EventCreateManyCreatedByInput[]
+  export type ResourceCreateManyUploadedByInputEnvelope = {
+    data: ResourceCreateManyUploadedByInput | ResourceCreateManyUploadedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AccountCreateWithoutUserInput = {
+    id: string
+    accountId: string
+    providerId: string
+    accessToken?: string | null
+    refreshToken?: string | null
+    idToken?: string | null
+    accessTokenExpiresAt?: Date | string | null
+    refreshTokenExpiresAt?: Date | string | null
+    scope?: string | null
+    password?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+  }
+
+  export type AccountUncheckedCreateWithoutUserInput = {
+    id: string
+    accountId: string
+    providerId: string
+    accessToken?: string | null
+    refreshToken?: string | null
+    idToken?: string | null
+    accessTokenExpiresAt?: Date | string | null
+    refreshTokenExpiresAt?: Date | string | null
+    scope?: string | null
+    password?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+  }
+
+  export type AccountCreateOrConnectWithoutUserInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput>
+  }
+
+  export type AccountCreateManyUserInputEnvelope = {
+    data: AccountCreateManyUserInput | AccountCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -18636,6 +20711,7 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     post: PostCreateNestedOneWithoutCommentsInput
+    notifications?: NotificationCreateNestedManyWithoutCommentInput
   }
 
   export type CommentUncheckedCreateWithoutAuthorInput = {
@@ -18643,6 +20719,7 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     postId: string
+    notifications?: NotificationUncheckedCreateNestedManyWithoutCommentInput
   }
 
   export type CommentCreateOrConnectWithoutAuthorInput = {
@@ -18675,145 +20752,151 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type SessionUpsertWithWhereUniqueWithoutUserInput = {
-    where: SessionWhereUniqueInput
-    update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
-    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
+  export type PostCreateWithoutAuthorInput = {
+    id?: string
+    title: string
+    content: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: PostCreatetagsInput | string[]
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: string | null
+    department?: string | null
+    doi?: string | null
+    downloads?: number
+    resourceType?: string | null
+    role?: string | null
+    summary?: string | null
+    university?: string | null
+    views?: number
+    visibility?: string | null
+    comments?: CommentCreateNestedManyWithoutPostInput
+    likes?: LikeCreateNestedManyWithoutPostInput
+    notifications?: NotificationCreateNestedManyWithoutPostInput
   }
 
-  export type SessionUpdateWithWhereUniqueWithoutUserInput = {
-    where: SessionWhereUniqueInput
-    data: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
+  export type PostUncheckedCreateWithoutAuthorInput = {
+    id?: string
+    title: string
+    content: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: PostCreatetagsInput | string[]
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: string | null
+    department?: string | null
+    doi?: string | null
+    downloads?: number
+    resourceType?: string | null
+    role?: string | null
+    summary?: string | null
+    university?: string | null
+    views?: number
+    visibility?: string | null
+    comments?: CommentUncheckedCreateNestedManyWithoutPostInput
+    likes?: LikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPostInput
   }
 
-  export type SessionUpdateManyWithWhereWithoutUserInput = {
-    where: SessionScalarWhereInput
-    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type SessionScalarWhereInput = {
-    AND?: SessionScalarWhereInput | SessionScalarWhereInput[]
-    OR?: SessionScalarWhereInput[]
-    NOT?: SessionScalarWhereInput | SessionScalarWhereInput[]
-    id?: StringFilter<"Session"> | string
-    expiresAt?: DateTimeFilter<"Session"> | Date | string
-    token?: StringFilter<"Session"> | string
-    createdAt?: DateTimeFilter<"Session"> | Date | string
-    updatedAt?: DateTimeFilter<"Session"> | Date | string
-    ipAddress?: StringNullableFilter<"Session"> | string | null
-    userAgent?: StringNullableFilter<"Session"> | string | null
-    userId?: StringFilter<"Session"> | string
-  }
-
-  export type AccountUpsertWithWhereUniqueWithoutUserInput = {
-    where: AccountWhereUniqueInput
-    update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
-    create: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput>
-  }
-
-  export type AccountUpdateWithWhereUniqueWithoutUserInput = {
-    where: AccountWhereUniqueInput
-    data: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
-  }
-
-  export type AccountUpdateManyWithWhereWithoutUserInput = {
-    where: AccountScalarWhereInput
-    data: XOR<AccountUpdateManyMutationInput, AccountUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type AccountScalarWhereInput = {
-    AND?: AccountScalarWhereInput | AccountScalarWhereInput[]
-    OR?: AccountScalarWhereInput[]
-    NOT?: AccountScalarWhereInput | AccountScalarWhereInput[]
-    id?: StringFilter<"Account"> | string
-    accountId?: StringFilter<"Account"> | string
-    providerId?: StringFilter<"Account"> | string
-    userId?: StringFilter<"Account"> | string
-    accessToken?: StringNullableFilter<"Account"> | string | null
-    refreshToken?: StringNullableFilter<"Account"> | string | null
-    idToken?: StringNullableFilter<"Account"> | string | null
-    accessTokenExpiresAt?: DateTimeNullableFilter<"Account"> | Date | string | null
-    refreshTokenExpiresAt?: DateTimeNullableFilter<"Account"> | Date | string | null
-    scope?: StringNullableFilter<"Account"> | string | null
-    password?: StringNullableFilter<"Account"> | string | null
-    createdAt?: DateTimeFilter<"Account"> | Date | string
-    updatedAt?: DateTimeFilter<"Account"> | Date | string
-  }
-
-  export type PostUpsertWithWhereUniqueWithoutAuthorInput = {
+  export type PostCreateOrConnectWithoutAuthorInput = {
     where: PostWhereUniqueInput
-    update: XOR<PostUpdateWithoutAuthorInput, PostUncheckedUpdateWithoutAuthorInput>
     create: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput>
   }
 
-  export type PostUpdateWithWhereUniqueWithoutAuthorInput = {
-    where: PostWhereUniqueInput
-    data: XOR<PostUpdateWithoutAuthorInput, PostUncheckedUpdateWithoutAuthorInput>
+  export type PostCreateManyAuthorInputEnvelope = {
+    data: PostCreateManyAuthorInput | PostCreateManyAuthorInput[]
+    skipDuplicates?: boolean
   }
 
-  export type PostUpdateManyWithWhereWithoutAuthorInput = {
-    where: PostScalarWhereInput
-    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyWithoutAuthorInput>
+  export type SessionCreateWithoutUserInput = {
+    id: string
+    expiresAt: Date | string
+    token: string
+    createdAt: Date | string
+    updatedAt: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
   }
 
-  export type PostScalarWhereInput = {
-    AND?: PostScalarWhereInput | PostScalarWhereInput[]
-    OR?: PostScalarWhereInput[]
-    NOT?: PostScalarWhereInput | PostScalarWhereInput[]
-    id?: StringFilter<"Post"> | string
-    title?: StringFilter<"Post"> | string
-    content?: StringFilter<"Post"> | string
-    summary?: StringNullableFilter<"Post"> | string | null
-    imageUrl?: StringNullableFilter<"Post"> | string | null
-    resourceType?: StringNullableFilter<"Post"> | string | null
-    role?: StringNullableFilter<"Post"> | string | null
-    university?: StringNullableFilter<"Post"> | string | null
-    department?: StringNullableFilter<"Post"> | string | null
-    doi?: StringNullableFilter<"Post"> | string | null
-    citation?: StringNullableFilter<"Post"> | string | null
-    attachments?: JsonNullableFilter<"Post">
-    visibility?: StringNullableFilter<"Post"> | string | null
-    createdAt?: DateTimeFilter<"Post"> | Date | string
-    updatedAt?: DateTimeFilter<"Post"> | Date | string
-    authorId?: StringFilter<"Post"> | string
-    tags?: StringNullableListFilter<"Post">
-    views?: IntFilter<"Post"> | number
-    downloads?: IntFilter<"Post"> | number
+  export type SessionUncheckedCreateWithoutUserInput = {
+    id: string
+    expiresAt: Date | string
+    token: string
+    createdAt: Date | string
+    updatedAt: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
   }
 
-  export type ResourceUpsertWithWhereUniqueWithoutUploadedByInput = {
-    where: ResourceWhereUniqueInput
-    update: XOR<ResourceUpdateWithoutUploadedByInput, ResourceUncheckedUpdateWithoutUploadedByInput>
-    create: XOR<ResourceCreateWithoutUploadedByInput, ResourceUncheckedCreateWithoutUploadedByInput>
+  export type SessionCreateOrConnectWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
   }
 
-  export type ResourceUpdateWithWhereUniqueWithoutUploadedByInput = {
-    where: ResourceWhereUniqueInput
-    data: XOR<ResourceUpdateWithoutUploadedByInput, ResourceUncheckedUpdateWithoutUploadedByInput>
+  export type SessionCreateManyUserInputEnvelope = {
+    data: SessionCreateManyUserInput | SessionCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
-  export type ResourceUpdateManyWithWhereWithoutUploadedByInput = {
-    where: ResourceScalarWhereInput
-    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyWithoutUploadedByInput>
+  export type NotificationCreateWithoutUserInput = {
+    id?: string
+    type: string
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    post?: PostCreateNestedOneWithoutNotificationsInput
+    comment?: CommentCreateNestedOneWithoutNotificationsInput
   }
 
-  export type ResourceScalarWhereInput = {
-    AND?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
-    OR?: ResourceScalarWhereInput[]
-    NOT?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
-    id?: StringFilter<"Resource"> | string
-    title?: StringFilter<"Resource"> | string
-    rating?: FloatFilter<"Resource"> | number
-    downloads?: IntFilter<"Resource"> | number
-    categories?: StringNullableListFilter<"Resource">
-    description?: StringFilter<"Resource"> | string
-    tags?: StringNullableListFilter<"Resource">
-    author?: StringFilter<"Resource"> | string
-    downloadUrl?: StringFilter<"Resource"> | string
-    externalUrl?: StringNullableFilter<"Resource"> | string | null
-    uploadedById?: StringFilter<"Resource"> | string
-    createdAt?: DateTimeFilter<"Resource"> | Date | string
-    updatedAt?: DateTimeFilter<"Resource"> | Date | string
+  export type NotificationUncheckedCreateWithoutUserInput = {
+    id?: string
+    type: string
+    message: string
+    postId?: string | null
+    commentId?: string | null
+    read?: boolean
+    createdAt?: Date | string
+  }
+
+  export type NotificationCreateOrConnectWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
+  }
+
+  export type NotificationCreateManyUserInputEnvelope = {
+    data: NotificationCreateManyUserInput | NotificationCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EventUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: EventWhereUniqueInput
+    update: XOR<EventUpdateWithoutCreatedByInput, EventUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type EventUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: EventWhereUniqueInput
+    data: XOR<EventUpdateWithoutCreatedByInput, EventUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type EventUpdateManyWithWhereWithoutCreatedByInput = {
+    where: EventScalarWhereInput
+    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type EventScalarWhereInput = {
+    AND?: EventScalarWhereInput | EventScalarWhereInput[]
+    OR?: EventScalarWhereInput[]
+    NOT?: EventScalarWhereInput | EventScalarWhereInput[]
+    id?: StringFilter<"Event"> | string
+    title?: StringFilter<"Event"> | string
+    description?: StringFilter<"Event"> | string
+    date?: DateTimeFilter<"Event"> | Date | string
+    posterUrl?: StringNullableFilter<"Event"> | string | null
+    createdById?: StringFilter<"Event"> | string
+    createdAt?: DateTimeFilter<"Event"> | Date | string
   }
 
   export type GroupUpsertWithWhereUniqueWithoutCreatedByInput = {
@@ -18869,33 +20952,74 @@ export namespace Prisma {
     joinedAt?: DateTimeFilter<"GroupMember"> | Date | string
   }
 
-  export type EventUpsertWithWhereUniqueWithoutCreatedByInput = {
-    where: EventWhereUniqueInput
-    update: XOR<EventUpdateWithoutCreatedByInput, EventUncheckedUpdateWithoutCreatedByInput>
-    create: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput>
+  export type ResourceUpsertWithWhereUniqueWithoutUploadedByInput = {
+    where: ResourceWhereUniqueInput
+    update: XOR<ResourceUpdateWithoutUploadedByInput, ResourceUncheckedUpdateWithoutUploadedByInput>
+    create: XOR<ResourceCreateWithoutUploadedByInput, ResourceUncheckedCreateWithoutUploadedByInput>
   }
 
-  export type EventUpdateWithWhereUniqueWithoutCreatedByInput = {
-    where: EventWhereUniqueInput
-    data: XOR<EventUpdateWithoutCreatedByInput, EventUncheckedUpdateWithoutCreatedByInput>
+  export type ResourceUpdateWithWhereUniqueWithoutUploadedByInput = {
+    where: ResourceWhereUniqueInput
+    data: XOR<ResourceUpdateWithoutUploadedByInput, ResourceUncheckedUpdateWithoutUploadedByInput>
   }
 
-  export type EventUpdateManyWithWhereWithoutCreatedByInput = {
-    where: EventScalarWhereInput
-    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyWithoutCreatedByInput>
+  export type ResourceUpdateManyWithWhereWithoutUploadedByInput = {
+    where: ResourceScalarWhereInput
+    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyWithoutUploadedByInput>
   }
 
-  export type EventScalarWhereInput = {
-    AND?: EventScalarWhereInput | EventScalarWhereInput[]
-    OR?: EventScalarWhereInput[]
-    NOT?: EventScalarWhereInput | EventScalarWhereInput[]
-    id?: StringFilter<"Event"> | string
-    title?: StringFilter<"Event"> | string
-    description?: StringFilter<"Event"> | string
-    date?: DateTimeFilter<"Event"> | Date | string
-    posterUrl?: StringNullableFilter<"Event"> | string | null
-    createdById?: StringFilter<"Event"> | string
-    createdAt?: DateTimeFilter<"Event"> | Date | string
+  export type ResourceScalarWhereInput = {
+    AND?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+    OR?: ResourceScalarWhereInput[]
+    NOT?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+    id?: StringFilter<"Resource"> | string
+    title?: StringFilter<"Resource"> | string
+    uploadedById?: StringFilter<"Resource"> | string
+    createdAt?: DateTimeFilter<"Resource"> | Date | string
+    author?: StringFilter<"Resource"> | string
+    categories?: StringNullableListFilter<"Resource">
+    description?: StringFilter<"Resource"> | string
+    downloadUrl?: StringFilter<"Resource"> | string
+    downloads?: IntFilter<"Resource"> | number
+    externalUrl?: StringNullableFilter<"Resource"> | string | null
+    rating?: FloatFilter<"Resource"> | number
+    tags?: StringNullableListFilter<"Resource">
+    updatedAt?: DateTimeFilter<"Resource"> | Date | string
+  }
+
+  export type AccountUpsertWithWhereUniqueWithoutUserInput = {
+    where: AccountWhereUniqueInput
+    update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
+    create: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput>
+  }
+
+  export type AccountUpdateWithWhereUniqueWithoutUserInput = {
+    where: AccountWhereUniqueInput
+    data: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AccountUpdateManyWithWhereWithoutUserInput = {
+    where: AccountScalarWhereInput
+    data: XOR<AccountUpdateManyMutationInput, AccountUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type AccountScalarWhereInput = {
+    AND?: AccountScalarWhereInput | AccountScalarWhereInput[]
+    OR?: AccountScalarWhereInput[]
+    NOT?: AccountScalarWhereInput | AccountScalarWhereInput[]
+    id?: StringFilter<"Account"> | string
+    accountId?: StringFilter<"Account"> | string
+    providerId?: StringFilter<"Account"> | string
+    userId?: StringFilter<"Account"> | string
+    accessToken?: StringNullableFilter<"Account"> | string | null
+    refreshToken?: StringNullableFilter<"Account"> | string | null
+    idToken?: StringNullableFilter<"Account"> | string | null
+    accessTokenExpiresAt?: DateTimeNullableFilter<"Account"> | Date | string | null
+    refreshTokenExpiresAt?: DateTimeNullableFilter<"Account"> | Date | string | null
+    scope?: StringNullableFilter<"Account"> | string | null
+    password?: StringNullableFilter<"Account"> | string | null
+    createdAt?: DateTimeFilter<"Account"> | Date | string
+    updatedAt?: DateTimeFilter<"Account"> | Date | string
   }
 
   export type CommentUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -18950,31 +21074,134 @@ export namespace Prisma {
     userId?: StringFilter<"Like"> | string
   }
 
+  export type PostUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: PostWhereUniqueInput
+    update: XOR<PostUpdateWithoutAuthorInput, PostUncheckedUpdateWithoutAuthorInput>
+    create: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type PostUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: PostWhereUniqueInput
+    data: XOR<PostUpdateWithoutAuthorInput, PostUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type PostUpdateManyWithWhereWithoutAuthorInput = {
+    where: PostScalarWhereInput
+    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type PostScalarWhereInput = {
+    AND?: PostScalarWhereInput | PostScalarWhereInput[]
+    OR?: PostScalarWhereInput[]
+    NOT?: PostScalarWhereInput | PostScalarWhereInput[]
+    id?: StringFilter<"Post"> | string
+    title?: StringFilter<"Post"> | string
+    content?: StringFilter<"Post"> | string
+    imageUrl?: StringNullableFilter<"Post"> | string | null
+    createdAt?: DateTimeFilter<"Post"> | Date | string
+    updatedAt?: DateTimeFilter<"Post"> | Date | string
+    authorId?: StringFilter<"Post"> | string
+    tags?: StringNullableListFilter<"Post">
+    attachments?: JsonNullableFilter<"Post">
+    citation?: StringNullableFilter<"Post"> | string | null
+    department?: StringNullableFilter<"Post"> | string | null
+    doi?: StringNullableFilter<"Post"> | string | null
+    downloads?: IntFilter<"Post"> | number
+    resourceType?: StringNullableFilter<"Post"> | string | null
+    role?: StringNullableFilter<"Post"> | string | null
+    summary?: StringNullableFilter<"Post"> | string | null
+    university?: StringNullableFilter<"Post"> | string | null
+    views?: IntFilter<"Post"> | number
+    visibility?: StringNullableFilter<"Post"> | string | null
+  }
+
+  export type SessionUpsertWithWhereUniqueWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
+    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type SessionUpdateWithWhereUniqueWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    data: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SessionUpdateManyWithWhereWithoutUserInput = {
+    where: SessionScalarWhereInput
+    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SessionScalarWhereInput = {
+    AND?: SessionScalarWhereInput | SessionScalarWhereInput[]
+    OR?: SessionScalarWhereInput[]
+    NOT?: SessionScalarWhereInput | SessionScalarWhereInput[]
+    id?: StringFilter<"Session"> | string
+    expiresAt?: DateTimeFilter<"Session"> | Date | string
+    token?: StringFilter<"Session"> | string
+    createdAt?: DateTimeFilter<"Session"> | Date | string
+    updatedAt?: DateTimeFilter<"Session"> | Date | string
+    ipAddress?: StringNullableFilter<"Session"> | string | null
+    userAgent?: StringNullableFilter<"Session"> | string | null
+    userId?: StringFilter<"Session"> | string
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
+    create: XOR<NotificationCreateWithoutUserInput, NotificationUncheckedCreateWithoutUserInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutUserInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutUserInput, NotificationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutUserInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type NotificationScalarWhereInput = {
+    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    OR?: NotificationScalarWhereInput[]
+    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    id?: StringFilter<"Notification"> | string
+    type?: StringFilter<"Notification"> | string
+    message?: StringFilter<"Notification"> | string
+    userId?: StringFilter<"Notification"> | string
+    postId?: StringNullableFilter<"Notification"> | string | null
+    commentId?: StringNullableFilter<"Notification"> | string | null
+    read?: BoolFilter<"Notification"> | boolean
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
+  }
+
   export type UserCreateWithoutSessionsInput = {
     id: string
     name: string
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    Post?: PostCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Event?: EventCreateNestedManyWithoutCreatedByInput
+    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -18983,25 +21210,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -19026,25 +21255,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    Post?: PostUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -19053,25 +21284,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -19080,25 +21313,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    Post?: PostCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Event?: EventCreateNestedManyWithoutCreatedByInput
+    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -19107,25 +21342,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -19150,25 +21387,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    Post?: PostUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -19177,84 +21416,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserCreateWithoutPostInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
-    image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    createdAt: Date | string
-    updatedAt: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
-    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
-    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Event?: EventCreateNestedManyWithoutCreatedByInput
-    Comments?: CommentCreateNestedManyWithoutAuthorInput
-    Likes?: LikeCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutPostInput = {
-    id: string
-    name: string
-    email: string
-    emailVerified: boolean
-    image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    createdAt: Date | string
-    updatedAt: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
-    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
-    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
-    Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
-    Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutPostInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutPostInput, UserUncheckedCreateWithoutPostInput>
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CommentCreateWithoutPostInput = {
@@ -19262,6 +21444,7 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     author: UserCreateNestedOneWithoutCommentsInput
+    notifications?: NotificationCreateNestedManyWithoutCommentInput
   }
 
   export type CommentUncheckedCreateWithoutPostInput = {
@@ -19269,6 +21452,7 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     authorId: string
+    notifications?: NotificationUncheckedCreateNestedManyWithoutCommentInput
   }
 
   export type CommentCreateOrConnectWithoutPostInput = {
@@ -19301,69 +21485,97 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutPostInput = {
-    update: XOR<UserUpdateWithoutPostInput, UserUncheckedUpdateWithoutPostInput>
+  export type UserCreateWithoutPostInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    Comments?: CommentCreateNestedManyWithoutAuthorInput
+    Likes?: LikeCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutPostInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPostInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutPostInput, UserUncheckedCreateWithoutPostInput>
-    where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutPostInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutPostInput, UserUncheckedUpdateWithoutPostInput>
+  export type NotificationCreateWithoutPostInput = {
+    id?: string
+    type: string
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutNotificationsInput
+    comment?: CommentCreateNestedOneWithoutNotificationsInput
   }
 
-  export type UserUpdateWithoutPostInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
-    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
-    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Event?: EventUpdateManyWithoutCreatedByNestedInput
-    Comments?: CommentUpdateManyWithoutAuthorNestedInput
-    Likes?: LikeUpdateManyWithoutUserNestedInput
+  export type NotificationUncheckedCreateWithoutPostInput = {
+    id?: string
+    type: string
+    message: string
+    userId: string
+    commentId?: string | null
+    read?: boolean
+    createdAt?: Date | string
   }
 
-  export type UserUncheckedUpdateWithoutPostInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    emailVerified?: BoolFieldUpdateOperationsInput | boolean
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
-    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
-    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
-    Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
-    Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+  export type NotificationCreateOrConnectWithoutPostInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutPostInput, NotificationUncheckedCreateWithoutPostInput>
+  }
+
+  export type NotificationCreateManyPostInputEnvelope = {
+    data: NotificationCreateManyPostInput | NotificationCreateManyPostInput[]
+    skipDuplicates?: boolean
   }
 
   export type CommentUpsertWithWhereUniqueWithoutPostInput = {
@@ -19398,55 +21610,89 @@ export namespace Prisma {
     data: XOR<LikeUpdateManyMutationInput, LikeUncheckedUpdateManyWithoutPostInput>
   }
 
-  export type PostCreateWithoutCommentsInput = {
-    id?: string
-    title: string
-    content: string
-    summary?: string | null
-    imageUrl?: string | null
-    resourceType?: string | null
-    role?: string | null
-    university?: string | null
-    department?: string | null
-    doi?: string | null
-    citation?: string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tags?: PostCreatetagsInput | string[]
-    views?: number
-    downloads?: number
-    author: UserCreateNestedOneWithoutPostInput
-    likes?: LikeCreateNestedManyWithoutPostInput
+  export type UserUpsertWithoutPostInput = {
+    update: XOR<UserUpdateWithoutPostInput, UserUncheckedUpdateWithoutPostInput>
+    create: XOR<UserCreateWithoutPostInput, UserUncheckedCreateWithoutPostInput>
+    where?: UserWhereInput
   }
 
-  export type PostUncheckedCreateWithoutCommentsInput = {
-    id?: string
-    title: string
-    content: string
-    summary?: string | null
-    imageUrl?: string | null
-    resourceType?: string | null
-    role?: string | null
-    university?: string | null
-    department?: string | null
-    doi?: string | null
-    citation?: string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    authorId: string
-    tags?: PostCreatetagsInput | string[]
-    views?: number
-    downloads?: number
-    likes?: LikeUncheckedCreateNestedManyWithoutPostInput
+  export type UserUpdateToOneWithWhereWithoutPostInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPostInput, UserUncheckedUpdateWithoutPostInput>
   }
 
-  export type PostCreateOrConnectWithoutCommentsInput = {
-    where: PostWhereUniqueInput
-    create: XOR<PostCreateWithoutCommentsInput, PostUncheckedCreateWithoutCommentsInput>
+  export type UserUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    Comments?: CommentUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutPostInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutPostInput, NotificationUncheckedUpdateWithoutPostInput>
+    create: XOR<NotificationCreateWithoutPostInput, NotificationUncheckedCreateWithoutPostInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutPostInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutPostInput, NotificationUncheckedUpdateWithoutPostInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutPostInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutPostInput>
   }
 
   export type UserCreateWithoutCommentsInput = {
@@ -19455,25 +21701,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    Post?: PostCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Event?: EventCreateNestedManyWithoutCreatedByInput
+    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
     Likes?: LikeCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
@@ -19482,25 +21730,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCommentsInput = {
@@ -19508,61 +21758,87 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
   }
 
-  export type PostUpsertWithoutCommentsInput = {
-    update: XOR<PostUpdateWithoutCommentsInput, PostUncheckedUpdateWithoutCommentsInput>
+  export type PostCreateWithoutCommentsInput = {
+    id?: string
+    title: string
+    content: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: PostCreatetagsInput | string[]
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: string | null
+    department?: string | null
+    doi?: string | null
+    downloads?: number
+    resourceType?: string | null
+    role?: string | null
+    summary?: string | null
+    university?: string | null
+    views?: number
+    visibility?: string | null
+    likes?: LikeCreateNestedManyWithoutPostInput
+    author: UserCreateNestedOneWithoutPostInput
+    notifications?: NotificationCreateNestedManyWithoutPostInput
+  }
+
+  export type PostUncheckedCreateWithoutCommentsInput = {
+    id?: string
+    title: string
+    content: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    authorId: string
+    tags?: PostCreatetagsInput | string[]
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: string | null
+    department?: string | null
+    doi?: string | null
+    downloads?: number
+    resourceType?: string | null
+    role?: string | null
+    summary?: string | null
+    university?: string | null
+    views?: number
+    visibility?: string | null
+    likes?: LikeUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type PostCreateOrConnectWithoutCommentsInput = {
+    where: PostWhereUniqueInput
     create: XOR<PostCreateWithoutCommentsInput, PostUncheckedCreateWithoutCommentsInput>
-    where?: PostWhereInput
   }
 
-  export type PostUpdateToOneWithWhereWithoutCommentsInput = {
-    where?: PostWhereInput
-    data: XOR<PostUpdateWithoutCommentsInput, PostUncheckedUpdateWithoutCommentsInput>
+  export type NotificationCreateWithoutCommentInput = {
+    id?: string
+    type: string
+    message: string
+    read?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutNotificationsInput
+    post?: PostCreateNestedOneWithoutNotificationsInput
   }
 
-  export type PostUpdateWithoutCommentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    citation?: NullableStringFieldUpdateOperationsInput | string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: PostUpdatetagsInput | string[]
-    views?: IntFieldUpdateOperationsInput | number
-    downloads?: IntFieldUpdateOperationsInput | number
-    author?: UserUpdateOneRequiredWithoutPostNestedInput
-    likes?: LikeUpdateManyWithoutPostNestedInput
+  export type NotificationUncheckedCreateWithoutCommentInput = {
+    id?: string
+    type: string
+    message: string
+    userId: string
+    postId?: string | null
+    read?: boolean
+    createdAt?: Date | string
   }
 
-  export type PostUncheckedUpdateWithoutCommentsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    citation?: NullableStringFieldUpdateOperationsInput | string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    authorId?: StringFieldUpdateOperationsInput | string
-    tags?: PostUpdatetagsInput | string[]
-    views?: IntFieldUpdateOperationsInput | number
-    downloads?: IntFieldUpdateOperationsInput | number
-    likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
+  export type NotificationCreateOrConnectWithoutCommentInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutCommentInput, NotificationUncheckedCreateWithoutCommentInput>
+  }
+
+  export type NotificationCreateManyCommentInputEnvelope = {
+    data: NotificationCreateManyCommentInput | NotificationCreateManyCommentInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserUpsertWithoutCommentsInput = {
@@ -19582,25 +21858,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    Post?: PostUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -19609,71 +21887,150 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type PostUpsertWithoutCommentsInput = {
+    update: XOR<PostUpdateWithoutCommentsInput, PostUncheckedUpdateWithoutCommentsInput>
+    create: XOR<PostCreateWithoutCommentsInput, PostUncheckedCreateWithoutCommentsInput>
+    where?: PostWhereInput
+  }
+
+  export type PostUpdateToOneWithWhereWithoutCommentsInput = {
+    where?: PostWhereInput
+    data: XOR<PostUpdateWithoutCommentsInput, PostUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type PostUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: PostUpdatetagsInput | string[]
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    downloads?: IntFieldUpdateOperationsInput | number
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    likes?: LikeUpdateManyWithoutPostNestedInput
+    author?: UserUpdateOneRequiredWithoutPostNestedInput
+    notifications?: NotificationUpdateManyWithoutPostNestedInput
+  }
+
+  export type PostUncheckedUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    tags?: PostUpdatetagsInput | string[]
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    downloads?: IntFieldUpdateOperationsInput | number
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type NotificationUpsertWithWhereUniqueWithoutCommentInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutCommentInput, NotificationUncheckedUpdateWithoutCommentInput>
+    create: XOR<NotificationCreateWithoutCommentInput, NotificationUncheckedCreateWithoutCommentInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutCommentInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutCommentInput, NotificationUncheckedUpdateWithoutCommentInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutCommentInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutCommentInput>
   }
 
   export type PostCreateWithoutLikesInput = {
     id?: string
     title: string
     content: string
-    summary?: string | null
     imageUrl?: string | null
-    resourceType?: string | null
-    role?: string | null
-    university?: string | null
-    department?: string | null
-    doi?: string | null
-    citation?: string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
-    views?: number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: string | null
+    department?: string | null
+    doi?: string | null
     downloads?: number
-    author: UserCreateNestedOneWithoutPostInput
+    resourceType?: string | null
+    role?: string | null
+    summary?: string | null
+    university?: string | null
+    views?: number
+    visibility?: string | null
     comments?: CommentCreateNestedManyWithoutPostInput
+    author: UserCreateNestedOneWithoutPostInput
+    notifications?: NotificationCreateNestedManyWithoutPostInput
   }
 
   export type PostUncheckedCreateWithoutLikesInput = {
     id?: string
     title: string
     content: string
-    summary?: string | null
     imageUrl?: string | null
-    resourceType?: string | null
-    role?: string | null
-    university?: string | null
-    department?: string | null
-    doi?: string | null
-    citation?: string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     authorId: string
     tags?: PostCreatetagsInput | string[]
-    views?: number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: string | null
+    department?: string | null
+    doi?: string | null
     downloads?: number
+    resourceType?: string | null
+    role?: string | null
+    summary?: string | null
+    university?: string | null
+    views?: number
+    visibility?: string | null
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type PostCreateOrConnectWithoutLikesInput = {
@@ -19687,25 +22044,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    Post?: PostCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Event?: EventCreateNestedManyWithoutCreatedByInput
+    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLikesInput = {
@@ -19714,25 +22073,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLikesInput = {
@@ -19755,46 +22116,48 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    citation?: NullableStringFieldUpdateOperationsInput | string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
-    views?: IntFieldUpdateOperationsInput | number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     downloads?: IntFieldUpdateOperationsInput | number
-    author?: UserUpdateOneRequiredWithoutPostNestedInput
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUpdateManyWithoutPostNestedInput
+    author?: UserUpdateOneRequiredWithoutPostNestedInput
+    notifications?: NotificationUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateWithoutLikesInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    citation?: NullableStringFieldUpdateOperationsInput | string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
     tags?: PostUpdatetagsInput | string[]
-    views?: IntFieldUpdateOperationsInput | number
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
     downloads?: IntFieldUpdateOperationsInput | number
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type UserUpsertWithoutLikesInput = {
@@ -19814,25 +22177,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    Post?: PostUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLikesInput = {
@@ -19841,25 +22206,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutResourceInput = {
@@ -19868,25 +22235,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    Post?: PostCreateNestedManyWithoutAuthorInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Event?: EventCreateNestedManyWithoutCreatedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutResourceInput = {
@@ -19895,25 +22264,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutResourceInput = {
@@ -19938,25 +22309,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    Post?: PostUpdateManyWithoutAuthorNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutResourceInput = {
@@ -19965,25 +22338,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCreatedGroupsInput = {
@@ -19992,25 +22367,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    Post?: PostCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
-    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
     Event?: EventCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedGroupsInput = {
@@ -20019,25 +22396,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
-    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedGroupsInput = {
@@ -20084,25 +22463,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    Post?: PostUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
-    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedGroupsInput = {
@@ -20111,25 +22492,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
-    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type GroupMemberUpsertWithWhereUniqueWithoutGroupInput = {
@@ -20175,25 +22558,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    Post?: PostCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
-    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
     Event?: EventCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutGroupMembershipsInput = {
@@ -20202,25 +22587,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
-    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutGroupMembershipsInput = {
@@ -20272,25 +22659,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    Post?: PostUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
-    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGroupMembershipsInput = {
@@ -20299,25 +22688,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
-    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutEventInput = {
@@ -20326,25 +22717,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    Post?: PostCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEventInput = {
@@ -20353,25 +22746,27 @@ export namespace Prisma {
     email: string
     emailVerified: boolean
     image?: string | null
-    bio?: string | null
-    username?: string | null
-    location?: string | null
-    university?: string | null
-    department?: string | null
-    yearOfStudy?: string | null
-    skills?: UserCreateskillsInput | string[]
-    researchFocus?: string | null
-    publications?: UserCreatepublicationsInput | string[]
     createdAt: Date | string
     updatedAt: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutEventInput = {
@@ -20396,25 +22791,27 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    Post?: PostUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEventInput = {
@@ -20423,35 +22820,64 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     emailVerified?: BoolFieldUpdateOperationsInput | boolean
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type SessionCreateManyUserInput = {
-    id: string
-    expiresAt: Date | string
-    token: string
-    createdAt: Date | string
-    updatedAt: Date | string
-    ipAddress?: string | null
-    userAgent?: string | null
+  export type EventCreateManyCreatedByInput = {
+    id?: string
+    title: string
+    description: string
+    date: Date | string
+    posterUrl?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GroupCreateManyCreatedByInput = {
+    id?: string
+    name: string
+    description?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GroupMemberCreateManyUserInput = {
+    id?: string
+    groupId: string
+    joinedAt?: Date | string
+  }
+
+  export type ResourceCreateManyUploadedByInput = {
+    id?: string
+    title: string
+    createdAt?: Date | string
+    author: string
+    categories?: ResourceCreatecategoriesInput | string[]
+    description: string
+    downloadUrl: string
+    downloads?: number
+    externalUrl?: string | null
+    rating?: number
+    tags?: ResourceCreatetagsInput | string[]
+    updatedAt?: Date | string
   }
 
   export type AccountCreateManyUserInput = {
@@ -20469,64 +22895,6 @@ export namespace Prisma {
     updatedAt: Date | string
   }
 
-  export type PostCreateManyAuthorInput = {
-    id?: string
-    title: string
-    content: string
-    summary?: string | null
-    imageUrl?: string | null
-    resourceType?: string | null
-    role?: string | null
-    university?: string | null
-    department?: string | null
-    doi?: string | null
-    citation?: string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tags?: PostCreatetagsInput | string[]
-    views?: number
-    downloads?: number
-  }
-
-  export type ResourceCreateManyUploadedByInput = {
-    id?: string
-    title: string
-    rating?: number
-    downloads?: number
-    categories?: ResourceCreatecategoriesInput | string[]
-    description: string
-    tags?: ResourceCreatetagsInput | string[]
-    author: string
-    downloadUrl: string
-    externalUrl?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type GroupCreateManyCreatedByInput = {
-    id?: string
-    name: string
-    description?: string | null
-    createdAt?: Date | string
-  }
-
-  export type GroupMemberCreateManyUserInput = {
-    id?: string
-    groupId: string
-    joinedAt?: Date | string
-  }
-
-  export type EventCreateManyCreatedByInput = {
-    id?: string
-    title: string
-    description: string
-    date: Date | string
-    posterUrl?: string | null
-    createdAt?: Date | string
-  }
-
   export type CommentCreateManyAuthorInput = {
     id?: string
     content: string
@@ -20539,34 +22907,158 @@ export namespace Prisma {
     postId: string
   }
 
-  export type SessionUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    token?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  export type PostCreateManyAuthorInput = {
+    id?: string
+    title: string
+    content: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: PostCreatetagsInput | string[]
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: string | null
+    department?: string | null
+    doi?: string | null
+    downloads?: number
+    resourceType?: string | null
+    role?: string | null
+    summary?: string | null
+    university?: string | null
+    views?: number
+    visibility?: string | null
   }
 
-  export type SessionUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    token?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  export type SessionCreateManyUserInput = {
+    id: string
+    expiresAt: Date | string
+    token: string
+    createdAt: Date | string
+    updatedAt: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
   }
 
-  export type SessionUncheckedUpdateManyWithoutUserInput = {
+  export type NotificationCreateManyUserInput = {
+    id?: string
+    type: string
+    message: string
+    postId?: string | null
+    commentId?: string | null
+    read?: boolean
+    createdAt?: Date | string
+  }
+
+  export type EventUpdateWithoutCreatedByInput = {
     id?: StringFieldUpdateOperationsInput | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    token?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: GroupMemberUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+  }
+
+  export type GroupUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupMemberUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    group?: GroupUpdateOneRequiredWithoutMembersNestedInput
+  }
+
+  export type GroupMemberUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    groupId?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GroupMemberUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    groupId?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResourceUpdateWithoutUploadedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: StringFieldUpdateOperationsInput | string
+    categories?: ResourceUpdatecategoriesInput | string[]
+    description?: StringFieldUpdateOperationsInput | string
+    downloadUrl?: StringFieldUpdateOperationsInput | string
+    downloads?: IntFieldUpdateOperationsInput | number
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: FloatFieldUpdateOperationsInput | number
+    tags?: ResourceUpdatetagsInput | string[]
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
-    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResourceUncheckedUpdateWithoutUploadedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: StringFieldUpdateOperationsInput | string
+    categories?: ResourceUpdatecategoriesInput | string[]
+    description?: StringFieldUpdateOperationsInput | string
+    downloadUrl?: StringFieldUpdateOperationsInput | string
+    downloads?: IntFieldUpdateOperationsInput | number
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: FloatFieldUpdateOperationsInput | number
+    tags?: ResourceUpdatetagsInput | string[]
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResourceUncheckedUpdateManyWithoutUploadedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: StringFieldUpdateOperationsInput | string
+    categories?: ResourceUpdatecategoriesInput | string[]
+    description?: StringFieldUpdateOperationsInput | string
+    downloadUrl?: StringFieldUpdateOperationsInput | string
+    downloads?: IntFieldUpdateOperationsInput | number
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: FloatFieldUpdateOperationsInput | number
+    tags?: ResourceUpdatetagsInput | string[]
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -20614,191 +23106,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type PostUpdateWithoutAuthorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    citation?: NullableStringFieldUpdateOperationsInput | string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: PostUpdatetagsInput | string[]
-    views?: IntFieldUpdateOperationsInput | number
-    downloads?: IntFieldUpdateOperationsInput | number
-    comments?: CommentUpdateManyWithoutPostNestedInput
-    likes?: LikeUpdateManyWithoutPostNestedInput
-  }
-
-  export type PostUncheckedUpdateWithoutAuthorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    citation?: NullableStringFieldUpdateOperationsInput | string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: PostUpdatetagsInput | string[]
-    views?: IntFieldUpdateOperationsInput | number
-    downloads?: IntFieldUpdateOperationsInput | number
-    comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
-    likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
-  }
-
-  export type PostUncheckedUpdateManyWithoutAuthorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    summary?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
-    university?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    citation?: NullableStringFieldUpdateOperationsInput | string | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    visibility?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: PostUpdatetagsInput | string[]
-    views?: IntFieldUpdateOperationsInput | number
-    downloads?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type ResourceUpdateWithoutUploadedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    rating?: FloatFieldUpdateOperationsInput | number
-    downloads?: IntFieldUpdateOperationsInput | number
-    categories?: ResourceUpdatecategoriesInput | string[]
-    description?: StringFieldUpdateOperationsInput | string
-    tags?: ResourceUpdatetagsInput | string[]
-    author?: StringFieldUpdateOperationsInput | string
-    downloadUrl?: StringFieldUpdateOperationsInput | string
-    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ResourceUncheckedUpdateWithoutUploadedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    rating?: FloatFieldUpdateOperationsInput | number
-    downloads?: IntFieldUpdateOperationsInput | number
-    categories?: ResourceUpdatecategoriesInput | string[]
-    description?: StringFieldUpdateOperationsInput | string
-    tags?: ResourceUpdatetagsInput | string[]
-    author?: StringFieldUpdateOperationsInput | string
-    downloadUrl?: StringFieldUpdateOperationsInput | string
-    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ResourceUncheckedUpdateManyWithoutUploadedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    rating?: FloatFieldUpdateOperationsInput | number
-    downloads?: IntFieldUpdateOperationsInput | number
-    categories?: ResourceUpdatecategoriesInput | string[]
-    description?: StringFieldUpdateOperationsInput | string
-    tags?: ResourceUpdatetagsInput | string[]
-    author?: StringFieldUpdateOperationsInput | string
-    downloadUrl?: StringFieldUpdateOperationsInput | string
-    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type GroupUpdateWithoutCreatedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    members?: GroupMemberUpdateManyWithoutGroupNestedInput
-  }
-
-  export type GroupUncheckedUpdateWithoutCreatedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    members?: GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
-  }
-
-  export type GroupUncheckedUpdateManyWithoutCreatedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type GroupMemberUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    group?: GroupUpdateOneRequiredWithoutMembersNestedInput
-  }
-
-  export type GroupMemberUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    groupId?: StringFieldUpdateOperationsInput | string
-    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type GroupMemberUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    groupId?: StringFieldUpdateOperationsInput | string
-    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type EventUpdateWithoutCreatedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type EventUncheckedUpdateWithoutCreatedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type EventUncheckedUpdateManyWithoutCreatedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    posterUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type CommentUpdateWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     post?: PostUpdateOneRequiredWithoutCommentsNestedInput
+    notifications?: NotificationUpdateManyWithoutCommentNestedInput
   }
 
   export type CommentUncheckedUpdateWithoutAuthorInput = {
@@ -20806,6 +23119,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     postId?: StringFieldUpdateOperationsInput | string
+    notifications?: NotificationUncheckedUpdateManyWithoutCommentNestedInput
   }
 
   export type CommentUncheckedUpdateManyWithoutAuthorInput = {
@@ -20830,6 +23144,135 @@ export namespace Prisma {
     postId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type PostUpdateWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: PostUpdatetagsInput | string[]
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    downloads?: IntFieldUpdateOperationsInput | number
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: CommentUpdateManyWithoutPostNestedInput
+    likes?: LikeUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUpdateManyWithoutPostNestedInput
+  }
+
+  export type PostUncheckedUpdateWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: PostUpdatetagsInput | string[]
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    downloads?: IntFieldUpdateOperationsInput | number
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
+    likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type PostUncheckedUpdateManyWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: PostUpdatetagsInput | string[]
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    citation?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    doi?: NullableStringFieldUpdateOperationsInput | string | null
+    downloads?: IntFieldUpdateOperationsInput | number
+    resourceType?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    views?: IntFieldUpdateOperationsInput | number
+    visibility?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SessionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    token?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SessionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    token?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SessionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    token?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type NotificationUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    post?: PostUpdateOneWithoutNotificationsNestedInput
+    comment?: CommentUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    commentId?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    commentId?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CommentCreateManyPostInput = {
     id?: string
     content: string
@@ -20842,11 +23285,22 @@ export namespace Prisma {
     userId: string
   }
 
+  export type NotificationCreateManyPostInput = {
+    id?: string
+    type: string
+    message: string
+    userId: string
+    commentId?: string | null
+    read?: boolean
+    createdAt?: Date | string
+  }
+
   export type CommentUpdateWithoutPostInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutCommentsNestedInput
+    notifications?: NotificationUpdateManyWithoutCommentNestedInput
   }
 
   export type CommentUncheckedUpdateWithoutPostInput = {
@@ -20854,6 +23308,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
+    notifications?: NotificationUncheckedUpdateManyWithoutCommentNestedInput
   }
 
   export type CommentUncheckedUpdateManyWithoutPostInput = {
@@ -20876,6 +23331,76 @@ export namespace Prisma {
   export type LikeUncheckedUpdateManyWithoutPostInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NotificationUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutNotificationsNestedInput
+    comment?: CommentUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    commentId?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    commentId?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationCreateManyCommentInput = {
+    id?: string
+    type: string
+    message: string
+    userId: string
+    postId?: string | null
+    read?: boolean
+    createdAt?: Date | string
+  }
+
+  export type NotificationUpdateWithoutCommentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutNotificationsNestedInput
+    post?: PostUpdateOneWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateWithoutCommentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutCommentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type GroupMemberCreateManyGroupInput = {

@@ -120,23 +120,35 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  message: 'message',
+  userId: 'userId',
+  postId: 'postId',
+  commentId: 'commentId',
+  read: 'read',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
-  bio: 'bio',
-  username: 'username',
-  location: 'location',
-  university: 'university',
-  department: 'department',
-  yearOfStudy: 'yearOfStudy',
-  skills: 'skills',
-  researchFocus: 'researchFocus',
-  publications: 'publications',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  bio: 'bio',
+  location: 'location',
+  username: 'username',
+  department: 'department',
+  publications: 'publications',
+  researchFocus: 'researchFocus',
+  skills: 'skills',
+  university: 'university',
+  yearOfStudy: 'yearOfStudy',
+  role: 'role'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {
@@ -179,22 +191,22 @@ exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
   title: 'title',
   content: 'content',
-  summary: 'summary',
   imageUrl: 'imageUrl',
-  resourceType: 'resourceType',
-  role: 'role',
-  university: 'university',
-  department: 'department',
-  doi: 'doi',
-  citation: 'citation',
-  attachments: 'attachments',
-  visibility: 'visibility',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   authorId: 'authorId',
   tags: 'tags',
+  attachments: 'attachments',
+  citation: 'citation',
+  department: 'department',
+  doi: 'doi',
+  downloads: 'downloads',
+  resourceType: 'resourceType',
+  role: 'role',
+  summary: 'summary',
+  university: 'university',
   views: 'views',
-  downloads: 'downloads'
+  visibility: 'visibility'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -214,16 +226,16 @@ exports.Prisma.LikeScalarFieldEnum = {
 exports.Prisma.ResourceScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  rating: 'rating',
-  downloads: 'downloads',
-  categories: 'categories',
-  description: 'description',
-  tags: 'tags',
-  author: 'author',
-  downloadUrl: 'downloadUrl',
-  externalUrl: 'externalUrl',
   uploadedById: 'uploadedById',
   createdAt: 'createdAt',
+  author: 'author',
+  categories: 'categories',
+  description: 'description',
+  downloadUrl: 'downloadUrl',
+  downloads: 'downloads',
+  externalUrl: 'externalUrl',
+  rating: 'rating',
+  tags: 'tags',
   updatedAt: 'updatedAt'
 };
 
@@ -277,9 +289,14 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
-
+exports.Role = exports.$Enums.Role = {
+  STUDENT: 'STUDENT',
+  ADMIN: 'ADMIN',
+  TEACHER: 'TEACHER'
+};
 
 exports.Prisma.ModelName = {
+  Notification: 'Notification',
   User: 'User',
   Session: 'Session',
   Account: 'Account',
