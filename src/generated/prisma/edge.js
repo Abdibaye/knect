@@ -285,7 +285,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\ADMIN\\Desktop\\knect\\src\\generated\\prisma",
+      "value": "/home/fahami/development/nextjs/knect/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -294,12 +294,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\ADMIN\\Desktop\\knect\\prisma\\schema.prisma",
+    "sourceFilePath": "/home/fahami/development/nextjs/knect/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
