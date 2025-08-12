@@ -12,14 +12,12 @@ import ThemeToggle from "../theme-toggle";
 import { ChartGanttIcon, MessageCircle, PlusIcon } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
-
-
 type SignedNavbarProps = {
   className?: string;
 };
 
 export default function SignedNavbar({ className }: SignedNavbarProps) {
-  const { data: session, isPending } = authClient.useSession()
+  const { data: session, isPending } = authClient.useSession();
 
   return (
     <header
@@ -29,8 +27,9 @@ export default function SignedNavbar({ className }: SignedNavbarProps) {
     >
       <div className="flex h-16 items-center justify-between gap-10">
         {/* Left side - just brand name */}
-        <Logo />
-
+     
+          <Logo size={65} />
+        
         {/* Middle - Search bar */}
         <div className="flex-1 max-w-md mx-auto w-full outline-none">
           <Input
@@ -42,10 +41,15 @@ export default function SignedNavbar({ className }: SignedNavbarProps) {
 
         {/* Right side - untouched */}
         <div className="flex flex-1 items-center justify-end gap-4">
-  <div className='hidden lg:block'><ThemeToggle  /></div>  
+          <div className="hidden lg:block">
+            <ThemeToggle />
+          </div>
           {/* <ChatBubbleLeftIcon className="w-6 h-6 text-blue-600 border border-blue-200 rounded-full p-1 hover:bg-blue-100 dark:hover:bg-blue-900 transition cursor-pointer" /> */}
-        
-          <MessageCircle onClick={() => document.dispatchEvent(new Event("showChat"))} className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer" />
+
+          <MessageCircle
+            onClick={() => document.dispatchEvent(new Event("showChat"))}
+            className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+          />
           <Button
             size="sm"
             className="text-sm max-sm:aspect-square max-sm:p-0 hidden md:inline-flex bg-accent hover:bg-accent/80 text-foreground font-medium rounded-md px-3 py-1.5"

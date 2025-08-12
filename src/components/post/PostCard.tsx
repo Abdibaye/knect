@@ -190,7 +190,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   const summary = post.summary || (post.content ? post.content.slice(0, 180) + (post.content.length > 180 ? "…" : "") : "");
 
   return (
-    <article className="rounded-xl border bg-card text-card-foreground shadow-sm p-4 w-full">
+    <article className="rounded-xl lg:mr-15 border bg-card text-card-foreground shadow-sm p-4 w-full">
       {/* Header */}
       <header className="flex justify-between items-start">
         <div className="flex items-start gap-3">
