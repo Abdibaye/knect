@@ -286,7 +286,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/abdi/Desktop/knect/src/generated/prisma",
+      "value": "/home/fahami/development/nextjs/knect/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -300,7 +300,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/abdi/Desktop/knect/prisma/schema.prisma",
+    "sourceFilePath": "/home/fahami/development/nextjs/knect/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
