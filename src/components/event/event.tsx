@@ -344,7 +344,7 @@ export default function EventsPage() {
           <div className="flex items-center space-x-3 mb-4">
             <Calendar className="h-8 w-8 text-blue-600" />
             <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-              Events
+              Events 
             </h1>
           </div>
           <p className="text-gray-600 dark:text-gray-400">
