@@ -16,9 +16,6 @@ import { Logo } from "./logo-form";
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { href: "/aboutUs", label: "About Us", active: true },
-  // { href: "#", label: "Resource" },
-  // { href: "#", label: "Event" },
-  // { href: "#", label: "Community" },
 ];
 
 export default function Navbar() {
