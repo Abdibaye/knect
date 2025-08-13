@@ -133,6 +133,18 @@ export async function POST(req: Request) {
         author: { connect: { id: session.session.userId } },
       },
     });
+    // Notify all users (all roles)
+    const users = await prisma.user.findMany();
+    await Promise.all(users.map((user) =>
+      prisma.notification.create({
+        data: {
+          type: 'new_post',
+          message: `A new post was created: ${title}`,
+          userId: user.id,
+          postId: post.id,
+        },
+      })
+    ));
     return NextResponse.json(post, { status: 201 });
   } catch (error: any) {
     return NextResponse.json({ error: 'Failed to create post', details: error?.message }, { status: 500 });

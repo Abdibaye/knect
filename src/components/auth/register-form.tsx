@@ -91,14 +91,14 @@ export default function RegisterForm() {
       await authClient.signIn.social({
         provider: "google",
         callbackURL: "/home",
-        // fetchOptions: {
-        //   onSuccess: () => {
-        //       router.push('/home')
-        //   },
-        //   onError: (error) => {
-        //       toast.error("internal server error");
-        //   }
-        //  },
+        fetchOptions: {
+          onSuccess: () => {
+              router.push('/home')
+          },
+          onError: (error) => {
+              toast.error("internal server error");
+          }
+         },
       });
     });
   }

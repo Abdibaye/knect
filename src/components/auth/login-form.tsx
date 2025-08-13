@@ -60,15 +60,15 @@ export function LoginForm({
         email: formData.email,
         password: formData.password,
         callbackURL: "/home",
-        // fetchOptions: {
-        //   onSuccess: () => {
-        //     toast.success("Login successful!");
-        //     router.push("/home");
-        //   },
-        //   onError: (error: any) => {
-        //     toast.error(error?.message || "Failed to login.");
-        //   }
-        // }
+        fetchOptions: {
+          onSuccess: () => {
+            toast.success("Login successful!");
+            router.push("/home");
+          },
+          onError: (error: any) => {
+            toast.error(error?.message || "Failed to login.");
+          }
+        }
       });
     } catch (error: any) {
       toast.error(error?.message || "Failed to login.");
