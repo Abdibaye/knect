@@ -25,6 +25,18 @@ export async function POST(req: NextRequest) {
   } else {
     await prisma.like.create({ data: { postId, userId } });
     liked = true;
+    // Create notification for post author (if not liking own post)
+    const post = await prisma.post.findUnique({ where: { id: postId } });
+    if (post && post.authorId !== userId) {
+      await prisma.notification.create({
+        data: {
+          type: 'like',
+          message: 'Someone liked your post',
+          userId: post.authorId,
+          postId: postId,
+        },
+      });
+    }
   }
   // Get new like count
   const likeCount = await prisma.like.count({ where: { postId } });

@@ -1,5 +1,18 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+model Notification {
+  id        String   @id @default(cuid())
+  type      String
+  message   String
+  userId    String
+  postId    String?
+  commentId String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id])
+  comment   Comment? @relation(fields: [commentId], references: [id])
+
+  @@map("notification")
+}
 
 generator client {
   provider = "prisma-client-js"
@@ -12,43 +25,41 @@ datasource db {
 }
 
 model User {
-  id               String        @id
+  id               String         @id
   name             String
-  email            String
+  email            String         @unique
   emailVerified    Boolean
   image            String?
-  bio              String?
-  username         String?
-  location         String?
-  // academic profile fields
-  university       String?
-  department       String?
-  yearOfStudy      String?
-  skills           String[]      @default([])
-  researchFocus    String?
-  publications     String[]      @default([])
   createdAt        DateTime
   updatedAt        DateTime
-  sessions         Session[]
-  accounts         Account[]
-  Post             Post[]
-  Resource         Resource[]
-  // groups created by this user
-  createdGroups    Group[]       @relation("UserCreatedGroups")
-  // group memberships for this user
-  groupMemberships GroupMember[] @relation("UserGroupMemberships")
+  bio              String?
+  location         String?
+  username         String?
+  department       String?
+  publications     String[]       @default([])
+  researchFocus    String?
+  skills           String[]       @default([])
+  university       String?
+  yearOfStudy      String?
+  role             Role           @default(STUDENT)
   Event            Event[]
+  createdGroups    Group[]        @relation("UserCreatedGroups")
+  groupMemberships GroupMember[]  @relation("UserGroupMemberships")
+  Resource         Resource[]
+  accounts         Account[]
   Comments         Comment[]
   Likes            Like[]
+  Post             Post[]
+  sessions         Session[]
+  notifications    Notification[]
 
-  @@unique([email])
   @@map("user")
 }
 
 model Session {
   id        String   @id
   expiresAt DateTime
-  token     String
+  token     String   @unique
   createdAt DateTime
   updatedAt DateTime
   ipAddress String?
@@ -56,7 +67,6 @@ model Session {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
   @@map("session")
 }
 
@@ -65,7 +75,6 @@ model Account {
   accountId             String
   providerId            String
   userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?
   refreshToken          String?
   idToken               String?
@@ -75,6 +84,7 @@ model Account {
   password              String?
   createdAt             DateTime
   updatedAt             DateTime
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("account")
 }
@@ -90,104 +100,92 @@ model Verification {
   @@map("verification")
 }
 
-enum Role {
-  STUDENT
-  ADMIN
-}
-
 model Post {
-  id           String    @id @default(cuid())
-  title        String
-  content      String
-  summary      String?
-  imageUrl     String?
-  resourceType String?
-  role         String?
-  university   String?
-  department   String?
-  doi          String?
-  citation     String?
-  attachments  Json?
-  visibility   String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  author       User      @relation(fields: [authorId], references: [id])
-  authorId     String
-  tags         String[]
-  comments     Comment[]
-  likes        Like[]
-  views        Int       @default(0)
-  downloads    Int       @default(0)
+  id            String         @id @default(cuid())
+  title         String
+  content       String
+  imageUrl      String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  authorId      String
+  tags          String[]
+  attachments   Json?
+  citation      String?
+  department    String?
+  doi           String?
+  downloads     Int            @default(0)
+  resourceType  String?
+  role          String?
+  summary       String?
+  university    String?
+  views         Int            @default(0)
+  visibility    String?
+  comments      Comment[]
+  likes         Like[]
+  author        User           @relation(fields: [authorId], references: [id])
+  notifications Notification[]
 
   @@map("post")
 }
 
 model Comment {
-  id        String   @id @default(cuid())
-  content   String
-  createdAt DateTime @default(now())
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    String
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
+  id            String         @id @default(cuid())
+  content       String
+  createdAt     DateTime       @default(now())
+  postId        String
+  authorId      String
+  author        User           @relation(fields: [authorId], references: [id])
+  post          Post           @relation(fields: [postId], references: [id])
+  notifications Notification[]
 
   @@map("comment")
 }
 
 model Like {
   id     String @id @default(cuid())
-  post   Post   @relation(fields: [postId], references: [id])
   postId String
-  user   User   @relation(fields: [userId], references: [id])
   userId String
+  post   Post   @relation(fields: [postId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
 
   @@unique([postId, userId])
   @@map("like")
 }
 
-enum PostCategory {
-  GENERAL
-  QUESTION
-  OPPORTUNITY
-  EVENT
-}
-
-// Updated Resource model based on UI and requirements
 model Resource {
   id           String   @id @default(cuid())
   title        String
-  rating       Float    @default(0)
-  downloads    Int      @default(0)
-  categories   String[] // e.g., ["React", "Guide"]
-  description  String
-  tags         String[] // e.g., ["React", "Hooks", "JavaScript", "Frontend"]
-  author       String
-  downloadUrl  String
-  externalUrl  String?
-  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
   uploadedById String
   createdAt    DateTime @default(now())
+  author       String
+  categories   String[]
+  description  String
+  downloadUrl  String
+  downloads    Int      @default(0)
+  externalUrl  String?
+  rating       Float    @default(0)
+  tags         String[]
   updatedAt    DateTime @updatedAt
+  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
 }
 
 model Group {
-  id          String  @id @default(cuid())
+  id          String        @id @default(cuid())
   name        String
   description String?
-  createdBy   User    @relation("UserCreatedGroups", fields: [createdById], references: [id])
   createdById String
-
-  members   GroupMember[] @relation("GroupMembers")
-  createdAt DateTime      @default(now())
+  createdAt   DateTime      @default(now())
+  createdBy   User          @relation("UserCreatedGroups", fields: [createdById], references: [id])
+  members     GroupMember[] @relation("GroupMembers")
 }
 
 model GroupMember {
   id       String   @id @default(cuid())
-  group    Group    @relation("GroupMembers", fields: [groupId], references: [id])
   groupId  String
-  user     User     @relation("UserGroupMemberships", fields: [userId], references: [id])
   userId   String
   joinedAt DateTime @default(now())
+  group    Group    @relation("GroupMembers", fields: [groupId], references: [id])
+  user     User     @relation("UserGroupMemberships", fields: [userId], references: [id])
 }
 
 model Event {
@@ -196,7 +194,20 @@ model Event {
   description String
   date        DateTime
   posterUrl   String?
-  createdBy   User     @relation(fields: [createdById], references: [id])
   createdById String
   createdAt   DateTime @default(now())
+  createdBy   User     @relation(fields: [createdById], references: [id])
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+  TEACHER
+}
+
+enum PostCategory {
+  GENERAL
+  QUESTION
+  OPPORTUNITY
+  EVENT
 }

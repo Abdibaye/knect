@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { formatDistanceToNow } from "date-fns"
 import { BellIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -10,56 +11,15 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const initialNotifications = [
-  {
-    id: 1,
-    user: "Chris Tompson",
-    action: "requested review on",
-    target: "PR #42: Feature implementation",
-    timestamp: "15 minutes ago",
-    unread: true,
-  },
-  {
-    id: 2,
-    user: "Emma Davis",
-    action: "shared",
-    target: "New component library",
-    timestamp: "45 minutes ago",
-    unread: true,
-  },
-  {
-    id: 3,
-    user: "James Wilson",
-    action: "assigned you to",
-    target: "API integration task",
-    timestamp: "4 hours ago",
-    unread: false,
-  },
-  {
-    id: 4,
-    user: "Alex Morgan",
-    action: "replied to your comment in",
-    target: "Authentication flow",
-    timestamp: "12 hours ago",
-    unread: false,
-  },
-  {
-    id: 5,
-    user: "Sarah Chen",
-    action: "commented on",
-    target: "Dashboard redesign",
-    timestamp: "2 days ago",
-    unread: false,
-  },
-  {
-    id: 6,
-    user: "Miky Derya",
-    action: "mentioned you in",
-    target: "Origin UI open graph image",
-    timestamp: "2 weeks ago",
-    unread: false,
-  },
-]
+export type Notification = {
+  id: string;
+  type: string;
+  message: string;
+  read: boolean;
+  createdAt: string;
+  postId?: string;
+  commentId?: string;
+}
 
 function Dot({ className }: { className?: string }) {
   return (
@@ -78,26 +38,29 @@ function Dot({ className }: { className?: string }) {
 }
 
 export default function NotificationMenu() {
-  const [notifications, setNotifications] = useState(initialNotifications)
-  const unreadCount = notifications.filter((n) => n.unread).length
+  const [notifications, setNotifications] = useState<Notification[]>([])
+  const [loading, setLoading] = useState(false)
+  const unreadCount = notifications.filter((n) => !n.read).length
 
-  const handleMarkAllAsRead = () => {
-    setNotifications(
-      notifications.map((notification) => ({
-        ...notification,
-        unread: false,
-      }))
-    )
+  const fetchNotifications = async () => {
+    setLoading(true)
+    try {
+      const res = await fetch("/api/notifications")
+      if (res.ok) {
+        setNotifications(await res.json())
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const handleNotificationClick = (id: number) => {
-    setNotifications(
-      notifications.map((notification) =>
-        notification.id === id
-          ? { ...notification, unread: false }
-          : notification
-      )
-    )
+  useEffect(() => {
+    fetchNotifications()
+  }, [])
+
+  const handleMarkAllAsRead = async () => {
+    await fetch("/api/notifications", { method: "PATCH" })
+    fetchNotifications()
   }
 
   return (
@@ -135,31 +98,25 @@ export default function NotificationMenu() {
           aria-orientation="horizontal"
           className="bg-border -mx-1 my-1 h-px"
         ></div>
-        {notifications.map((notification) => (
+        {loading ? (
+          <div className="p-4 text-center text-muted-foreground text-sm">Loading…</div>
+        ) : notifications.length === 0 ? (
+          <div className="p-4 text-center text-muted-foreground text-sm">No notifications</div>
+        ) : notifications.map((notification) => (
           <div
             key={notification.id}
-            className="hover:bg-accent rounded-md px-3 py-2 text-sm transition-colors"
+            className={`hover:bg-accent rounded-md px-3 py-2 text-sm transition-colors ${!notification.read ? "font-semibold" : ""}`}
           >
             <div className="relative flex items-start pe-3">
               <div className="flex-1 space-y-1">
-                <button
-                  className="text-foreground/80 text-left after:absolute after:inset-0"
-                  onClick={() => handleNotificationClick(notification.id)}
-                >
-                  <span className="text-foreground font-medium hover:underline">
-                    {notification.user}
-                  </span>{" "}
-                  {notification.action}{" "}
-                  <span className="text-foreground font-medium hover:underline">
-                    {notification.target}
-                  </span>
-                  .
-                </button>
+                <div className="text-foreground/80 text-left">
+                  {notification.message}
+                </div>
                 <div className="text-muted-foreground text-xs">
-                  {notification.timestamp}
+                  {formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}
                 </div>
               </div>
-              {notification.unread && (
+              {!notification.read && (
                 <div className="absolute end-0 self-center">
                   <span className="sr-only">Unread</span>
                   <Dot />
