@@ -23,8 +23,8 @@ const MainItems = [
     icon: Home,
   },
   {
-    title: "Opportunities",
-    url: "/Opportunities",
+    title: "opportunities",
+    url: "/opportunities",
     icon: Telescope,
   },
   {
