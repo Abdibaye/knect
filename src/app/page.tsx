@@ -28,6 +28,7 @@ export default function Page() {
           </Button>
         </Link>
       </div>
+    
     </section>
   );
 }

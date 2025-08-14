@@ -1,11 +1,11 @@
 import React from 'react'
 
-const chat = () => {
+const opportunity = () => {
   return (
     <div>
-      
+      Opp
     </div>
   )
 }
 
-export default chat
+export default opportunity
