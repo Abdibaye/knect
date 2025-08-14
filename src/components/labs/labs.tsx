@@ -120,7 +120,7 @@ const LabsComponent = () => {
 
         {/* Lab Form */}
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <LabForm onSubmit={handleLabFormSubmit} onCancel={handleLabFormCancel} className="max-w-2xl mx-auto" />
+          
         </div>
       </div>
     )
