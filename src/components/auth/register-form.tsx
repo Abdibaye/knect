@@ -90,15 +90,15 @@ export default function RegisterForm() {
     setGoogleTransition(async () => {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/home",
-        fetchOptions: {
-          onSuccess: () => {
-              router.push('/home')
-          },
-          onError: (error) => {
-              toast.error("internal server error");
-          }
-         },
+        callbackURL: "/fayda",
+        // fetchOptions: {
+        //   onSuccess: () => {
+        //       router.push('/home')
+        //   },
+        //   onError: (error) => {
+        //       toast.error("internal server error");
+        //   }
+        //  },
       });
     });
   }

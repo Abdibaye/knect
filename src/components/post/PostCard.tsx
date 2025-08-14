@@ -190,7 +190,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   const summary = post.summary || (post.content ? post.content.slice(0, 180) + (post.content.length > 180 ? "…" : "") : "");
 
   return (
-    <article className="rounded-xl border bg-card text-card-foreground shadow-sm p-4 w-full">
+    <article className="rounded-xl overflow-hidden border bg-card text-card-foreground shadow-sm p-4 w-full">
       {/* Header */}
       <header className="flex justify-between items-start">
         <div className="flex items-start gap-3">
@@ -276,14 +276,14 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
 
       {/* Image Preview */}
       {post.imageUrl && (
-        <figure className="mt-4 overflow-hidden rounded-xl border shadow-sm max-h-96">
+        <figure className="-mx-4 mt-4 overflow-hidden rounded-none border-y bg-transparent">
           <Image
             src={imageUrl}
             alt="Post image"
             width={1200}
             height={630}
-            className="w-full h-full object-cover"
-            style={{ maxHeight: 384 }}
+            className="block w-full h-auto object-contain"
+            sizes="(max-width: 768px) 100vw, 800px"
           />
         </figure>
       )}

@@ -1,11 +1,11 @@
 import React from 'react'
 
-const chat = () => {
+const page = () => {
   return (
     <div>
-      
+      Opportunity
     </div>
   )
 }
 
-export default chat
+export default page
