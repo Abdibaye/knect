@@ -106,6 +106,8 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   const [likeCount, setLikeCount] = useState<number>(post.likeCount ?? 0);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [likedUsers, setLikedUsers] = useState<{ id: string; name?: string; image?: string }[]>([]);
+  const [showLikes, setShowLikes] = useState(false);
 
   const { data: session } = authClient.useSession();
 
@@ -163,10 +165,16 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
 
   const handleToggleComments = () => setShowComments((prev) => !prev);
 
-  const toggleLike = () => {
-    setIsLiked((v) => !v);
-    setLikeCount((c) => (isLiked ? Math.max(0, c - 1) : c + 1));
-    // TODO: call like API
+  const toggleLike = async () => {
+    try {
+      const res = await fetch(`/api/posts/${post.id}/like`, { method: "POST" });
+      if (!res.ok) throw new Error("Failed to like post");
+      const data = await res.json();
+      setIsLiked(data.liked);
+      setLikeCount(data.likeCount);
+    } catch (err) {
+      // Optionally show error
+    }
   };
 
   const onShare = async () => {
@@ -188,6 +196,15 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   };
 
   const summary = post.summary || (post.content ? post.content.slice(0, 180) + (post.content.length > 180 ? "…" : "") : "");
+
+  const fetchLikedUsers = async () => {
+    try {
+      const res = await fetch(`/api/posts/${post.id}/likes`);
+      if (!res.ok) throw new Error("Failed to fetch likes");
+      setLikedUsers(await res.json());
+      setShowLikes(true);
+    } catch {}
+  };
 
   return (
     <article className="rounded-xl overflow-hidden border bg-card text-card-foreground shadow-sm p-4 w-full">
@@ -324,8 +341,29 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
           aria-label="Like"
         >
           <ThumbsUp className="size-5" />
-          <span>{likeCount}</span>
+          <span
+            className="cursor-pointer underline decoration-dotted decoration-2 underline-offset-2"
+            onClick={e => { e.stopPropagation(); fetchLikedUsers(); }}
+            title="View who liked"
+          >
+            {likeCount}
+          </span>
         </button>
+        {showLikes && (
+          <div className="absolute z-50 bg-card border rounded shadow p-2 mt-2">
+            <div className="font-semibold mb-1">Liked by:</div>
+            <ul className="max-h-40 overflow-y-auto">
+              {likedUsers.length === 0 && <li className="text-xs text-muted-foreground">No likes yet</li>}
+              {likedUsers.map(u => (
+                <li key={u.id} className="flex items-center gap-2 py-1">
+                  {u.image && <img src={u.image} alt={u.name} className="w-5 h-5 rounded-full" />}
+                  <span className="text-sm">{u.name || u.id}</span>
+                </li>
+              ))}
+            </ul>
+            <button className="mt-2 text-xs text-primary hover:underline" onClick={() => setShowLikes(false)}>Close</button>
+          </div>
+        )}
         <button
           type="button"
           className="flex items-center justify-center gap-2 rounded-md px-3 py-2 text-muted-foreground hover:bg-accent hover:text-foreground"
