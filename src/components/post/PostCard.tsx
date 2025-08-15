@@ -108,6 +108,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [likedUsers, setLikedUsers] = useState<{ id: string; name?: string; image?: string }[]>([]);
   const [showLikes, setShowLikes] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const { data: session } = authClient.useSession();
 
@@ -196,6 +197,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   };
 
   const summary = post.summary || (post.content ? post.content.slice(0, 180) + (post.content.length > 180 ? "…" : "") : "");
+  const hasMore = !!post.summary || (post.content?.length ?? 0) > 180;
 
   const fetchLikedUsers = async () => {
     try {
@@ -274,10 +276,27 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
         </div>
       </header>
 
-      {/* Title & Summary */}
+      {/* Title & Content */}
       <section className="mt-2">
         <h2 className="text-xl md:text-2xl font-bold leading-snug">{post.title}</h2>
-        {summary && <p className="text-sm md:text-base text-foreground/90 mt-1">{summary}</p>}
+        {isExpanded ? (
+          post.content && (
+            <div className="text-sm md:text-base mt-1 whitespace-pre-wrap text-foreground/90">{post.content}</div>
+          )
+        ) : (
+          summary && <p className="text-sm md:text-base text-foreground/90 mt-1">{summary}</p>
+        )}
+        {hasMore && (
+          <button
+            type="button"
+            onClick={() => setIsExpanded((v) => !v)}
+            className="mt-1 text-xs text-primary hover:underline"
+            aria-expanded={isExpanded}
+            aria-controls={`post-${post.id}-content`}
+          >
+            {isExpanded ? "Show less" : "Read more"}
+          </button>
+        )}
       </section>
 
       {/* Tags */}
