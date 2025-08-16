@@ -232,10 +232,11 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="Discussion">Discussion</SelectItem>
+                  <SelectItem value="opportunity">opportunity</SelectItem>
                   <SelectItem value="Research Paper">Research Paper</SelectItem>
                   <SelectItem value="Event">Event</SelectItem>
                   <SelectItem value="Lab Material">Lab Material</SelectItem>
-                  <SelectItem value="Discussion">Discussion</SelectItem>
                   <SelectItem value="Other">Other</SelectItem>
                 </SelectContent>
               </Select>
