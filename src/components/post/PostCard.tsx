@@ -167,6 +167,11 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   const handleToggleComments = () => setShowComments((prev) => !prev);
 
   const toggleLike = async () => {
+    // Optimistically update UI
+    const prevLiked = isLiked;
+    const prevCount = likeCount;
+    setIsLiked(!isLiked);
+    setLikeCount((count) => count + (isLiked ? -1 : 1));
     try {
       const res = await fetch(`/api/posts/${post.id}/like`, { method: "POST" });
       if (!res.ok) throw new Error("Failed to like post");
@@ -174,6 +179,9 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
       setIsLiked(data.liked);
       setLikeCount(data.likeCount);
     } catch (err) {
+      // Revert UI if error
+      setIsLiked(prevLiked);
+      setLikeCount(prevCount);
       // Optionally show error
     }
   };
