@@ -1,9 +1,1 @@
-import React from 'react'
-
-export default function page() {
-  return (
-    <div>
-      test pages
-    </div>
-  )
-}
+export default function page() { return null; }

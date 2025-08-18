@@ -109,62 +109,84 @@ export async function POST(req: Request) {
       doi,
       citation,
       attachments,
+      eventDetails,
     } = body ?? {};
 
     if (!title || !content) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const post = await prisma.post.create({
-      data: {
-        title,
-        content,
-        summary,
-        imageUrl,
-        visibility,
-        tags,
-        resourceType,
-        role,
-        university,
-        department,
-        doi,
-        citation,
-        attachments,
-        author: { connect: { id: session.session.userId } },
-      },
-    });
-    // Notify all users (all roles)
-    const users = await prisma.user.findMany();
-    // fetch actor name
-    const actor = await prisma.user.findUnique({ where: { id: session.session.userId }, select: { name: true } });
-    await Promise.all(users.map((user) =>
-      prisma.notification.create({
+    let post;
+    try {
+      post = await prisma.post.create({
         data: {
-          type: 'new_post',
-          message: `${actor?.name ?? 'Someone'} created a new post: ${title}`,
-          userId: user.id,
-          postId: post.id,
+          title,
+          content,
+          summary,
+          imageUrl,
+          visibility,
+          tags,
+          resourceType,
+          role,
+          university,
+          department,
+          doi,
+          citation,
+          attachments,
+          eventDetails: resourceType === 'Event' && eventDetails ? eventDetails : undefined,
+          author: { connect: { id: session.session.userId } },
         },
-      })
-    ));
+      });
+    } catch (err: any) {
+      console.error('Prisma post.create error:', err);
+      return NextResponse.json({ error: 'Prisma post.create failed', details: err?.message, meta: err?.meta }, { status: 500 });
+    }
+
+    try {
+      // Notify all users (all roles)
+      const users = await prisma.user.findMany();
+      // fetch actor name
+      const actor = await prisma.user.findUnique({ where: { id: session.session.userId }, select: { name: true } });
+      await Promise.all(users.map((user) =>
+        prisma.notification.create({
+          data: {
+            type: 'new_post',
+            message: `${actor?.name ?? 'Someone'} created a new post: ${title}`,
+            userId: user.id,
+            postId: post.id,
+          },
+        })
+      ));
+    } catch (err: any) {
+      console.error('Notification creation error:', err);
+      // Still return the post, but include notification error info
+      return NextResponse.json({ post, notificationError: err?.message, notificationMeta: err?.meta }, { status: 201 });
+    }
     return NextResponse.json(post, { status: 201 });
   } catch (error: any) {
-    return NextResponse.json({ error: 'Failed to create post', details: error?.message }, { status: 500 });
+    console.error('API /api/posts error:', error);
+    return NextResponse.json({ error: 'Failed to create post', details: error?.message, stack: error?.stack }, { status: 500 });
   }
 }
 
 // GET /api/posts
 export async function GET() {
   try {
-    const posts = await prisma.post.findMany({
-      take: 20,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        author: { select: { id: true, name: true, image: true, university: true, department: true } },
-        comments: true,
-        likes: true,
-      },
-    });
+    let posts;
+    try {
+      posts = await prisma.post.findMany({
+        take: 20,
+        orderBy: { createdAt: 'desc' },
+        include: {
+          author: { select: { id: true, name: true, image: true, university: true, department: true } },
+          comments: true,
+          likes: true,
+        },
+      });
+    } catch (err: any) {
+      console.error('Prisma post.findMany error:', err);
+      return NextResponse.json({ error: 'Prisma post.findMany failed', details: err?.message, meta: err?.meta }, { status: 500 });
+    }
 
     const postsWithCounts = posts.map((post) => ({
       ...post,
@@ -177,6 +199,7 @@ export async function GET() {
 
     return NextResponse.json(postsWithCounts, { status: 200 });
   } catch (error: any) {
-    return NextResponse.json({ error: 'Failed to fetch posts', details: error?.message }, { status: 500 });
+    console.error('API /api/posts GET error:', error);
+    return NextResponse.json({ error: 'Failed to fetch posts', details: error?.message, stack: error?.stack }, { status: 500 });
   }
 }
