@@ -28,7 +28,7 @@ export function CommentList({ comments, onReply }: CommentListProps) {
   return (
     <ul className="space-y-3 mt-2">
       {comments.map((comment) => (
-        <li key={comment.id} className="border rounded-md p-2 bg-muted/30">
+        <li id={`comment-${comment.id}`} key={comment.id} className="border rounded-md p-2 bg-muted/30">
           <div className="flex items-center gap-2 mb-1">
             {comment.author?.image && (
               <img

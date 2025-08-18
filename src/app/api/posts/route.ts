@@ -135,11 +135,13 @@ export async function POST(req: Request) {
     });
     // Notify all users (all roles)
     const users = await prisma.user.findMany();
+    // fetch actor name
+    const actor = await prisma.user.findUnique({ where: { id: session.session.userId }, select: { name: true } });
     await Promise.all(users.map((user) =>
       prisma.notification.create({
         data: {
           type: 'new_post',
-          message: `A new post was created: ${title}`,
+          message: `${actor?.name ?? 'Someone'} created a new post: ${title}`,
           userId: user.id,
           postId: post.id,
         },

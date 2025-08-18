@@ -28,10 +28,12 @@ export async function POST(req: NextRequest) {
     // Create notification for post author (if not liking own post)
     const post = await prisma.post.findUnique({ where: { id: postId } });
     if (post && post.authorId !== userId) {
+      // fetch actor name
+      const actor = await prisma.user.findUnique({ where: { id: userId }, select: { name: true } });
       await prisma.notification.create({
         data: {
           type: 'like',
-          message: 'Someone liked your post',
+          message: `${actor?.name ?? 'Someone'} liked your post`,
           userId: post.authorId,
           postId: postId,
         },

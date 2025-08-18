@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@/generated/prisma';
 import { auth } from '@/lib/auth';
@@ -55,10 +54,11 @@ export async function POST(req: NextRequest) {
     // Create notification for post author (if not commenting on own post)
     const post = await prisma.post.findUnique({ where: { id: postId } });
     if (post && post.authorId !== session.session.userId) {
+      const actor = await prisma.user.findUnique({ where: { id: session.session.userId }, select: { name: true } });
       await prisma.notification.create({
         data: {
           type: 'comment',
-          message: 'Someone commented on your post',
+          message: `${actor?.name ?? 'Someone'} commented on your post`,
           userId: post.authorId,
           postId: postId,
         },
