@@ -6,27 +6,51 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Search, FlaskRoundIcon as Flask, BookOpen, Download, ExternalLink, Clock, Plus, ArrowLeft } from "lucide-react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogOverlay } from "@/components/ui/dialog"
+import { Search, FlaskRoundIcon as Flask, BookOpen, ExternalLink, Clock, Plus, Download } from "lucide-react"
+import { AddLabForm, AddMaterialForm } from "@/components/labs/add-forms"
 
 const LabsComponent = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [showLabForm, setShowLabForm] = useState(false)
+  const [showMaterialForm, setShowMaterialForm] = useState(false)
 
   const handleAddLab = () => {
     setShowLabForm(true)
   }
 
   const handleAddMaterial = () => {
-    console.log("Add new material clicked")
+    setShowMaterialForm(true)
   }
 
-  const handleLabFormSubmit = (newLab: any) => {
-    // Here you could add the new lab to your labs array if needed
+  const handleLabFormSubmit = (data: any) => {
+    console.log("Lab form submitted:", data)
+    // Add your lab creation logic here
     setShowLabForm(false)
+  }
+
+  const handleMaterialFormSubmit = (data: any) => {
+    console.log("Material form submitted:", data)
+    // Add your material creation logic here
+    setShowMaterialForm(false)
   }
 
   const handleLabFormCancel = () => {
     setShowLabForm(false)
+  }
+
+  const handleMaterialFormCancel = () => {
+    setShowMaterialForm(false)
+  }
+
+  const handleDownloadLab = (lab: any) => {
+    // Implement download logic for labs here
+    console.log("Downloading lab:", lab)
+  }
+
+  const handleDownloadMaterial = (material: any) => {
+    // Implement download logic for materials here
+    console.log("Downloading material:", material)
   }
 
   const labs = [
@@ -91,40 +115,6 @@ const LabsComponent = () => {
       material.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       material.category.toLowerCase().includes(searchTerm.toLowerCase()),
   )
-
-  if (showLabForm) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800">
-        {/* Header Section */}
-        <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-blue-200 dark:border-gray-700">
-          <div className="max-w-7xl mx-auto px-4 py-12">
-            <div className="flex items-center gap-4 mb-6">
-              <Button variant="ghost" onClick={handleLabFormCancel} className="flex items-center gap-2">
-                <ArrowLeft className="w-4 h-4" />
-                Back to Labs
-              </Button>
-            </div>
-            <div className="text-center">
-              <div className="flex justify-center mb-4">
-                <div className="p-3 bg-blue-600 rounded-xl">
-                  <Flask className="w-8 h-8 text-white" />
-                </div>
-              </div>
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 font-heading">Create New Lab</h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
-                Add a new lab to your collection
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Lab Form */}
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800">
@@ -224,7 +214,7 @@ const LabsComponent = () => {
                         <ExternalLink className="w-4 h-4 mr-1" />
                         View Details
                       </Button>
-                      <Button size="sm" variant="outline">
+                      <Button size="sm" variant="outline" onClick={() => handleDownloadLab(lab)} title="Download Lab">
                         <Download className="w-4 h-4" />
                       </Button>
                     </div>
@@ -271,8 +261,13 @@ const LabsComponent = () => {
                         <ExternalLink className="w-4 h-4 mr-1" />
                         View Details
                       </Button>
-                      <Button size="sm" variant="outline">
-                        <BookOpen className="w-4 h-4" />
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleDownloadMaterial(material)}
+                        title="Download Material"
+                      >
+                        <Download className="w-4 h-4" />
                       </Button>
                     </div>
                   </CardContent>
@@ -281,23 +276,27 @@ const LabsComponent = () => {
             </div>
           </TabsContent>
         </Tabs>
-
-        {/* Quick Stats */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-center">
-            <CardContent className="pt-6">
-              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">{labs.length}</div>
-              <p className="text-gray-600 dark:text-gray-300">Labs</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-center">
-            <CardContent className="pt-6">
-              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">{materials.length}</div>
-              <p className="text-gray-600 dark:text-gray-300">Materials</p>
-            </CardContent>
-          </Card>
-        </div>
       </div>
+
+      <Dialog open={showLabForm} onOpenChange={setShowLabForm}>
+        <DialogOverlay className="backdrop-blur-sm bg-black/50" />
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Add New Lab</DialogTitle>
+          </DialogHeader>
+          <AddLabForm onSubmit={handleLabFormSubmit} onCancel={handleLabFormCancel} />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showMaterialForm} onOpenChange={setShowMaterialForm}>
+        <DialogOverlay className="backdrop-blur-sm bg-black/50" />
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Add New Material</DialogTitle>
+          </DialogHeader>
+          <AddMaterialForm onSubmit={handleMaterialFormSubmit} onCancel={handleMaterialFormCancel} />
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
