@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { formatDistanceToNow } from "date-fns"
 import { BellIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -41,6 +42,7 @@ export default function NotificationMenu() {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [loading, setLoading] = useState(false)
   const unreadCount = notifications.filter((n) => !n.read).length
+  const router = useRouter()
 
   const fetchNotifications = async () => {
     setLoading(true)
@@ -57,6 +59,19 @@ export default function NotificationMenu() {
   useEffect(() => {
     fetchNotifications()
   }, [])
+
+  const handleNotificationClick = async (n: Notification) => {
+    // Optimistically mark as read in UI
+    setNotifications((prev) => prev.map((x) => (x.id === n.id ? { ...x, read: true } : x)))
+    try {
+      // Mark all as read on server (no single-notification endpoint exists)
+      await fetch("/api/notifications", { method: "PATCH" })
+    } catch {
+      // ignore
+    }
+    const path = n.postId ? `/posts/${n.postId}${n.commentId ? `#comment-${n.commentId}` : ""}` : "/notifications"
+    router.push(path)
+  }
 
   const handleMarkAllAsRead = async () => {
     await fetch("/api/notifications", { method: "PATCH" })
@@ -110,7 +125,16 @@ export default function NotificationMenu() {
             <div className="relative flex items-start pe-3">
               <div className="flex-1 space-y-1">
                 <div className="text-foreground/80 text-left">
-                  {notification.message}
+                  {notification.postId ? (
+                    <button
+                      onClick={() => handleNotificationClick(notification)}
+                      className="block text-left w-full"
+                    >
+                      {notification.message}
+                    </button>
+                  ) : (
+                    <div>{notification.message}</div>
+                  )}
                 </div>
                 <div className="text-muted-foreground text-xs">
                   {formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}

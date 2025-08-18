@@ -1,18 +1,3 @@
-model Notification {
-  id        String   @id @default(cuid())
-  type      String
-  message   String
-  userId    String
-  postId    String?
-  commentId String?
-  read      Boolean  @default(false)
-  createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
-  post      Post?    @relation(fields: [postId], references: [id])
-  comment   Comment? @relation(fields: [commentId], references: [id])
-
-  @@map("notification")
-}
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -23,10 +8,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Notification {
+  id        String   @id @default(cuid())
+  type      String
+  message   String
+  userId    String
+  postId    String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  commentId String?
+  comment   Comment? @relation(fields: [commentId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("notification")
+}
+
 model User {
-  id               String        @id
+  id               String         @id
   name             String
-  email            String        @unique
+  email            String         @unique
   emailVerified    Boolean
   image            String?
   createdAt        DateTime
@@ -35,22 +36,22 @@ model User {
   location         String?
   username         String?
   department       String?
-  publications     String[]      @default([])
+  publications     String[]       @default([])
   researchFocus    String?
-  skills           String[]      @default([])
+  skills           String[]       @default([])
   university       String?
   yearOfStudy      String?
-  role             Role          @default(STUDENT)
+  role             Role           @default(STUDENT)
   Event            Event[]
-  createdGroups    Group[]       @relation("UserCreatedGroups")
-  groupMemberships GroupMember[] @relation("UserGroupMemberships")
+  createdGroups    Group[]        @relation("UserCreatedGroups")
+  groupMemberships GroupMember[]  @relation("UserGroupMemberships")
   Resource         Resource[]
   accounts         Account[]
   Comments         Comment[]
   Likes            Like[]
+  notifications    Notification[]
   Post             Post[]
   sessions         Session[]
-  notifications    Notification[]
 
   @@map("user")
 }
@@ -100,41 +101,41 @@ model Verification {
 }
 
 model Post {
-  id           String    @id @default(cuid())
-  title        String
-  content      String
-  imageUrl     String?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  authorId     String
-  tags         String[]
-  attachments  Json?
-  citation     String?
-  department   String?
-  doi          String?
-  downloads    Int       @default(0)
-  resourceType String?
-  role         String?
-  summary      String?
-  university   String?
-  views        Int       @default(0)
-  visibility   String?
-  comments     Comment[]
-  likes        Like[]
-  author       User      @relation(fields: [authorId], references: [id])
+  id            String         @id @default(cuid())
+  title         String
+  content       String
+  imageUrl      String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  authorId      String
+  tags          String[]
+  attachments   Json?
+  citation      String?
+  department    String?
+  doi           String?
+  downloads     Int            @default(0)
+  resourceType  String?
+  role          String?
+  summary       String?
+  university    String?
+  views         Int            @default(0)
+  visibility    String?
+  comments      Comment[]
+  likes         Like[]
   notifications Notification[]
+  author        User           @relation(fields: [authorId], references: [id])
 
   @@map("post")
 }
 
 model Comment {
-  id        String   @id @default(cuid())
-  content   String
-  createdAt DateTime @default(now())
-  postId    String
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
-  post      Post     @relation(fields: [postId], references: [id])
+  id            String         @id @default(cuid())
+  content       String
+  createdAt     DateTime       @default(now())
+  postId        String
+  authorId      String
+  author        User           @relation(fields: [authorId], references: [id])
+  post          Post           @relation(fields: [postId], references: [id])
   notifications Notification[]
 
   @@map("comment")
