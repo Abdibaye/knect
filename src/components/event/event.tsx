@@ -31,106 +31,74 @@ interface Event {
   tags: string[];
 }
 
-const events: Event[] = [
-  {
-    id: "1",
-    title: "Frontend Developer Meetup",
-    description:
-      "Join us for an evening of discussions about the latest frontend technologies and trends.",
-    date: "2024-01-15",
-    time: "18:00",
-    location: "Tech Hub, Downtown",
-    attendees: 45,
-    maxAttendees: 100,
-    category: "Meetup",
-    isOnline: false,
-    price: "Free",
-    createdBy: { name: "Frontend Community" },
-    createdAt: "2023-12-01T12:00:00Z",
-    posterUrl:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
-    tags: ["React", "JavaScript", "Networking"],
-  },
-  {
-    id: "2",
-    title: "React Workshop: Building Modern UIs",
-    description:
-      "Hands-on workshop covering advanced React patterns and best practices.",
-    date: "2024-01-18",
-    time: "10:00",
-    location: "Online",
-    attendees: 78,
-    maxAttendees: 150,
-    category: "Workshop",
-    isOnline: true,
-    price: "$49",
-    createdBy: { name: "React Academy" },
-    createdAt: "2023-12-05T09:30:00Z",
-    posterUrl:
-      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
-    tags: ["React", "Workshop", "UI/UX"],
-  },
-  {
-    id: "3",
-    title: "Design Systems Conference",
-    description:
-      "A full-day conference about building and maintaining design systems at scale.",
-    date: "2024-01-22",
-    time: "09:00",
-    location: "Convention Center",
-    attendees: 234,
-    maxAttendees: 500,
-    category: "Conference",
-    isOnline: false,
-    price: "$199",
-    createdBy: { name: "Design Collective" },
-    createdAt: "2023-12-10T15:00:00Z",
-    posterUrl:
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
-    tags: ["Design Systems", "UI/UX", "Conference"],
-  },
-  {
-    id: "4",
-    title: "API Development Bootcamp",
-    description:
-      "Intensive 3-day bootcamp on building robust APIs with modern technologies.",
-    date: "2024-01-25",
-    time: "09:00",
-    location: "Learning Center",
-    attendees: 28,
-    maxAttendees: 50,
-    category: "Bootcamp",
-    isOnline: false,
-    price: "$299",
-    createdBy: { name: "Code Academy" },
-    createdAt: "2023-12-15T10:00:00Z",
-    posterUrl:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80",
-    tags: ["API", "Backend", "Bootcamp"],
-  },
-];
+
+import { useEffect } from "react";
+
+type EventPost = {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  eventDetails?: {
+    date?: string;
+    location?: string;
+    posterUrl?: string;
+    time?: string;
+    category?: string;
+    isOnline?: boolean;
+    price?: string;
+    attendees?: number;
+    maxAttendees?: number;
+    tags?: string[];
+  };
+  author?: { name?: string };
+};
+
 
 export default function EventsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showEventForm, setShowEventForm] = useState(false);
+  const [events, setEvents] = useState<EventPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Sort events by date ascending
-  const sortedEvents = [...events].sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-  );
+  useEffect(() => {
+    const fetchEvents = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch("/api/posts");
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error(data.error || "Failed to fetch events");
+        setEvents(data.filter((post: any) => post.resourceType === "Event"));
+      } catch (err: any) {
+        setError(err.message || "Failed to fetch events");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchEvents();
+  }, []);
 
-  // Filter events by search query
-  const filteredEvents = sortedEvents.filter(
-    (event) =>
-      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.tags.some((tag) =>
-        tag.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-  );
+  // Sort and filter events
+  const sortedEvents = [...events].sort((a, b) => {
+    const dateA = a.eventDetails?.date ? new Date(a.eventDetails.date).getTime() : 0;
+    const dateB = b.eventDetails?.date ? new Date(b.eventDetails.date).getTime() : 0;
+    return dateA - dateB;
+  });
+  const filteredEvents = sortedEvents.filter((event) => {
+    const title = event.title?.toLowerCase() || "";
+    const content = event.content?.toLowerCase() || "";
+    const tags = event.eventDetails?.tags || [];
+    return (
+      title.includes(searchQuery.toLowerCase()) ||
+      content.includes(searchQuery.toLowerCase()) ||
+      tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+  });
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black relative">
+    <div className="min-h-screen  bg-gray-50 dark:bg-transparent relative">
       {/* Overlay when modal open */}
       {showEventForm && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"></div>
@@ -181,79 +149,86 @@ export default function EventsPage() {
 
           {/* Event cards */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {filteredEvents.map((event) => (
-              <Card key={event.id} className="hover:shadow-lg transition-shadow">
-                {/* Poster image if exists */}
-                {event.posterUrl && (
-                  <img
-                    src={event.posterUrl}
-                    alt={event.title}
-                    className="w-full h-48 object-cover rounded-t-lg"
-                  />
-                )}
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <CardTitle className="text-xl mb-2">
-                        {event.title}
-                      </CardTitle>
-                      <div className="flex items-center space-x-2 mb-2">
-                        <Badge variant="secondary">{event.category}</Badge>
-                        {event.isOnline && <Badge variant="outline">Online</Badge>}
-                        <Badge variant="outline">{event.price}</Badge>
+            {loading && <div>Loading events...</div>}
+            {error && <div className="text-red-500">{error}</div>}
+            {!loading && !error && filteredEvents.length === 0 && <div>No events found.</div>}
+            {filteredEvents.map((event) => {
+              // Fallback to imageUrl if eventDetails.posterUrl is missing
+              const posterUrl = event.eventDetails?.posterUrl || (event as any).imageUrl;
+              return (
+                <Card key={event.id} className="hover:shadow-lg transition-shadow">
+                  {/* Poster image if exists */}
+                  {posterUrl && (
+                    <img
+                      src={posterUrl}
+                      alt={event.title}
+                      className="w-full h-48 object-cover rounded-t-lg"
+                    />
+                  )}
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <CardTitle className="text-xl mb-2">
+                          {event.title}
+                        </CardTitle>
+                        <div className="flex items-center space-x-2 mb-2">
+                          {event.eventDetails?.category && <Badge variant="secondary">{event.eventDetails.category}</Badge>}
+                          {event.eventDetails?.isOnline && <Badge variant="outline">Online</Badge>}
+                          {event.eventDetails?.price && <Badge variant="outline">{event.eventDetails.price}</Badge>}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">
-                    {event.description}
-                  </p>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                      {event.content}
+                    </p>
 
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center space-x-2 text-sm text-gray-500">
-                      <Calendar className="h-4 w-4" />
-                      <span>{new Date(event.date).toLocaleDateString()}</span>
-                      <Clock className="h-4 w-4 ml-2" />
-                      <span>{event.time}</span>
+                    <div className="space-y-2 mb-4">
+                      <div className="flex items-center space-x-2 text-sm text-gray-500">
+                        <Calendar className="h-4 w-4" />
+                        <span>{event.eventDetails?.date ? new Date(event.eventDetails.date).toLocaleDateString() : ""}</span>
+                        <Clock className="h-4 w-4 ml-2" />
+                        <span>{event.eventDetails?.time || ""}</span>
+                      </div>
+                      <div className="flex items-center space-x-2 text-sm text-gray-500">
+                        <MapPin className="h-4 w-4" />
+                        <span>{event.eventDetails?.location || ""}</span>
+                      </div>
+                      <div className="flex items-center space-x-2 text-sm text-gray-500">
+                        <Users className="h-4 w-4" />
+                        <span>
+                          {event.eventDetails?.attendees || 0}/{event.eventDetails?.maxAttendees || 0} attendees
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-500">
-                      <MapPin className="h-4 w-4" />
-                      <span>{event.location}</span>
+
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {(event.eventDetails?.tags || []).map((tag) => (
+                        <Badge key={tag} variant="outline" className="text-xs">
+                          {tag}
+                        </Badge>
+                      ))}
                     </div>
-                    <div className="flex items-center space-x-2 text-sm text-gray-500">
-                      <Users className="h-4 w-4" />
-                      <span>
-                        {event.attendees}/{event.maxAttendees} attendees
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500">
+                        by {event.author?.name || "Unknown"}
                       </span>
+                      <span className="text-xs text-gray-400 italic">
+                        Created: {new Date(event.createdAt).toLocaleDateString()}
+                      </span>
+                      <div className="flex space-x-2">
+                        <Button size="sm" variant="outline">
+                          Learn More
+                        </Button>
+                        <Button size="sm">Register</Button>
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {event.tags.map((tag) => (
-                      <Badge key={tag} variant="outline" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">
-                      by {event.createdBy.name}
-                    </span>
-                    <span className="text-xs text-gray-400 italic">
-                      Created: {new Date(event.createdAt).toLocaleDateString()}
-                    </span>
-                    <div className="flex space-x-2">
-                      <Button size="sm" variant="outline">
-                        Learn More
-                      </Button>
-                      <Button size="sm">Register</Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </main>
       </div>
@@ -273,8 +248,7 @@ export default function EventsPage() {
             </Button>
             <div className="overflow-y-auto p-4 pt-10 flex-1">
               <EventForm
-                onSubmit={(data) => {
-                  console.log("Event submitted:", data);
+                onSuccess={() => {
                   setShowEventForm(false);
                 }}
               />

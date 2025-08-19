@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -43,6 +42,10 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+    // Event-specific fields
+  const [eventDate, setEventDate] = useState("");
+  const [eventLocation, setEventLocation] = useState("");
+
 
   const uploadToS3 = async (file: File) => {
     const formData = new FormData();
@@ -107,6 +110,15 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
         coverUrl = await handleImageUpload(image);
       }
 
+      // Build eventDetails if resourceType is Event
+      let eventDetails = undefined;
+      if (resourceType === "Event") {
+        eventDetails = {
+          date: eventDate || undefined,
+          location: eventLocation || undefined,
+        };
+      }
+
       const postData = {
         title,
         summary,
@@ -125,6 +137,7 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
         doi: doi || undefined,
         citation: citation || undefined,
         attachments: attachments.length ? attachments : undefined,
+        eventDetails,
       };
 
       const res = await fetch("/api/posts", {
@@ -156,7 +169,10 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
       setDepartment("");
       setDoi("");
       setCitation("");
-      toast.success("Post created");
+  // Reset event fields
+  setEventDate("");
+  setEventLocation("");
+  toast.success("Post created");
     } catch (err: any) {
       setError(err.message || "Failed to create post");
     } finally {
@@ -311,6 +327,35 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
             </div>
           </div>
 
+          {/* Event-specific fields (only for Event resourceType) */}
+          {resourceType === "Event" && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1">
+                <Label className="ml-1" htmlFor="eventDate">
+                  Event Date
+                </Label>
+                <Input
+                  id="eventDate"
+                  type="date"
+                  value={eventDate}
+                  onChange={(e) => setEventDate(e.target.value)}
+                  required={resourceType === "Event"}
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <Label className="ml-1" htmlFor="eventLocation">
+                  Event Location
+                </Label>
+                <Input
+                  id="eventLocation"
+                  value={eventLocation}
+                  onChange={(e) => setEventLocation(e.target.value)}
+                  placeholder="e.g. Main Hall, Addis Ababa University"
+                  required={resourceType === "Event"}
+                />
+              </div>
+            </div>
+          )}
           {/* Visibility */}
           <div className="flex flex-col gap-1">
             <Label className="ml-1" htmlFor="visibility">

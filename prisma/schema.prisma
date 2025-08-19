@@ -120,6 +120,7 @@ model Post {
   university    String?
   views         Int            @default(0)
   visibility    String?
+  eventDetails  Json?
   comments      Comment[]
   likes         Like[]
   notifications Notification[]

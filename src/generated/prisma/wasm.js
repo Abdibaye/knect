@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.14.0
- * Query Engine version: 717184b7b35ea05dfa71a3236b7af656013e1e49
+ * Prisma Client JS version: 6.11.1
+ * Query Engine version: f40f79ec31188888a2e33acda0ecc8fd10a853a9
  */
 Prisma.prismaVersion = {
-  client: "6.14.0",
-  engine: "717184b7b35ea05dfa71a3236b7af656013e1e49"
+  client: "6.11.1",
+  engine: "f40f79ec31188888a2e33acda0ecc8fd10a853a9"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -206,7 +206,8 @@ exports.Prisma.PostScalarFieldEnum = {
   summary: 'summary',
   university: 'university',
   views: 'views',
-  visibility: 'visibility'
+  visibility: 'visibility',
+  eventDetails: 'eventDetails'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {

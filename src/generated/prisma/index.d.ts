@@ -122,7 +122,7 @@ export const PostCategory: typeof $Enums.PostCategory
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -154,6 +154,13 @@ export class PrismaClient<
    * Disconnect from the database
    */
   $disconnect(): $Utils.JsPromise<void>;
+
+  /**
+   * Add a middleware
+   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
+   * @see https://pris.ly/d/extensions
+   */
+  $use(cb: Prisma.Middleware): void
 
 /**
    * Executes a prepared raw query and returns the number of affected rows.
@@ -401,8 +408,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.14.0
-   * Query Engine version: 717184b7b35ea05dfa71a3236b7af656013e1e49
+   * Prisma Client JS version: 6.11.1
+   * Query Engine version: f40f79ec31188888a2e33acda0ecc8fd10a853a9
    */
   export type PrismaVersion = {
     client: string
@@ -1748,24 +1755,16 @@ export namespace Prisma {
     /**
      * @example
      * ```
-     * // Shorthand for `emit: 'stdout'`
+     * // Defaults to stdout
      * log: ['query', 'info', 'warn', 'error']
      * 
-     * // Emit as events only
+     * // Emit as events
      * log: [
-     *   { emit: 'event', level: 'query' },
-     *   { emit: 'event', level: 'info' },
-     *   { emit: 'event', level: 'warn' }
-     *   { emit: 'event', level: 'error' }
+     *   { emit: 'stdout', level: 'query' },
+     *   { emit: 'stdout', level: 'info' },
+     *   { emit: 'stdout', level: 'warn' }
+     *   { emit: 'stdout', level: 'error' }
      * ]
-     * 
-     * / Emit as events and log to stdout
-     * og: [
-     *  { emit: 'stdout', level: 'query' },
-     *  { emit: 'stdout', level: 'info' },
-     *  { emit: 'stdout', level: 'warn' }
-     *  { emit: 'stdout', level: 'error' }
-     * 
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
@@ -1818,15 +1817,10 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
-
-  export type GetLogType<T> = CheckIsLogLevel<
-    T extends LogDefinition ? T['level'] : T
-  >;
-
-  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
-    ? GetLogType<T[number]>
-    : never;
+  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
+  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
+    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
+    : never
 
   export type QueryEvent = {
     timestamp: Date
@@ -1866,6 +1860,25 @@ export namespace Prisma {
     | 'runCommandRaw'
     | 'findRaw'
     | 'groupBy'
+
+  /**
+   * These options are being passed into the middleware as "params"
+   */
+  export type MiddlewareParams = {
+    model?: ModelName
+    action: PrismaAction
+    args: any
+    dataPath: string[]
+    runInTransaction: boolean
+  }
+
+  /**
+   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
+   */
+  export type Middleware<T = any> = (
+    params: MiddlewareParams,
+    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
+  ) => $Utils.JsPromise<T>
 
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
@@ -8081,6 +8094,7 @@ export namespace Prisma {
     university: number
     views: number
     visibility: number
+    eventDetails: number
     _all: number
   }
 
@@ -8155,6 +8169,7 @@ export namespace Prisma {
     university?: true
     views?: true
     visibility?: true
+    eventDetails?: true
     _all?: true
   }
 
@@ -8264,6 +8279,7 @@ export namespace Prisma {
     university: string | null
     views: number
     visibility: string | null
+    eventDetails: JsonValue | null
     _count: PostCountAggregateOutputType | null
     _avg: PostAvgAggregateOutputType | null
     _sum: PostSumAggregateOutputType | null
@@ -8305,6 +8321,7 @@ export namespace Prisma {
     university?: boolean
     views?: boolean
     visibility?: boolean
+    eventDetails?: boolean
     comments?: boolean | Post$commentsArgs<ExtArgs>
     likes?: boolean | Post$likesArgs<ExtArgs>
     notifications?: boolean | Post$notificationsArgs<ExtArgs>
@@ -8332,6 +8349,7 @@ export namespace Prisma {
     university?: boolean
     views?: boolean
     visibility?: boolean
+    eventDetails?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -8355,6 +8373,7 @@ export namespace Prisma {
     university?: boolean
     views?: boolean
     visibility?: boolean
+    eventDetails?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -8378,9 +8397,10 @@ export namespace Prisma {
     university?: boolean
     views?: boolean
     visibility?: boolean
+    eventDetails?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "imageUrl" | "createdAt" | "updatedAt" | "authorId" | "tags" | "attachments" | "citation" | "department" | "doi" | "downloads" | "resourceType" | "role" | "summary" | "university" | "views" | "visibility", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "imageUrl" | "createdAt" | "updatedAt" | "authorId" | "tags" | "attachments" | "citation" | "department" | "doi" | "downloads" | "resourceType" | "role" | "summary" | "university" | "views" | "visibility" | "eventDetails", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     comments?: boolean | Post$commentsArgs<ExtArgs>
     likes?: boolean | Post$likesArgs<ExtArgs>
@@ -8423,6 +8443,7 @@ export namespace Prisma {
       university: string | null
       views: number
       visibility: string | null
+      eventDetails: Prisma.JsonValue | null
     }, ExtArgs["result"]["post"]>
     composites: {}
   }
@@ -8869,6 +8890,7 @@ export namespace Prisma {
     readonly university: FieldRef<"Post", 'String'>
     readonly views: FieldRef<"Post", 'Int'>
     readonly visibility: FieldRef<"Post", 'String'>
+    readonly eventDetails: FieldRef<"Post", 'Json'>
   }
     
 
@@ -16023,7 +16045,8 @@ export namespace Prisma {
     summary: 'summary',
     university: 'university',
     views: 'views',
-    visibility: 'visibility'
+    visibility: 'visibility',
+    eventDetails: 'eventDetails'
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -16705,6 +16728,7 @@ export namespace Prisma {
     university?: StringNullableFilter<"Post"> | string | null
     views?: IntFilter<"Post"> | number
     visibility?: StringNullableFilter<"Post"> | string | null
+    eventDetails?: JsonNullableFilter<"Post">
     comments?: CommentListRelationFilter
     likes?: LikeListRelationFilter
     notifications?: NotificationListRelationFilter
@@ -16731,6 +16755,7 @@ export namespace Prisma {
     university?: SortOrderInput | SortOrder
     views?: SortOrder
     visibility?: SortOrderInput | SortOrder
+    eventDetails?: SortOrderInput | SortOrder
     comments?: CommentOrderByRelationAggregateInput
     likes?: LikeOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
@@ -16760,6 +16785,7 @@ export namespace Prisma {
     university?: StringNullableFilter<"Post"> | string | null
     views?: IntFilter<"Post"> | number
     visibility?: StringNullableFilter<"Post"> | string | null
+    eventDetails?: JsonNullableFilter<"Post">
     comments?: CommentListRelationFilter
     likes?: LikeListRelationFilter
     notifications?: NotificationListRelationFilter
@@ -16786,6 +16812,7 @@ export namespace Prisma {
     university?: SortOrderInput | SortOrder
     views?: SortOrder
     visibility?: SortOrderInput | SortOrder
+    eventDetails?: SortOrderInput | SortOrder
     _count?: PostCountOrderByAggregateInput
     _avg?: PostAvgOrderByAggregateInput
     _max?: PostMaxOrderByAggregateInput
@@ -16816,6 +16843,7 @@ export namespace Prisma {
     university?: StringNullableWithAggregatesFilter<"Post"> | string | null
     views?: IntWithAggregatesFilter<"Post"> | number
     visibility?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    eventDetails?: JsonNullableWithAggregatesFilter<"Post">
   }
 
   export type CommentWhereInput = {
@@ -17724,6 +17752,7 @@ export namespace Prisma {
     university?: string | null
     views?: number
     visibility?: string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentCreateNestedManyWithoutPostInput
     likes?: LikeCreateNestedManyWithoutPostInput
     notifications?: NotificationCreateNestedManyWithoutPostInput
@@ -17750,6 +17779,7 @@ export namespace Prisma {
     university?: string | null
     views?: number
     visibility?: string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutPostInput
@@ -17774,6 +17804,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentUpdateManyWithoutPostNestedInput
     likes?: LikeUpdateManyWithoutPostNestedInput
     notifications?: NotificationUpdateManyWithoutPostNestedInput
@@ -17800,6 +17831,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutPostNestedInput
@@ -17825,6 +17857,7 @@ export namespace Prisma {
     university?: string | null
     views?: number
     visibility?: string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PostUpdateManyMutationInput = {
@@ -17846,6 +17879,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type PostUncheckedUpdateManyInput = {
@@ -17868,6 +17902,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type CommentCreateInput = {
@@ -18779,6 +18814,7 @@ export namespace Prisma {
     university?: SortOrder
     views?: SortOrder
     visibility?: SortOrder
+    eventDetails?: SortOrder
   }
 
   export type PostAvgOrderByAggregateInput = {
@@ -20285,6 +20321,7 @@ export namespace Prisma {
     university?: string | null
     views?: number
     visibility?: string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentCreateNestedManyWithoutPostInput
     likes?: LikeCreateNestedManyWithoutPostInput
     author: UserCreateNestedOneWithoutPostInput
@@ -20310,6 +20347,7 @@ export namespace Prisma {
     university?: string | null
     views?: number
     visibility?: string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
   }
@@ -20439,6 +20477,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentUpdateManyWithoutPostNestedInput
     likes?: LikeUpdateManyWithoutPostNestedInput
     author?: UserUpdateOneRequiredWithoutPostNestedInput
@@ -20464,6 +20503,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -20788,6 +20828,7 @@ export namespace Prisma {
     university?: string | null
     views?: number
     visibility?: string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentCreateNestedManyWithoutPostInput
     likes?: LikeCreateNestedManyWithoutPostInput
     notifications?: NotificationCreateNestedManyWithoutPostInput
@@ -20812,6 +20853,7 @@ export namespace Prisma {
     university?: string | null
     views?: number
     visibility?: string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutPostInput
@@ -21130,6 +21172,7 @@ export namespace Prisma {
     university?: StringNullableFilter<"Post"> | string | null
     views?: IntFilter<"Post"> | number
     visibility?: StringNullableFilter<"Post"> | string | null
+    eventDetails?: JsonNullableFilter<"Post">
   }
 
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
@@ -21764,6 +21807,7 @@ export namespace Prisma {
     university?: string | null
     views?: number
     visibility?: string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     likes?: LikeCreateNestedManyWithoutPostInput
     notifications?: NotificationCreateNestedManyWithoutPostInput
     author: UserCreateNestedOneWithoutPostInput
@@ -21789,6 +21833,7 @@ export namespace Prisma {
     university?: string | null
     views?: number
     visibility?: string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     likes?: LikeUncheckedCreateNestedManyWithoutPostInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutPostInput
   }
@@ -21927,6 +21972,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     likes?: LikeUpdateManyWithoutPostNestedInput
     notifications?: NotificationUpdateManyWithoutPostNestedInput
     author?: UserUpdateOneRequiredWithoutPostNestedInput
@@ -21952,6 +21998,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -21991,6 +22038,7 @@ export namespace Prisma {
     university?: string | null
     views?: number
     visibility?: string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentCreateNestedManyWithoutPostInput
     notifications?: NotificationCreateNestedManyWithoutPostInput
     author: UserCreateNestedOneWithoutPostInput
@@ -22016,6 +22064,7 @@ export namespace Prisma {
     university?: string | null
     views?: number
     visibility?: string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentUncheckedCreateNestedManyWithoutPostInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutPostInput
   }
@@ -22118,6 +22167,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentUpdateManyWithoutPostNestedInput
     notifications?: NotificationUpdateManyWithoutPostNestedInput
     author?: UserUpdateOneRequiredWithoutPostNestedInput
@@ -22143,6 +22193,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -22923,6 +22974,7 @@ export namespace Prisma {
     university?: string | null
     views?: number
     visibility?: string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type SessionCreateManyUserInput = {
@@ -23180,6 +23232,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentUpdateManyWithoutPostNestedInput
     likes?: LikeUpdateManyWithoutPostNestedInput
     notifications?: NotificationUpdateManyWithoutPostNestedInput
@@ -23204,6 +23257,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
     comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
     likes?: LikeUncheckedUpdateManyWithoutPostNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutPostNestedInput
@@ -23228,6 +23282,7 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     views?: IntFieldUpdateOperationsInput | number
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    eventDetails?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type SessionUpdateWithoutUserInput = {
