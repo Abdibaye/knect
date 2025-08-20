@@ -217,7 +217,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   };
 
   return (
-    <article className="rounded-xl overflow-hidden border bg-card text-card-foreground shadow-sm p-4 w-full">
+    <article className="rounded-xl overflow-hidden border bg-card text-card-foreground shadow-sm p-4">
       {/* Header */}
       <header className="flex justify-between items-start">
         <div className="flex items-start gap-3">
@@ -320,7 +320,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
 
       {/* Image Preview */}
       {post.imageUrl && (
-        <figure className="-mx-4 mt-4 overflow-hidden rounded-none border-y bg-transparent">
+        <figure className="mx-4 mt-4 overflow-hidden rounded-none border-y bg-transparent">
           <Image
             src={imageUrl}
             alt="Post image"
