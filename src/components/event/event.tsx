@@ -98,7 +98,7 @@ export default function EventsPage() {
   });
 
   return (
-    <div className="min-h-screen  bg-gray-50 dark:bg-transparent relative">
+    <div className="min-h-screen dark:bg-red relative">
       {/* Overlay when modal open */}
       {showEventForm && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"></div>
@@ -156,76 +156,89 @@ export default function EventsPage() {
               // Fallback to imageUrl if eventDetails.posterUrl is missing
               const posterUrl = event.eventDetails?.posterUrl || (event as any).imageUrl;
               return (
-                <Card key={event.id} className="hover:shadow-lg transition-shadow">
-                  {/* Poster image if exists */}
-                  {posterUrl && (
-                    <img
-                      src={posterUrl}
-                      alt={event.title}
-                      className="w-full h-48 object-cover rounded-t-lg"
-                    />
-                  )}
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <CardTitle className="text-xl mb-2">
-                          {event.title}
-                        </CardTitle>
-                        <div className="flex items-center space-x-2 mb-2">
-                          {event.eventDetails?.category && <Badge variant="secondary">{event.eventDetails.category}</Badge>}
-                          {event.eventDetails?.isOnline && <Badge variant="outline">Online</Badge>}
-                          {event.eventDetails?.price && <Badge variant="outline">{event.eventDetails.price}</Badge>}
+                <Card
+                  key={event.id}
+                  className="hover:shadow-lg transition-shadow flex flex-col h-[500px]"
+                  style={{ minHeight: 500 }}
+                >
+                  {/* Poster image or placeholder */}
+                  <div className="w-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center overflow-hidden">
+                    {posterUrl ? (
+                      <img
+                        src={posterUrl}
+                        alt="Post image"
+                        className="w-full object-contain max-h-60"
+                        style={{ maxHeight: 240 }}
+                        sizes="(max-width: 768px)100vw, 800px"
+                      />
+                    ) : (
+                      <span className="text-gray-400 text-lg py-8">No Image</span>
+                    )}
+                  </div>
+                  <div className="flex-1 flex flex-col">
+                    <CardHeader>
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <CardTitle className="text-xl mb-2">
+                            {event.title}
+                          </CardTitle>
+                          <div className="flex items-center space-x-2 mb-2">
+                            {event.eventDetails?.category && <Badge variant="secondary">{event.eventDetails.category}</Badge>}
+                            {event.eventDetails?.isOnline && <Badge variant="outline">Online</Badge>}
+                            {event.eventDetails?.price && <Badge variant="outline">{event.eventDetails.price}</Badge>}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">
-                      {event.content}
-                    </p>
+                    </CardHeader>
+                    <CardContent className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                          {event.content}
+                        </p>
 
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center space-x-2 text-sm text-gray-500">
-                        <Calendar className="h-4 w-4" />
-                        <span>{event.eventDetails?.date ? new Date(event.eventDetails.date).toLocaleDateString() : ""}</span>
-                        <Clock className="h-4 w-4 ml-2" />
-                        <span>{event.eventDetails?.time || ""}</span>
+                        <div className="space-y-2 mb-4">
+                          <div className="flex items-center space-x-2 text-sm text-gray-500">
+                            <Calendar className="h-4 w-4" />
+                            <span>{event.eventDetails?.date ? new Date(event.eventDetails.date).toLocaleDateString() : ""}</span>
+                            <Clock className="h-4 w-4 ml-2" />
+                            <span>{event.eventDetails?.time || ""}</span>
+                          </div>
+                          <div className="flex items-center space-x-2 text-sm text-gray-500">
+                            <MapPin className="h-4 w-4" />
+                            <span>{event.eventDetails?.location || ""}</span>
+                          </div>
+                          <div className="flex items-center space-x-2 text-sm text-gray-500">
+                            <Users className="h-4 w-4" />
+                            <span>
+                              {event.eventDetails?.attendees || 0}/{event.eventDetails?.maxAttendees || 0} attendees
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-wrap gap-1 mb-4">
+                          {(event.eventDetails?.tags || []).map((tag) => (
+                            <Badge key={tag} variant="outline" className="text-xs">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-2 text-sm text-gray-500">
-                        <MapPin className="h-4 w-4" />
-                        <span>{event.eventDetails?.location || ""}</span>
-                      </div>
-                      <div className="flex items-center space-x-2 text-sm text-gray-500">
-                        <Users className="h-4 w-4" />
-                        <span>
-                          {event.eventDetails?.attendees || 0}/{event.eventDetails?.maxAttendees || 0} attendees
+                      <div className="flex items-center justify-between mt-auto">
+                        <span className="text-sm text-gray-500">
+                          by {event.author?.name || "Unknown"}
                         </span>
+                        <span className="text-xs text-gray-400 italic">
+                          Created: {new Date(event.createdAt).toLocaleDateString()}
+                        </span>
+                        <div className="flex space-x-2">
+                          <Button size="sm" variant="outline">
+                            Learn More
+                          </Button>
+                          <Button size="sm">Register</Button>
+                        </div>
                       </div>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1 mb-4">
-                      {(event.eventDetails?.tags || []).map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500">
-                        by {event.author?.name || "Unknown"}
-                      </span>
-                      <span className="text-xs text-gray-400 italic">
-                        Created: {new Date(event.createdAt).toLocaleDateString()}
-                      </span>
-                      <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">
-                          Learn More
-                        </Button>
-                        <Button size="sm">Register</Button>
-                      </div>
-                    </div>
-                  </CardContent>
+                    </CardContent>
+                  </div>
                 </Card>
               );
             })}
