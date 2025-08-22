@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { EventSkeleton } from "./event-skeleton";
 import { Calendar, MapPin, Clock, Users, Search, Filter, Plus } from "lucide-react";
 import { EventForm } from "./event-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-
 interface User {
   name: string;
   // add more user fields as needed later
@@ -149,7 +149,7 @@ export default function EventsPage() {
 
           {/* Event cards */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {loading && <div>Loading events...</div>}
+            {loading && Array.from({ length: 4 }).map((_, i) => <EventSkeleton key={i} />)}
             {error && <div className="text-red-500">{error}</div>}
             {!loading && !error && filteredEvents.length === 0 && <div>No events found.</div>}
             {filteredEvents.map((event) => {
