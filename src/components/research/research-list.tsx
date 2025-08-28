@@ -23,13 +23,13 @@ export default function ResearchList() {
 
   return (
     <div>
-      <h1 className="font-bold  mb-5 text-2xl">Over 200+mil Research Papers</h1>
+      <h1 className="font-bold  mb-10 mt-10 text-2xl">Over 200+mil Research Papers</h1>
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Enter a topic"
-        className="border-1 border-b-amber-100 p-2 rounded-full  mb-4"
+        className="border-1  border-b-amber-100 p-2 rounded-full  mb-4"
       />
       <button
         className="border-1 p-2  mx-5 bg-gray-600 rounded-full"
