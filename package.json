@@ -39,6 +39,8 @@
     "react-hook-form": "^7.60.0",
     "react-icons": "^5.5.0",
     "sonner": "^2.0.6",
+    "stream-chat": "^9.17.0",
+    "stream-chat-react": "^13.5.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "swagger-ui-react": "^3.29.0",
