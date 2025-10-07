@@ -65,6 +65,10 @@ type PostCardProps = {
     author?: { name?: string; image?: string };
     authorId?: string;
     likeCount?: number;
+    // Whether the current user liked this post (if provided by server)
+    likedByMe?: boolean;
+    // Optional likes array so client can compute liked state when session is available
+    likes?: { userId: string }[];
     commentCount?: number;
     createdAt?: string;
     // Extended optional academic and content metadata
@@ -104,7 +108,8 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   const [error, setError] = useState<string | null>(null);
 
   const [likeCount, setLikeCount] = useState<number>(post.likeCount ?? 0);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  // initialize from server-provided liked flag if available to avoid flicker
+  const [isLiked, setIsLiked] = useState<boolean>(post.likedByMe ?? false);
   const [isSaved, setIsSaved] = useState<boolean>(false);
   const [likedUsers, setLikedUsers] = useState<{ id: string; name?: string; image?: string }[]>([]);
   const [showLikes, setShowLikes] = useState(false);
@@ -131,6 +136,26 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
     };
     fetchComments();
   }, [showComments, post.id]);
+
+  // Keep like count in sync with incoming props (e.g., on refresh or refetch)
+  useEffect(() => {
+    setLikeCount(post.likeCount ?? 0);
+  }, [post.likeCount]);
+
+  // Derive liked state from server data or likes array + current session
+  useEffect(() => {
+    // If server provided likedByMe, prefer it
+    if (typeof post.likedByMe === "boolean") {
+      setIsLiked(post.likedByMe);
+      return;
+    }
+    // Otherwise, if we have likes and a logged-in user, compute it
+    const userId = session?.user?.id;
+    if (post.likes && userId) {
+      const liked = post.likes.some((l) => l.userId === userId);
+      setIsLiked(liked);
+    }
+  }, [post.likedByMe, post.likes, session?.user?.id]);
 
   // Add a new top-level comment
   const handleAddComment = async (content: string) => {
@@ -217,7 +242,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   };
 
   return (
-    <article className="rounded-xl overflow-hidden border bg-card text-card-foreground shadow-sm p-4 w-full">
+    <article className="rounded-xl  overflow-hidden border bg-card text-card-foreground shadow-sm p-4 w-full">
       {/* Header */}
       <header className="flex justify-between items-start">
         <div className="flex items-start gap-3">
@@ -361,15 +386,13 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
         <button
           type="button"
           onClick={toggleLike}
-          className={`flex items-center justify-center gap-2 rounded-md px-3 py-2 transition-colors ${
-            isLiked ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent hover:text-foreground"
-          }`}
+          className="flex items-center justify-center gap-2 rounded-md px-3 py-2 transition-colors "
           aria-pressed={isLiked}
           aria-label="Like"
         >
-          <ThumbsUp className="size-5" />
+          <ThumbsUp className={`size-5 ${isLiked ? "text-green-500" : "text-muted-foreground"}`} />
           <span
-            className="cursor-pointer underline decoration-dotted decoration-2 underline-offset-2"
+            className={"cursor-pointer select-none" + (likeCount > 0 ? " text-foreground" : " text-muted-foreground") + (isLiked ? " font-semibold text-green-500" : "")}
             onClick={e => { e.stopPropagation(); fetchLikedUsers(); }}
             title="View who liked"
           >
@@ -463,7 +486,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
         <section className="mt-4">
           {error && <div className="text-destructive mb-2">{error}</div>}
           {loadingComments ? (
-            <div>Loading comments...</div>
+            <div>...</div>
           ) : (
             <>
               <CommentForm onSubmit={handleAddComment} />

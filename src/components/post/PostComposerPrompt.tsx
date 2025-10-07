@@ -31,9 +31,9 @@ export default function PostComposerPrompt({ onCompose }: PostComposerPromptProp
       </div>
 
       <div className="mt-3 flex items-center justify-between text-xs md:text-sm">
-        <Action icon={<ImageIcon className="h-4 w-4" />} label="Photo" onClick={onCompose} />
-        <Action icon={<Library className="h-4 w-4" />} label="Resource" onClick={onCompose} />
-        <Action icon={<FlaskConical className="h-4 w-4" />} label="Research" onClick={onCompose} />
+        <Action icon={<ImageIcon className="h-4 w-4 text-green-500" />} label="Photo" onClick={onCompose} />
+        <Action icon={<Library className="h-4 w-4 text-blue-500" />} label="Resource" onClick={onCompose} />
+        <Action icon={<FlaskConical className="h-4 w-4 text-yellow-500" />} label="Research" onClick={onCompose} />
       </div>
 
       <p className="mt-2 text-xs text-muted-foreground">
