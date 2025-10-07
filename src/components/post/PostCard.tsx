@@ -345,7 +345,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
 
       {/* Image Preview */}
       {post.imageUrl && (
-        <figure className="-mx-4 mt-4 overflow-hidden rounded-none border-y bg-transparent">
+        <figure className="mx-4 mt-4 overflow-hidden rounded-none border-y bg-transparent">
           <Image
             src={imageUrl}
             alt="Post image"
