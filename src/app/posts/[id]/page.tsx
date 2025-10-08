@@ -13,7 +13,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
         include: { author: { select: { id: true, name: true, image: true } } },
         orderBy: { createdAt: 'asc' },
       },
-      likes: true,
+      likes: { select: { userId: true } },
     },
   })
 
@@ -29,6 +29,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
     author: post.author ? { name: post.author.name, image: post.author.image ?? undefined } : undefined,
     authorId: post.authorId,
     likeCount: post.likes?.length ?? 0,
+    likes: post.likes ?? [],
     commentCount: post.comments?.length ?? 0,
     createdAt: post.createdAt?.toISOString(),
     university: post.university ?? undefined,

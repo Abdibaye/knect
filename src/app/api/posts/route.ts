@@ -170,8 +170,10 @@ export async function POST(req: Request) {
 }
 
 // GET /api/posts
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    const session = await auth.api.getSession({ headers: req.headers });
+    const currentUserId = session?.session?.userId;
     let posts;
     try {
       posts = await prisma.post.findMany({
@@ -180,7 +182,7 @@ export async function GET() {
         include: {
           author: { select: { id: true, name: true, image: true, university: true, department: true } },
           comments: true,
-          likes: true,
+          likes: { select: { userId: true } },
         },
       });
     } catch (err: any) {
@@ -192,6 +194,7 @@ export async function GET() {
       ...post,
       likeCount: post.likes.length,
       commentCount: post.comments.length,
+      likedByMe: currentUserId ? post.likes.some((l: any) => l.userId === currentUserId) : false,
       // If post-level university/department not set, fallback to author's profile
       university: post.university ?? post.author?.university ?? undefined,
       department: post.department ?? post.author?.department ?? undefined,
