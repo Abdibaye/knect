@@ -7,6 +7,88 @@ import { ArrowLeft, Bookmark, ExternalLink, CalendarDays } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
+function OpportunityDetailSkeleton() {
+  return (
+    <div className="max-w-4xl mx-auto py-6 px-3 sm:px-4 pb-24 animate-pulse">
+      {/* Back button */}
+      <div className="mb-4 inline-flex items-center gap-1">
+        <div className="h-4 w-4 bg-muted rounded" />
+        <div className="h-4 w-12 bg-muted rounded" />
+      </div>
+
+      <div className="rounded-xl border p-5 sm:p-6 bg-card">
+        {/* Header section */}
+        <div className="flex flex-col gap-5 md:gap-4 md:flex-row md:items-start md:justify-between">
+          <div className="space-y-3 flex-1 min-w-0">
+            {/* Title */}
+            <div className="h-8 bg-muted rounded w-3/4 md:h-9" />
+            {/* Provider info */}
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <div className="h-4 bg-muted rounded w-32" />
+              <div className="h-4 bg-muted rounded w-16" />
+              <div className="h-4 bg-muted rounded w-20" />
+            </div>
+            {/* Badges */}
+            <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 -mx-1 px-1">
+              <div className="h-6 w-20 bg-muted rounded-full" />
+              <div className="h-6 w-16 bg-muted rounded-full" />
+              <div className="h-6 w-18 bg-muted rounded-full" />
+            </div>
+          </div>
+          {/* Action buttons */}
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <div className="h-8 w-24 bg-muted rounded" />
+            <div className="h-8 w-20 bg-muted rounded" />
+          </div>
+        </div>
+
+        {/* Deadline */}
+        <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full border">
+          <div className="h-4 w-4 bg-muted rounded" />
+          <div className="h-4 w-32 bg-muted rounded" />
+        </div>
+
+        {/* Banner image */}
+        <div className="mt-6 -mx-5 -mb-5">
+          <div className="relative w-full h-48 bg-muted rounded-lg overflow-hidden border-b" />
+        </div>
+
+        {/* Description section */}
+        <section className="mt-6 space-y-4">
+          <div className="h-6 bg-muted rounded w-24" />
+          <div className="space-y-2">
+            <div className="h-4 bg-muted/80 rounded w-full" />
+            <div className="h-4 bg-muted/70 rounded w-11/12" />
+            <div className="h-4 bg-muted/60 rounded w-4/5" />
+            <div className="h-4 bg-muted/50 rounded w-3/4" />
+          </div>
+
+          <div className="h-5 bg-muted rounded w-20 mt-4" />
+          <ul className="space-y-1">
+            <li><div className="h-4 bg-muted/70 rounded w-2/3" /></li>
+            <li><div className="h-4 bg-muted/70 rounded w-3/4" /></li>
+            <li><div className="h-4 bg-muted/70 rounded w-1/2" /></li>
+          </ul>
+
+          <div className="h-5 bg-muted rounded w-16 mt-4" />
+          <div className="h-4 bg-muted/70 rounded w-full" />
+
+          <div className="h-5 bg-muted rounded w-14 mt-4" />
+          <div className="h-4 bg-muted/70 rounded w-3/4" />
+        </section>
+      </div>
+
+      {/* Mobile bottom action bar */}
+      <div className="fixed inset-x-0 bottom-0 z-40 sm:hidden border-t bg-background/95 px-4 py-3">
+        <div className="flex items-center gap-3">
+          <div className="h-8 flex-1 bg-muted rounded" />
+          <div className="h-8 flex-1 bg-muted rounded" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function OpportunityDetail({ id }: { id: string }) {
   const router = useRouter();
   const [opportunity, setOpportunity] = useState<Opportunity | null>(null);
@@ -14,32 +96,50 @@ export default function OpportunityDetail({ id }: { id: string }) {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    // Placeholder fetch - replace with API call
-    setLoading(true);
-    const timer = setTimeout(() => {
-      setOpportunity({
-        id,
-        title: "AI Research Internship",
-        provider: { id: "org1", name: "OpenAI Lab" },
-        type: "Internship",
-        description: "Full description with rich details about the internship responsibilities, research focus, mentorship structure, and expected outcomes.",
-        deadline: new Date(Date.now() + 6 * 86400000).toISOString(),
-        tags: ["AI", "Research", "ML"],
-        university: "MIT",
-        department: "Computer Science",
-        createdAt: new Date().toISOString(),
-        requirements: ["Strong Python skills", "Familiarity with ML frameworks", "Research mindset"],
-        eligibility: "Undergraduate or graduate students in CS or related fields",
-        benefits: "Stipend, publication support, mentorship, computing resources",
-        applicationLink: "https://example.com/apply",
-        contactEmail: "hr@example.com",
-      });
-      setLoading(false);
-    }, 500);
-    return () => clearTimeout(timer);
+    async function fetchOpportunity() {
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/opportunities/${id}`);
+        if (!res.ok) {
+          if (res.status === 404) {
+            setOpportunity(null);
+          } else {
+            throw new Error(`Failed to fetch opportunity: ${res.status}`);
+          }
+          return;
+        }
+        const data = await res.json();
+        // Map API shape to UI type
+        const mapped: Opportunity = {
+          id: data.id,
+          title: data.title,
+          provider: { 
+            id: data.postedBy?.id ?? data.postedById ?? "", 
+            name: data.provider || data.postedBy?.name || "Unknown", 
+            image: data.providerLogo || data.postedBy?.image 
+          },
+          type: (data.type as Opportunity["type"]) ?? "Project",
+          description: data.description,
+          deadline: data.deadline ? new Date(data.deadline).toISOString() : undefined,
+          tags: data.tags ?? [],
+          university: data.university ?? undefined,
+          department: data.department ?? undefined,
+          bannerImage: data.bannerImage ?? undefined,
+          createdAt: new Date(data.createdAt).toISOString(),
+          // optional fields not in schema are left undefined
+        };
+        setOpportunity(mapped);
+      } catch (error: any) {
+        console.error('Failed to fetch opportunity:', error);
+        setOpportunity(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchOpportunity();
   }, [id]);
 
-  if (loading) return <div className="p-6">Loading…</div>;
+  if (loading) return <OpportunityDetailSkeleton />;
   if (!opportunity) return <div className="p-6">Not found.</div>;
 
   const deadlineDate = opportunity.deadline ? new Date(opportunity.deadline) : null;
@@ -78,7 +178,26 @@ export default function OpportunityDetail({ id }: { id: string }) {
           </div>
         )}
 
-  <section className="prose dark:prose-invert max-w-none mt-6 leading-relaxed text-sm sm:text-base">
+        {/* Banner image */}
+        {opportunity.bannerImage && (
+          <div className="mt-6 -mx-5 -mb-5">
+            <div className="relative w-full overflow-hidden border-b">
+              <img
+                src={opportunity.bannerImage}
+                alt={opportunity.title}
+                className="w-full h-auto max-h-64 object-contain"
+                loading="lazy"
+                onError={(e) => {
+                  const img = e.currentTarget as HTMLImageElement;
+                  img.onerror = null;
+                  img.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJDMTMuMSAyIDE0IDIuOSAxNCA0VjE2QzE0IDE3LjEgMTMuMSAxOCA xMiAxOEgxMEM4LjkxOCAxOCA4IDE3LjEgOCA xNiA4VjRDOCA yLjkgOC45MiAyIDEwIDJDMTAgMiAxMC45MiAyIDEyIDJaTTEyIDIwQzEzLjEwNCAyMCAxNCAxOS4xMDQgMTQgMThIMTAuMDAxQzEwLjAwMSAxOS4xMDQgMTAuODk2IDIwIDEyIDIwWiIgZmlsbD0iIzY5NzM4NSIvPgo8L3N2Zz4K";
+                }}
+              />
+            </div>
+          </div>
+        )}
+
+        <section className="prose dark:prose-invert max-w-none mt-6 leading-relaxed text-sm sm:text-base">
           <h2>Description</h2>
           <p>{opportunity.description}</p>
           {opportunity.requirements && (

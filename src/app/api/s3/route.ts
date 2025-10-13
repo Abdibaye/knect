@@ -37,7 +37,26 @@ export async function POST(req: Request) {
         ACL: "public-read",
       })
     );
-    const url = `${process.env.AWS_ENDPOINT_URL_S3 || ""}/${bucket}/${fileName}`;
+    const endpointEnv = process.env.AWS_ENDPOINT_URL_S3 || "";
+    let url = "";
+    try {
+      const endpointUrl = new URL(endpointEnv);
+      const host = endpointUrl.hostname;
+      const proto = endpointUrl.protocol || "https:";
+      // For Tigris endpoints, use virtual-hosted style for public access
+      if (host === "t3.storage.dev" || host.endsWith(".fly.storage.tigris.dev")) {
+        url = `${proto}//${bucket}.${host}/${fileName}`;
+      } else if (host.startsWith(`${bucket}.`)) {
+        // If endpoint already includes the bucket as a subdomain, don't repeat it
+        url = `${proto}//${host}/${fileName}`;
+      } else {
+        // Fallback to path-style
+        url = `${endpointUrl.origin}/${bucket}/${fileName}`;
+      }
+    } catch {
+      // If endpoint is not a valid URL, fallback to plain concatenation (path-style)
+      url = `${endpointEnv.replace(/\/$/, "")}/${bucket}/${fileName}`;
+    }
     return NextResponse.json({ url });
   } catch (error: any) {
     console.error("S3 upload error:", error);

@@ -71,6 +71,7 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
       setUploading(true);
       const url = await uploadToS3(file);
       setImageUrl(url);
+      console.log(imageUrl);
       toast.success("Image uploaded");
       return url;
     } catch (err: any) {

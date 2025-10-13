@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Bookmark, CalendarDays } from "lucide-react";
-import Image from "next/image";
 import { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
 
@@ -64,20 +63,30 @@ export default function OpportunityCard({ opportunity }: { opportunity: Opportun
         <Bookmark className="size-4" />
       </button>
 
-      <div className="flex items-start gap-4">
-        <div className="relative shrink-0">
-          <div className="w-14 h-14 rounded-full bg-muted flex items-center justify-center overflow-hidden ring-4 ring-background group-hover:ring-primary/20 transition">
-            {opportunity.provider.image ? (
-              <Image src={opportunity.provider.image} alt={opportunity.provider.name} width={56} height={56} className="object-cover" />
-            ) : (
-              <span className="text-base font-semibold">{opportunity.provider.name[0]}</span>
-            )}
+      {/* Banner image */}
+      {opportunity.bannerImage && (
+        <div className="mb-3 -mx-4 -mt-4">
+          <div className="relative w-full overflow-hidden border-b">
+            <img
+              src={opportunity.bannerImage}
+              alt={opportunity.title}
+              className="w-full h-auto max-h-48 object-contain"
+              loading="lazy"
+              onError={(e) => {
+                const img = e.currentTarget as HTMLImageElement;
+                img.onerror = null;
+                img.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDJDMTMuMSAyIDE0IDIuOSAxNCA0VjE2QzE0IDE3LjEgMTMuMSAxOCA xMiAxOEgxMEM4LjkxOCAxOCA4IDE3LjEgOCA xNiA4VjRDOCA yLjkgOC45MiAyIDEwIDJDMTAgMiAxMC45MiAyIDEyIDJaTTEyIDIwQzEzLjEwNCAyMCAxNCAxOS4xMDQgMTQgMThIMTAuMDAxQzEwLjAwMSAxOS4xMDQgMTAuODk2IDIwIDEyIDIwWiIgZmlsbD0iIzY5NzM4NSIvPgo8L3N2Zz4K";
+              }}
+              onClick={(e) => { e.stopPropagation(); }}
+            />
           </div>
         </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-base md:text-lg leading-snug pr-8 group-hover:underline group-hover:underline-offset-2">
-            {opportunity.title}
-          </h3>
+      )}
+
+      <div className="min-w-0">
+        <h3 className="font-semibold text-base md:text-lg leading-snug pr-8 group-hover:underline group-hover:underline-offset-2">
+          {opportunity.title}
+        </h3>
           <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] uppercase tracking-wide text-muted-foreground font-medium">
             <span>{opportunity.provider.name}</span>
             {opportunity.university && <span className="inline-flex items-center">• {opportunity.university}</span>}
@@ -105,7 +114,6 @@ export default function OpportunityCard({ opportunity }: { opportunity: Opportun
             )}
           </div>
         </div>
-      </div>
 
       <div className="mt-4 flex items-center justify-between gap-3">
         <Button size="sm" variant="secondary" className="h-8 px-3" onClick={(e) => { e.stopPropagation(); router.push(`/opportunities/${opportunity.id}`); }}>Details</Button>

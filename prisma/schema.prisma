@@ -46,6 +46,7 @@ model User {
   createdGroups    Group[]        @relation("UserCreatedGroups")
   groupMemberships GroupMember[]  @relation("UserGroupMemberships")
   Resource         Resource[]
+  Opportunity      Opportunity[]
   accounts         Account[]
   Comments         Comment[]
   Likes            Like[]
@@ -211,4 +212,29 @@ enum PostCategory {
   QUESTION
   OPPORTUNITY
   EVENT
+}
+
+model Opportunity {
+  id             String   @id @default(cuid())
+  title          String
+  description    String
+  type           String
+  provider       String
+  providerLogo   String?   // small image (e.g., org logo)
+  bannerImage    String?   // main banner/poster for the opportunity
+  university     String?
+  department     String?
+  tags           String[]
+  location       String?
+  applicationUrl String?
+  deadline       DateTime
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  postedById     String
+  postedBy       User      @relation(fields: [postedById], references: [id], onDelete: Cascade)
+  isVerified     Boolean   @default(false)
+  views          Int       @default(0)
+  bookmarks      Int       @default(0)
+
+  @@map("opportunity")
 }
