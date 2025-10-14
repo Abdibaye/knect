@@ -100,6 +100,7 @@ export async function POST(req: Request) {
       content,
       summary,
       imageUrl,
+      mediaType,
       visibility,
       tags,
       resourceType,
@@ -112,7 +113,7 @@ export async function POST(req: Request) {
       eventDetails,
     } = body ?? {};
 
-    if (!title || !content) {
+    if (!content) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -124,6 +125,7 @@ export async function POST(req: Request) {
           content,
           summary,
           imageUrl,
+          mediaType,
           visibility,
           tags,
           resourceType,

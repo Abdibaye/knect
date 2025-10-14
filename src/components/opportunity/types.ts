@@ -10,6 +10,7 @@ export interface Opportunity {
   tags?: string[];
   university?: string;
   department?: string;
+  bannerImage?: string;
   createdAt: string; // ISO date
   requirements?: string[];
   eligibility?: string;

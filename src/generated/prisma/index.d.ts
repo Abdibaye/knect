@@ -73,6 +73,11 @@ export type GroupMember = $Result.DefaultSelection<Prisma.$GroupMemberPayload>
  * 
  */
 export type Event = $Result.DefaultSelection<Prisma.$EventPayload>
+/**
+ * Model Opportunity
+ * 
+ */
+export type Opportunity = $Result.DefaultSelection<Prisma.$OpportunityPayload>
 
 /**
  * Enums
@@ -122,7 +127,7 @@ export const PostCategory: typeof $Enums.PostCategory
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -154,13 +159,6 @@ export class PrismaClient<
    * Disconnect from the database
    */
   $disconnect(): $Utils.JsPromise<void>;
-
-  /**
-   * Add a middleware
-   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
-   * @see https://pris.ly/d/extensions
-   */
-  $use(cb: Prisma.Middleware): void
 
 /**
    * Executes a prepared raw query and returns the number of affected rows.
@@ -350,6 +348,16 @@ export class PrismaClient<
     * ```
     */
   get event(): Prisma.EventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.opportunity`: Exposes CRUD operations for the **Opportunity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Opportunities
+    * const opportunities = await prisma.opportunity.findMany()
+    * ```
+    */
+  get opportunity(): Prisma.OpportunityDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -408,8 +416,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.12.0
-   * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
+   * Prisma Client JS version: 6.14.0
+   * Query Engine version: 717184b7b35ea05dfa71a3236b7af656013e1e49
    */
   export type PrismaVersion = {
     client: string
@@ -801,7 +809,8 @@ export namespace Prisma {
     Resource: 'Resource',
     Group: 'Group',
     GroupMember: 'GroupMember',
-    Event: 'Event'
+    Event: 'Event',
+    Opportunity: 'Opportunity'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -820,7 +829,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "notification" | "user" | "session" | "account" | "verification" | "post" | "comment" | "like" | "resource" | "group" | "groupMember" | "event"
+      modelProps: "notification" | "user" | "session" | "account" | "verification" | "post" | "comment" | "like" | "resource" | "group" | "groupMember" | "event" | "opportunity"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1712,6 +1721,80 @@ export namespace Prisma {
           }
         }
       }
+      Opportunity: {
+        payload: Prisma.$OpportunityPayload<ExtArgs>
+        fields: Prisma.OpportunityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OpportunityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpportunityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OpportunityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpportunityPayload>
+          }
+          findFirst: {
+            args: Prisma.OpportunityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpportunityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OpportunityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpportunityPayload>
+          }
+          findMany: {
+            args: Prisma.OpportunityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpportunityPayload>[]
+          }
+          create: {
+            args: Prisma.OpportunityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpportunityPayload>
+          }
+          createMany: {
+            args: Prisma.OpportunityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OpportunityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpportunityPayload>[]
+          }
+          delete: {
+            args: Prisma.OpportunityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpportunityPayload>
+          }
+          update: {
+            args: Prisma.OpportunityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpportunityPayload>
+          }
+          deleteMany: {
+            args: Prisma.OpportunityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OpportunityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OpportunityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpportunityPayload>[]
+          }
+          upsert: {
+            args: Prisma.OpportunityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpportunityPayload>
+          }
+          aggregate: {
+            args: Prisma.OpportunityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOpportunity>
+          }
+          groupBy: {
+            args: Prisma.OpportunityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OpportunityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OpportunityCountArgs<ExtArgs>
+            result: $Utils.Optional<OpportunityCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1755,16 +1838,24 @@ export namespace Prisma {
     /**
      * @example
      * ```
-     * // Defaults to stdout
+     * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
      * 
-     * // Emit as events
+     * // Emit as events only
      * log: [
-     *   { emit: 'stdout', level: 'query' },
-     *   { emit: 'stdout', level: 'info' },
-     *   { emit: 'stdout', level: 'warn' }
-     *   { emit: 'stdout', level: 'error' }
+     *   { emit: 'event', level: 'query' },
+     *   { emit: 'event', level: 'info' },
+     *   { emit: 'event', level: 'warn' }
+     *   { emit: 'event', level: 'error' }
      * ]
+     * 
+     * / Emit as events and log to stdout
+     * og: [
+     *  { emit: 'stdout', level: 'query' },
+     *  { emit: 'stdout', level: 'info' },
+     *  { emit: 'stdout', level: 'warn' }
+     *  { emit: 'stdout', level: 'error' }
+     * 
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
@@ -1808,6 +1899,7 @@ export namespace Prisma {
     group?: GroupOmit
     groupMember?: GroupMemberOmit
     event?: EventOmit
+    opportunity?: OpportunityOmit
   }
 
   /* Types for Logging */
@@ -1817,10 +1909,15 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
-  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
-    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
-    : never
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+
+  export type GetLogType<T> = CheckIsLogLevel<
+    T extends LogDefinition ? T['level'] : T
+  >;
+
+  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
+    ? GetLogType<T[number]>
+    : never;
 
   export type QueryEvent = {
     timestamp: Date
@@ -1861,25 +1958,6 @@ export namespace Prisma {
     | 'findRaw'
     | 'groupBy'
 
-  /**
-   * These options are being passed into the middleware as "params"
-   */
-  export type MiddlewareParams = {
-    model?: ModelName
-    action: PrismaAction
-    args: any
-    dataPath: string[]
-    runInTransaction: boolean
-  }
-
-  /**
-   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
-   */
-  export type Middleware<T = any> = (
-    params: MiddlewareParams,
-    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
-  ) => $Utils.JsPromise<T>
-
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
 
@@ -1906,6 +1984,7 @@ export namespace Prisma {
     createdGroups: number
     groupMemberships: number
     Resource: number
+    Opportunity: number
     accounts: number
     Comments: number
     Likes: number
@@ -1919,6 +1998,7 @@ export namespace Prisma {
     createdGroups?: boolean | UserCountOutputTypeCountCreatedGroupsArgs
     groupMemberships?: boolean | UserCountOutputTypeCountGroupMembershipsArgs
     Resource?: boolean | UserCountOutputTypeCountResourceArgs
+    Opportunity?: boolean | UserCountOutputTypeCountOpportunityArgs
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     Comments?: boolean | UserCountOutputTypeCountCommentsArgs
     Likes?: boolean | UserCountOutputTypeCountLikesArgs
@@ -1964,6 +2044,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountResourceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResourceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountOpportunityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OpportunityWhereInput
   }
 
   /**
@@ -3531,6 +3618,7 @@ export namespace Prisma {
     createdGroups?: boolean | User$createdGroupsArgs<ExtArgs>
     groupMemberships?: boolean | User$groupMembershipsArgs<ExtArgs>
     Resource?: boolean | User$ResourceArgs<ExtArgs>
+    Opportunity?: boolean | User$OpportunityArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
     Comments?: boolean | User$CommentsArgs<ExtArgs>
     Likes?: boolean | User$LikesArgs<ExtArgs>
@@ -3606,6 +3694,7 @@ export namespace Prisma {
     createdGroups?: boolean | User$createdGroupsArgs<ExtArgs>
     groupMemberships?: boolean | User$groupMembershipsArgs<ExtArgs>
     Resource?: boolean | User$ResourceArgs<ExtArgs>
+    Opportunity?: boolean | User$OpportunityArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
     Comments?: boolean | User$CommentsArgs<ExtArgs>
     Likes?: boolean | User$LikesArgs<ExtArgs>
@@ -3624,6 +3713,7 @@ export namespace Prisma {
       createdGroups: Prisma.$GroupPayload<ExtArgs>[]
       groupMemberships: Prisma.$GroupMemberPayload<ExtArgs>[]
       Resource: Prisma.$ResourcePayload<ExtArgs>[]
+      Opportunity: Prisma.$OpportunityPayload<ExtArgs>[]
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       Comments: Prisma.$CommentPayload<ExtArgs>[]
       Likes: Prisma.$LikePayload<ExtArgs>[]
@@ -4047,6 +4137,7 @@ export namespace Prisma {
     createdGroups<T extends User$createdGroupsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdGroupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     groupMemberships<T extends User$groupMembershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$groupMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Resource<T extends User$ResourceArgs<ExtArgs> = {}>(args?: Subset<T, User$ResourceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Opportunity<T extends User$OpportunityArgs<ExtArgs> = {}>(args?: Subset<T, User$OpportunityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Comments<T extends User$CommentsArgs<ExtArgs> = {}>(args?: Subset<T, User$CommentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Likes<T extends User$LikesArgs<ExtArgs> = {}>(args?: Subset<T, User$LikesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4580,6 +4671,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+  }
+
+  /**
+   * User.Opportunity
+   */
+  export type User$OpportunityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityInclude<ExtArgs> | null
+    where?: OpportunityWhereInput
+    orderBy?: OpportunityOrderByWithRelationInput | OpportunityOrderByWithRelationInput[]
+    cursor?: OpportunityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OpportunityScalarFieldEnum | OpportunityScalarFieldEnum[]
   }
 
   /**
@@ -8039,6 +8154,7 @@ export namespace Prisma {
     title: string | null
     content: string | null
     imageUrl: string | null
+    mediaType: string | null
     createdAt: Date | null
     updatedAt: Date | null
     authorId: string | null
@@ -8059,6 +8175,7 @@ export namespace Prisma {
     title: string | null
     content: string | null
     imageUrl: string | null
+    mediaType: string | null
     createdAt: Date | null
     updatedAt: Date | null
     authorId: string | null
@@ -8079,6 +8196,7 @@ export namespace Prisma {
     title: number
     content: number
     imageUrl: number
+    mediaType: number
     createdAt: number
     updatedAt: number
     authorId: number
@@ -8114,6 +8232,7 @@ export namespace Prisma {
     title?: true
     content?: true
     imageUrl?: true
+    mediaType?: true
     createdAt?: true
     updatedAt?: true
     authorId?: true
@@ -8134,6 +8253,7 @@ export namespace Prisma {
     title?: true
     content?: true
     imageUrl?: true
+    mediaType?: true
     createdAt?: true
     updatedAt?: true
     authorId?: true
@@ -8154,6 +8274,7 @@ export namespace Prisma {
     title?: true
     content?: true
     imageUrl?: true
+    mediaType?: true
     createdAt?: true
     updatedAt?: true
     authorId?: true
@@ -8261,9 +8382,10 @@ export namespace Prisma {
 
   export type PostGroupByOutputType = {
     id: string
-    title: string
+    title: string | null
     content: string
     imageUrl: string | null
+    mediaType: string | null
     createdAt: Date
     updatedAt: Date
     authorId: string
@@ -8306,6 +8428,7 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     imageUrl?: boolean
+    mediaType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     authorId?: boolean
@@ -8334,6 +8457,7 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     imageUrl?: boolean
+    mediaType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     authorId?: boolean
@@ -8358,6 +8482,7 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     imageUrl?: boolean
+    mediaType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     authorId?: boolean
@@ -8382,6 +8507,7 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     imageUrl?: boolean
+    mediaType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     authorId?: boolean
@@ -8400,7 +8526,7 @@ export namespace Prisma {
     eventDetails?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "imageUrl" | "createdAt" | "updatedAt" | "authorId" | "tags" | "attachments" | "citation" | "department" | "doi" | "downloads" | "resourceType" | "role" | "summary" | "university" | "views" | "visibility" | "eventDetails", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "imageUrl" | "mediaType" | "createdAt" | "updatedAt" | "authorId" | "tags" | "attachments" | "citation" | "department" | "doi" | "downloads" | "resourceType" | "role" | "summary" | "university" | "views" | "visibility" | "eventDetails", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     comments?: boolean | Post$commentsArgs<ExtArgs>
     likes?: boolean | Post$likesArgs<ExtArgs>
@@ -8425,9 +8551,10 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      title: string
+      title: string | null
       content: string
       imageUrl: string | null
+      mediaType: string | null
       createdAt: Date
       updatedAt: Date
       authorId: string
@@ -8875,6 +9002,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Post", 'String'>
     readonly content: FieldRef<"Post", 'String'>
     readonly imageUrl: FieldRef<"Post", 'String'>
+    readonly mediaType: FieldRef<"Post", 'String'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
     readonly updatedAt: FieldRef<"Post", 'DateTime'>
     readonly authorId: FieldRef<"Post", 'String'>
@@ -15931,6 +16059,1280 @@ export namespace Prisma {
 
 
   /**
+   * Model Opportunity
+   */
+
+  export type AggregateOpportunity = {
+    _count: OpportunityCountAggregateOutputType | null
+    _avg: OpportunityAvgAggregateOutputType | null
+    _sum: OpportunitySumAggregateOutputType | null
+    _min: OpportunityMinAggregateOutputType | null
+    _max: OpportunityMaxAggregateOutputType | null
+  }
+
+  export type OpportunityAvgAggregateOutputType = {
+    views: number | null
+    bookmarks: number | null
+  }
+
+  export type OpportunitySumAggregateOutputType = {
+    views: number | null
+    bookmarks: number | null
+  }
+
+  export type OpportunityMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    type: string | null
+    provider: string | null
+    providerLogo: string | null
+    bannerImage: string | null
+    university: string | null
+    department: string | null
+    location: string | null
+    applicationUrl: string | null
+    deadline: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    postedById: string | null
+    isVerified: boolean | null
+    views: number | null
+    bookmarks: number | null
+  }
+
+  export type OpportunityMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    type: string | null
+    provider: string | null
+    providerLogo: string | null
+    bannerImage: string | null
+    university: string | null
+    department: string | null
+    location: string | null
+    applicationUrl: string | null
+    deadline: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    postedById: string | null
+    isVerified: boolean | null
+    views: number | null
+    bookmarks: number | null
+  }
+
+  export type OpportunityCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    type: number
+    provider: number
+    providerLogo: number
+    bannerImage: number
+    university: number
+    department: number
+    tags: number
+    location: number
+    applicationUrl: number
+    deadline: number
+    createdAt: number
+    updatedAt: number
+    postedById: number
+    isVerified: number
+    views: number
+    bookmarks: number
+    _all: number
+  }
+
+
+  export type OpportunityAvgAggregateInputType = {
+    views?: true
+    bookmarks?: true
+  }
+
+  export type OpportunitySumAggregateInputType = {
+    views?: true
+    bookmarks?: true
+  }
+
+  export type OpportunityMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    type?: true
+    provider?: true
+    providerLogo?: true
+    bannerImage?: true
+    university?: true
+    department?: true
+    location?: true
+    applicationUrl?: true
+    deadline?: true
+    createdAt?: true
+    updatedAt?: true
+    postedById?: true
+    isVerified?: true
+    views?: true
+    bookmarks?: true
+  }
+
+  export type OpportunityMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    type?: true
+    provider?: true
+    providerLogo?: true
+    bannerImage?: true
+    university?: true
+    department?: true
+    location?: true
+    applicationUrl?: true
+    deadline?: true
+    createdAt?: true
+    updatedAt?: true
+    postedById?: true
+    isVerified?: true
+    views?: true
+    bookmarks?: true
+  }
+
+  export type OpportunityCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    type?: true
+    provider?: true
+    providerLogo?: true
+    bannerImage?: true
+    university?: true
+    department?: true
+    tags?: true
+    location?: true
+    applicationUrl?: true
+    deadline?: true
+    createdAt?: true
+    updatedAt?: true
+    postedById?: true
+    isVerified?: true
+    views?: true
+    bookmarks?: true
+    _all?: true
+  }
+
+  export type OpportunityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Opportunity to aggregate.
+     */
+    where?: OpportunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Opportunities to fetch.
+     */
+    orderBy?: OpportunityOrderByWithRelationInput | OpportunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OpportunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Opportunities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Opportunities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Opportunities
+    **/
+    _count?: true | OpportunityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OpportunityAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OpportunitySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OpportunityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OpportunityMaxAggregateInputType
+  }
+
+  export type GetOpportunityAggregateType<T extends OpportunityAggregateArgs> = {
+        [P in keyof T & keyof AggregateOpportunity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOpportunity[P]>
+      : GetScalarType<T[P], AggregateOpportunity[P]>
+  }
+
+
+
+
+  export type OpportunityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OpportunityWhereInput
+    orderBy?: OpportunityOrderByWithAggregationInput | OpportunityOrderByWithAggregationInput[]
+    by: OpportunityScalarFieldEnum[] | OpportunityScalarFieldEnum
+    having?: OpportunityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OpportunityCountAggregateInputType | true
+    _avg?: OpportunityAvgAggregateInputType
+    _sum?: OpportunitySumAggregateInputType
+    _min?: OpportunityMinAggregateInputType
+    _max?: OpportunityMaxAggregateInputType
+  }
+
+  export type OpportunityGroupByOutputType = {
+    id: string
+    title: string
+    description: string
+    type: string
+    provider: string
+    providerLogo: string | null
+    bannerImage: string | null
+    university: string | null
+    department: string | null
+    tags: string[]
+    location: string | null
+    applicationUrl: string | null
+    deadline: Date
+    createdAt: Date
+    updatedAt: Date
+    postedById: string
+    isVerified: boolean
+    views: number
+    bookmarks: number
+    _count: OpportunityCountAggregateOutputType | null
+    _avg: OpportunityAvgAggregateOutputType | null
+    _sum: OpportunitySumAggregateOutputType | null
+    _min: OpportunityMinAggregateOutputType | null
+    _max: OpportunityMaxAggregateOutputType | null
+  }
+
+  type GetOpportunityGroupByPayload<T extends OpportunityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OpportunityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OpportunityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OpportunityGroupByOutputType[P]>
+            : GetScalarType<T[P], OpportunityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OpportunitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    type?: boolean
+    provider?: boolean
+    providerLogo?: boolean
+    bannerImage?: boolean
+    university?: boolean
+    department?: boolean
+    tags?: boolean
+    location?: boolean
+    applicationUrl?: boolean
+    deadline?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    postedById?: boolean
+    isVerified?: boolean
+    views?: boolean
+    bookmarks?: boolean
+    postedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["opportunity"]>
+
+  export type OpportunitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    type?: boolean
+    provider?: boolean
+    providerLogo?: boolean
+    bannerImage?: boolean
+    university?: boolean
+    department?: boolean
+    tags?: boolean
+    location?: boolean
+    applicationUrl?: boolean
+    deadline?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    postedById?: boolean
+    isVerified?: boolean
+    views?: boolean
+    bookmarks?: boolean
+    postedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["opportunity"]>
+
+  export type OpportunitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    type?: boolean
+    provider?: boolean
+    providerLogo?: boolean
+    bannerImage?: boolean
+    university?: boolean
+    department?: boolean
+    tags?: boolean
+    location?: boolean
+    applicationUrl?: boolean
+    deadline?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    postedById?: boolean
+    isVerified?: boolean
+    views?: boolean
+    bookmarks?: boolean
+    postedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["opportunity"]>
+
+  export type OpportunitySelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    type?: boolean
+    provider?: boolean
+    providerLogo?: boolean
+    bannerImage?: boolean
+    university?: boolean
+    department?: boolean
+    tags?: boolean
+    location?: boolean
+    applicationUrl?: boolean
+    deadline?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    postedById?: boolean
+    isVerified?: boolean
+    views?: boolean
+    bookmarks?: boolean
+  }
+
+  export type OpportunityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "type" | "provider" | "providerLogo" | "bannerImage" | "university" | "department" | "tags" | "location" | "applicationUrl" | "deadline" | "createdAt" | "updatedAt" | "postedById" | "isVerified" | "views" | "bookmarks", ExtArgs["result"]["opportunity"]>
+  export type OpportunityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    postedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type OpportunityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    postedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type OpportunityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    postedBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $OpportunityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Opportunity"
+    objects: {
+      postedBy: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      description: string
+      type: string
+      provider: string
+      providerLogo: string | null
+      bannerImage: string | null
+      university: string | null
+      department: string | null
+      tags: string[]
+      location: string | null
+      applicationUrl: string | null
+      deadline: Date
+      createdAt: Date
+      updatedAt: Date
+      postedById: string
+      isVerified: boolean
+      views: number
+      bookmarks: number
+    }, ExtArgs["result"]["opportunity"]>
+    composites: {}
+  }
+
+  type OpportunityGetPayload<S extends boolean | null | undefined | OpportunityDefaultArgs> = $Result.GetResult<Prisma.$OpportunityPayload, S>
+
+  type OpportunityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OpportunityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OpportunityCountAggregateInputType | true
+    }
+
+  export interface OpportunityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Opportunity'], meta: { name: 'Opportunity' } }
+    /**
+     * Find zero or one Opportunity that matches the filter.
+     * @param {OpportunityFindUniqueArgs} args - Arguments to find a Opportunity
+     * @example
+     * // Get one Opportunity
+     * const opportunity = await prisma.opportunity.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OpportunityFindUniqueArgs>(args: SelectSubset<T, OpportunityFindUniqueArgs<ExtArgs>>): Prisma__OpportunityClient<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Opportunity that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OpportunityFindUniqueOrThrowArgs} args - Arguments to find a Opportunity
+     * @example
+     * // Get one Opportunity
+     * const opportunity = await prisma.opportunity.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OpportunityFindUniqueOrThrowArgs>(args: SelectSubset<T, OpportunityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OpportunityClient<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Opportunity that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpportunityFindFirstArgs} args - Arguments to find a Opportunity
+     * @example
+     * // Get one Opportunity
+     * const opportunity = await prisma.opportunity.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OpportunityFindFirstArgs>(args?: SelectSubset<T, OpportunityFindFirstArgs<ExtArgs>>): Prisma__OpportunityClient<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Opportunity that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpportunityFindFirstOrThrowArgs} args - Arguments to find a Opportunity
+     * @example
+     * // Get one Opportunity
+     * const opportunity = await prisma.opportunity.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OpportunityFindFirstOrThrowArgs>(args?: SelectSubset<T, OpportunityFindFirstOrThrowArgs<ExtArgs>>): Prisma__OpportunityClient<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Opportunities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpportunityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Opportunities
+     * const opportunities = await prisma.opportunity.findMany()
+     * 
+     * // Get first 10 Opportunities
+     * const opportunities = await prisma.opportunity.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const opportunityWithIdOnly = await prisma.opportunity.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OpportunityFindManyArgs>(args?: SelectSubset<T, OpportunityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Opportunity.
+     * @param {OpportunityCreateArgs} args - Arguments to create a Opportunity.
+     * @example
+     * // Create one Opportunity
+     * const Opportunity = await prisma.opportunity.create({
+     *   data: {
+     *     // ... data to create a Opportunity
+     *   }
+     * })
+     * 
+     */
+    create<T extends OpportunityCreateArgs>(args: SelectSubset<T, OpportunityCreateArgs<ExtArgs>>): Prisma__OpportunityClient<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Opportunities.
+     * @param {OpportunityCreateManyArgs} args - Arguments to create many Opportunities.
+     * @example
+     * // Create many Opportunities
+     * const opportunity = await prisma.opportunity.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OpportunityCreateManyArgs>(args?: SelectSubset<T, OpportunityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Opportunities and returns the data saved in the database.
+     * @param {OpportunityCreateManyAndReturnArgs} args - Arguments to create many Opportunities.
+     * @example
+     * // Create many Opportunities
+     * const opportunity = await prisma.opportunity.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Opportunities and only return the `id`
+     * const opportunityWithIdOnly = await prisma.opportunity.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OpportunityCreateManyAndReturnArgs>(args?: SelectSubset<T, OpportunityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Opportunity.
+     * @param {OpportunityDeleteArgs} args - Arguments to delete one Opportunity.
+     * @example
+     * // Delete one Opportunity
+     * const Opportunity = await prisma.opportunity.delete({
+     *   where: {
+     *     // ... filter to delete one Opportunity
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OpportunityDeleteArgs>(args: SelectSubset<T, OpportunityDeleteArgs<ExtArgs>>): Prisma__OpportunityClient<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Opportunity.
+     * @param {OpportunityUpdateArgs} args - Arguments to update one Opportunity.
+     * @example
+     * // Update one Opportunity
+     * const opportunity = await prisma.opportunity.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OpportunityUpdateArgs>(args: SelectSubset<T, OpportunityUpdateArgs<ExtArgs>>): Prisma__OpportunityClient<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Opportunities.
+     * @param {OpportunityDeleteManyArgs} args - Arguments to filter Opportunities to delete.
+     * @example
+     * // Delete a few Opportunities
+     * const { count } = await prisma.opportunity.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OpportunityDeleteManyArgs>(args?: SelectSubset<T, OpportunityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Opportunities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpportunityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Opportunities
+     * const opportunity = await prisma.opportunity.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OpportunityUpdateManyArgs>(args: SelectSubset<T, OpportunityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Opportunities and returns the data updated in the database.
+     * @param {OpportunityUpdateManyAndReturnArgs} args - Arguments to update many Opportunities.
+     * @example
+     * // Update many Opportunities
+     * const opportunity = await prisma.opportunity.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Opportunities and only return the `id`
+     * const opportunityWithIdOnly = await prisma.opportunity.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OpportunityUpdateManyAndReturnArgs>(args: SelectSubset<T, OpportunityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Opportunity.
+     * @param {OpportunityUpsertArgs} args - Arguments to update or create a Opportunity.
+     * @example
+     * // Update or create a Opportunity
+     * const opportunity = await prisma.opportunity.upsert({
+     *   create: {
+     *     // ... data to create a Opportunity
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Opportunity we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OpportunityUpsertArgs>(args: SelectSubset<T, OpportunityUpsertArgs<ExtArgs>>): Prisma__OpportunityClient<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Opportunities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpportunityCountArgs} args - Arguments to filter Opportunities to count.
+     * @example
+     * // Count the number of Opportunities
+     * const count = await prisma.opportunity.count({
+     *   where: {
+     *     // ... the filter for the Opportunities we want to count
+     *   }
+     * })
+    **/
+    count<T extends OpportunityCountArgs>(
+      args?: Subset<T, OpportunityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OpportunityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Opportunity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpportunityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OpportunityAggregateArgs>(args: Subset<T, OpportunityAggregateArgs>): Prisma.PrismaPromise<GetOpportunityAggregateType<T>>
+
+    /**
+     * Group by Opportunity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpportunityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OpportunityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OpportunityGroupByArgs['orderBy'] }
+        : { orderBy?: OpportunityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OpportunityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOpportunityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Opportunity model
+   */
+  readonly fields: OpportunityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Opportunity.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OpportunityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    postedBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Opportunity model
+   */
+  interface OpportunityFieldRefs {
+    readonly id: FieldRef<"Opportunity", 'String'>
+    readonly title: FieldRef<"Opportunity", 'String'>
+    readonly description: FieldRef<"Opportunity", 'String'>
+    readonly type: FieldRef<"Opportunity", 'String'>
+    readonly provider: FieldRef<"Opportunity", 'String'>
+    readonly providerLogo: FieldRef<"Opportunity", 'String'>
+    readonly bannerImage: FieldRef<"Opportunity", 'String'>
+    readonly university: FieldRef<"Opportunity", 'String'>
+    readonly department: FieldRef<"Opportunity", 'String'>
+    readonly tags: FieldRef<"Opportunity", 'String[]'>
+    readonly location: FieldRef<"Opportunity", 'String'>
+    readonly applicationUrl: FieldRef<"Opportunity", 'String'>
+    readonly deadline: FieldRef<"Opportunity", 'DateTime'>
+    readonly createdAt: FieldRef<"Opportunity", 'DateTime'>
+    readonly updatedAt: FieldRef<"Opportunity", 'DateTime'>
+    readonly postedById: FieldRef<"Opportunity", 'String'>
+    readonly isVerified: FieldRef<"Opportunity", 'Boolean'>
+    readonly views: FieldRef<"Opportunity", 'Int'>
+    readonly bookmarks: FieldRef<"Opportunity", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Opportunity findUnique
+   */
+  export type OpportunityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityInclude<ExtArgs> | null
+    /**
+     * Filter, which Opportunity to fetch.
+     */
+    where: OpportunityWhereUniqueInput
+  }
+
+  /**
+   * Opportunity findUniqueOrThrow
+   */
+  export type OpportunityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityInclude<ExtArgs> | null
+    /**
+     * Filter, which Opportunity to fetch.
+     */
+    where: OpportunityWhereUniqueInput
+  }
+
+  /**
+   * Opportunity findFirst
+   */
+  export type OpportunityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityInclude<ExtArgs> | null
+    /**
+     * Filter, which Opportunity to fetch.
+     */
+    where?: OpportunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Opportunities to fetch.
+     */
+    orderBy?: OpportunityOrderByWithRelationInput | OpportunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Opportunities.
+     */
+    cursor?: OpportunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Opportunities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Opportunities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Opportunities.
+     */
+    distinct?: OpportunityScalarFieldEnum | OpportunityScalarFieldEnum[]
+  }
+
+  /**
+   * Opportunity findFirstOrThrow
+   */
+  export type OpportunityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityInclude<ExtArgs> | null
+    /**
+     * Filter, which Opportunity to fetch.
+     */
+    where?: OpportunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Opportunities to fetch.
+     */
+    orderBy?: OpportunityOrderByWithRelationInput | OpportunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Opportunities.
+     */
+    cursor?: OpportunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Opportunities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Opportunities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Opportunities.
+     */
+    distinct?: OpportunityScalarFieldEnum | OpportunityScalarFieldEnum[]
+  }
+
+  /**
+   * Opportunity findMany
+   */
+  export type OpportunityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityInclude<ExtArgs> | null
+    /**
+     * Filter, which Opportunities to fetch.
+     */
+    where?: OpportunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Opportunities to fetch.
+     */
+    orderBy?: OpportunityOrderByWithRelationInput | OpportunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Opportunities.
+     */
+    cursor?: OpportunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Opportunities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Opportunities.
+     */
+    skip?: number
+    distinct?: OpportunityScalarFieldEnum | OpportunityScalarFieldEnum[]
+  }
+
+  /**
+   * Opportunity create
+   */
+  export type OpportunityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Opportunity.
+     */
+    data: XOR<OpportunityCreateInput, OpportunityUncheckedCreateInput>
+  }
+
+  /**
+   * Opportunity createMany
+   */
+  export type OpportunityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Opportunities.
+     */
+    data: OpportunityCreateManyInput | OpportunityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Opportunity createManyAndReturn
+   */
+  export type OpportunityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * The data used to create many Opportunities.
+     */
+    data: OpportunityCreateManyInput | OpportunityCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Opportunity update
+   */
+  export type OpportunityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Opportunity.
+     */
+    data: XOR<OpportunityUpdateInput, OpportunityUncheckedUpdateInput>
+    /**
+     * Choose, which Opportunity to update.
+     */
+    where: OpportunityWhereUniqueInput
+  }
+
+  /**
+   * Opportunity updateMany
+   */
+  export type OpportunityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Opportunities.
+     */
+    data: XOR<OpportunityUpdateManyMutationInput, OpportunityUncheckedUpdateManyInput>
+    /**
+     * Filter which Opportunities to update
+     */
+    where?: OpportunityWhereInput
+    /**
+     * Limit how many Opportunities to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Opportunity updateManyAndReturn
+   */
+  export type OpportunityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * The data used to update Opportunities.
+     */
+    data: XOR<OpportunityUpdateManyMutationInput, OpportunityUncheckedUpdateManyInput>
+    /**
+     * Filter which Opportunities to update
+     */
+    where?: OpportunityWhereInput
+    /**
+     * Limit how many Opportunities to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Opportunity upsert
+   */
+  export type OpportunityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Opportunity to update in case it exists.
+     */
+    where: OpportunityWhereUniqueInput
+    /**
+     * In case the Opportunity found by the `where` argument doesn't exist, create a new Opportunity with this data.
+     */
+    create: XOR<OpportunityCreateInput, OpportunityUncheckedCreateInput>
+    /**
+     * In case the Opportunity was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OpportunityUpdateInput, OpportunityUncheckedUpdateInput>
+  }
+
+  /**
+   * Opportunity delete
+   */
+  export type OpportunityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityInclude<ExtArgs> | null
+    /**
+     * Filter which Opportunity to delete.
+     */
+    where: OpportunityWhereUniqueInput
+  }
+
+  /**
+   * Opportunity deleteMany
+   */
+  export type OpportunityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Opportunities to delete
+     */
+    where?: OpportunityWhereInput
+    /**
+     * Limit how many Opportunities to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Opportunity without action
+   */
+  export type OpportunityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Opportunity
+     */
+    select?: OpportunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Opportunity
+     */
+    omit?: OpportunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpportunityInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -16031,6 +17433,7 @@ export namespace Prisma {
     title: 'title',
     content: 'content',
     imageUrl: 'imageUrl',
+    mediaType: 'mediaType',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     authorId: 'authorId',
@@ -16123,6 +17526,31 @@ export namespace Prisma {
   };
 
   export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+  export const OpportunityScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    type: 'type',
+    provider: 'provider',
+    providerLogo: 'providerLogo',
+    bannerImage: 'bannerImage',
+    university: 'university',
+    department: 'department',
+    tags: 'tags',
+    location: 'location',
+    applicationUrl: 'applicationUrl',
+    deadline: 'deadline',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    postedById: 'postedById',
+    isVerified: 'isVerified',
+    views: 'views',
+    bookmarks: 'bookmarks'
+  };
+
+  export type OpportunityScalarFieldEnum = (typeof OpportunityScalarFieldEnum)[keyof typeof OpportunityScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -16366,6 +17794,7 @@ export namespace Prisma {
     createdGroups?: GroupListRelationFilter
     groupMemberships?: GroupMemberListRelationFilter
     Resource?: ResourceListRelationFilter
+    Opportunity?: OpportunityListRelationFilter
     accounts?: AccountListRelationFilter
     Comments?: CommentListRelationFilter
     Likes?: LikeListRelationFilter
@@ -16396,6 +17825,7 @@ export namespace Prisma {
     createdGroups?: GroupOrderByRelationAggregateInput
     groupMemberships?: GroupMemberOrderByRelationAggregateInput
     Resource?: ResourceOrderByRelationAggregateInput
+    Opportunity?: OpportunityOrderByRelationAggregateInput
     accounts?: AccountOrderByRelationAggregateInput
     Comments?: CommentOrderByRelationAggregateInput
     Likes?: LikeOrderByRelationAggregateInput
@@ -16429,6 +17859,7 @@ export namespace Prisma {
     createdGroups?: GroupListRelationFilter
     groupMemberships?: GroupMemberListRelationFilter
     Resource?: ResourceListRelationFilter
+    Opportunity?: OpportunityListRelationFilter
     accounts?: AccountListRelationFilter
     Comments?: CommentListRelationFilter
     Likes?: LikeListRelationFilter
@@ -16710,9 +18141,10 @@ export namespace Prisma {
     OR?: PostWhereInput[]
     NOT?: PostWhereInput | PostWhereInput[]
     id?: StringFilter<"Post"> | string
-    title?: StringFilter<"Post"> | string
+    title?: StringNullableFilter<"Post"> | string | null
     content?: StringFilter<"Post"> | string
     imageUrl?: StringNullableFilter<"Post"> | string | null
+    mediaType?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     authorId?: StringFilter<"Post"> | string
@@ -16737,9 +18169,10 @@ export namespace Prisma {
 
   export type PostOrderByWithRelationInput = {
     id?: SortOrder
-    title?: SortOrder
+    title?: SortOrderInput | SortOrder
     content?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    mediaType?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
@@ -16767,9 +18200,10 @@ export namespace Prisma {
     AND?: PostWhereInput | PostWhereInput[]
     OR?: PostWhereInput[]
     NOT?: PostWhereInput | PostWhereInput[]
-    title?: StringFilter<"Post"> | string
+    title?: StringNullableFilter<"Post"> | string | null
     content?: StringFilter<"Post"> | string
     imageUrl?: StringNullableFilter<"Post"> | string | null
+    mediaType?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     authorId?: StringFilter<"Post"> | string
@@ -16794,9 +18228,10 @@ export namespace Prisma {
 
   export type PostOrderByWithAggregationInput = {
     id?: SortOrder
-    title?: SortOrder
+    title?: SortOrderInput | SortOrder
     content?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
+    mediaType?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
@@ -16825,9 +18260,10 @@ export namespace Prisma {
     OR?: PostScalarWhereWithAggregatesInput[]
     NOT?: PostScalarWhereWithAggregatesInput | PostScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Post"> | string
-    title?: StringWithAggregatesFilter<"Post"> | string
+    title?: StringNullableWithAggregatesFilter<"Post"> | string | null
     content?: StringWithAggregatesFilter<"Post"> | string
     imageUrl?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    mediaType?: StringNullableWithAggregatesFilter<"Post"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     authorId?: StringWithAggregatesFilter<"Post"> | string
@@ -17229,6 +18665,133 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
   }
 
+  export type OpportunityWhereInput = {
+    AND?: OpportunityWhereInput | OpportunityWhereInput[]
+    OR?: OpportunityWhereInput[]
+    NOT?: OpportunityWhereInput | OpportunityWhereInput[]
+    id?: StringFilter<"Opportunity"> | string
+    title?: StringFilter<"Opportunity"> | string
+    description?: StringFilter<"Opportunity"> | string
+    type?: StringFilter<"Opportunity"> | string
+    provider?: StringFilter<"Opportunity"> | string
+    providerLogo?: StringNullableFilter<"Opportunity"> | string | null
+    bannerImage?: StringNullableFilter<"Opportunity"> | string | null
+    university?: StringNullableFilter<"Opportunity"> | string | null
+    department?: StringNullableFilter<"Opportunity"> | string | null
+    tags?: StringNullableListFilter<"Opportunity">
+    location?: StringNullableFilter<"Opportunity"> | string | null
+    applicationUrl?: StringNullableFilter<"Opportunity"> | string | null
+    deadline?: DateTimeFilter<"Opportunity"> | Date | string
+    createdAt?: DateTimeFilter<"Opportunity"> | Date | string
+    updatedAt?: DateTimeFilter<"Opportunity"> | Date | string
+    postedById?: StringFilter<"Opportunity"> | string
+    isVerified?: BoolFilter<"Opportunity"> | boolean
+    views?: IntFilter<"Opportunity"> | number
+    bookmarks?: IntFilter<"Opportunity"> | number
+    postedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type OpportunityOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    provider?: SortOrder
+    providerLogo?: SortOrderInput | SortOrder
+    bannerImage?: SortOrderInput | SortOrder
+    university?: SortOrderInput | SortOrder
+    department?: SortOrderInput | SortOrder
+    tags?: SortOrder
+    location?: SortOrderInput | SortOrder
+    applicationUrl?: SortOrderInput | SortOrder
+    deadline?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    postedById?: SortOrder
+    isVerified?: SortOrder
+    views?: SortOrder
+    bookmarks?: SortOrder
+    postedBy?: UserOrderByWithRelationInput
+  }
+
+  export type OpportunityWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: OpportunityWhereInput | OpportunityWhereInput[]
+    OR?: OpportunityWhereInput[]
+    NOT?: OpportunityWhereInput | OpportunityWhereInput[]
+    title?: StringFilter<"Opportunity"> | string
+    description?: StringFilter<"Opportunity"> | string
+    type?: StringFilter<"Opportunity"> | string
+    provider?: StringFilter<"Opportunity"> | string
+    providerLogo?: StringNullableFilter<"Opportunity"> | string | null
+    bannerImage?: StringNullableFilter<"Opportunity"> | string | null
+    university?: StringNullableFilter<"Opportunity"> | string | null
+    department?: StringNullableFilter<"Opportunity"> | string | null
+    tags?: StringNullableListFilter<"Opportunity">
+    location?: StringNullableFilter<"Opportunity"> | string | null
+    applicationUrl?: StringNullableFilter<"Opportunity"> | string | null
+    deadline?: DateTimeFilter<"Opportunity"> | Date | string
+    createdAt?: DateTimeFilter<"Opportunity"> | Date | string
+    updatedAt?: DateTimeFilter<"Opportunity"> | Date | string
+    postedById?: StringFilter<"Opportunity"> | string
+    isVerified?: BoolFilter<"Opportunity"> | boolean
+    views?: IntFilter<"Opportunity"> | number
+    bookmarks?: IntFilter<"Opportunity"> | number
+    postedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type OpportunityOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    provider?: SortOrder
+    providerLogo?: SortOrderInput | SortOrder
+    bannerImage?: SortOrderInput | SortOrder
+    university?: SortOrderInput | SortOrder
+    department?: SortOrderInput | SortOrder
+    tags?: SortOrder
+    location?: SortOrderInput | SortOrder
+    applicationUrl?: SortOrderInput | SortOrder
+    deadline?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    postedById?: SortOrder
+    isVerified?: SortOrder
+    views?: SortOrder
+    bookmarks?: SortOrder
+    _count?: OpportunityCountOrderByAggregateInput
+    _avg?: OpportunityAvgOrderByAggregateInput
+    _max?: OpportunityMaxOrderByAggregateInput
+    _min?: OpportunityMinOrderByAggregateInput
+    _sum?: OpportunitySumOrderByAggregateInput
+  }
+
+  export type OpportunityScalarWhereWithAggregatesInput = {
+    AND?: OpportunityScalarWhereWithAggregatesInput | OpportunityScalarWhereWithAggregatesInput[]
+    OR?: OpportunityScalarWhereWithAggregatesInput[]
+    NOT?: OpportunityScalarWhereWithAggregatesInput | OpportunityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Opportunity"> | string
+    title?: StringWithAggregatesFilter<"Opportunity"> | string
+    description?: StringWithAggregatesFilter<"Opportunity"> | string
+    type?: StringWithAggregatesFilter<"Opportunity"> | string
+    provider?: StringWithAggregatesFilter<"Opportunity"> | string
+    providerLogo?: StringNullableWithAggregatesFilter<"Opportunity"> | string | null
+    bannerImage?: StringNullableWithAggregatesFilter<"Opportunity"> | string | null
+    university?: StringNullableWithAggregatesFilter<"Opportunity"> | string | null
+    department?: StringNullableWithAggregatesFilter<"Opportunity"> | string | null
+    tags?: StringNullableListFilter<"Opportunity">
+    location?: StringNullableWithAggregatesFilter<"Opportunity"> | string | null
+    applicationUrl?: StringNullableWithAggregatesFilter<"Opportunity"> | string | null
+    deadline?: DateTimeWithAggregatesFilter<"Opportunity"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"Opportunity"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Opportunity"> | Date | string
+    postedById?: StringWithAggregatesFilter<"Opportunity"> | string
+    isVerified?: BoolWithAggregatesFilter<"Opportunity"> | boolean
+    views?: IntWithAggregatesFilter<"Opportunity"> | number
+    bookmarks?: IntWithAggregatesFilter<"Opportunity"> | number
+  }
+
   export type NotificationCreateInput = {
     id?: string
     type: string
@@ -17325,6 +18888,7 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -17355,6 +18919,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -17385,6 +18950,7 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -17415,6 +18981,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -17735,9 +19302,10 @@ export namespace Prisma {
 
   export type PostCreateInput = {
     id?: string
-    title: string
+    title?: string | null
     content: string
     imageUrl?: string | null
+    mediaType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
@@ -17761,9 +19329,10 @@ export namespace Prisma {
 
   export type PostUncheckedCreateInput = {
     id?: string
-    title: string
+    title?: string | null
     content: string
     imageUrl?: string | null
+    mediaType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     authorId: string
@@ -17787,9 +19356,10 @@ export namespace Prisma {
 
   export type PostUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
@@ -17813,9 +19383,10 @@ export namespace Prisma {
 
   export type PostUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
@@ -17839,9 +19410,10 @@ export namespace Prisma {
 
   export type PostCreateManyInput = {
     id?: string
-    title: string
+    title?: string | null
     content: string
     imageUrl?: string | null
+    mediaType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     authorId: string
@@ -17862,9 +19434,10 @@ export namespace Prisma {
 
   export type PostUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
@@ -17884,9 +19457,10 @@ export namespace Prisma {
 
   export type PostUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
@@ -18289,6 +19863,159 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OpportunityCreateInput = {
+    id?: string
+    title: string
+    description: string
+    type: string
+    provider: string
+    providerLogo?: string | null
+    bannerImage?: string | null
+    university?: string | null
+    department?: string | null
+    tags?: OpportunityCreatetagsInput | string[]
+    location?: string | null
+    applicationUrl?: string | null
+    deadline: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    isVerified?: boolean
+    views?: number
+    bookmarks?: number
+    postedBy: UserCreateNestedOneWithoutOpportunityInput
+  }
+
+  export type OpportunityUncheckedCreateInput = {
+    id?: string
+    title: string
+    description: string
+    type: string
+    provider: string
+    providerLogo?: string | null
+    bannerImage?: string | null
+    university?: string | null
+    department?: string | null
+    tags?: OpportunityCreatetagsInput | string[]
+    location?: string | null
+    applicationUrl?: string | null
+    deadline: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    postedById: string
+    isVerified?: boolean
+    views?: number
+    bookmarks?: number
+  }
+
+  export type OpportunityUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerLogo?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: OpportunityUpdatetagsInput | string[]
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    views?: IntFieldUpdateOperationsInput | number
+    bookmarks?: IntFieldUpdateOperationsInput | number
+    postedBy?: UserUpdateOneRequiredWithoutOpportunityNestedInput
+  }
+
+  export type OpportunityUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerLogo?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: OpportunityUpdatetagsInput | string[]
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    postedById?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    views?: IntFieldUpdateOperationsInput | number
+    bookmarks?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OpportunityCreateManyInput = {
+    id?: string
+    title: string
+    description: string
+    type: string
+    provider: string
+    providerLogo?: string | null
+    bannerImage?: string | null
+    university?: string | null
+    department?: string | null
+    tags?: OpportunityCreatetagsInput | string[]
+    location?: string | null
+    applicationUrl?: string | null
+    deadline: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    postedById: string
+    isVerified?: boolean
+    views?: number
+    bookmarks?: number
+  }
+
+  export type OpportunityUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerLogo?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: OpportunityUpdatetagsInput | string[]
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    views?: IntFieldUpdateOperationsInput | number
+    bookmarks?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OpportunityUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerLogo?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: OpportunityUpdatetagsInput | string[]
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    postedById?: StringFieldUpdateOperationsInput | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    views?: IntFieldUpdateOperationsInput | number
+    bookmarks?: IntFieldUpdateOperationsInput | number
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -18485,6 +20212,12 @@ export namespace Prisma {
     none?: ResourceWhereInput
   }
 
+  export type OpportunityListRelationFilter = {
+    every?: OpportunityWhereInput
+    some?: OpportunityWhereInput
+    none?: OpportunityWhereInput
+  }
+
   export type AccountListRelationFilter = {
     every?: AccountWhereInput
     some?: AccountWhereInput
@@ -18534,6 +20267,10 @@ export namespace Prisma {
   }
 
   export type ResourceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OpportunityOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18799,6 +20536,7 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     imageUrl?: SortOrder
+    mediaType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
@@ -18827,6 +20565,7 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     imageUrl?: SortOrder
+    mediaType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
@@ -18847,6 +20586,7 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     imageUrl?: SortOrder
+    mediaType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     authorId?: SortOrder
@@ -19122,6 +20862,80 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type OpportunityCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    provider?: SortOrder
+    providerLogo?: SortOrder
+    bannerImage?: SortOrder
+    university?: SortOrder
+    department?: SortOrder
+    tags?: SortOrder
+    location?: SortOrder
+    applicationUrl?: SortOrder
+    deadline?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    postedById?: SortOrder
+    isVerified?: SortOrder
+    views?: SortOrder
+    bookmarks?: SortOrder
+  }
+
+  export type OpportunityAvgOrderByAggregateInput = {
+    views?: SortOrder
+    bookmarks?: SortOrder
+  }
+
+  export type OpportunityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    provider?: SortOrder
+    providerLogo?: SortOrder
+    bannerImage?: SortOrder
+    university?: SortOrder
+    department?: SortOrder
+    location?: SortOrder
+    applicationUrl?: SortOrder
+    deadline?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    postedById?: SortOrder
+    isVerified?: SortOrder
+    views?: SortOrder
+    bookmarks?: SortOrder
+  }
+
+  export type OpportunityMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    provider?: SortOrder
+    providerLogo?: SortOrder
+    bannerImage?: SortOrder
+    university?: SortOrder
+    department?: SortOrder
+    location?: SortOrder
+    applicationUrl?: SortOrder
+    deadline?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    postedById?: SortOrder
+    isVerified?: SortOrder
+    views?: SortOrder
+    bookmarks?: SortOrder
+  }
+
+  export type OpportunitySumOrderByAggregateInput = {
+    views?: SortOrder
+    bookmarks?: SortOrder
+  }
+
   export type CommentCreateNestedOneWithoutNotificationsInput = {
     create?: XOR<CommentCreateWithoutNotificationsInput, CommentUncheckedCreateWithoutNotificationsInput>
     connectOrCreate?: CommentCreateOrConnectWithoutNotificationsInput
@@ -19220,6 +21034,13 @@ export namespace Prisma {
     connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
   }
 
+  export type OpportunityCreateNestedManyWithoutPostedByInput = {
+    create?: XOR<OpportunityCreateWithoutPostedByInput, OpportunityUncheckedCreateWithoutPostedByInput> | OpportunityCreateWithoutPostedByInput[] | OpportunityUncheckedCreateWithoutPostedByInput[]
+    connectOrCreate?: OpportunityCreateOrConnectWithoutPostedByInput | OpportunityCreateOrConnectWithoutPostedByInput[]
+    createMany?: OpportunityCreateManyPostedByInputEnvelope
+    connect?: OpportunityWhereUniqueInput | OpportunityWhereUniqueInput[]
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -19288,6 +21109,13 @@ export namespace Prisma {
     connectOrCreate?: ResourceCreateOrConnectWithoutUploadedByInput | ResourceCreateOrConnectWithoutUploadedByInput[]
     createMany?: ResourceCreateManyUploadedByInputEnvelope
     connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type OpportunityUncheckedCreateNestedManyWithoutPostedByInput = {
+    create?: XOR<OpportunityCreateWithoutPostedByInput, OpportunityUncheckedCreateWithoutPostedByInput> | OpportunityCreateWithoutPostedByInput[] | OpportunityUncheckedCreateWithoutPostedByInput[]
+    connectOrCreate?: OpportunityCreateOrConnectWithoutPostedByInput | OpportunityCreateOrConnectWithoutPostedByInput[]
+    createMany?: OpportunityCreateManyPostedByInputEnvelope
+    connect?: OpportunityWhereUniqueInput | OpportunityWhereUniqueInput[]
   }
 
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
@@ -19400,6 +21228,20 @@ export namespace Prisma {
     update?: ResourceUpdateWithWhereUniqueWithoutUploadedByInput | ResourceUpdateWithWhereUniqueWithoutUploadedByInput[]
     updateMany?: ResourceUpdateManyWithWhereWithoutUploadedByInput | ResourceUpdateManyWithWhereWithoutUploadedByInput[]
     deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type OpportunityUpdateManyWithoutPostedByNestedInput = {
+    create?: XOR<OpportunityCreateWithoutPostedByInput, OpportunityUncheckedCreateWithoutPostedByInput> | OpportunityCreateWithoutPostedByInput[] | OpportunityUncheckedCreateWithoutPostedByInput[]
+    connectOrCreate?: OpportunityCreateOrConnectWithoutPostedByInput | OpportunityCreateOrConnectWithoutPostedByInput[]
+    upsert?: OpportunityUpsertWithWhereUniqueWithoutPostedByInput | OpportunityUpsertWithWhereUniqueWithoutPostedByInput[]
+    createMany?: OpportunityCreateManyPostedByInputEnvelope
+    set?: OpportunityWhereUniqueInput | OpportunityWhereUniqueInput[]
+    disconnect?: OpportunityWhereUniqueInput | OpportunityWhereUniqueInput[]
+    delete?: OpportunityWhereUniqueInput | OpportunityWhereUniqueInput[]
+    connect?: OpportunityWhereUniqueInput | OpportunityWhereUniqueInput[]
+    update?: OpportunityUpdateWithWhereUniqueWithoutPostedByInput | OpportunityUpdateWithWhereUniqueWithoutPostedByInput[]
+    updateMany?: OpportunityUpdateManyWithWhereWithoutPostedByInput | OpportunityUpdateManyWithWhereWithoutPostedByInput[]
+    deleteMany?: OpportunityScalarWhereInput | OpportunityScalarWhereInput[]
   }
 
   export type AccountUpdateManyWithoutUserNestedInput = {
@@ -19540,6 +21382,20 @@ export namespace Prisma {
     update?: ResourceUpdateWithWhereUniqueWithoutUploadedByInput | ResourceUpdateWithWhereUniqueWithoutUploadedByInput[]
     updateMany?: ResourceUpdateManyWithWhereWithoutUploadedByInput | ResourceUpdateManyWithWhereWithoutUploadedByInput[]
     deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type OpportunityUncheckedUpdateManyWithoutPostedByNestedInput = {
+    create?: XOR<OpportunityCreateWithoutPostedByInput, OpportunityUncheckedCreateWithoutPostedByInput> | OpportunityCreateWithoutPostedByInput[] | OpportunityUncheckedCreateWithoutPostedByInput[]
+    connectOrCreate?: OpportunityCreateOrConnectWithoutPostedByInput | OpportunityCreateOrConnectWithoutPostedByInput[]
+    upsert?: OpportunityUpsertWithWhereUniqueWithoutPostedByInput | OpportunityUpsertWithWhereUniqueWithoutPostedByInput[]
+    createMany?: OpportunityCreateManyPostedByInputEnvelope
+    set?: OpportunityWhereUniqueInput | OpportunityWhereUniqueInput[]
+    disconnect?: OpportunityWhereUniqueInput | OpportunityWhereUniqueInput[]
+    delete?: OpportunityWhereUniqueInput | OpportunityWhereUniqueInput[]
+    connect?: OpportunityWhereUniqueInput | OpportunityWhereUniqueInput[]
+    update?: OpportunityUpdateWithWhereUniqueWithoutPostedByInput | OpportunityUpdateWithWhereUniqueWithoutPostedByInput[]
+    updateMany?: OpportunityUpdateManyWithWhereWithoutPostedByInput | OpportunityUpdateManyWithWhereWithoutPostedByInput[]
+    deleteMany?: OpportunityScalarWhereInput | OpportunityScalarWhereInput[]
   }
 
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
@@ -20051,6 +21907,29 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEventInput, UserUpdateWithoutEventInput>, UserUncheckedUpdateWithoutEventInput>
   }
 
+  export type OpportunityCreatetagsInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutOpportunityInput = {
+    create?: XOR<UserCreateWithoutOpportunityInput, UserUncheckedCreateWithoutOpportunityInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOpportunityInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type OpportunityUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdateOneRequiredWithoutOpportunityNestedInput = {
+    create?: XOR<UserCreateWithoutOpportunityInput, UserUncheckedCreateWithoutOpportunityInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOpportunityInput
+    upsert?: UserUpsertWithoutOpportunityInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOpportunityInput, UserUpdateWithoutOpportunityInput>, UserUncheckedUpdateWithoutOpportunityInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -20304,9 +22183,10 @@ export namespace Prisma {
 
   export type PostCreateWithoutNotificationsInput = {
     id?: string
-    title: string
+    title?: string | null
     content: string
     imageUrl?: string | null
+    mediaType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
@@ -20329,9 +22209,10 @@ export namespace Prisma {
 
   export type PostUncheckedCreateWithoutNotificationsInput = {
     id?: string
-    title: string
+    title?: string | null
     content: string
     imageUrl?: string | null
+    mediaType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     authorId: string
@@ -20379,6 +22260,7 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -20408,6 +22290,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -20460,9 +22343,10 @@ export namespace Prisma {
 
   export type PostUpdateWithoutNotificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
@@ -20485,9 +22369,10 @@ export namespace Prisma {
 
   export type PostUncheckedUpdateWithoutNotificationsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
@@ -20541,6 +22426,7 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -20570,6 +22456,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -20693,6 +22580,58 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type OpportunityCreateWithoutPostedByInput = {
+    id?: string
+    title: string
+    description: string
+    type: string
+    provider: string
+    providerLogo?: string | null
+    bannerImage?: string | null
+    university?: string | null
+    department?: string | null
+    tags?: OpportunityCreatetagsInput | string[]
+    location?: string | null
+    applicationUrl?: string | null
+    deadline: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    isVerified?: boolean
+    views?: number
+    bookmarks?: number
+  }
+
+  export type OpportunityUncheckedCreateWithoutPostedByInput = {
+    id?: string
+    title: string
+    description: string
+    type: string
+    provider: string
+    providerLogo?: string | null
+    bannerImage?: string | null
+    university?: string | null
+    department?: string | null
+    tags?: OpportunityCreatetagsInput | string[]
+    location?: string | null
+    applicationUrl?: string | null
+    deadline: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    isVerified?: boolean
+    views?: number
+    bookmarks?: number
+  }
+
+  export type OpportunityCreateOrConnectWithoutPostedByInput = {
+    where: OpportunityWhereUniqueInput
+    create: XOR<OpportunityCreateWithoutPostedByInput, OpportunityUncheckedCreateWithoutPostedByInput>
+  }
+
+  export type OpportunityCreateManyPostedByInputEnvelope = {
+    data: OpportunityCreateManyPostedByInput | OpportunityCreateManyPostedByInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountCreateWithoutUserInput = {
     id: string
     accountId: string
@@ -20811,9 +22750,10 @@ export namespace Prisma {
 
   export type PostCreateWithoutAuthorInput = {
     id?: string
-    title: string
+    title?: string | null
     content: string
     imageUrl?: string | null
+    mediaType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
@@ -20836,9 +22776,10 @@ export namespace Prisma {
 
   export type PostUncheckedCreateWithoutAuthorInput = {
     id?: string
-    title: string
+    title?: string | null
     content: string
     imageUrl?: string | null
+    mediaType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
@@ -21016,6 +22957,47 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Resource"> | Date | string
   }
 
+  export type OpportunityUpsertWithWhereUniqueWithoutPostedByInput = {
+    where: OpportunityWhereUniqueInput
+    update: XOR<OpportunityUpdateWithoutPostedByInput, OpportunityUncheckedUpdateWithoutPostedByInput>
+    create: XOR<OpportunityCreateWithoutPostedByInput, OpportunityUncheckedCreateWithoutPostedByInput>
+  }
+
+  export type OpportunityUpdateWithWhereUniqueWithoutPostedByInput = {
+    where: OpportunityWhereUniqueInput
+    data: XOR<OpportunityUpdateWithoutPostedByInput, OpportunityUncheckedUpdateWithoutPostedByInput>
+  }
+
+  export type OpportunityUpdateManyWithWhereWithoutPostedByInput = {
+    where: OpportunityScalarWhereInput
+    data: XOR<OpportunityUpdateManyMutationInput, OpportunityUncheckedUpdateManyWithoutPostedByInput>
+  }
+
+  export type OpportunityScalarWhereInput = {
+    AND?: OpportunityScalarWhereInput | OpportunityScalarWhereInput[]
+    OR?: OpportunityScalarWhereInput[]
+    NOT?: OpportunityScalarWhereInput | OpportunityScalarWhereInput[]
+    id?: StringFilter<"Opportunity"> | string
+    title?: StringFilter<"Opportunity"> | string
+    description?: StringFilter<"Opportunity"> | string
+    type?: StringFilter<"Opportunity"> | string
+    provider?: StringFilter<"Opportunity"> | string
+    providerLogo?: StringNullableFilter<"Opportunity"> | string | null
+    bannerImage?: StringNullableFilter<"Opportunity"> | string | null
+    university?: StringNullableFilter<"Opportunity"> | string | null
+    department?: StringNullableFilter<"Opportunity"> | string | null
+    tags?: StringNullableListFilter<"Opportunity">
+    location?: StringNullableFilter<"Opportunity"> | string | null
+    applicationUrl?: StringNullableFilter<"Opportunity"> | string | null
+    deadline?: DateTimeFilter<"Opportunity"> | Date | string
+    createdAt?: DateTimeFilter<"Opportunity"> | Date | string
+    updatedAt?: DateTimeFilter<"Opportunity"> | Date | string
+    postedById?: StringFilter<"Opportunity"> | string
+    isVerified?: BoolFilter<"Opportunity"> | boolean
+    views?: IntFilter<"Opportunity"> | number
+    bookmarks?: IntFilter<"Opportunity"> | number
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -21154,9 +23136,10 @@ export namespace Prisma {
     OR?: PostScalarWhereInput[]
     NOT?: PostScalarWhereInput | PostScalarWhereInput[]
     id?: StringFilter<"Post"> | string
-    title?: StringFilter<"Post"> | string
+    title?: StringNullableFilter<"Post"> | string | null
     content?: StringFilter<"Post"> | string
     imageUrl?: StringNullableFilter<"Post"> | string | null
+    mediaType?: StringNullableFilter<"Post"> | string | null
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
     authorId?: StringFilter<"Post"> | string
@@ -21227,6 +23210,7 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -21256,6 +23240,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -21301,6 +23286,7 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -21330,6 +23316,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -21359,6 +23346,7 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -21388,6 +23376,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -21433,6 +23422,7 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -21462,6 +23452,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -21567,6 +23558,7 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -21596,6 +23588,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -21689,6 +23682,7 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -21718,6 +23712,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -21747,6 +23742,7 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Likes?: LikeCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -21776,6 +23772,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -21790,9 +23787,10 @@ export namespace Prisma {
 
   export type PostCreateWithoutCommentsInput = {
     id?: string
-    title: string
+    title?: string | null
     content: string
     imageUrl?: string | null
+    mediaType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
@@ -21815,9 +23813,10 @@ export namespace Prisma {
 
   export type PostUncheckedCreateWithoutCommentsInput = {
     id?: string
-    title: string
+    title?: string | null
     content: string
     imageUrl?: string | null
+    mediaType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     authorId: string
@@ -21906,6 +23905,7 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -21935,6 +23935,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -21955,9 +23956,10 @@ export namespace Prisma {
 
   export type PostUpdateWithoutCommentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
@@ -21980,9 +23982,10 @@ export namespace Prisma {
 
   export type PostUncheckedUpdateWithoutCommentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
@@ -22021,9 +24024,10 @@ export namespace Prisma {
 
   export type PostCreateWithoutLikesInput = {
     id?: string
-    title: string
+    title?: string | null
     content: string
     imageUrl?: string | null
+    mediaType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
@@ -22046,9 +24050,10 @@ export namespace Prisma {
 
   export type PostUncheckedCreateWithoutLikesInput = {
     id?: string
-    title: string
+    title?: string | null
     content: string
     imageUrl?: string | null
+    mediaType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     authorId: string
@@ -22096,6 +24101,7 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
@@ -22125,6 +24131,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -22150,9 +24157,10 @@ export namespace Prisma {
 
   export type PostUpdateWithoutLikesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
@@ -22175,9 +24183,10 @@ export namespace Prisma {
 
   export type PostUncheckedUpdateWithoutLikesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: StringFieldUpdateOperationsInput | string
@@ -22231,6 +24240,7 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
@@ -22260,6 +24270,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -22288,6 +24299,7 @@ export namespace Prisma {
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -22317,6 +24329,7 @@ export namespace Prisma {
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -22362,6 +24375,7 @@ export namespace Prisma {
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -22391,6 +24405,7 @@ export namespace Prisma {
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -22420,6 +24435,7 @@ export namespace Prisma {
     Event?: EventCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -22449,6 +24465,7 @@ export namespace Prisma {
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -22516,6 +24533,7 @@ export namespace Prisma {
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -22545,6 +24563,7 @@ export namespace Prisma {
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -22611,6 +24630,7 @@ export namespace Prisma {
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -22640,6 +24660,7 @@ export namespace Prisma {
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -22712,6 +24733,7 @@ export namespace Prisma {
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -22741,6 +24763,7 @@ export namespace Prisma {
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -22770,6 +24793,7 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -22799,6 +24823,7 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -22844,6 +24869,7 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -22870,6 +24896,143 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutOpportunityInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    Comments?: CommentCreateNestedManyWithoutAuthorInput
+    Likes?: LikeCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutOpportunityInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutOpportunityInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutOpportunityInput, UserUncheckedCreateWithoutOpportunityInput>
+  }
+
+  export type UserUpsertWithoutOpportunityInput = {
+    update: XOR<UserUpdateWithoutOpportunityInput, UserUncheckedUpdateWithoutOpportunityInput>
+    create: XOR<UserCreateWithoutOpportunityInput, UserUncheckedCreateWithoutOpportunityInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutOpportunityInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutOpportunityInput, UserUncheckedUpdateWithoutOpportunityInput>
+  }
+
+  export type UserUpdateWithoutOpportunityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    Comments?: CommentUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutOpportunityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
@@ -22918,6 +25081,27 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type OpportunityCreateManyPostedByInput = {
+    id?: string
+    title: string
+    description: string
+    type: string
+    provider: string
+    providerLogo?: string | null
+    bannerImage?: string | null
+    university?: string | null
+    department?: string | null
+    tags?: OpportunityCreatetagsInput | string[]
+    location?: string | null
+    applicationUrl?: string | null
+    deadline: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    isVerified?: boolean
+    views?: number
+    bookmarks?: number
+  }
+
   export type AccountCreateManyUserInput = {
     id: string
     accountId: string
@@ -22957,9 +25141,10 @@ export namespace Prisma {
 
   export type PostCreateManyAuthorInput = {
     id?: string
-    title: string
+    title?: string | null
     content: string
     imageUrl?: string | null
+    mediaType?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: PostCreatetagsInput | string[]
@@ -23100,6 +25285,69 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OpportunityUpdateWithoutPostedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerLogo?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: OpportunityUpdatetagsInput | string[]
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    views?: IntFieldUpdateOperationsInput | number
+    bookmarks?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OpportunityUncheckedUpdateWithoutPostedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerLogo?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: OpportunityUpdatetagsInput | string[]
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    views?: IntFieldUpdateOperationsInput | number
+    bookmarks?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type OpportunityUncheckedUpdateManyWithoutPostedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    providerLogo?: NullableStringFieldUpdateOperationsInput | string | null
+    bannerImage?: NullableStringFieldUpdateOperationsInput | string | null
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: OpportunityUpdatetagsInput | string[]
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    deadline?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    views?: IntFieldUpdateOperationsInput | number
+    bookmarks?: IntFieldUpdateOperationsInput | number
+  }
+
   export type AccountUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     accountId?: StringFieldUpdateOperationsInput | string
@@ -23215,9 +25463,10 @@ export namespace Prisma {
 
   export type PostUpdateWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
@@ -23240,9 +25489,10 @@ export namespace Prisma {
 
   export type PostUncheckedUpdateWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]
@@ -23265,9 +25515,10 @@ export namespace Prisma {
 
   export type PostUncheckedUpdateManyWithoutAuthorInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: PostUpdatetagsInput | string[]

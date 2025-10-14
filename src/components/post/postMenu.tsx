@@ -44,7 +44,7 @@ export default function PostMenu({ post, currentUserId, onDelete }: PostMenuProp
         <Button
           size="icon"
           variant="ghost"
-          className="rounded-full shadow-none"
+          className="rounded-full shadow-none hover:bg-transparent border border-transparent hover:border-accent"
           aria-label="Open edit menu"
         >
           <EllipsisIcon size={16} aria-hidden="true" />

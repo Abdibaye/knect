@@ -47,7 +47,7 @@ export function FilterBar({ value, onChange, available }: FilterBarProps) {
   // Reset control removed per request; can be reintroduced if needed.
 
   return (
-    <div className="flex flex-col gap-3 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-[4rem] z-40 p-3">
+    <div className="flex flex-col gap-3">
       <div className="flex flex-col sm:flex-row sm:items-center gap-3">
         <Input
           placeholder="Search opportunities, internships, events…"

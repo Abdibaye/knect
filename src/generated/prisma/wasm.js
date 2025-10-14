@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.12.0
- * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
+ * Prisma Client JS version: 6.14.0
+ * Query Engine version: 717184b7b35ea05dfa71a3236b7af656013e1e49
  */
 Prisma.prismaVersion = {
-  client: "6.12.0",
-  engine: "8047c96bbd92db98a2abc7c9323ce77c02c89dbc"
+  client: "6.14.0",
+  engine: "717184b7b35ea05dfa71a3236b7af656013e1e49"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -192,6 +192,7 @@ exports.Prisma.PostScalarFieldEnum = {
   title: 'title',
   content: 'content',
   imageUrl: 'imageUrl',
+  mediaType: 'mediaType',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   authorId: 'authorId',
@@ -265,6 +266,28 @@ exports.Prisma.EventScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.OpportunityScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  type: 'type',
+  provider: 'provider',
+  providerLogo: 'providerLogo',
+  bannerImage: 'bannerImage',
+  university: 'university',
+  department: 'department',
+  tags: 'tags',
+  location: 'location',
+  applicationUrl: 'applicationUrl',
+  deadline: 'deadline',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  postedById: 'postedById',
+  isVerified: 'isVerified',
+  views: 'views',
+  bookmarks: 'bookmarks'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -308,7 +331,8 @@ exports.Prisma.ModelName = {
   Resource: 'Resource',
   Group: 'Group',
   GroupMember: 'GroupMember',
-  Event: 'Event'
+  Event: 'Event',
+  Opportunity: 'Opportunity'
 };
 
 /**
