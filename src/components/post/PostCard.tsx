@@ -57,9 +57,10 @@ type Attachment = { name: string; url: string; type?: string };
 type PostCardProps = {
   post: {
     id: string;
-    title: string;
+    title?: string; // Made optional
     content: string;
-    imageUrl: string;
+    imageUrl?: string; // Made optional
+    mediaType?: string; // Added for video/image distinction
     tags?: string[];
     visibility?: string;
     author?: { name?: string; image?: string };
@@ -98,7 +99,6 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   const router = useRouter();
   const postUrl = useMemo(() => `/posts/${post.id}`, [post.id]);
 
-  const imageUrl = post.imageUrl || "/placeholder-image.png";
   const authorImageUrl = post.author?.image ?? "";
   const authorName = post.author?.name || "Unknown";
 
@@ -214,7 +214,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   const onShare = async () => {
     try {
       if (navigator.share) {
-        await navigator.share({ title: post.title, text: post.summary || post.content, url: postUrl });
+        await navigator.share({ title: post.title || "Post", text: post.summary || post.content, url: postUrl });
       } else if (navigator.clipboard) {
         await navigator.clipboard.writeText(location.origin + postUrl);
         // optional toast
@@ -311,8 +311,8 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
 
       {/* Title & Content */}
       <section className="mt-2">
-        <h2 className="text-xl md:text-2xl font-bold leading-snug">{post.title}</h2>
-        <p className="text-sm md:text-base text-foreground/90 mt-1">{post.summary}</p>
+        {post.title && <h2 className="text-xl md:text-2xl font-bold leading-snug">{post.title}</h2>}
+        <p className="text-sm md:text-base text-foreground/90 mt-1">{summary}</p>
         {isExpanded && (
           post.content && (
             <div className="text-sm md:text-base mt-1 whitespace-pre-wrap text-foreground/90">{post.content}</div>
@@ -342,17 +342,26 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
         </ul>
       )}
 
-      {/* Image Preview */}
+      {/* Media Preview */}
       {post.imageUrl && (
         <figure className="mx-4 mt-4 overflow-hidden rounded-none border-y bg-transparent">
-          <Image
-            src={imageUrl}
-            alt="Post image"
-            width={1200}
-            height={630}
-            className="block w-full h-auto object-contain"
-            sizes="(max-width: 768px) 100vw, 800px"
-          />
+          {post.mediaType === "video" ? (
+            <video
+              src={post.imageUrl}
+              controls
+              className="block w-full h-auto object-contain"
+              preload="metadata"
+            />
+          ) : (
+            <Image
+              src={post.imageUrl}
+              alt="Post media"
+              width={1200}
+              height={630}
+              className="block w-full h-auto object-contain"
+              sizes="(max-width: 768px) 100vw, 800px"
+            />
+          )}
         </figure>
       )}
 

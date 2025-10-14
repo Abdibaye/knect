@@ -90,7 +90,7 @@ export default function OpportunitiesPage() {
           {session?.user && (
             <Dialog open={createOpen} onOpenChange={setCreateOpen}>
               <DialogTrigger asChild>
-                <Button size="sm" className="shrink-0  w-full sm:w-auto">
+                <Button size="sm" className="shrink-0  w-full sm:w-auto mb-7">
                   <Plus className="mr-1 h-4 w-4" /> New Opportunity
                 </Button>
               </DialogTrigger>
