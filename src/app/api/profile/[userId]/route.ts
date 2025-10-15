@@ -78,10 +78,8 @@ export async function GET(
       university: user.university ?? null,
       department: user.department ?? null,
       yearOfStudy: user.yearOfStudy ?? null,
-      bio: user.bio ?? null,
-      skills: user.skills ?? [],
-      researchFocus: user.researchFocus ?? null,
-      publications: user.publications ?? [],
+      about: user.about ?? null,
+      researchFocusSkills: user.researchFocusSkills ?? null,
       contributions: {
         posts: postsCount,
         resources: resourcesCount,

@@ -18,10 +18,8 @@ interface ProfilePayload {
   university: string | null;
   department: string | null;
   yearOfStudy: string | null;
-  bio: string | null;
-  skills: string[];
-  researchFocus: string | null;
-  publications: (string | { title: string; url?: string })[];
+  about: string | null;
+  researchFocusSkills: string | null;
   contributions: { posts: number; resources: number; events: number };
   communities: { id: string; name: string }[];
   verified: boolean;
@@ -97,9 +95,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                       .filter(Boolean)
                       .join(" • ") || "—"}
                   </p>
-                  {profile.bio && (
+                  {profile.about && (
                     <p className="text-sm leading-relaxed text-foreground/90 max-w-3xl">
-                      {profile.bio}
+                      {profile.about}
                     </p>
                   )}
 
@@ -134,65 +132,21 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                 </TabsList>
 
                 <TabsContent value="about" className="space-y-6">
-                  {/* Skills */}
+                  {/* Research/Focus/Skills combined */}
                   <section>
-                    <h3 className="text-sm font-medium mb-2">Skills</h3>
-                    {profile.skills?.length ? (
+                    <h3 className="text-sm font-medium mb-2">Research / Focus / Skills</h3>
+                    {profile.researchFocusSkills && profile.researchFocusSkills.trim().length ? (
                       <div className="flex flex-wrap gap-2">
-                        {profile.skills.map((s, i) => (
-                          <Badge key={i} variant="outline">{s}</Badge>
-                        ))}
+                        {profile.researchFocusSkills
+                          .split(/[,\n]/)
+                          .map((s) => s.trim())
+                          .filter(Boolean)
+                          .map((s, i) => (
+                            <Badge key={`${s}-${i}`} variant="outline">{s}</Badge>
+                          ))}
                       </div>
                     ) : (
-                      <p className="text-sm text-muted-foreground">No skills added.</p>
-                    )}
-                  </section>
-
-                  {/* Research Focus */}
-                  <section>
-                    <h3 className="text-sm font-medium mb-2">Research Focus</h3>
-                    {profile.researchFocus ? (
-                      <p className="text-sm text-foreground/90">{profile.researchFocus}</p>
-                    ) : (
-                      <p className="text-sm text-muted-foreground">Not specified.</p>
-                    )}
-                  </section>
-
-                  {/* Publications */}
-                  <section>
-                    <h3 className="text-sm font-medium mb-2">Publications</h3>
-                    {profile.publications?.length ? (
-                      <ul className="list-disc list-inside space-y-1">
-                        {profile.publications.map((p, i) => {
-                          if (typeof p === "string") {
-                            const isLink = /^https?:\/\//.test(p);
-                            return (
-                              <li key={i}>
-                                {isLink ? (
-                                  <a href={p} className="text-primary hover:underline" target="_blank" rel="noreferrer">
-                                    {p}
-                                  </a>
-                                ) : (
-                                  <span>{p}</span>
-                                )}
-                              </li>
-                            );
-                          }
-                          return (
-                            <li key={i}>
-                              {p.url ? (
-                                <a href={p.url} className="text-primary hover:underline" target="_blank" rel="noreferrer">
-                                  {p.title}
-                                </a>
-                              ) : (
-                                <span>{p.title}</span>
-                              )}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    ) : (
-                      <p className="text-sm text-muted-foreground">No publications yet.</p>
+                      <p className="text-sm text-muted-foreground">No research/focus/skills added.</p>
                     )}
                   </section>
                 </TabsContent>
