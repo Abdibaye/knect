@@ -3380,11 +3380,11 @@ export namespace Prisma {
     image: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    bio: string | null
+    about: string | null
     location: string | null
     username: string | null
     department: string | null
-    researchFocus: string | null
+    researchFocusSkills: string | null
     university: string | null
     yearOfStudy: string | null
     role: $Enums.Role | null
@@ -3398,11 +3398,11 @@ export namespace Prisma {
     image: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    bio: string | null
+    about: string | null
     location: string | null
     username: string | null
     department: string | null
-    researchFocus: string | null
+    researchFocusSkills: string | null
     university: string | null
     yearOfStudy: string | null
     role: $Enums.Role | null
@@ -3416,13 +3416,11 @@ export namespace Prisma {
     image: number
     createdAt: number
     updatedAt: number
-    bio: number
+    about: number
     location: number
     username: number
     department: number
-    publications: number
-    researchFocus: number
-    skills: number
+    researchFocusSkills: number
     university: number
     yearOfStudy: number
     role: number
@@ -3438,11 +3436,11 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
-    bio?: true
+    about?: true
     location?: true
     username?: true
     department?: true
-    researchFocus?: true
+    researchFocusSkills?: true
     university?: true
     yearOfStudy?: true
     role?: true
@@ -3456,11 +3454,11 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
-    bio?: true
+    about?: true
     location?: true
     username?: true
     department?: true
-    researchFocus?: true
+    researchFocusSkills?: true
     university?: true
     yearOfStudy?: true
     role?: true
@@ -3474,13 +3472,11 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
-    bio?: true
+    about?: true
     location?: true
     username?: true
     department?: true
-    publications?: true
-    researchFocus?: true
-    skills?: true
+    researchFocusSkills?: true
     university?: true
     yearOfStudy?: true
     role?: true
@@ -3567,13 +3563,11 @@ export namespace Prisma {
     image: string | null
     createdAt: Date
     updatedAt: Date
-    bio: string | null
+    about: string | null
     location: string | null
     username: string | null
     department: string | null
-    publications: string[]
-    researchFocus: string | null
-    skills: string[]
+    researchFocusSkills: string | null
     university: string | null
     yearOfStudy: string | null
     role: $Enums.Role
@@ -3604,13 +3598,11 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    bio?: boolean
+    about?: boolean
     location?: boolean
     username?: boolean
     department?: boolean
-    publications?: boolean
-    researchFocus?: boolean
-    skills?: boolean
+    researchFocusSkills?: boolean
     university?: boolean
     yearOfStudy?: boolean
     role?: boolean
@@ -3636,13 +3628,11 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    bio?: boolean
+    about?: boolean
     location?: boolean
     username?: boolean
     department?: boolean
-    publications?: boolean
-    researchFocus?: boolean
-    skills?: boolean
+    researchFocusSkills?: boolean
     university?: boolean
     yearOfStudy?: boolean
     role?: boolean
@@ -3656,13 +3646,11 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    bio?: boolean
+    about?: boolean
     location?: boolean
     username?: boolean
     department?: boolean
-    publications?: boolean
-    researchFocus?: boolean
-    skills?: boolean
+    researchFocusSkills?: boolean
     university?: boolean
     yearOfStudy?: boolean
     role?: boolean
@@ -3676,19 +3664,17 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    bio?: boolean
+    about?: boolean
     location?: boolean
     username?: boolean
     department?: boolean
-    publications?: boolean
-    researchFocus?: boolean
-    skills?: boolean
+    researchFocusSkills?: boolean
     university?: boolean
     yearOfStudy?: boolean
     role?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "bio" | "location" | "username" | "department" | "publications" | "researchFocus" | "skills" | "university" | "yearOfStudy" | "role", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "about" | "location" | "username" | "department" | "researchFocusSkills" | "university" | "yearOfStudy" | "role", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Event?: boolean | User$EventArgs<ExtArgs>
     createdGroups?: boolean | User$createdGroupsArgs<ExtArgs>
@@ -3729,13 +3715,11 @@ export namespace Prisma {
       image: string | null
       createdAt: Date
       updatedAt: Date
-      bio: string | null
+      about: string | null
       location: string | null
       username: string | null
       department: string | null
-      publications: string[]
-      researchFocus: string | null
-      skills: string[]
+      researchFocusSkills: string | null
       university: string | null
       yearOfStudy: string | null
       role: $Enums.Role
@@ -4180,13 +4164,11 @@ export namespace Prisma {
     readonly image: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
-    readonly bio: FieldRef<"User", 'String'>
+    readonly about: FieldRef<"User", 'String'>
     readonly location: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
     readonly department: FieldRef<"User", 'String'>
-    readonly publications: FieldRef<"User", 'String[]'>
-    readonly researchFocus: FieldRef<"User", 'String'>
-    readonly skills: FieldRef<"User", 'String[]'>
+    readonly researchFocusSkills: FieldRef<"User", 'String'>
     readonly university: FieldRef<"User", 'String'>
     readonly yearOfStudy: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
@@ -17368,13 +17350,11 @@ export namespace Prisma {
     image: 'image',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    bio: 'bio',
+    about: 'about',
     location: 'location',
     username: 'username',
     department: 'department',
-    publications: 'publications',
-    researchFocus: 'researchFocus',
-    skills: 'skills',
+    researchFocusSkills: 'researchFocusSkills',
     university: 'university',
     yearOfStudy: 'yearOfStudy',
     role: 'role'
@@ -17780,13 +17760,11 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    bio?: StringNullableFilter<"User"> | string | null
+    about?: StringNullableFilter<"User"> | string | null
     location?: StringNullableFilter<"User"> | string | null
     username?: StringNullableFilter<"User"> | string | null
     department?: StringNullableFilter<"User"> | string | null
-    publications?: StringNullableListFilter<"User">
-    researchFocus?: StringNullableFilter<"User"> | string | null
-    skills?: StringNullableListFilter<"User">
+    researchFocusSkills?: StringNullableFilter<"User"> | string | null
     university?: StringNullableFilter<"User"> | string | null
     yearOfStudy?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
@@ -17811,13 +17789,11 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    bio?: SortOrderInput | SortOrder
+    about?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
     username?: SortOrderInput | SortOrder
     department?: SortOrderInput | SortOrder
-    publications?: SortOrder
-    researchFocus?: SortOrderInput | SortOrder
-    skills?: SortOrder
+    researchFocusSkills?: SortOrderInput | SortOrder
     university?: SortOrderInput | SortOrder
     yearOfStudy?: SortOrderInput | SortOrder
     role?: SortOrder
@@ -17845,13 +17821,11 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    bio?: StringNullableFilter<"User"> | string | null
+    about?: StringNullableFilter<"User"> | string | null
     location?: StringNullableFilter<"User"> | string | null
     username?: StringNullableFilter<"User"> | string | null
     department?: StringNullableFilter<"User"> | string | null
-    publications?: StringNullableListFilter<"User">
-    researchFocus?: StringNullableFilter<"User"> | string | null
-    skills?: StringNullableListFilter<"User">
+    researchFocusSkills?: StringNullableFilter<"User"> | string | null
     university?: StringNullableFilter<"User"> | string | null
     yearOfStudy?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
@@ -17876,13 +17850,11 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    bio?: SortOrderInput | SortOrder
+    about?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
     username?: SortOrderInput | SortOrder
     department?: SortOrderInput | SortOrder
-    publications?: SortOrder
-    researchFocus?: SortOrderInput | SortOrder
-    skills?: SortOrder
+    researchFocusSkills?: SortOrderInput | SortOrder
     university?: SortOrderInput | SortOrder
     yearOfStudy?: SortOrderInput | SortOrder
     role?: SortOrder
@@ -17902,13 +17874,11 @@ export namespace Prisma {
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    bio?: StringNullableWithAggregatesFilter<"User"> | string | null
+    about?: StringNullableWithAggregatesFilter<"User"> | string | null
     location?: StringNullableWithAggregatesFilter<"User"> | string | null
     username?: StringNullableWithAggregatesFilter<"User"> | string | null
     department?: StringNullableWithAggregatesFilter<"User"> | string | null
-    publications?: StringNullableListFilter<"User">
-    researchFocus?: StringNullableWithAggregatesFilter<"User"> | string | null
-    skills?: StringNullableListFilter<"User">
+    researchFocusSkills?: StringNullableWithAggregatesFilter<"User"> | string | null
     university?: StringNullableWithAggregatesFilter<"User"> | string | null
     yearOfStudy?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
@@ -18874,13 +18844,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -18905,13 +18873,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -18936,13 +18902,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -18967,13 +18931,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -18998,13 +18960,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -19018,13 +18978,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -19038,13 +18996,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -20173,14 +20129,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-
   export type EnumRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
     in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
@@ -20306,13 +20254,11 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    bio?: SortOrder
+    about?: SortOrder
     location?: SortOrder
     username?: SortOrder
     department?: SortOrder
-    publications?: SortOrder
-    researchFocus?: SortOrder
-    skills?: SortOrder
+    researchFocusSkills?: SortOrder
     university?: SortOrder
     yearOfStudy?: SortOrder
     role?: SortOrder
@@ -20326,11 +20272,11 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    bio?: SortOrder
+    about?: SortOrder
     location?: SortOrder
     username?: SortOrder
     department?: SortOrder
-    researchFocus?: SortOrder
+    researchFocusSkills?: SortOrder
     university?: SortOrder
     yearOfStudy?: SortOrder
     role?: SortOrder
@@ -20344,11 +20290,11 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    bio?: SortOrder
+    about?: SortOrder
     location?: SortOrder
     username?: SortOrder
     department?: SortOrder
-    researchFocus?: SortOrder
+    researchFocusSkills?: SortOrder
     university?: SortOrder
     yearOfStudy?: SortOrder
     role?: SortOrder
@@ -20495,6 +20441,14 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
   }
   export type JsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -20998,14 +20952,6 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type UserCreatepublicationsInput = {
-    set: string[]
-  }
-
-  export type UserCreateskillsInput = {
-    set: string[]
-  }
-
   export type EventCreateNestedManyWithoutCreatedByInput = {
     create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
     connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
@@ -21158,16 +21104,6 @@ export namespace Prisma {
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
     createMany?: SessionCreateManyUserInputEnvelope
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-  }
-
-  export type UserUpdatepublicationsInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
-  export type UserUpdateskillsInput = {
-    set?: string[]
-    push?: string | string[]
   }
 
   export type EnumRoleFieldUpdateOperationsInput = {
@@ -22246,13 +22182,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -22276,13 +22210,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -22412,13 +22344,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -22442,13 +22372,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -23196,13 +23124,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -23226,13 +23152,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -23272,13 +23196,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -23302,13 +23224,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -23332,13 +23252,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -23362,13 +23280,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -23408,13 +23324,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -23438,13 +23352,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -23544,13 +23456,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -23574,13 +23484,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -23668,13 +23576,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -23698,13 +23604,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -23728,13 +23632,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -23758,13 +23660,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -23891,13 +23791,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -23921,13 +23819,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24087,13 +23983,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24117,13 +24011,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24226,13 +24118,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24256,13 +24146,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24286,13 +24174,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24316,13 +24202,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24362,13 +24246,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24392,13 +24274,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24422,13 +24302,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24452,13 +24330,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24520,13 +24396,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24550,13 +24424,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24617,13 +24489,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24647,13 +24517,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24720,13 +24588,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24750,13 +24616,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24780,13 +24644,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24810,13 +24672,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24856,13 +24716,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24886,13 +24744,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24916,13 +24772,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24946,13 +24800,11 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    bio?: string | null
+    about?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    publications?: UserCreatepublicationsInput | string[]
-    researchFocus?: string | null
-    skills?: UserCreateskillsInput | string[]
+    researchFocusSkills?: string | null
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24992,13 +24844,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -25022,13 +24872,11 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    about?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    publications?: UserUpdatepublicationsInput | string[]
-    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
-    skills?: UserUpdateskillsInput | string[]
+    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role

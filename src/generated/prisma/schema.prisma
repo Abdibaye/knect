@@ -25,34 +25,32 @@ model Notification {
 }
 
 model User {
-  id               String         @id
-  name             String
-  email            String         @unique
-  emailVerified    Boolean
-  image            String?
-  createdAt        DateTime
-  updatedAt        DateTime
-  bio              String?
-  location         String?
-  username         String?
-  department       String?
-  publications     String[]       @default([])
-  researchFocus    String?
-  skills           String[]       @default([])
-  university       String?
-  yearOfStudy      String?
-  role             Role           @default(STUDENT)
-  Event            Event[]
-  createdGroups    Group[]        @relation("UserCreatedGroups")
-  groupMemberships GroupMember[]  @relation("UserGroupMemberships")
-  Resource         Resource[]
-  Opportunity      Opportunity[]
-  accounts         Account[]
-  Comments         Comment[]
-  Likes            Like[]
-  notifications    Notification[]
-  Post             Post[]
-  sessions         Session[]
+  id                  String         @id
+  name                String
+  email               String         @unique
+  emailVerified       Boolean
+  image               String?
+  createdAt           DateTime
+  updatedAt           DateTime
+  about               String?
+  location            String?
+  username            String?
+  department          String?
+  researchFocusSkills String?
+  university          String?
+  yearOfStudy         String?
+  role                Role           @default(STUDENT)
+  Event               Event[]
+  createdGroups       Group[]        @relation("UserCreatedGroups")
+  groupMemberships    GroupMember[]  @relation("UserGroupMemberships")
+  Resource            Resource[]
+  Opportunity         Opportunity[]
+  accounts            Account[]
+  Comments            Comment[]
+  Likes               Like[]
+  notifications       Notification[]
+  Post                Post[]
+  sessions            Session[]
 
   @@map("user")
 }

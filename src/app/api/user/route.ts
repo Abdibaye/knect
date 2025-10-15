@@ -13,11 +13,11 @@ export async function POST(request: Request) {
     }
     const userId = session.session.userId;
 
-    const { name, bio, username, image, location } = await request.json();
+  const { name, about, bio, username, image, location } = await request.json();
 
     const user = await prisma.user.update({
       where: { id: userId },
-      data: { name, bio, username, image, location },
+      data: { name, about: typeof about === 'string' ? about : bio, username, image, location },
     });
 
     return NextResponse.json({ user });

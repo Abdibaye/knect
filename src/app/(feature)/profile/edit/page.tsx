@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function toList(value: string): string[] {
   return value
@@ -25,19 +26,15 @@ export default function EditProfilePage() {
   const [form, setForm] = useState({
     name: "",
     username: "",
-    bio: "",
+    about: "",
     image: "",
     university: "",
     department: "",
     yearOfStudy: "",
-    researchFocus: "",
-    skillsText: "",
-    publicationsText: "",
+    researchFocusSkillsText: "",
     location: "",
   });
-
-  const skillsArray = useMemo(() => toList(form.skillsText), [form.skillsText]);
-  const publicationsArray = useMemo(() => toList(form.publicationsText), [form.publicationsText]);
+  const rfsArray = useMemo(() => toList(form.researchFocusSkillsText), [form.researchFocusSkillsText]);
 
   useEffect(() => {
     const load = async () => {
@@ -51,14 +48,12 @@ export default function EditProfilePage() {
           ...f,
           name: u.name || "",
           username: u.username || "",
-          bio: u.bio || "",
+          about: u.about || u.bio || "",
           image: u.image || "",
           university: u.university || "",
           department: u.department || "",
           yearOfStudy: u.yearOfStudy || "",
-          researchFocus: u.researchFocus || "",
-          skillsText: Array.isArray(u.skills) ? u.skills.join(", ") : "",
-          publicationsText: Array.isArray(u.publications) ? u.publications.join("\n") : "",
+          researchFocusSkillsText: (u.researchFocusSkills as string | undefined) || "",
           location: u.location || "",
         }));
       } catch (e: any) {
@@ -94,14 +89,12 @@ export default function EditProfilePage() {
         body: JSON.stringify({
           name: form.name,
           username: form.username,
-          bio: form.bio,
+          about: form.about,
           image: form.image,
           university: form.university,
           department: form.department,
           yearOfStudy: form.yearOfStudy,
-          researchFocus: form.researchFocus,
-          skills: skillsArray,
-          publications: publicationsArray,
+          researchFocusSkills: rfsArray.join(", "),
           location: form.location,
         }),
       });
@@ -119,6 +112,70 @@ export default function EditProfilePage() {
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-8 space-y-6">
+      {loading ? (
+        <Card>
+          <CardHeader>
+            <CardTitle>Edit Profile</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            <div className="flex items-center gap-4">
+              <Skeleton className="h-16 w-16 rounded-full" />
+              <div>
+                <Skeleton className="h-8 w-36 rounded-md" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Name */}
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              {/* Username */}
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              {/* University */}
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              {/* Department */}
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-28" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              {/* Year of Study */}
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              {/* Location */}
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+            </div>
+
+            {/* About */}
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-28 w-full" />
+            </div>
+
+            {/* Research/Focus/Skill Areas */}
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-64" />
+              <Skeleton className="h-24 w-full" />
+            </div>
+
+            <div className="flex justify-end">
+              <Skeleton className="h-9 w-32 rounded-md" />
+            </div>
+          </CardContent>
+        </Card>
+      ) : (
       <Card>
         <CardHeader>
           <CardTitle>Edit Profile</CardTitle>
@@ -169,33 +226,18 @@ export default function EditProfilePage() {
           </div>
 
           <div>
-            <label className="text-sm font-medium">Bio</label>
-            <Textarea rows={4} value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} />
+            <label className="text-sm font-medium">About</label>
+            <Textarea rows={4} value={form.about} onChange={(e) => setForm({ ...form, about: e.target.value })} />
           </div>
 
           <div>
-            <label className="text-sm font-medium">Research Focus</label>
-            <Input value={form.researchFocus} onChange={(e) => setForm({ ...form, researchFocus: e.target.value })} />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium">Skills (comma or newline separated)</label>
-            <Textarea rows={3} value={form.skillsText} onChange={(e) => setForm({ ...form, skillsText: e.target.value })} />
+            <label className="text-sm font-medium">Research/Focus/Skill Areas (comma or newline separated)</label>
+            <Textarea rows={3} value={form.researchFocusSkillsText} onChange={(e) => setForm({ ...form, researchFocusSkillsText: e.target.value })} />
             <div className="mt-2 flex flex-wrap gap-2">
-              {skillsArray.map((s, i) => (
+              {rfsArray.map((s, i) => (
                 <Badge key={i} variant="outline">{s}</Badge>
               ))}
             </div>
-          </div>
-
-          <div>
-            <label className="text-sm font-medium">Publications (one per line or comma separated)</label>
-            <Textarea rows={4} value={form.publicationsText} onChange={(e) => setForm({ ...form, publicationsText: e.target.value })} />
-            <ul className="mt-2 list-disc list-inside text-sm space-y-1">
-              {publicationsArray.map((p, i) => (
-                <li key={i}>{p}</li>
-              ))}
-            </ul>
           </div>
 
           <div className="flex justify-end">
@@ -205,6 +247,7 @@ export default function EditProfilePage() {
           </div>
         </CardContent>
       </Card>
+      )}
     </div>
   );
 }

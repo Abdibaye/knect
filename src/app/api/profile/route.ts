@@ -2,15 +2,18 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
-function normalizeList(value: unknown): string[] | undefined {
+function normalizeCommaString(value: unknown): string | undefined {
+  // Accept string or array and return a normalized comma+space separated string
   if (Array.isArray(value)) {
-    return value.map(String).map((s) => s.trim()).filter(Boolean);
+    const items = value.map(String).map((s) => s.trim()).filter(Boolean);
+    return items.length ? items.join(", ") : "";
   }
   if (typeof value === "string") {
-    return value
+    const items = value
       .split(/[\n,]/)
       .map((s) => s.trim())
       .filter(Boolean);
+    return items.length ? items.join(", ") : "";
   }
   return undefined;
 }
@@ -22,37 +25,52 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const userId = session.session.userId;
-
+  
     const body = await request.json();
     const {
       name,
-      bio,
+      about,
       image,
       university,
       department,
       yearOfStudy,
-      skills,
-      researchFocus,
-      publications,
+      researchFocusSkills,
+      // Back-compat legacy fields that may still be sent by older clients
+      bio: legacyBio,
+      skills: legacySkills,
+      researchFocus: legacyResearchFocus,
+      publications: _legacyPublications,
       username,
       location,
     } = body ?? {};
 
-    const skillsArr = normalizeList(skills);
-    const publicationsArr = normalizeList(publications);
-
     const data: any = {};
     if (typeof name === "string") data.name = name;
-    if (typeof bio === "string") data.bio = bio;
+    // Prefer explicit `about`, fallback to legacy `bio`
+    if (typeof about === "string") data.about = about;
+    else if (typeof legacyBio === "string") data.about = legacyBio;
     if (typeof image === "string") data.image = image;
     if (typeof university === "string") data.university = university;
     if (typeof department === "string") data.department = department;
     if (typeof yearOfStudy === "string") data.yearOfStudy = yearOfStudy;
-    if (typeof researchFocus === "string") data.researchFocus = researchFocus;
     if (typeof username === "string") data.username = username;
     if (typeof location === "string") data.location = location;
-    if (skillsArr) data.skills = skillsArr;
-    if (publicationsArr) data.publications = publicationsArr;
+
+    // Compute researchFocusSkills normalized string
+    const normalizedRfs = normalizeCommaString(researchFocusSkills);
+    if (normalizedRfs !== undefined) {
+      data.researchFocusSkills = normalizedRfs;
+    } else {
+      // Backward compatibility: merge legacy researchFocus (string) and skills (array/string)
+      const legacyParts: string[] = [];
+      const fromFocus = normalizeCommaString(legacyResearchFocus);
+      const fromSkills = normalizeCommaString(legacySkills);
+      if (fromFocus) legacyParts.push(...fromFocus.split(", ").map((s) => s.trim()).filter(Boolean));
+      if (fromSkills) legacyParts.push(...fromSkills.split(", ").map((s) => s.trim()).filter(Boolean));
+      if (legacyParts.length) {
+        data.researchFocusSkills = Array.from(new Set(legacyParts)).join(", ");
+      }
+    }
 
     const user = await prisma.user.update({
       where: { id: userId },
