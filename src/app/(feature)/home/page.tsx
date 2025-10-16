@@ -50,7 +50,7 @@ const Home = () => {
   }, [loadPosts]);
 
   return (
-    <div className="w-full flex justify-center ml-0 lg:ml-9 mt-3">
+    <div className="w-full flex justify-center lg:ml-9 mt-3 min-[1024px]:pr-[21rem] min-[1381px]:pr-0 2xl:pr-0">
       <div className="w-full max-w-2xl space-y-4">
         {/* === CREATE POST MODE === */}
         {mode === "create" && (

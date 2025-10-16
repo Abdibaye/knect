@@ -33,7 +33,7 @@ export default function FollowSidebar() {
 	};
 
 	return (
-		<aside className="hidden lg:block fixed right-5  top-16 w-78 p-4 space-y-4 z-10">
+		<aside className="hidden lg:block fixed right-5 top-16 w-[20rem] p-4 space-y-4 z-20">
 			{/* Featured research */}
 			<section className="bg-card text-card-foreground border border-border p-4 rounded-xl shadow-sm">
 				<div className="flex items-center justify-between mb-3">

@@ -242,7 +242,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   };
 
   return (
-    <article className="rounded-xl  overflow-hidden border bg-card text-card-foreground shadow-sm p-4 w-full">
+    <article className="rounded-xl  overflow-hidden border bg-card text-card-foreground shadow-sm p-4 w-full ">
       {/* Header */}
       <header className="flex justify-between items-start">
         <div className="flex items-start gap-3">

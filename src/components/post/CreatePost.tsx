@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -16,12 +16,21 @@ type CreatePostProps = {
 export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
   const { data: session } = authClient.useSession();
   const user = session?.user;
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const [content, setContent] = useState("");
   const [media, setMedia] = useState<File | null>(null);
   const [mediaType, setMediaType] = useState<"image" | "video" | null>(null);
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // 👇 Auto-resize effect
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  }, [content]);
 
   const uploadToS3 = async (file: File) => {
     const formData = new FormData();
@@ -85,7 +94,6 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
       const data = await res.json();
       onSubmit?.(data);
 
-      // Reset form
       setContent("");
       setMedia(null);
       setMediaType(null);
@@ -132,13 +140,13 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
           </div>
         </div>
 
-        {/* Content Textarea */}
+        {/* Auto-resizing Textarea */}
         <Textarea
+          ref={textareaRef}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="What's on your mind?"
-          rows={4}
-          className="w-full border-none resize-none focus:ring-0 text-lg mb-6"
+          className="w-full min-h-[80px] border-none resize-none focus:ring-0 text-lg mb-6 overflow-hidden"
         />
 
         {/* Media Preview */}
