@@ -16,6 +16,8 @@ import {
   Share2,
   ThumbsUp,
   ChartNoAxesColumn,
+  BookmarkCheck,
+  MessageSquare,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CommentForm } from "./CommentForm";
@@ -424,17 +426,17 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
         )}
         <button
           type="button"
-          className={`flex items-center justify-center gap-2 rounded-md px-3 py-2 text-muted-foreground border border-transparent hover:border-accent ${showComments ? "bg-accent/13 text-foreground" : ""}`}
+          className={`flex items-center justify-center gap-2 cursor-pointer rounded-md px-3 py-2 text-muted-foreground border border-transparent ${showComments ? "bg-accent/13 text-foreground" : ""}`}
           aria-label="Comments"
           onClick={handleToggleComments}
         >
-          <MessageCircle className="size-5" />
+          <MessageSquare className="size-5" />
           <span>{typeof post.commentCount === "number" ? post.commentCount : comments.length}</span>
         </button>
         <button
           type="button"
           onClick={onShare}
-          className={showComments ? `flex items-center justify-center gap-2 rounded-md px-3 py-2 text-muted-foreground hover:bg-accent hover:text-foreground` : `flex items-center justify-center gap-2 rounded-md px-3 py-2 text-muted-foreground hover:bg-accent hover:text-foreground`}
+          className={"flex items-center justify-center gap-2 rounded-md px-3 py-2 text-muted-foreground hover:border-accent hover:text-foreground"}
           aria-label="Share"
         >
           <Share2 className="size-5" />
@@ -444,12 +446,13 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
           type="button"
           onClick={() => setIsSaved((v) => !v)}
           className={`flex items-center justify-center gap-2 rounded-md px-3 py-2 transition-colors ${
-            isSaved ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent hover:text-foreground"
+            isSaved ? " text-primary-foreground" : "text-muted-foreground hover:text-foreground"
           }`}
           aria-pressed={isSaved}
           aria-label="Save"
         >
-          <Bookmark className="size-5" />
+          
+        {isSaved ? <BookmarkCheck className="size-5 text-primary" /> : <Bookmark className="size-5" />}
           <span>{isSaved ? "Saved" : "Save"}</span>
         </button>
       </nav>
@@ -459,9 +462,6 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
         <div className="flex items-center gap-4">
           {typeof post.views === "number" && (
             <span className="inline-flex items-center gap-1"><ChartNoAxesColumn className="size-4" />{post.views}</span>
-          )}
-          {typeof post.downloads === "number" && (
-            <span className="inline-flex items-center gap-1"><FileDown className="size-4" />{post.downloads}</span>
           )}
         </div>
         {post.collaborators && post.collaborators.length > 0 && (

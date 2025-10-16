@@ -37,7 +37,7 @@ export default function PostComposerPrompt({ onCompose }: PostComposerPromptProp
       </div>
 
       <p className="mt-2 text-xs text-muted-foreground">
-        You can attach PDFs, PPT/DOC, and add DOI or citation.
+        You can attach images, videos, and documents.
       </p>
     </div>
   );
