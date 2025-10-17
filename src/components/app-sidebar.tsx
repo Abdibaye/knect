@@ -3,6 +3,7 @@
 import { Calendar, CircleQuestionMarkIcon, Home, Inbox, Info, MailQuestionIcon, MessageCircle, Scroll, Search, Settings, Telescope, TestTube2, User, Users } from "lucide-react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import * as React from "react";
 
 import {
   Sidebar,
@@ -74,6 +75,8 @@ const SecondaryItems = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
 
   return (
     <Sidebar>
@@ -82,26 +85,28 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {MainItems.map((item) => {
-                const isActive = pathname.startsWith(item.url);
+                const isActive = mounted && pathname.startsWith(item.url);
                 return (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <a
-                        href={item.url}
-                        className={clsx(
-                          "flex items-center gap-2 px-3 py-2 rounded-md transition-all",
-                          isActive
-                            ? "bg-primary text-primary-foreground"
-                            : "text-foreground/80 hover:bg-accent hover:text-foreground"
-                        )}
-                      >
-                        <item.icon size={18} />
-                        <span className="text-sm font-medium">
-                          {item.title}
-                        </span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                   <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton
+                  asChild
+                  isActive={isActive}
+                  className="hover:bg-transparent active:bg-transparent data-[state=open]:hover:bg-transparent hover:text-foreground active:text-foreground border border-transparent hover:border-accent data-[active=true]:bg-accent/20 data-[active=true]:text-foreground data-[active=true]:border-accent"
+                >
+                  <a
+                    href={item.url}
+                    className={clsx(
+                      "flex items-center gap-2 px-3 py-2 rounded-md transition-all",
+                      !isActive && "text-foreground/80"
+                    )}
+                  >
+                    <item.icon size={18} />
+                    <span className="text-sm font-medium">
+                      {item.title}
+                    </span>
+                  </a>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
                 );
               })}
             </SidebarMenu>
@@ -112,17 +117,19 @@ export function AppSidebar() {
       <div className="mt-auto border-t border-border p-3">
         <SidebarMenu>
           {SecondaryItems.map((item) => {
-            const isActive = pathname.startsWith(item.url);
+            const isActive = mounted && pathname.startsWith(item.url);
             return (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton
+                  asChild
+                  isActive={isActive}
+                  className="hover:bg-transparent active:bg-transparent data-[state=open]:hover:bg-transparent hover:text-foreground active:text-foreground border border-transparent hover:border-accent data-[active=true]:bg-accent/20 data-[active=true]:text-foreground data-[active=true]:border-accent"
+                >
                   <a
                     href={item.url}
                     className={clsx(
                       "flex items-center gap-2 px-3 py-2 rounded-md transition-all",
-                      isActive
-                        ? "bg-primary text-primary-foreground"
-                        : "text-foreground/80 hover:bg-accent hover:text-foreground"
+                      !isActive && "text-foreground/80"
                     )}
                   >
                     <item.icon size={18} />
