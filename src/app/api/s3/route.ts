@@ -41,21 +41,22 @@ export async function POST(req: Request) {
     let url = "";
     try {
       const endpointUrl = new URL(endpointEnv);
-      const host = endpointUrl.hostname;
+      const host = endpointUrl.hostname.toLowerCase();
       const proto = endpointUrl.protocol || "https:";
-      // For Tigris endpoints, use virtual-hosted style for public access
       if (host === "t3.storage.dev" || host.endsWith(".fly.storage.tigris.dev")) {
         url = `${proto}//${bucket}.${host}/${fileName}`;
       } else if (host.startsWith(`${bucket}.`)) {
-        // If endpoint already includes the bucket as a subdomain, don't repeat it
         url = `${proto}//${host}/${fileName}`;
       } else {
-        // Fallback to path-style
         url = `${endpointUrl.origin}/${bucket}/${fileName}`;
       }
     } catch {
-      // If endpoint is not a valid URL, fallback to plain concatenation (path-style)
-      url = `${endpointEnv.replace(/\/$/, "")}/${bucket}/${fileName}`;
+      // Prefer virtual-hosted for Tigris even on parse failure
+      if (/t3\.storage\.dev/i.test(endpointEnv)) {
+        url = `https://${bucket}.t3.storage.dev/${fileName}`;
+      } else {
+        url = `${endpointEnv.replace(/\/$/, "")}/${bucket}/${fileName}`;
+      }
     }
     return NextResponse.json({ url });
   } catch (error: any) {
