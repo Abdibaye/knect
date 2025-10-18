@@ -3,7 +3,11 @@ import Link from "next/link";
 
 import React from "react";
 import Navbar from "@/components/shared/navbar-form";
-export default function Page() {
+import { requireGuest } from "@/app/data/auth/require-guest";
+
+export default async function Page() {
+  // If a session exists, redirect to /home — prevents authenticated users from landing on /
+  await requireGuest();
   return (
     <section className="relative w-full h-[80vh] md:h-[100vh]">
       <Navbar />

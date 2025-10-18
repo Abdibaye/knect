@@ -5,13 +5,15 @@ import React from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import FollowSidebar from "@/components/home/home-layout";
-import { requireAdmin } from "@/app/data/admin/require-admin";
+import { requireGuest } from "@/app/data/auth/require-guest";
 
-export default function FeatureLayout({
+export default async function FeatureLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Redirect authenticated users away from auth routes (login/register) to home
+  await requireGuest();
   return (
     <>
       <Navbar />
