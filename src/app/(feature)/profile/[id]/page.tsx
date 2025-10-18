@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { auth } from "@/lib/auth";
 import { CheckIcon } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 
 export const dynamic = "force-dynamic";
@@ -40,12 +41,19 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const session = await auth.api.getSession({ headers: hdrs });
   const { id } = await params;
 
+  // Support /profile/me by resolving to the authenticated user's ID
+  const resolvedId = id === "me" ? session?.session?.userId : id;
+  if (!resolvedId) {
+    // No session and user requested /profile/me -> send to register/login
+    redirect("/register");
+  }
+
   const host = hdrs.get("x-forwarded-host") ?? hdrs.get("host");
   const proto = hdrs.get("x-forwarded-proto") ?? "http";
   const envBase = process.env.NEXT_PUBLIC_BASE_URL;
   const baseUrl = envBase && envBase.length > 0 ? envBase : host ? `${proto}://${host}` : "http://localhost:3000";
 
-  const profile = await fetchProfile(id, baseUrl);
+  const profile = await fetchProfile(resolvedId!, baseUrl);
   if (!profile) {
     return (
       <div className="container mx-auto px-4 py-8">

@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
     domains: [
       "lh3.googleusercontent.com",
       "knect.t3.storage.dev",
-      "t3.storage.dev", // <-- add this line
+      "t3.storage.dev", 
     ],
     remotePatterns: [
       {
