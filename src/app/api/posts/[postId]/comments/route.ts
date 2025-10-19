@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     const comments = await prisma.comment.findMany({
       where: { postId },
       include: {
-        author: { select: { id: true, name: true, image: true } },
+        author: { select: { id: true, name: true, image: true, university: true, department: true } },
         // To include replies, you must define a self-relation in your Prisma schema (e.g., 'replies' as a relation field).
         // If your schema has a self-relation, use the correct relation field name here.
         // Otherwise, remove this block and fetch replies in a separate query if needed.
