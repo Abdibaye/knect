@@ -7,9 +7,18 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
  
 const prisma = new PrismaClient();
 export const auth = betterAuth({
+  
   database: prismaAdapter(prisma, {
-    provider: "postgresql", // or "mysql", "postgresql", ...etc
+    provider: "postgresql",
   }),
+
+  // Session configuration
+  // NOTE: Using a very short expiry for testing. Change to "7d" or the equivalent seconds for production.
+  // If your Better Auth version expects a numeric value, use seconds (e.g., 7 * 24 * 60 * 60)
+  // If it supports duration strings, prefer "7d".
+  session: {
+    expiresIn: 7 * 24 * 60 * 60 , // 30 seconds for testing; set to 7 * 24 * 60 * 60 (or "7d") for 7 days
+  } as any,
 
   emailAndPassword: {
     	enabled: true,
@@ -21,5 +30,5 @@ export const auth = betterAuth({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     },
-  }
+  },
 });

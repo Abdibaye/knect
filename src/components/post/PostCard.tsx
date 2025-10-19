@@ -18,6 +18,7 @@ import {
   ChartNoAxesColumn,
   BookmarkCheck,
   MessageSquare,
+  Loader2Icon,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CommentForm } from "./CommentForm";
@@ -283,7 +284,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
                 <Badge variant="outline" className="px-2 py-0.5">{post.resourceType}</Badge>
               )}
             </div>
-            <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mt-1">
+            <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground mt-0">
               {post.university && (
                 <button onClick={() => filterBy("university", post.university)} className="hover:underline text-primary">
                   {post.university}
@@ -310,6 +311,29 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
           <PostMenu post={{ id: post.id, authorId: post.authorId }} currentUserId={session?.user.id} />
         </div>
       </header>
+
+          {/* Media Preview (moved above content) */}
+          {post.imageUrl && (
+            <figure className="mx-4 mt-4 overflow-hidden rounded-none border-y bg-transparent">
+              {post.mediaType === "video" ? (
+                <video
+                  src={post.imageUrl}
+                  controls
+                  className="block w-full h-auto object-contain"
+                  preload="metadata"
+                />
+              ) : (
+                <Image
+                  src={post.imageUrl}
+                  alt="Post media"
+                  width={1200}
+                  height={630}
+                  className="block w-full h-auto object-contain"
+                  sizes="(max-width: 768px) 100vw, 800px"
+                />
+              )}
+            </figure>
+          )}
 
       {/* Title & Content */}
       <section className="mt-2">
@@ -344,28 +368,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
         </ul>
       )}
 
-      {/* Media Preview */}
-      {post.imageUrl && (
-        <figure className="mx-4 mt-4 overflow-hidden rounded-none border-y bg-transparent">
-          {post.mediaType === "video" ? (
-            <video
-              src={post.imageUrl}
-              controls
-              className="block w-full h-auto object-contain"
-              preload="metadata"
-            />
-          ) : (
-            <Image
-              src={post.imageUrl}
-              alt="Post media"
-              width={1200}
-              height={630}
-              className="block w-full h-auto object-contain"
-              sizes="(max-width: 768px) 100vw, 800px"
-            />
-          )}
-        </figure>
-      )}
+      
 
       {/* Attachments */}
       {post.attachments && post.attachments.length > 0 && (
@@ -494,11 +497,14 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
         <section className="mt-4">
           {error && <div className="text-destructive mb-2">{error}</div>}
           {loadingComments ? (
-            <div className="animate-pulse text-center">...</div>
+            <div className="flex item-center justify-center">
+              <Loader2Icon className="animate-spin" />
+            </div>
           ) : (
             <>
-              <CommentForm onSubmit={handleAddComment} />
               <CommentList comments={comments} onReply={handleReply} />
+              <CommentForm onSubmit={handleAddComment} />
+
             </>
           )}
         </section>
