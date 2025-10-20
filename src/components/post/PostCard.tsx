@@ -235,6 +235,16 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
   const summary = post.summary || (post.content ? post.content.slice(0, 180) + (post.content.length > 180 ? "…" : "") : "");
   const hasMore = !!post.summary || (post.content?.length ?? 0) > 180;
 
+  // Split attachments into images vs other files
+  const isImageAttachment = (a: Attachment) => {
+    const type = (a.type || "").toLowerCase()
+    if (type.startsWith("image/")) return true
+    const ext = (a.url.split("?")[0].split("#")[0].split(".").pop() || "").toLowerCase()
+    return ["jpg", "jpeg", "png", "gif", "webp", "svg"].includes(ext)
+  }
+  const imageAttachments = (post.attachments || []).filter(isImageAttachment)
+  const fileAttachments = (post.attachments || []).filter((a) => !isImageAttachment(a))
+
   const fetchLikedUsers = async () => {
     try {
       const res = await fetch(`/api/posts/${post.id}/likes`);
@@ -312,28 +322,129 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
         </div>
       </header>
 
-          {/* Media Preview (moved above content) */}
-          {post.imageUrl && (
+          {/* Media Preview (video, images grid, or single image) */}
+          {post.mediaType === "video" && post.imageUrl ? (
             <figure className="mx-4 mt-4 overflow-hidden rounded-none border-y bg-transparent">
-              {post.mediaType === "video" ? (
-                <video
-                  src={post.imageUrl}
-                  controls
-                  className="block w-full h-auto object-contain"
-                  preload="metadata"
-                />
-              ) : (
-                <Image
-                  src={post.imageUrl}
-                  alt="Post media"
-                  width={1200}
-                  height={630}
-                  className="block w-full h-auto object-contain"
-                  sizes="(max-width: 768px) 100vw, 800px"
-                />
-              )}
+              <video
+                src={post.imageUrl}
+                controls
+                className="block w-full h-auto object-contain"
+                preload="metadata"
+              />
             </figure>
-          )}
+          ) : imageAttachments.length > 0 ? (
+            <div className="mx-4 mt-4">
+              {(() => {
+                const count = imageAttachments.length;
+                if (count === 1) {
+                  const img = imageAttachments[0];
+                  return (
+                    <div className="overflow-hidden rounded-md border">
+                      <div className="relative w-full aspect-video bg-muted">
+                        <Image src={img.url} alt={img.name || "image-1"} fill className="object-cover" sizes="100vw" />
+                      </div>
+                    </div>
+                  );
+                }
+                if (count === 2) {
+                  return (
+                    <div className="grid grid-cols-2 gap-2 rounded-md overflow-hidden border">
+                      {imageAttachments.slice(0, 2).map((img, idx) => (
+                        <div key={idx} className="relative w-full aspect-square bg-muted">
+                          <Image src={img.url} alt={img.name || `image-${idx + 1}`}
+                                 fill className="object-cover" sizes="(max-width: 768px) 50vw, 400px" />
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
+                if (count === 3) {
+                  return (
+                    <div className="rounded-md overflow-hidden border">
+                      <div className="relative w-full aspect-video bg-muted">
+                        <Image src={imageAttachments[0].url} alt={imageAttachments[0].name || "image-1"}
+                               fill className="object-cover" sizes="100vw" />
+                      </div>
+                      <div className="mt-2 grid grid-cols-2 gap-2">
+                        {imageAttachments.slice(1).map((img, idx) => (
+                          <div key={idx} className="relative w-full aspect-square bg-muted">
+                            <Image src={img.url} alt={img.name || `image-${idx + 2}`}
+                                   fill className="object-cover" sizes="(max-width: 768px) 50vw, 400px" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
+                if (count === 4) {
+                  return (
+                    <div className="rounded-md overflow-hidden border">
+                      <div className="relative w-full aspect-video bg-muted">
+                        <Image src={imageAttachments[0].url} alt={imageAttachments[0].name || "image-1"}
+                               fill className="object-cover" sizes="100vw" />
+                      </div>
+                      <div className="mt-2 grid grid-cols-3 gap-2">
+                        {imageAttachments.slice(1, 4).map((img, idx) => (
+                          <div key={idx} className="relative w-full aspect-square bg-muted">
+                            <Image src={img.url} alt={img.name || `image-${idx + 2}`}
+                                   fill className="object-cover" sizes="(max-width: 768px) 33vw, 300px" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
+                if (count === 5) {
+                  return (
+                    <div className="rounded-md overflow-hidden border">
+                      <div className="relative w-full aspect-video bg-muted">
+                        <Image src={imageAttachments[0].url} alt={imageAttachments[0].name || "image-1"}
+                               fill className="object-cover" sizes="100vw" />
+                      </div>
+                      <div className="mt-2 grid grid-cols-2 gap-2">
+                        {imageAttachments.slice(1, 3).map((img, idx) => (
+                          <div key={idx} className="relative w-full aspect-square bg-muted">
+                            <Image src={img.url} alt={img.name || `image-${idx + 2}`}
+                                   fill className="object-cover" sizes="(max-width: 768px) 50vw, 400px" />
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-2 grid grid-cols-2 gap-2">
+                        {imageAttachments.slice(3, 5).map((img, idx) => (
+                          <div key={idx} className="relative w-full aspect-square bg-muted">
+                            <Image src={img.url} alt={img.name || `image-${idx + 4}`}
+                                   fill className="object-cover" sizes="(max-width: 768px) 50vw, 400px" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                }
+                // Fallback for 6+ images -> simple responsive grid
+                return (
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2 rounded-md overflow-hidden border">
+                    {imageAttachments.map((img, idx) => (
+                      <div key={idx} className="relative w-full aspect-square bg-muted">
+                        <Image src={img.url} alt={img.name || `image-${idx + 1}`}
+                               fill className="object-cover" sizes="(max-width: 768px) 50vw, 33vw" />
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
+            </div>
+          ) : post.imageUrl ? (
+            <figure className="mx-4 mt-4 overflow-hidden rounded-none border-y bg-transparent">
+              <Image
+                src={post.imageUrl}
+                alt="Post media"
+                width={1200}
+                height={630}
+                className="block w-full h-auto object-contain"
+                sizes="(max-width: 768px) 100vw, 800px"
+              />
+            </figure>
+          ) : null}
 
       {/* Title & Content */}
       <section className="mt-2">
@@ -371,9 +482,9 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
       
 
       {/* Attachments */}
-      {post.attachments && post.attachments.length > 0 && (
+      {fileAttachments.length > 0 && (
         <div className="mt-4 space-y-2" aria-label="attachments">
-          {post.attachments.map((f, idx) => {
+          {fileAttachments.map((f, idx) => {
             const ext = (f.name.split(".").pop() || "").toLowerCase();
             return (
               <div key={idx} className="flex items-center justify-between rounded-lg border p-3 bg-muted/30">

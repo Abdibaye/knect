@@ -7,6 +7,8 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { XIcon, ImageIcon, VideoIcon } from "lucide-react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import MultipleImageUploader from "./multipleImageUploader";
+import type { UploadedFile } from "@/hooks/use-file-upload";
 
 type CreatePostProps = {
   onSubmit?: (data: any) => void;
@@ -21,6 +23,7 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
   const [content, setContent] = useState("");
   const [media, setMedia] = useState<File | null>(null);
   const [mediaType, setMediaType] = useState<"image" | "video" | null>(null);
+  const [images, setImages] = useState<UploadedFile[]>([]);
   const [uploading, setUploading] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -70,14 +73,31 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
     setLoading(true);
     try {
       let imageUrl = undefined;
-      if (media) {
+      const attachments: { name: string; url: string; type: string }[] = [];
+
+      // If a single video is selected, upload it as imageUrl/mediaType=video
+      if (media && mediaType === "video") {
         imageUrl = await uploadToS3(media);
+      }
+
+      // Upload all selected images and add to attachments
+      if (images.length > 0) {
+        for (const item of images) {
+          // UploadedFile.file may be a pseudo File when coming from initial, skip upload in that case
+          // but in CreatePost we don't set initial, so it's a real File; still guard gracefully
+          const file = item.file as File;
+          if (file && file.size >= 0) {
+            const url = await uploadToS3(file);
+            attachments.push({ name: file.name, url, type: file.type || "image/*" });
+          }
+        }
       }
 
       const postData = {
         content,
         imageUrl,
         mediaType,
+        attachments: attachments.length ? attachments : undefined,
       };
 
       const res = await fetch("/api/posts", {
@@ -97,6 +117,7 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
       setContent("");
       setMedia(null);
       setMediaType(null);
+      setImages([]);
       toast.success("Post created");
     } catch (err: any) {
       toast.error(err.message || "Failed to create post");
@@ -150,29 +171,14 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
         />
 
         {/* Media Preview */}
-        {media && mediaType === "image" && (
-          <img src={URL.createObjectURL(media)} alt="Preview" className="mb-4 max-h-64 rounded-lg border" />
-        )}
         {media && mediaType === "video" && (
           <video src={URL.createObjectURL(media)} controls className="mb-4 max-h-64 rounded-lg border" />
         )}
-
+        <MultipleImageUploader onChange={setImages} maxFiles={6} maxSizeMB={5} />
         {/* Footer */}
         <div className="flex items-center justify-between pt-4 border-t">
           <div className="flex gap-4">
-            <label htmlFor="image-upload" className="cursor-pointer p-2 rounded-full hover:bg-muted">
-              <ImageIcon size={24} className="text-muted-foreground hover:text-foreground" />
-              <input
-                id="image-upload"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) handleMediaUpload(file, "image");
-                }}
-              />
-            </label>
+            {/* Image uploads handled by MultipleImageUploader */}
             <label htmlFor="video-upload" className="cursor-pointer p-2 rounded-full hover:bg-muted">
               <VideoIcon size={24} className="text-muted-foreground hover:text-foreground" />
               <input
