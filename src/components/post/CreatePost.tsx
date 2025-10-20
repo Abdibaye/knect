@@ -176,7 +176,7 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
         )}
         <MultipleImageUploader onChange={setImages} maxFiles={6} maxSizeMB={5} />
         {/* Footer */}
-        <div className="flex items-center justify-between pt-4 border-t">
+        <div className="flex items-center justify-between pt-4 ">
           <div className="flex gap-4">
             {/* Image uploads handled by MultipleImageUploader */}
             <label htmlFor="video-upload" className="cursor-pointer p-2 rounded-full hover:bg-muted">
