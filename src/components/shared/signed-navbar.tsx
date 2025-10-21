@@ -52,7 +52,7 @@ export default function SignedNavbar({ className }: SignedNavbarProps) {
           />
           <Button
             size="sm"
-            className="text-sm max-sm:aspect-square max-sm:p-0 hidden md:inline-flex bg-accent hover:bg-accent/80 text-foreground font-medium rounded-md px-3 py-1.5"
+            className="text-sm max-sm:aspect-square max-sm:p-0 hidden md:inline-flex bg-accent/20 hover:bg-accent/80 text-foreground font-medium rounded-md px-3 py-1.5"
             onClick={() => {
               const event = new Event("showCreatePost");
               document.dispatchEvent(event);

@@ -114,7 +114,7 @@ export default function FollowSidebar() {
 									variant={following ? "default" : "secondary"}
 									size="sm"
 									aria-pressed={following}
-									className="gap-1"
+									className="gap-1 bg-accent/20"
 								>
 									<Plus className="w-4 h-4" />
 									{following ? "Following" : "Follow"}

@@ -27,7 +27,15 @@ export default function PostMenu({ post, currentUserId, onDelete }: PostMenuProp
       const res = await fetch(`/api/posts/${post.id}`, {
         method: "DELETE",
       });
-      if (!res.ok) throw new Error("Failed to delete post");
+      console.log(res);
+      if (!res.ok) {
+        let message = `Failed to delete post`;
+        try {
+          const data = await res.json();
+          if (data?.error) message = data.error;
+        } catch {}
+        throw new Error(`${message} (${res.status})`);
+      }
       toast.success("Post deleted");
       if (onDelete) onDelete();
     } catch (err: any) {

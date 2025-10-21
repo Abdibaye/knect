@@ -103,7 +103,7 @@ export default function CreatePost({ onSubmit, onCancel }: CreatePostProps) {
       const res = await fetch("/api/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(postData),
+        body: JSON.stringify(postData)
       });
 
       if (!res.ok) {
