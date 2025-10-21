@@ -24,7 +24,7 @@ const MainItems = [
     icon: Home,
   },
   {
-    title: "opportunities",
+    title: "Opportunities",
     url: "/opportunities",
     icon: Telescope,
   },
@@ -91,13 +91,13 @@ export function AppSidebar() {
                 <SidebarMenuButton
                   asChild
                   isActive={isActive}
-                  className="hover:bg-transparent active:bg-transparent data-[state=open]:hover:bg-transparent hover:text-foreground active:text-foreground border border-transparent hover:border-accent data-[active=true]:bg-accent/20 data-[active=true]:text-foreground data-[active=true]:border-accent"
+                  className="hover:bg-transparent active:bg-transparent data-[state=open]:hover:bg-transparent hover:text-foreground active:text-foreground hover:border-accent data-[active=true]:bg-accent/20 data-[active=true]:text-foreground data-[active=true]:border-accent focus-visible:ring-1 focus-visible:ring-ring"
                 >
                   <a
                     href={item.url}
                     className={clsx(
                       "flex items-center gap-2 px-3 py-2 rounded-md transition-all",
-                      !isActive && "text-foreground/80"
+                      !isActive && "text-foreground/80 text-lg"
                     )}
                   >
                     <item.icon size={18} />
@@ -146,3 +146,4 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
+

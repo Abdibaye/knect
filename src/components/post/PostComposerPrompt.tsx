@@ -23,7 +23,7 @@ export default function PostComposerPrompt({ onCompose }: PostComposerPromptProp
         </Avatar>
         <button
           onClick={onCompose}
-          className="flex-1 text-left text-sm md:text-base px-4 py-2 rounded-full border border-input bg-background/60 hover:border-accent transition-colors text-muted-foreground"
+          className="flex-1 cursor-pointer text-left text-sm md:text-base px-4 py-2 rounded-full border border-input bg-background/60 hover:border-accent/30 transition-colors text-muted-foreground"
           aria-label="Create a post"
         >
           {`Got a project, question, or idea? Share it with ${user?.name ? user.name.split(" ")[0] + "'s" : "the"} community…`}
@@ -55,8 +55,7 @@ function Action({ icon, label, onClick }: { icon: React.ReactNode; label: string
         border border-transparent 
         rounded-xl 
         transition-all duration-200
-        hover:border-accent
-        hover:bg-transparent
+        hover:!bg-transparent
         hover:rounded-2xl
       "
     >
