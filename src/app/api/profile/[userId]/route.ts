@@ -6,10 +6,12 @@ const prisma = new PrismaClient();
 
 export async function GET(
   req: Request,
-  { params }: { params: { userId: string } }
+  context: { params: { userId: string } }
 ) {
   try {
     const session = await auth.api.getSession({ headers: req.headers });
+
+    const params = await context.params;
 
     const user = await prisma.user.findUnique({
       where: { id: params.userId },

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ImageZoom } from "@/components/kibo-ui/image-zoom";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -23,6 +24,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CommentForm } from "./CommentForm";
 import { CommentList, Comment as CommentType } from "./CommentList";
+import Link from "next/link";
 
 // Utility to format relative time
 function getRelativeTime(dateString?: string) {
@@ -274,13 +276,14 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
           </div>
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <button
-                onClick={() => (window.location.href = `/profile/${post.authorId}`)}
-                className="text-sm cursor-pointer font-semibold text-foreground hover:underline"
-                aria-label={`${authorName} profile`}
-              >
-                <span className="truncate max-w-[200px] sm:max-w-[280px] inline-block">{authorName}</span>
-              </button>
+              <Link href={`/profile/${post.authorId}`}>
+                <button
+                  className="text-sm cursor-pointer font-semibold text-foreground hover:underline"
+                  aria-label={`${authorName} profile`}
+                >
+                  <span className="truncate max-w-[200px] sm:max-w-[280px] inline-block">{authorName}</span>
+                </button>
+              </Link>
               {post.authorVerified && (
                 <Badge variant="outline" className="gap-1">
                   <CheckIcon className="text-emerald-500" size={12} aria-hidden="true" />
@@ -341,18 +344,22 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
                   return (
                     <div className="overflow-hidden rounded-md border">
                       <div className="relative w-full aspect-video bg-muted">
-                        <Image src={img.url} alt={img.name || "image-1"} fill className="object-cover" sizes="100vw" />
+                        <ImageZoom className="!absolute inset-0">
+                          <Image data-zoom src={img.url} alt={img.name || "image-1"} fill className="object-cover" sizes="100vw" />
+                        </ImageZoom>
                       </div>
                     </div>
                   );
                 }
                 if (count === 2) {
                   return (
-                    <div className="grid grid-cols-2 gap-2 rounded-md overflow-hidden border">
+                    <div className="grid grid-cols-2 gap-2 overflow-hidden">
                       {imageAttachments.slice(0, 2).map((img, idx) => (
                         <div key={idx} className="relative w-full aspect-square bg-muted">
-                          <Image src={img.url} alt={img.name || `image-${idx + 1}`}
-                                 fill className="object-cover" sizes="(max-width: 768px) 50vw, 400px" />
+                          <ImageZoom className="!absolute inset-0">
+                            <Image data-zoom src={img.url} alt={img.name || `image-${idx + 1}`}
+                                   fill className="object-cover" sizes="(max-width: 768px) 50vw, 400px" />
+                          </ImageZoom>
                         </div>
                       ))}
                     </div>
@@ -360,16 +367,20 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
                 }
                 if (count === 3) {
                   return (
-                    <div className="rounded-md overflow-hidden border">
+                    <div className="overflow-hidden">
                       <div className="relative w-full aspect-video bg-muted">
-                        <Image src={imageAttachments[0].url} alt={imageAttachments[0].name || "image-1"}
-                               fill className="object-cover" sizes="100vw" />
+                        <ImageZoom className="!absolute inset-0">
+                          <Image data-zoom src={imageAttachments[0].url} alt={imageAttachments[0].name || "image-1"}
+                                 fill className="object-cover" sizes="100vw" />
+                        </ImageZoom>
                       </div>
                       <div className="mt-2 grid grid-cols-2 gap-2">
                         {imageAttachments.slice(1).map((img, idx) => (
                           <div key={idx} className="relative w-full aspect-square bg-muted">
-                            <Image src={img.url} alt={img.name || `image-${idx + 2}`}
-                                   fill className="object-cover" sizes="(max-width: 768px) 50vw, 400px" />
+                            <ImageZoom className="!absolute inset-0">
+                              <Image data-zoom src={img.url} alt={img.name || `image-${idx + 2}`}
+                                     fill className="object-cover" sizes="(max-width: 768px) 50vw, 400px" />
+                            </ImageZoom>
                           </div>
                         ))}
                       </div>
@@ -378,16 +389,20 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
                 }
                 if (count === 4) {
                   return (
-                    <div className="rounded-md overflow-hidden border">
+                    <div className="overflow-hidden ">
                       <div className="relative w-full aspect-video bg-muted">
-                        <Image src={imageAttachments[0].url} alt={imageAttachments[0].name || "image-1"}
-                               fill className="object-cover" sizes="100vw" />
+                        <ImageZoom className="!absolute inset-0">
+                          <Image data-zoom src={imageAttachments[0].url} alt={imageAttachments[0].name || "image-1"}
+                                 fill className="object-cover" sizes="100vw" />
+                        </ImageZoom>
                       </div>
                       <div className="mt-2 grid grid-cols-3 gap-2">
                         {imageAttachments.slice(1, 4).map((img, idx) => (
                           <div key={idx} className="relative w-full aspect-square bg-muted">
-                            <Image src={img.url} alt={img.name || `image-${idx + 2}`}
-                                   fill className="object-cover" sizes="(max-width: 768px) 33vw, 300px" />
+                            <ImageZoom className="!absolute inset-0">
+                              <Image data-zoom src={img.url} alt={img.name || `image-${idx + 2}`}
+                                     fill className="object-cover" sizes="(max-width: 768px) 33vw, 300px" />
+                            </ImageZoom>
                           </div>
                         ))}
                       </div>
@@ -398,22 +413,28 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
                   return (
                     <div className="rounded-md overflow-hidden border">
                       <div className="relative w-full aspect-video bg-muted">
-                        <Image src={imageAttachments[0].url} alt={imageAttachments[0].name || "image-1"}
-                               fill className="object-cover" sizes="100vw" />
+                        <ImageZoom className="!absolute inset-0">
+                          <Image data-zoom src={imageAttachments[0].url} alt={imageAttachments[0].name || "image-1"}
+                                 fill className="object-cover" sizes="100vw" />
+                        </ImageZoom> 
                       </div>
                       <div className="mt-2 grid grid-cols-2 gap-2">
                         {imageAttachments.slice(1, 3).map((img, idx) => (
                           <div key={idx} className="relative w-full aspect-square bg-muted">
-                            <Image src={img.url} alt={img.name || `image-${idx + 2}`}
-                                   fill className="object-cover" sizes="(max-width: 768px) 50vw, 400px" />
+                            <ImageZoom className="!absolute inset-0">
+                              <Image data-zoom src={img.url} alt={img.name || `image-${idx + 2}`}
+                                     fill className="object-cover" sizes="(max-width: 768px) 50vw, 400px" />
+                            </ImageZoom>
                           </div>
                         ))}
                       </div>
                       <div className="mt-2 grid grid-cols-2 gap-2">
                         {imageAttachments.slice(3, 5).map((img, idx) => (
                           <div key={idx} className="relative w-full aspect-square bg-muted">
-                            <Image src={img.url} alt={img.name || `image-${idx + 4}`}
-                                   fill className="object-cover" sizes="(max-width: 768px) 50vw, 400px" />
+                            <ImageZoom className="!absolute inset-0">
+                              <Image data-zoom src={img.url} alt={img.name || `image-${idx + 4}`}
+                                     fill className="object-cover" sizes="(max-width: 768px) 50vw, 400px" />
+                            </ImageZoom>
                           </div>
                         ))}
                       </div>
@@ -425,8 +446,10 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2 rounded-md overflow-hidden border">
                     {imageAttachments.map((img, idx) => (
                       <div key={idx} className="relative w-full aspect-square bg-muted">
-                        <Image src={img.url} alt={img.name || `image-${idx + 1}`}
-                               fill className="object-cover" sizes="(max-width: 768px) 50vw, 33vw" />
+                        <ImageZoom className="!absolute inset-0">
+                          <Image data-zoom src={img.url} alt={img.name || `image-${idx + 1}`}
+                                 fill className="object-cover" sizes="(max-width: 768px) 50vw, 33vw" />
+                        </ImageZoom>
                       </div>
                     ))}
                   </div>
@@ -435,14 +458,17 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
             </div>
           ) : post.imageUrl ? (
             <figure className="mx-4 mt-4 overflow-hidden rounded-none border-y bg-transparent">
-              <Image
-                src={post.imageUrl}
-                alt="Post media"
-                width={1200}
-                height={630}
-                className="block w-full h-auto object-contain"
-                sizes="(max-width: 768px) 100vw, 800px"
-              />
+              <ImageZoom>
+                <Image
+                  data-zoom
+                  src={post.imageUrl}
+                  alt="Post media"
+                  width={1200}
+                  height={630}
+                  className="block w-full h-auto object-contain"
+                  sizes="(max-width: 768px) 100vw, 800px"
+                />
+              </ImageZoom>
             </figure>
           ) : null}
 

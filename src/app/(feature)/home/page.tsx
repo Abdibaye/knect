@@ -6,6 +6,7 @@ import CreatePost from "@/components/post/CreatePost";
 import PostCardSkeleton from "@/components/post/PostCardSkeleton";
 import ChatListPage from "@/components/chat-list/chat-list";
 import PostComposerPrompt from "@/components/post/PostComposerPrompt";
+import NoInternetFallback from "@/components/ui/no-internet";
 
 type Mode = "posts" | "create" | "chat";
 
@@ -78,7 +79,15 @@ const Home = () => {
                 <PostCardSkeleton />
               </>
             )}
-            {error && <div className="text-red-500">{error}</div>}
+            {error && (
+              error.toLowerCase().includes("failed to fetch") ? (
+                <NoInternetFallback onRetry={loadPosts} />
+              ) : (
+                <div className="rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
+                  {error}
+                </div>
+              )
+            )}
             {!loading && posts.map((post) => <PostCard key={post.id} post={post} />)}
           </>
         )}
