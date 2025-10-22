@@ -353,7 +353,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
                 }
                 if (count === 2) {
                   return (
-                    <div className="grid grid-cols-2 gap-2 rounded-md overflow-hidden border">
+                    <div className="grid grid-cols-2 gap-2 overflow-hidden">
                       {imageAttachments.slice(0, 2).map((img, idx) => (
                         <div key={idx} className="relative w-full aspect-square bg-muted">
                           <ImageZoom className="!absolute inset-0">
@@ -367,7 +367,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
                 }
                 if (count === 3) {
                   return (
-                    <div className="rounded-md overflow-hidden border">
+                    <div className="overflow-hidden">
                       <div className="relative w-full aspect-video bg-muted">
                         <ImageZoom className="!absolute inset-0">
                           <Image data-zoom src={imageAttachments[0].url} alt={imageAttachments[0].name || "image-1"}
@@ -389,7 +389,7 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
                 }
                 if (count === 4) {
                   return (
-                    <div className="rounded-md overflow-hidden border">
+                    <div className="overflow-hidden ">
                       <div className="relative w-full aspect-video bg-muted">
                         <ImageZoom className="!absolute inset-0">
                           <Image data-zoom src={imageAttachments[0].url} alt={imageAttachments[0].name || "image-1"}
