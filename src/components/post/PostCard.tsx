@@ -24,6 +24,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CommentForm } from "./CommentForm";
 import { CommentList, Comment as CommentType } from "./CommentList";
+import Link from "next/link";
 
 // Utility to format relative time
 function getRelativeTime(dateString?: string) {
@@ -275,13 +276,14 @@ export default function PostCard({ post, initialComments = [] }: PostCardProps) 
           </div>
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <button
-                onClick={() => (window.location.href = `/profile/${post.authorId}`)}
-                className="text-sm cursor-pointer font-semibold text-foreground hover:underline"
-                aria-label={`${authorName} profile`}
-              >
-                <span className="truncate max-w-[200px] sm:max-w-[280px] inline-block">{authorName}</span>
-              </button>
+              <Link href={`/profile/${post.authorId}`}>
+                <button
+                  className="text-sm cursor-pointer font-semibold text-foreground hover:underline"
+                  aria-label={`${authorName} profile`}
+                >
+                  <span className="truncate max-w-[200px] sm:max-w-[280px] inline-block">{authorName}</span>
+                </button>
+              </Link>
               {post.authorVerified && (
                 <Badge variant="outline" className="gap-1">
                   <CheckIcon className="text-emerald-500" size={12} aria-hidden="true" />
