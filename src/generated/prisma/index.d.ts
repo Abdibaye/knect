@@ -101,6 +101,34 @@ export const PostCategory: {
 
 export type PostCategory = (typeof PostCategory)[keyof typeof PostCategory]
 
+
+export const ResourceNodeType: {
+  FOLDER: 'FOLDER',
+  FILE: 'FILE'
+};
+
+export type ResourceNodeType = (typeof ResourceNodeType)[keyof typeof ResourceNodeType]
+
+
+export const ResourceFolderKind: {
+  UNIVERSITY: 'UNIVERSITY',
+  DEPARTMENT: 'DEPARTMENT',
+  COURSE: 'COURSE',
+  CUSTOM: 'CUSTOM'
+};
+
+export type ResourceFolderKind = (typeof ResourceFolderKind)[keyof typeof ResourceFolderKind]
+
+
+export const ResourceMediaType: {
+  DOCUMENT: 'DOCUMENT',
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO',
+  OTHER: 'OTHER'
+};
+
+export type ResourceMediaType = (typeof ResourceMediaType)[keyof typeof ResourceMediaType]
+
 }
 
 export type Role = $Enums.Role
@@ -110,6 +138,18 @@ export const Role: typeof $Enums.Role
 export type PostCategory = $Enums.PostCategory
 
 export const PostCategory: typeof $Enums.PostCategory
+
+export type ResourceNodeType = $Enums.ResourceNodeType
+
+export const ResourceNodeType: typeof $Enums.ResourceNodeType
+
+export type ResourceFolderKind = $Enums.ResourceFolderKind
+
+export const ResourceFolderKind: typeof $Enums.ResourceFolderKind
+
+export type ResourceMediaType = $Enums.ResourceMediaType
+
+export const ResourceMediaType: typeof $Enums.ResourceMediaType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1983,7 +2023,7 @@ export namespace Prisma {
     Event: number
     createdGroups: number
     groupMemberships: number
-    Resource: number
+    resources: number
     Opportunity: number
     accounts: number
     Comments: number
@@ -1997,7 +2037,7 @@ export namespace Prisma {
     Event?: boolean | UserCountOutputTypeCountEventArgs
     createdGroups?: boolean | UserCountOutputTypeCountCreatedGroupsArgs
     groupMemberships?: boolean | UserCountOutputTypeCountGroupMembershipsArgs
-    Resource?: boolean | UserCountOutputTypeCountResourceArgs
+    resources?: boolean | UserCountOutputTypeCountResourcesArgs
     Opportunity?: boolean | UserCountOutputTypeCountOpportunityArgs
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     Comments?: boolean | UserCountOutputTypeCountCommentsArgs
@@ -2042,7 +2082,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountResourceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountResourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResourceWhereInput
   }
 
@@ -2173,6 +2213,37 @@ export namespace Prisma {
    */
   export type CommentCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NotificationWhereInput
+  }
+
+
+  /**
+   * Count Type ResourceCountOutputType
+   */
+
+  export type ResourceCountOutputType = {
+    children: number
+  }
+
+  export type ResourceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    children?: boolean | ResourceCountOutputTypeCountChildrenArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ResourceCountOutputType without action
+   */
+  export type ResourceCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceCountOutputType
+     */
+    select?: ResourceCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ResourceCountOutputType without action
+   */
+  export type ResourceCountOutputTypeCountChildrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResourceWhereInput
   }
 
 
@@ -3380,11 +3451,11 @@ export namespace Prisma {
     image: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    about: string | null
+    bio: string | null
     location: string | null
     username: string | null
     department: string | null
-    researchFocusSkills: string | null
+    researchFocus: string | null
     university: string | null
     yearOfStudy: string | null
     role: $Enums.Role | null
@@ -3398,11 +3469,11 @@ export namespace Prisma {
     image: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    about: string | null
+    bio: string | null
     location: string | null
     username: string | null
     department: string | null
-    researchFocusSkills: string | null
+    researchFocus: string | null
     university: string | null
     yearOfStudy: string | null
     role: $Enums.Role | null
@@ -3416,11 +3487,13 @@ export namespace Prisma {
     image: number
     createdAt: number
     updatedAt: number
-    about: number
+    bio: number
     location: number
     username: number
     department: number
-    researchFocusSkills: number
+    publications: number
+    researchFocus: number
+    skills: number
     university: number
     yearOfStudy: number
     role: number
@@ -3436,11 +3509,11 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
-    about?: true
+    bio?: true
     location?: true
     username?: true
     department?: true
-    researchFocusSkills?: true
+    researchFocus?: true
     university?: true
     yearOfStudy?: true
     role?: true
@@ -3454,11 +3527,11 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
-    about?: true
+    bio?: true
     location?: true
     username?: true
     department?: true
-    researchFocusSkills?: true
+    researchFocus?: true
     university?: true
     yearOfStudy?: true
     role?: true
@@ -3472,11 +3545,13 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
-    about?: true
+    bio?: true
     location?: true
     username?: true
     department?: true
-    researchFocusSkills?: true
+    publications?: true
+    researchFocus?: true
+    skills?: true
     university?: true
     yearOfStudy?: true
     role?: true
@@ -3563,11 +3638,13 @@ export namespace Prisma {
     image: string | null
     createdAt: Date
     updatedAt: Date
-    about: string | null
+    bio: string | null
     location: string | null
     username: string | null
     department: string | null
-    researchFocusSkills: string | null
+    publications: string[]
+    researchFocus: string | null
+    skills: string[]
     university: string | null
     yearOfStudy: string | null
     role: $Enums.Role
@@ -3598,18 +3675,20 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    about?: boolean
+    bio?: boolean
     location?: boolean
     username?: boolean
     department?: boolean
-    researchFocusSkills?: boolean
+    publications?: boolean
+    researchFocus?: boolean
+    skills?: boolean
     university?: boolean
     yearOfStudy?: boolean
     role?: boolean
     Event?: boolean | User$EventArgs<ExtArgs>
     createdGroups?: boolean | User$createdGroupsArgs<ExtArgs>
     groupMemberships?: boolean | User$groupMembershipsArgs<ExtArgs>
-    Resource?: boolean | User$ResourceArgs<ExtArgs>
+    resources?: boolean | User$resourcesArgs<ExtArgs>
     Opportunity?: boolean | User$OpportunityArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
     Comments?: boolean | User$CommentsArgs<ExtArgs>
@@ -3628,11 +3707,13 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    about?: boolean
+    bio?: boolean
     location?: boolean
     username?: boolean
     department?: boolean
-    researchFocusSkills?: boolean
+    publications?: boolean
+    researchFocus?: boolean
+    skills?: boolean
     university?: boolean
     yearOfStudy?: boolean
     role?: boolean
@@ -3646,11 +3727,13 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    about?: boolean
+    bio?: boolean
     location?: boolean
     username?: boolean
     department?: boolean
-    researchFocusSkills?: boolean
+    publications?: boolean
+    researchFocus?: boolean
+    skills?: boolean
     university?: boolean
     yearOfStudy?: boolean
     role?: boolean
@@ -3664,22 +3747,24 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    about?: boolean
+    bio?: boolean
     location?: boolean
     username?: boolean
     department?: boolean
-    researchFocusSkills?: boolean
+    publications?: boolean
+    researchFocus?: boolean
+    skills?: boolean
     university?: boolean
     yearOfStudy?: boolean
     role?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "about" | "location" | "username" | "department" | "researchFocusSkills" | "university" | "yearOfStudy" | "role", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "bio" | "location" | "username" | "department" | "publications" | "researchFocus" | "skills" | "university" | "yearOfStudy" | "role", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Event?: boolean | User$EventArgs<ExtArgs>
     createdGroups?: boolean | User$createdGroupsArgs<ExtArgs>
     groupMemberships?: boolean | User$groupMembershipsArgs<ExtArgs>
-    Resource?: boolean | User$ResourceArgs<ExtArgs>
+    resources?: boolean | User$resourcesArgs<ExtArgs>
     Opportunity?: boolean | User$OpportunityArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
     Comments?: boolean | User$CommentsArgs<ExtArgs>
@@ -3698,7 +3783,7 @@ export namespace Prisma {
       Event: Prisma.$EventPayload<ExtArgs>[]
       createdGroups: Prisma.$GroupPayload<ExtArgs>[]
       groupMemberships: Prisma.$GroupMemberPayload<ExtArgs>[]
-      Resource: Prisma.$ResourcePayload<ExtArgs>[]
+      resources: Prisma.$ResourcePayload<ExtArgs>[]
       Opportunity: Prisma.$OpportunityPayload<ExtArgs>[]
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       Comments: Prisma.$CommentPayload<ExtArgs>[]
@@ -3715,11 +3800,13 @@ export namespace Prisma {
       image: string | null
       createdAt: Date
       updatedAt: Date
-      about: string | null
+      bio: string | null
       location: string | null
       username: string | null
       department: string | null
-      researchFocusSkills: string | null
+      publications: string[]
+      researchFocus: string | null
+      skills: string[]
       university: string | null
       yearOfStudy: string | null
       role: $Enums.Role
@@ -4120,7 +4207,7 @@ export namespace Prisma {
     Event<T extends User$EventArgs<ExtArgs> = {}>(args?: Subset<T, User$EventArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     createdGroups<T extends User$createdGroupsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdGroupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     groupMemberships<T extends User$groupMembershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$groupMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Resource<T extends User$ResourceArgs<ExtArgs> = {}>(args?: Subset<T, User$ResourceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    resources<T extends User$resourcesArgs<ExtArgs> = {}>(args?: Subset<T, User$resourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Opportunity<T extends User$OpportunityArgs<ExtArgs> = {}>(args?: Subset<T, User$OpportunityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Comments<T extends User$CommentsArgs<ExtArgs> = {}>(args?: Subset<T, User$CommentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4164,11 +4251,13 @@ export namespace Prisma {
     readonly image: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
-    readonly about: FieldRef<"User", 'String'>
+    readonly bio: FieldRef<"User", 'String'>
     readonly location: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
     readonly department: FieldRef<"User", 'String'>
-    readonly researchFocusSkills: FieldRef<"User", 'String'>
+    readonly publications: FieldRef<"User", 'String[]'>
+    readonly researchFocus: FieldRef<"User", 'String'>
+    readonly skills: FieldRef<"User", 'String[]'>
     readonly university: FieldRef<"User", 'String'>
     readonly yearOfStudy: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
@@ -4632,9 +4721,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.Resource
+   * User.resources
    */
-  export type User$ResourceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$resourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Resource
      */
@@ -11636,113 +11725,243 @@ export namespace Prisma {
   }
 
   export type ResourceAvgAggregateOutputType = {
+    depth: number | null
+    sortOrder: number | null
+    fileSize: number | null
+    version: number | null
     downloads: number | null
     rating: number | null
   }
 
   export type ResourceSumAggregateOutputType = {
+    depth: number | null
+    sortOrder: number | null
+    fileSize: number | null
+    version: number | null
     downloads: number | null
     rating: number | null
   }
 
   export type ResourceMinAggregateOutputType = {
     id: string | null
-    title: string | null
+    name: string | null
+    slug: string | null
+    nodeType: $Enums.ResourceNodeType | null
+    folderKind: $Enums.ResourceFolderKind | null
+    mediaType: $Enums.ResourceMediaType | null
+    parentId: string | null
+    depth: number | null
+    sortOrder: number | null
+    canonicalPath: string | null
+    description: string | null
+    universityCode: string | null
+    departmentCode: string | null
+    courseCode: string | null
+    fileName: string | null
+    fileSize: number | null
+    mimeType: string | null
+    storageKey: string | null
+    downloadUrl: string | null
+    externalUrl: string | null
+    previewUrl: string | null
+    checksum: string | null
+    version: number | null
+    downloads: number | null
+    rating: number | null
     uploadedById: string | null
     createdAt: Date | null
-    author: string | null
-    description: string | null
-    downloadUrl: string | null
-    downloads: number | null
-    externalUrl: string | null
-    rating: number | null
     updatedAt: Date | null
+    publishedAt: Date | null
+    isArchived: boolean | null
   }
 
   export type ResourceMaxAggregateOutputType = {
     id: string | null
-    title: string | null
+    name: string | null
+    slug: string | null
+    nodeType: $Enums.ResourceNodeType | null
+    folderKind: $Enums.ResourceFolderKind | null
+    mediaType: $Enums.ResourceMediaType | null
+    parentId: string | null
+    depth: number | null
+    sortOrder: number | null
+    canonicalPath: string | null
+    description: string | null
+    universityCode: string | null
+    departmentCode: string | null
+    courseCode: string | null
+    fileName: string | null
+    fileSize: number | null
+    mimeType: string | null
+    storageKey: string | null
+    downloadUrl: string | null
+    externalUrl: string | null
+    previewUrl: string | null
+    checksum: string | null
+    version: number | null
+    downloads: number | null
+    rating: number | null
     uploadedById: string | null
     createdAt: Date | null
-    author: string | null
-    description: string | null
-    downloadUrl: string | null
-    downloads: number | null
-    externalUrl: string | null
-    rating: number | null
     updatedAt: Date | null
+    publishedAt: Date | null
+    isArchived: boolean | null
   }
 
   export type ResourceCountAggregateOutputType = {
     id: number
-    title: number
+    name: number
+    slug: number
+    nodeType: number
+    folderKind: number
+    mediaType: number
+    parentId: number
+    depth: number
+    sortOrder: number
+    canonicalPath: number
+    description: number
+    tags: number
+    categories: number
+    universityCode: number
+    departmentCode: number
+    courseCode: number
+    fileName: number
+    fileSize: number
+    mimeType: number
+    storageKey: number
+    downloadUrl: number
+    externalUrl: number
+    previewUrl: number
+    checksum: number
+    version: number
+    downloads: number
+    rating: number
     uploadedById: number
     createdAt: number
-    author: number
-    categories: number
-    description: number
-    downloadUrl: number
-    downloads: number
-    externalUrl: number
-    rating: number
-    tags: number
     updatedAt: number
+    publishedAt: number
+    isArchived: number
     _all: number
   }
 
 
   export type ResourceAvgAggregateInputType = {
+    depth?: true
+    sortOrder?: true
+    fileSize?: true
+    version?: true
     downloads?: true
     rating?: true
   }
 
   export type ResourceSumAggregateInputType = {
+    depth?: true
+    sortOrder?: true
+    fileSize?: true
+    version?: true
     downloads?: true
     rating?: true
   }
 
   export type ResourceMinAggregateInputType = {
     id?: true
-    title?: true
+    name?: true
+    slug?: true
+    nodeType?: true
+    folderKind?: true
+    mediaType?: true
+    parentId?: true
+    depth?: true
+    sortOrder?: true
+    canonicalPath?: true
+    description?: true
+    universityCode?: true
+    departmentCode?: true
+    courseCode?: true
+    fileName?: true
+    fileSize?: true
+    mimeType?: true
+    storageKey?: true
+    downloadUrl?: true
+    externalUrl?: true
+    previewUrl?: true
+    checksum?: true
+    version?: true
+    downloads?: true
+    rating?: true
     uploadedById?: true
     createdAt?: true
-    author?: true
-    description?: true
-    downloadUrl?: true
-    downloads?: true
-    externalUrl?: true
-    rating?: true
     updatedAt?: true
+    publishedAt?: true
+    isArchived?: true
   }
 
   export type ResourceMaxAggregateInputType = {
     id?: true
-    title?: true
+    name?: true
+    slug?: true
+    nodeType?: true
+    folderKind?: true
+    mediaType?: true
+    parentId?: true
+    depth?: true
+    sortOrder?: true
+    canonicalPath?: true
+    description?: true
+    universityCode?: true
+    departmentCode?: true
+    courseCode?: true
+    fileName?: true
+    fileSize?: true
+    mimeType?: true
+    storageKey?: true
+    downloadUrl?: true
+    externalUrl?: true
+    previewUrl?: true
+    checksum?: true
+    version?: true
+    downloads?: true
+    rating?: true
     uploadedById?: true
     createdAt?: true
-    author?: true
-    description?: true
-    downloadUrl?: true
-    downloads?: true
-    externalUrl?: true
-    rating?: true
     updatedAt?: true
+    publishedAt?: true
+    isArchived?: true
   }
 
   export type ResourceCountAggregateInputType = {
     id?: true
-    title?: true
+    name?: true
+    slug?: true
+    nodeType?: true
+    folderKind?: true
+    mediaType?: true
+    parentId?: true
+    depth?: true
+    sortOrder?: true
+    canonicalPath?: true
+    description?: true
+    tags?: true
+    categories?: true
+    universityCode?: true
+    departmentCode?: true
+    courseCode?: true
+    fileName?: true
+    fileSize?: true
+    mimeType?: true
+    storageKey?: true
+    downloadUrl?: true
+    externalUrl?: true
+    previewUrl?: true
+    checksum?: true
+    version?: true
+    downloads?: true
+    rating?: true
     uploadedById?: true
     createdAt?: true
-    author?: true
-    categories?: true
-    description?: true
-    downloadUrl?: true
-    downloads?: true
-    externalUrl?: true
-    rating?: true
-    tags?: true
     updatedAt?: true
+    publishedAt?: true
+    isArchived?: true
     _all?: true
   }
 
@@ -11834,18 +12053,37 @@ export namespace Prisma {
 
   export type ResourceGroupByOutputType = {
     id: string
-    title: string
-    uploadedById: string
-    createdAt: Date
-    author: string
-    categories: string[]
-    description: string
-    downloadUrl: string
-    downloads: number
-    externalUrl: string | null
-    rating: number
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind: $Enums.ResourceFolderKind | null
+    mediaType: $Enums.ResourceMediaType | null
+    parentId: string | null
+    depth: number
+    sortOrder: number
+    canonicalPath: string
+    description: string | null
     tags: string[]
+    categories: string[]
+    universityCode: string | null
+    departmentCode: string | null
+    courseCode: string | null
+    fileName: string | null
+    fileSize: number | null
+    mimeType: string | null
+    storageKey: string | null
+    downloadUrl: string | null
+    externalUrl: string | null
+    previewUrl: string | null
+    checksum: string | null
+    version: number
+    downloads: number
+    rating: number
+    uploadedById: string | null
+    createdAt: Date
     updatedAt: Date
+    publishedAt: Date | null
+    isArchived: boolean
     _count: ResourceCountAggregateOutputType | null
     _avg: ResourceAvgAggregateOutputType | null
     _sum: ResourceSumAggregateOutputType | null
@@ -11869,101 +12107,208 @@ export namespace Prisma {
 
   export type ResourceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    title?: boolean
+    name?: boolean
+    slug?: boolean
+    nodeType?: boolean
+    folderKind?: boolean
+    mediaType?: boolean
+    parentId?: boolean
+    depth?: boolean
+    sortOrder?: boolean
+    canonicalPath?: boolean
+    description?: boolean
+    tags?: boolean
+    categories?: boolean
+    universityCode?: boolean
+    departmentCode?: boolean
+    courseCode?: boolean
+    fileName?: boolean
+    fileSize?: boolean
+    mimeType?: boolean
+    storageKey?: boolean
+    downloadUrl?: boolean
+    externalUrl?: boolean
+    previewUrl?: boolean
+    checksum?: boolean
+    version?: boolean
+    downloads?: boolean
+    rating?: boolean
     uploadedById?: boolean
     createdAt?: boolean
-    author?: boolean
-    categories?: boolean
-    description?: boolean
-    downloadUrl?: boolean
-    downloads?: boolean
-    externalUrl?: boolean
-    rating?: boolean
-    tags?: boolean
     updatedAt?: boolean
-    uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    publishedAt?: boolean
+    isArchived?: boolean
+    parent?: boolean | Resource$parentArgs<ExtArgs>
+    children?: boolean | Resource$childrenArgs<ExtArgs>
+    uploadedBy?: boolean | Resource$uploadedByArgs<ExtArgs>
+    _count?: boolean | ResourceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["resource"]>
 
   export type ResourceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    title?: boolean
+    name?: boolean
+    slug?: boolean
+    nodeType?: boolean
+    folderKind?: boolean
+    mediaType?: boolean
+    parentId?: boolean
+    depth?: boolean
+    sortOrder?: boolean
+    canonicalPath?: boolean
+    description?: boolean
+    tags?: boolean
+    categories?: boolean
+    universityCode?: boolean
+    departmentCode?: boolean
+    courseCode?: boolean
+    fileName?: boolean
+    fileSize?: boolean
+    mimeType?: boolean
+    storageKey?: boolean
+    downloadUrl?: boolean
+    externalUrl?: boolean
+    previewUrl?: boolean
+    checksum?: boolean
+    version?: boolean
+    downloads?: boolean
+    rating?: boolean
     uploadedById?: boolean
     createdAt?: boolean
-    author?: boolean
-    categories?: boolean
-    description?: boolean
-    downloadUrl?: boolean
-    downloads?: boolean
-    externalUrl?: boolean
-    rating?: boolean
-    tags?: boolean
     updatedAt?: boolean
-    uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    publishedAt?: boolean
+    isArchived?: boolean
+    parent?: boolean | Resource$parentArgs<ExtArgs>
+    uploadedBy?: boolean | Resource$uploadedByArgs<ExtArgs>
   }, ExtArgs["result"]["resource"]>
 
   export type ResourceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    title?: boolean
+    name?: boolean
+    slug?: boolean
+    nodeType?: boolean
+    folderKind?: boolean
+    mediaType?: boolean
+    parentId?: boolean
+    depth?: boolean
+    sortOrder?: boolean
+    canonicalPath?: boolean
+    description?: boolean
+    tags?: boolean
+    categories?: boolean
+    universityCode?: boolean
+    departmentCode?: boolean
+    courseCode?: boolean
+    fileName?: boolean
+    fileSize?: boolean
+    mimeType?: boolean
+    storageKey?: boolean
+    downloadUrl?: boolean
+    externalUrl?: boolean
+    previewUrl?: boolean
+    checksum?: boolean
+    version?: boolean
+    downloads?: boolean
+    rating?: boolean
     uploadedById?: boolean
     createdAt?: boolean
-    author?: boolean
-    categories?: boolean
-    description?: boolean
-    downloadUrl?: boolean
-    downloads?: boolean
-    externalUrl?: boolean
-    rating?: boolean
-    tags?: boolean
     updatedAt?: boolean
-    uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    publishedAt?: boolean
+    isArchived?: boolean
+    parent?: boolean | Resource$parentArgs<ExtArgs>
+    uploadedBy?: boolean | Resource$uploadedByArgs<ExtArgs>
   }, ExtArgs["result"]["resource"]>
 
   export type ResourceSelectScalar = {
     id?: boolean
-    title?: boolean
+    name?: boolean
+    slug?: boolean
+    nodeType?: boolean
+    folderKind?: boolean
+    mediaType?: boolean
+    parentId?: boolean
+    depth?: boolean
+    sortOrder?: boolean
+    canonicalPath?: boolean
+    description?: boolean
+    tags?: boolean
+    categories?: boolean
+    universityCode?: boolean
+    departmentCode?: boolean
+    courseCode?: boolean
+    fileName?: boolean
+    fileSize?: boolean
+    mimeType?: boolean
+    storageKey?: boolean
+    downloadUrl?: boolean
+    externalUrl?: boolean
+    previewUrl?: boolean
+    checksum?: boolean
+    version?: boolean
+    downloads?: boolean
+    rating?: boolean
     uploadedById?: boolean
     createdAt?: boolean
-    author?: boolean
-    categories?: boolean
-    description?: boolean
-    downloadUrl?: boolean
-    downloads?: boolean
-    externalUrl?: boolean
-    rating?: boolean
-    tags?: boolean
     updatedAt?: boolean
+    publishedAt?: boolean
+    isArchived?: boolean
   }
 
-  export type ResourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "uploadedById" | "createdAt" | "author" | "categories" | "description" | "downloadUrl" | "downloads" | "externalUrl" | "rating" | "tags" | "updatedAt", ExtArgs["result"]["resource"]>
+  export type ResourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "nodeType" | "folderKind" | "mediaType" | "parentId" | "depth" | "sortOrder" | "canonicalPath" | "description" | "tags" | "categories" | "universityCode" | "departmentCode" | "courseCode" | "fileName" | "fileSize" | "mimeType" | "storageKey" | "downloadUrl" | "externalUrl" | "previewUrl" | "checksum" | "version" | "downloads" | "rating" | "uploadedById" | "createdAt" | "updatedAt" | "publishedAt" | "isArchived", ExtArgs["result"]["resource"]>
   export type ResourceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | Resource$parentArgs<ExtArgs>
+    children?: boolean | Resource$childrenArgs<ExtArgs>
+    uploadedBy?: boolean | Resource$uploadedByArgs<ExtArgs>
+    _count?: boolean | ResourceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ResourceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | Resource$parentArgs<ExtArgs>
+    uploadedBy?: boolean | Resource$uploadedByArgs<ExtArgs>
   }
   export type ResourceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    uploadedBy?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | Resource$parentArgs<ExtArgs>
+    uploadedBy?: boolean | Resource$uploadedByArgs<ExtArgs>
   }
 
   export type $ResourcePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Resource"
     objects: {
-      uploadedBy: Prisma.$UserPayload<ExtArgs>
+      parent: Prisma.$ResourcePayload<ExtArgs> | null
+      children: Prisma.$ResourcePayload<ExtArgs>[]
+      uploadedBy: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      title: string
-      uploadedById: string
-      createdAt: Date
-      author: string
-      categories: string[]
-      description: string
-      downloadUrl: string
-      downloads: number
-      externalUrl: string | null
-      rating: number
+      name: string
+      slug: string
+      nodeType: $Enums.ResourceNodeType
+      folderKind: $Enums.ResourceFolderKind | null
+      mediaType: $Enums.ResourceMediaType | null
+      parentId: string | null
+      depth: number
+      sortOrder: number
+      canonicalPath: string
+      description: string | null
       tags: string[]
+      categories: string[]
+      universityCode: string | null
+      departmentCode: string | null
+      courseCode: string | null
+      fileName: string | null
+      fileSize: number | null
+      mimeType: string | null
+      storageKey: string | null
+      downloadUrl: string | null
+      externalUrl: string | null
+      previewUrl: string | null
+      checksum: string | null
+      version: number
+      downloads: number
+      rating: number
+      uploadedById: string | null
+      createdAt: Date
       updatedAt: Date
+      publishedAt: Date | null
+      isArchived: boolean
     }, ExtArgs["result"]["resource"]>
     composites: {}
   }
@@ -12358,7 +12703,9 @@ export namespace Prisma {
    */
   export interface Prisma__ResourceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    uploadedBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    parent<T extends Resource$parentArgs<ExtArgs> = {}>(args?: Subset<T, Resource$parentArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    children<T extends Resource$childrenArgs<ExtArgs> = {}>(args?: Subset<T, Resource$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    uploadedBy<T extends Resource$uploadedByArgs<ExtArgs> = {}>(args?: Subset<T, Resource$uploadedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12389,18 +12736,37 @@ export namespace Prisma {
    */
   interface ResourceFieldRefs {
     readonly id: FieldRef<"Resource", 'String'>
-    readonly title: FieldRef<"Resource", 'String'>
+    readonly name: FieldRef<"Resource", 'String'>
+    readonly slug: FieldRef<"Resource", 'String'>
+    readonly nodeType: FieldRef<"Resource", 'ResourceNodeType'>
+    readonly folderKind: FieldRef<"Resource", 'ResourceFolderKind'>
+    readonly mediaType: FieldRef<"Resource", 'ResourceMediaType'>
+    readonly parentId: FieldRef<"Resource", 'String'>
+    readonly depth: FieldRef<"Resource", 'Int'>
+    readonly sortOrder: FieldRef<"Resource", 'Int'>
+    readonly canonicalPath: FieldRef<"Resource", 'String'>
+    readonly description: FieldRef<"Resource", 'String'>
+    readonly tags: FieldRef<"Resource", 'String[]'>
+    readonly categories: FieldRef<"Resource", 'String[]'>
+    readonly universityCode: FieldRef<"Resource", 'String'>
+    readonly departmentCode: FieldRef<"Resource", 'String'>
+    readonly courseCode: FieldRef<"Resource", 'String'>
+    readonly fileName: FieldRef<"Resource", 'String'>
+    readonly fileSize: FieldRef<"Resource", 'Int'>
+    readonly mimeType: FieldRef<"Resource", 'String'>
+    readonly storageKey: FieldRef<"Resource", 'String'>
+    readonly downloadUrl: FieldRef<"Resource", 'String'>
+    readonly externalUrl: FieldRef<"Resource", 'String'>
+    readonly previewUrl: FieldRef<"Resource", 'String'>
+    readonly checksum: FieldRef<"Resource", 'String'>
+    readonly version: FieldRef<"Resource", 'Int'>
+    readonly downloads: FieldRef<"Resource", 'Int'>
+    readonly rating: FieldRef<"Resource", 'Float'>
     readonly uploadedById: FieldRef<"Resource", 'String'>
     readonly createdAt: FieldRef<"Resource", 'DateTime'>
-    readonly author: FieldRef<"Resource", 'String'>
-    readonly categories: FieldRef<"Resource", 'String[]'>
-    readonly description: FieldRef<"Resource", 'String'>
-    readonly downloadUrl: FieldRef<"Resource", 'String'>
-    readonly downloads: FieldRef<"Resource", 'Int'>
-    readonly externalUrl: FieldRef<"Resource", 'String'>
-    readonly rating: FieldRef<"Resource", 'Float'>
-    readonly tags: FieldRef<"Resource", 'String[]'>
     readonly updatedAt: FieldRef<"Resource", 'DateTime'>
+    readonly publishedAt: FieldRef<"Resource", 'DateTime'>
+    readonly isArchived: FieldRef<"Resource", 'Boolean'>
   }
     
 
@@ -12794,6 +13160,68 @@ export namespace Prisma {
      * Limit how many Resources to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Resource.parent
+   */
+  export type Resource$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    where?: ResourceWhereInput
+  }
+
+  /**
+   * Resource.children
+   */
+  export type Resource$childrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    where?: ResourceWhereInput
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    cursor?: ResourceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+  }
+
+  /**
+   * Resource.uploadedBy
+   */
+  export type Resource$uploadedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -17350,11 +17778,13 @@ export namespace Prisma {
     image: 'image',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    about: 'about',
+    bio: 'bio',
     location: 'location',
     username: 'username',
     department: 'department',
-    researchFocusSkills: 'researchFocusSkills',
+    publications: 'publications',
+    researchFocus: 'researchFocus',
+    skills: 'skills',
     university: 'university',
     yearOfStudy: 'yearOfStudy',
     role: 'role'
@@ -17457,18 +17887,37 @@ export namespace Prisma {
 
   export const ResourceScalarFieldEnum: {
     id: 'id',
-    title: 'title',
+    name: 'name',
+    slug: 'slug',
+    nodeType: 'nodeType',
+    folderKind: 'folderKind',
+    mediaType: 'mediaType',
+    parentId: 'parentId',
+    depth: 'depth',
+    sortOrder: 'sortOrder',
+    canonicalPath: 'canonicalPath',
+    description: 'description',
+    tags: 'tags',
+    categories: 'categories',
+    universityCode: 'universityCode',
+    departmentCode: 'departmentCode',
+    courseCode: 'courseCode',
+    fileName: 'fileName',
+    fileSize: 'fileSize',
+    mimeType: 'mimeType',
+    storageKey: 'storageKey',
+    downloadUrl: 'downloadUrl',
+    externalUrl: 'externalUrl',
+    previewUrl: 'previewUrl',
+    checksum: 'checksum',
+    version: 'version',
+    downloads: 'downloads',
+    rating: 'rating',
     uploadedById: 'uploadedById',
     createdAt: 'createdAt',
-    author: 'author',
-    categories: 'categories',
-    description: 'description',
-    downloadUrl: 'downloadUrl',
-    downloads: 'downloads',
-    externalUrl: 'externalUrl',
-    rating: 'rating',
-    tags: 'tags',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    publishedAt: 'publishedAt',
+    isArchived: 'isArchived'
   };
 
   export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
@@ -17657,6 +18106,48 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'ResourceNodeType'
+   */
+  export type EnumResourceNodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceNodeType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ResourceNodeType[]'
+   */
+  export type ListEnumResourceNodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceNodeType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ResourceFolderKind'
+   */
+  export type EnumResourceFolderKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceFolderKind'>
+    
+
+
+  /**
+   * Reference to a field of type 'ResourceFolderKind[]'
+   */
+  export type ListEnumResourceFolderKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceFolderKind[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ResourceMediaType'
+   */
+  export type EnumResourceMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceMediaType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ResourceMediaType[]'
+   */
+  export type ListEnumResourceMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceMediaType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -17760,18 +18251,20 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    about?: StringNullableFilter<"User"> | string | null
+    bio?: StringNullableFilter<"User"> | string | null
     location?: StringNullableFilter<"User"> | string | null
     username?: StringNullableFilter<"User"> | string | null
     department?: StringNullableFilter<"User"> | string | null
-    researchFocusSkills?: StringNullableFilter<"User"> | string | null
+    publications?: StringNullableListFilter<"User">
+    researchFocus?: StringNullableFilter<"User"> | string | null
+    skills?: StringNullableListFilter<"User">
     university?: StringNullableFilter<"User"> | string | null
     yearOfStudy?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     Event?: EventListRelationFilter
     createdGroups?: GroupListRelationFilter
     groupMemberships?: GroupMemberListRelationFilter
-    Resource?: ResourceListRelationFilter
+    resources?: ResourceListRelationFilter
     Opportunity?: OpportunityListRelationFilter
     accounts?: AccountListRelationFilter
     Comments?: CommentListRelationFilter
@@ -17789,18 +18282,20 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    about?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
     username?: SortOrderInput | SortOrder
     department?: SortOrderInput | SortOrder
-    researchFocusSkills?: SortOrderInput | SortOrder
+    publications?: SortOrder
+    researchFocus?: SortOrderInput | SortOrder
+    skills?: SortOrder
     university?: SortOrderInput | SortOrder
     yearOfStudy?: SortOrderInput | SortOrder
     role?: SortOrder
     Event?: EventOrderByRelationAggregateInput
     createdGroups?: GroupOrderByRelationAggregateInput
     groupMemberships?: GroupMemberOrderByRelationAggregateInput
-    Resource?: ResourceOrderByRelationAggregateInput
+    resources?: ResourceOrderByRelationAggregateInput
     Opportunity?: OpportunityOrderByRelationAggregateInput
     accounts?: AccountOrderByRelationAggregateInput
     Comments?: CommentOrderByRelationAggregateInput
@@ -17821,18 +18316,20 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    about?: StringNullableFilter<"User"> | string | null
+    bio?: StringNullableFilter<"User"> | string | null
     location?: StringNullableFilter<"User"> | string | null
     username?: StringNullableFilter<"User"> | string | null
     department?: StringNullableFilter<"User"> | string | null
-    researchFocusSkills?: StringNullableFilter<"User"> | string | null
+    publications?: StringNullableListFilter<"User">
+    researchFocus?: StringNullableFilter<"User"> | string | null
+    skills?: StringNullableListFilter<"User">
     university?: StringNullableFilter<"User"> | string | null
     yearOfStudy?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     Event?: EventListRelationFilter
     createdGroups?: GroupListRelationFilter
     groupMemberships?: GroupMemberListRelationFilter
-    Resource?: ResourceListRelationFilter
+    resources?: ResourceListRelationFilter
     Opportunity?: OpportunityListRelationFilter
     accounts?: AccountListRelationFilter
     Comments?: CommentListRelationFilter
@@ -17850,11 +18347,13 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    about?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
     location?: SortOrderInput | SortOrder
     username?: SortOrderInput | SortOrder
     department?: SortOrderInput | SortOrder
-    researchFocusSkills?: SortOrderInput | SortOrder
+    publications?: SortOrder
+    researchFocus?: SortOrderInput | SortOrder
+    skills?: SortOrder
     university?: SortOrderInput | SortOrder
     yearOfStudy?: SortOrderInput | SortOrder
     role?: SortOrder
@@ -17874,11 +18373,13 @@ export namespace Prisma {
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    about?: StringNullableWithAggregatesFilter<"User"> | string | null
+    bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     location?: StringNullableWithAggregatesFilter<"User"> | string | null
     username?: StringNullableWithAggregatesFilter<"User"> | string | null
     department?: StringNullableWithAggregatesFilter<"User"> | string | null
-    researchFocusSkills?: StringNullableWithAggregatesFilter<"User"> | string | null
+    publications?: StringNullableListFilter<"User">
+    researchFocus?: StringNullableWithAggregatesFilter<"User"> | string | null
+    skills?: StringNullableListFilter<"User">
     university?: StringNullableWithAggregatesFilter<"User"> | string | null
     yearOfStudy?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
@@ -18367,72 +18868,155 @@ export namespace Prisma {
     OR?: ResourceWhereInput[]
     NOT?: ResourceWhereInput | ResourceWhereInput[]
     id?: StringFilter<"Resource"> | string
-    title?: StringFilter<"Resource"> | string
-    uploadedById?: StringFilter<"Resource"> | string
-    createdAt?: DateTimeFilter<"Resource"> | Date | string
-    author?: StringFilter<"Resource"> | string
-    categories?: StringNullableListFilter<"Resource">
-    description?: StringFilter<"Resource"> | string
-    downloadUrl?: StringFilter<"Resource"> | string
-    downloads?: IntFilter<"Resource"> | number
-    externalUrl?: StringNullableFilter<"Resource"> | string | null
-    rating?: FloatFilter<"Resource"> | number
+    name?: StringFilter<"Resource"> | string
+    slug?: StringFilter<"Resource"> | string
+    nodeType?: EnumResourceNodeTypeFilter<"Resource"> | $Enums.ResourceNodeType
+    folderKind?: EnumResourceFolderKindNullableFilter<"Resource"> | $Enums.ResourceFolderKind | null
+    mediaType?: EnumResourceMediaTypeNullableFilter<"Resource"> | $Enums.ResourceMediaType | null
+    parentId?: StringNullableFilter<"Resource"> | string | null
+    depth?: IntFilter<"Resource"> | number
+    sortOrder?: IntFilter<"Resource"> | number
+    canonicalPath?: StringFilter<"Resource"> | string
+    description?: StringNullableFilter<"Resource"> | string | null
     tags?: StringNullableListFilter<"Resource">
+    categories?: StringNullableListFilter<"Resource">
+    universityCode?: StringNullableFilter<"Resource"> | string | null
+    departmentCode?: StringNullableFilter<"Resource"> | string | null
+    courseCode?: StringNullableFilter<"Resource"> | string | null
+    fileName?: StringNullableFilter<"Resource"> | string | null
+    fileSize?: IntNullableFilter<"Resource"> | number | null
+    mimeType?: StringNullableFilter<"Resource"> | string | null
+    storageKey?: StringNullableFilter<"Resource"> | string | null
+    downloadUrl?: StringNullableFilter<"Resource"> | string | null
+    externalUrl?: StringNullableFilter<"Resource"> | string | null
+    previewUrl?: StringNullableFilter<"Resource"> | string | null
+    checksum?: StringNullableFilter<"Resource"> | string | null
+    version?: IntFilter<"Resource"> | number
+    downloads?: IntFilter<"Resource"> | number
+    rating?: FloatFilter<"Resource"> | number
+    uploadedById?: StringNullableFilter<"Resource"> | string | null
+    createdAt?: DateTimeFilter<"Resource"> | Date | string
     updatedAt?: DateTimeFilter<"Resource"> | Date | string
-    uploadedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    publishedAt?: DateTimeNullableFilter<"Resource"> | Date | string | null
+    isArchived?: BoolFilter<"Resource"> | boolean
+    parent?: XOR<ResourceNullableScalarRelationFilter, ResourceWhereInput> | null
+    children?: ResourceListRelationFilter
+    uploadedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type ResourceOrderByWithRelationInput = {
     id?: SortOrder
-    title?: SortOrder
-    uploadedById?: SortOrder
-    createdAt?: SortOrder
-    author?: SortOrder
-    categories?: SortOrder
-    description?: SortOrder
-    downloadUrl?: SortOrder
-    downloads?: SortOrder
-    externalUrl?: SortOrderInput | SortOrder
-    rating?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    nodeType?: SortOrder
+    folderKind?: SortOrderInput | SortOrder
+    mediaType?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
+    depth?: SortOrder
+    sortOrder?: SortOrder
+    canonicalPath?: SortOrder
+    description?: SortOrderInput | SortOrder
     tags?: SortOrder
+    categories?: SortOrder
+    universityCode?: SortOrderInput | SortOrder
+    departmentCode?: SortOrderInput | SortOrder
+    courseCode?: SortOrderInput | SortOrder
+    fileName?: SortOrderInput | SortOrder
+    fileSize?: SortOrderInput | SortOrder
+    mimeType?: SortOrderInput | SortOrder
+    storageKey?: SortOrderInput | SortOrder
+    downloadUrl?: SortOrderInput | SortOrder
+    externalUrl?: SortOrderInput | SortOrder
+    previewUrl?: SortOrderInput | SortOrder
+    checksum?: SortOrderInput | SortOrder
+    version?: SortOrder
+    downloads?: SortOrder
+    rating?: SortOrder
+    uploadedById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
+    publishedAt?: SortOrderInput | SortOrder
+    isArchived?: SortOrder
+    parent?: ResourceOrderByWithRelationInput
+    children?: ResourceOrderByRelationAggregateInput
     uploadedBy?: UserOrderByWithRelationInput
   }
 
   export type ResourceWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    canonicalPath?: string
+    parentId_slug?: ResourceParentIdSlugCompoundUniqueInput
     AND?: ResourceWhereInput | ResourceWhereInput[]
     OR?: ResourceWhereInput[]
     NOT?: ResourceWhereInput | ResourceWhereInput[]
-    title?: StringFilter<"Resource"> | string
-    uploadedById?: StringFilter<"Resource"> | string
-    createdAt?: DateTimeFilter<"Resource"> | Date | string
-    author?: StringFilter<"Resource"> | string
-    categories?: StringNullableListFilter<"Resource">
-    description?: StringFilter<"Resource"> | string
-    downloadUrl?: StringFilter<"Resource"> | string
-    downloads?: IntFilter<"Resource"> | number
-    externalUrl?: StringNullableFilter<"Resource"> | string | null
-    rating?: FloatFilter<"Resource"> | number
+    name?: StringFilter<"Resource"> | string
+    slug?: StringFilter<"Resource"> | string
+    nodeType?: EnumResourceNodeTypeFilter<"Resource"> | $Enums.ResourceNodeType
+    folderKind?: EnumResourceFolderKindNullableFilter<"Resource"> | $Enums.ResourceFolderKind | null
+    mediaType?: EnumResourceMediaTypeNullableFilter<"Resource"> | $Enums.ResourceMediaType | null
+    parentId?: StringNullableFilter<"Resource"> | string | null
+    depth?: IntFilter<"Resource"> | number
+    sortOrder?: IntFilter<"Resource"> | number
+    description?: StringNullableFilter<"Resource"> | string | null
     tags?: StringNullableListFilter<"Resource">
+    categories?: StringNullableListFilter<"Resource">
+    universityCode?: StringNullableFilter<"Resource"> | string | null
+    departmentCode?: StringNullableFilter<"Resource"> | string | null
+    courseCode?: StringNullableFilter<"Resource"> | string | null
+    fileName?: StringNullableFilter<"Resource"> | string | null
+    fileSize?: IntNullableFilter<"Resource"> | number | null
+    mimeType?: StringNullableFilter<"Resource"> | string | null
+    storageKey?: StringNullableFilter<"Resource"> | string | null
+    downloadUrl?: StringNullableFilter<"Resource"> | string | null
+    externalUrl?: StringNullableFilter<"Resource"> | string | null
+    previewUrl?: StringNullableFilter<"Resource"> | string | null
+    checksum?: StringNullableFilter<"Resource"> | string | null
+    version?: IntFilter<"Resource"> | number
+    downloads?: IntFilter<"Resource"> | number
+    rating?: FloatFilter<"Resource"> | number
+    uploadedById?: StringNullableFilter<"Resource"> | string | null
+    createdAt?: DateTimeFilter<"Resource"> | Date | string
     updatedAt?: DateTimeFilter<"Resource"> | Date | string
-    uploadedBy?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+    publishedAt?: DateTimeNullableFilter<"Resource"> | Date | string | null
+    isArchived?: BoolFilter<"Resource"> | boolean
+    parent?: XOR<ResourceNullableScalarRelationFilter, ResourceWhereInput> | null
+    children?: ResourceListRelationFilter
+    uploadedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id" | "parentId_slug" | "canonicalPath">
 
   export type ResourceOrderByWithAggregationInput = {
     id?: SortOrder
-    title?: SortOrder
-    uploadedById?: SortOrder
-    createdAt?: SortOrder
-    author?: SortOrder
-    categories?: SortOrder
-    description?: SortOrder
-    downloadUrl?: SortOrder
-    downloads?: SortOrder
-    externalUrl?: SortOrderInput | SortOrder
-    rating?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    nodeType?: SortOrder
+    folderKind?: SortOrderInput | SortOrder
+    mediaType?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
+    depth?: SortOrder
+    sortOrder?: SortOrder
+    canonicalPath?: SortOrder
+    description?: SortOrderInput | SortOrder
     tags?: SortOrder
+    categories?: SortOrder
+    universityCode?: SortOrderInput | SortOrder
+    departmentCode?: SortOrderInput | SortOrder
+    courseCode?: SortOrderInput | SortOrder
+    fileName?: SortOrderInput | SortOrder
+    fileSize?: SortOrderInput | SortOrder
+    mimeType?: SortOrderInput | SortOrder
+    storageKey?: SortOrderInput | SortOrder
+    downloadUrl?: SortOrderInput | SortOrder
+    externalUrl?: SortOrderInput | SortOrder
+    previewUrl?: SortOrderInput | SortOrder
+    checksum?: SortOrderInput | SortOrder
+    version?: SortOrder
+    downloads?: SortOrder
+    rating?: SortOrder
+    uploadedById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     updatedAt?: SortOrder
+    publishedAt?: SortOrderInput | SortOrder
+    isArchived?: SortOrder
     _count?: ResourceCountOrderByAggregateInput
     _avg?: ResourceAvgOrderByAggregateInput
     _max?: ResourceMaxOrderByAggregateInput
@@ -18445,18 +19029,37 @@ export namespace Prisma {
     OR?: ResourceScalarWhereWithAggregatesInput[]
     NOT?: ResourceScalarWhereWithAggregatesInput | ResourceScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Resource"> | string
-    title?: StringWithAggregatesFilter<"Resource"> | string
-    uploadedById?: StringWithAggregatesFilter<"Resource"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
-    author?: StringWithAggregatesFilter<"Resource"> | string
-    categories?: StringNullableListFilter<"Resource">
-    description?: StringWithAggregatesFilter<"Resource"> | string
-    downloadUrl?: StringWithAggregatesFilter<"Resource"> | string
-    downloads?: IntWithAggregatesFilter<"Resource"> | number
-    externalUrl?: StringNullableWithAggregatesFilter<"Resource"> | string | null
-    rating?: FloatWithAggregatesFilter<"Resource"> | number
+    name?: StringWithAggregatesFilter<"Resource"> | string
+    slug?: StringWithAggregatesFilter<"Resource"> | string
+    nodeType?: EnumResourceNodeTypeWithAggregatesFilter<"Resource"> | $Enums.ResourceNodeType
+    folderKind?: EnumResourceFolderKindNullableWithAggregatesFilter<"Resource"> | $Enums.ResourceFolderKind | null
+    mediaType?: EnumResourceMediaTypeNullableWithAggregatesFilter<"Resource"> | $Enums.ResourceMediaType | null
+    parentId?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    depth?: IntWithAggregatesFilter<"Resource"> | number
+    sortOrder?: IntWithAggregatesFilter<"Resource"> | number
+    canonicalPath?: StringWithAggregatesFilter<"Resource"> | string
+    description?: StringNullableWithAggregatesFilter<"Resource"> | string | null
     tags?: StringNullableListFilter<"Resource">
+    categories?: StringNullableListFilter<"Resource">
+    universityCode?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    departmentCode?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    courseCode?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    fileName?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    fileSize?: IntNullableWithAggregatesFilter<"Resource"> | number | null
+    mimeType?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    storageKey?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    downloadUrl?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    externalUrl?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    previewUrl?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    checksum?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    version?: IntWithAggregatesFilter<"Resource"> | number
+    downloads?: IntWithAggregatesFilter<"Resource"> | number
+    rating?: FloatWithAggregatesFilter<"Resource"> | number
+    uploadedById?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
+    publishedAt?: DateTimeNullableWithAggregatesFilter<"Resource"> | Date | string | null
+    isArchived?: BoolWithAggregatesFilter<"Resource"> | boolean
   }
 
   export type GroupWhereInput = {
@@ -18844,18 +19447,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -18873,18 +19478,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -18902,18 +19509,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -18931,18 +19540,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -18960,11 +19571,13 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -18978,11 +19591,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -18996,11 +19611,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -19535,113 +20152,249 @@ export namespace Prisma {
 
   export type ResourceCreateInput = {
     id?: string
-    title: string
-    createdAt?: Date | string
-    author: string
-    categories?: ResourceCreatecategoriesInput | string[]
-    description: string
-    downloadUrl: string
-    downloads?: number
-    externalUrl?: string | null
-    rating?: number
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
     tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    universityCode?: string | null
+    departmentCode?: string | null
+    courseCode?: string | null
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    createdAt?: Date | string
     updatedAt?: Date | string
-    uploadedBy: UserCreateNestedOneWithoutResourceInput
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    parent?: ResourceCreateNestedOneWithoutChildrenInput
+    children?: ResourceCreateNestedManyWithoutParentInput
+    uploadedBy?: UserCreateNestedOneWithoutResourcesInput
   }
 
   export type ResourceUncheckedCreateInput = {
     id?: string
-    title: string
-    uploadedById: string
-    createdAt?: Date | string
-    author: string
-    categories?: ResourceCreatecategoriesInput | string[]
-    description: string
-    downloadUrl: string
-    downloads?: number
-    externalUrl?: string | null
-    rating?: number
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    parentId?: string | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
     tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    universityCode?: string | null
+    departmentCode?: string | null
+    courseCode?: string | null
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    uploadedById?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    children?: ResourceUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type ResourceUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    author?: StringFieldUpdateOperationsInput | string
-    categories?: ResourceUpdatecategoriesInput | string[]
-    description?: StringFieldUpdateOperationsInput | string
-    downloadUrl?: StringFieldUpdateOperationsInput | string
-    downloads?: IntFieldUpdateOperationsInput | number
-    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: FloatFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    uploadedBy?: UserUpdateOneRequiredWithoutResourceNestedInput
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    parent?: ResourceUpdateOneWithoutChildrenNestedInput
+    children?: ResourceUpdateManyWithoutParentNestedInput
+    uploadedBy?: UserUpdateOneWithoutResourcesNestedInput
   }
 
   export type ResourceUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    uploadedById?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    author?: StringFieldUpdateOperationsInput | string
-    categories?: ResourceUpdatecategoriesInput | string[]
-    description?: StringFieldUpdateOperationsInput | string
-    downloadUrl?: StringFieldUpdateOperationsInput | string
-    downloads?: IntFieldUpdateOperationsInput | number
-    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: FloatFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    children?: ResourceUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type ResourceCreateManyInput = {
     id?: string
-    title: string
-    uploadedById: string
-    createdAt?: Date | string
-    author: string
-    categories?: ResourceCreatecategoriesInput | string[]
-    description: string
-    downloadUrl: string
-    downloads?: number
-    externalUrl?: string | null
-    rating?: number
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    parentId?: string | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
     tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    universityCode?: string | null
+    departmentCode?: string | null
+    courseCode?: string | null
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    uploadedById?: string | null
+    createdAt?: Date | string
     updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
   }
 
   export type ResourceUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    author?: StringFieldUpdateOperationsInput | string
-    categories?: ResourceUpdatecategoriesInput | string[]
-    description?: StringFieldUpdateOperationsInput | string
-    downloadUrl?: StringFieldUpdateOperationsInput | string
-    downloads?: IntFieldUpdateOperationsInput | number
-    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: FloatFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ResourceUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    uploadedById?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    author?: StringFieldUpdateOperationsInput | string
-    categories?: ResourceUpdatecategoriesInput | string[]
-    description?: StringFieldUpdateOperationsInput | string
-    downloadUrl?: StringFieldUpdateOperationsInput | string
-    downloads?: IntFieldUpdateOperationsInput | number
-    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: FloatFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type GroupCreateInput = {
@@ -20129,6 +20882,14 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type EnumRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
     in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
@@ -20254,11 +21015,13 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    about?: SortOrder
+    bio?: SortOrder
     location?: SortOrder
     username?: SortOrder
     department?: SortOrder
-    researchFocusSkills?: SortOrder
+    publications?: SortOrder
+    researchFocus?: SortOrder
+    skills?: SortOrder
     university?: SortOrder
     yearOfStudy?: SortOrder
     role?: SortOrder
@@ -20272,11 +21035,11 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    about?: SortOrder
+    bio?: SortOrder
     location?: SortOrder
     username?: SortOrder
     department?: SortOrder
-    researchFocusSkills?: SortOrder
+    researchFocus?: SortOrder
     university?: SortOrder
     yearOfStudy?: SortOrder
     role?: SortOrder
@@ -20290,11 +21053,11 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    about?: SortOrder
+    bio?: SortOrder
     location?: SortOrder
     username?: SortOrder
     department?: SortOrder
-    researchFocusSkills?: SortOrder
+    researchFocus?: SortOrder
     university?: SortOrder
     yearOfStudy?: SortOrder
     role?: SortOrder
@@ -20441,14 +21204,6 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
   export type JsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -20655,6 +21410,38 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type EnumResourceNodeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceNodeType | EnumResourceNodeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceNodeType[] | ListEnumResourceNodeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceNodeType[] | ListEnumResourceNodeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceNodeTypeFilter<$PrismaModel> | $Enums.ResourceNodeType
+  }
+
+  export type EnumResourceFolderKindNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceFolderKind | EnumResourceFolderKindFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ResourceFolderKind[] | ListEnumResourceFolderKindFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ResourceFolderKind[] | ListEnumResourceFolderKindFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumResourceFolderKindNullableFilter<$PrismaModel> | $Enums.ResourceFolderKind | null
+  }
+
+  export type EnumResourceMediaTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceMediaType | EnumResourceMediaTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ResourceMediaType[] | ListEnumResourceMediaTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ResourceMediaType[] | ListEnumResourceMediaTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumResourceMediaTypeNullableFilter<$PrismaModel> | $Enums.ResourceMediaType | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type FloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -20666,58 +21453,184 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type ResourceNullableScalarRelationFilter = {
+    is?: ResourceWhereInput | null
+    isNot?: ResourceWhereInput | null
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type ResourceParentIdSlugCompoundUniqueInput = {
+    parentId: string
+    slug: string
+  }
+
   export type ResourceCountOrderByAggregateInput = {
     id?: SortOrder
-    title?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    nodeType?: SortOrder
+    folderKind?: SortOrder
+    mediaType?: SortOrder
+    parentId?: SortOrder
+    depth?: SortOrder
+    sortOrder?: SortOrder
+    canonicalPath?: SortOrder
+    description?: SortOrder
+    tags?: SortOrder
+    categories?: SortOrder
+    universityCode?: SortOrder
+    departmentCode?: SortOrder
+    courseCode?: SortOrder
+    fileName?: SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    storageKey?: SortOrder
+    downloadUrl?: SortOrder
+    externalUrl?: SortOrder
+    previewUrl?: SortOrder
+    checksum?: SortOrder
+    version?: SortOrder
+    downloads?: SortOrder
+    rating?: SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
-    author?: SortOrder
-    categories?: SortOrder
-    description?: SortOrder
-    downloadUrl?: SortOrder
-    downloads?: SortOrder
-    externalUrl?: SortOrder
-    rating?: SortOrder
-    tags?: SortOrder
     updatedAt?: SortOrder
+    publishedAt?: SortOrder
+    isArchived?: SortOrder
   }
 
   export type ResourceAvgOrderByAggregateInput = {
+    depth?: SortOrder
+    sortOrder?: SortOrder
+    fileSize?: SortOrder
+    version?: SortOrder
     downloads?: SortOrder
     rating?: SortOrder
   }
 
   export type ResourceMaxOrderByAggregateInput = {
     id?: SortOrder
-    title?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    nodeType?: SortOrder
+    folderKind?: SortOrder
+    mediaType?: SortOrder
+    parentId?: SortOrder
+    depth?: SortOrder
+    sortOrder?: SortOrder
+    canonicalPath?: SortOrder
+    description?: SortOrder
+    universityCode?: SortOrder
+    departmentCode?: SortOrder
+    courseCode?: SortOrder
+    fileName?: SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    storageKey?: SortOrder
+    downloadUrl?: SortOrder
+    externalUrl?: SortOrder
+    previewUrl?: SortOrder
+    checksum?: SortOrder
+    version?: SortOrder
+    downloads?: SortOrder
+    rating?: SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
-    author?: SortOrder
-    description?: SortOrder
-    downloadUrl?: SortOrder
-    downloads?: SortOrder
-    externalUrl?: SortOrder
-    rating?: SortOrder
     updatedAt?: SortOrder
+    publishedAt?: SortOrder
+    isArchived?: SortOrder
   }
 
   export type ResourceMinOrderByAggregateInput = {
     id?: SortOrder
-    title?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    nodeType?: SortOrder
+    folderKind?: SortOrder
+    mediaType?: SortOrder
+    parentId?: SortOrder
+    depth?: SortOrder
+    sortOrder?: SortOrder
+    canonicalPath?: SortOrder
+    description?: SortOrder
+    universityCode?: SortOrder
+    departmentCode?: SortOrder
+    courseCode?: SortOrder
+    fileName?: SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    storageKey?: SortOrder
+    downloadUrl?: SortOrder
+    externalUrl?: SortOrder
+    previewUrl?: SortOrder
+    checksum?: SortOrder
+    version?: SortOrder
+    downloads?: SortOrder
+    rating?: SortOrder
     uploadedById?: SortOrder
     createdAt?: SortOrder
-    author?: SortOrder
-    description?: SortOrder
-    downloadUrl?: SortOrder
-    downloads?: SortOrder
-    externalUrl?: SortOrder
-    rating?: SortOrder
     updatedAt?: SortOrder
+    publishedAt?: SortOrder
+    isArchived?: SortOrder
   }
 
   export type ResourceSumOrderByAggregateInput = {
+    depth?: SortOrder
+    sortOrder?: SortOrder
+    fileSize?: SortOrder
+    version?: SortOrder
     downloads?: SortOrder
     rating?: SortOrder
+  }
+
+  export type EnumResourceNodeTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceNodeType | EnumResourceNodeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceNodeType[] | ListEnumResourceNodeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceNodeType[] | ListEnumResourceNodeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceNodeTypeWithAggregatesFilter<$PrismaModel> | $Enums.ResourceNodeType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumResourceNodeTypeFilter<$PrismaModel>
+    _max?: NestedEnumResourceNodeTypeFilter<$PrismaModel>
+  }
+
+  export type EnumResourceFolderKindNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceFolderKind | EnumResourceFolderKindFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ResourceFolderKind[] | ListEnumResourceFolderKindFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ResourceFolderKind[] | ListEnumResourceFolderKindFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumResourceFolderKindNullableWithAggregatesFilter<$PrismaModel> | $Enums.ResourceFolderKind | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumResourceFolderKindNullableFilter<$PrismaModel>
+    _max?: NestedEnumResourceFolderKindNullableFilter<$PrismaModel>
+  }
+
+  export type EnumResourceMediaTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceMediaType | EnumResourceMediaTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ResourceMediaType[] | ListEnumResourceMediaTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ResourceMediaType[] | ListEnumResourceMediaTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumResourceMediaTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.ResourceMediaType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumResourceMediaTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumResourceMediaTypeNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -20952,6 +21865,14 @@ export namespace Prisma {
     set?: string | null
   }
 
+  export type UserCreatepublicationsInput = {
+    set: string[]
+  }
+
+  export type UserCreateskillsInput = {
+    set: string[]
+  }
+
   export type EventCreateNestedManyWithoutCreatedByInput = {
     create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
     connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
@@ -21104,6 +22025,16 @@ export namespace Prisma {
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
     createMany?: SessionCreateManyUserInputEnvelope
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
+  export type UserUpdatepublicationsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdateskillsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type EnumRoleFieldUpdateOperationsInput = {
@@ -21705,23 +22636,68 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLikesInput, UserUpdateWithoutLikesInput>, UserUncheckedUpdateWithoutLikesInput>
   }
 
-  export type ResourceCreatecategoriesInput = {
-    set: string[]
-  }
-
   export type ResourceCreatetagsInput = {
     set: string[]
   }
 
-  export type UserCreateNestedOneWithoutResourceInput = {
-    create?: XOR<UserCreateWithoutResourceInput, UserUncheckedCreateWithoutResourceInput>
-    connectOrCreate?: UserCreateOrConnectWithoutResourceInput
+  export type ResourceCreatecategoriesInput = {
+    set: string[]
+  }
+
+  export type ResourceCreateNestedOneWithoutChildrenInput = {
+    create?: XOR<ResourceCreateWithoutChildrenInput, ResourceUncheckedCreateWithoutChildrenInput>
+    connectOrCreate?: ResourceCreateOrConnectWithoutChildrenInput
+    connect?: ResourceWhereUniqueInput
+  }
+
+  export type ResourceCreateNestedManyWithoutParentInput = {
+    create?: XOR<ResourceCreateWithoutParentInput, ResourceUncheckedCreateWithoutParentInput> | ResourceCreateWithoutParentInput[] | ResourceUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutParentInput | ResourceCreateOrConnectWithoutParentInput[]
+    createMany?: ResourceCreateManyParentInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedOneWithoutResourcesInput = {
+    create?: XOR<UserCreateWithoutResourcesInput, UserUncheckedCreateWithoutResourcesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResourcesInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type ResourceUncheckedCreateNestedManyWithoutParentInput = {
+    create?: XOR<ResourceCreateWithoutParentInput, ResourceUncheckedCreateWithoutParentInput> | ResourceCreateWithoutParentInput[] | ResourceUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutParentInput | ResourceCreateOrConnectWithoutParentInput[]
+    createMany?: ResourceCreateManyParentInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type EnumResourceNodeTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ResourceNodeType
+  }
+
+  export type NullableEnumResourceFolderKindFieldUpdateOperationsInput = {
+    set?: $Enums.ResourceFolderKind | null
+  }
+
+  export type NullableEnumResourceMediaTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ResourceMediaType | null
+  }
+
+  export type ResourceUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type ResourceUpdatecategoriesInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -21732,17 +22708,52 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type ResourceUpdatetagsInput = {
-    set?: string[]
-    push?: string | string[]
+  export type ResourceUpdateOneWithoutChildrenNestedInput = {
+    create?: XOR<ResourceCreateWithoutChildrenInput, ResourceUncheckedCreateWithoutChildrenInput>
+    connectOrCreate?: ResourceCreateOrConnectWithoutChildrenInput
+    upsert?: ResourceUpsertWithoutChildrenInput
+    disconnect?: ResourceWhereInput | boolean
+    delete?: ResourceWhereInput | boolean
+    connect?: ResourceWhereUniqueInput
+    update?: XOR<XOR<ResourceUpdateToOneWithWhereWithoutChildrenInput, ResourceUpdateWithoutChildrenInput>, ResourceUncheckedUpdateWithoutChildrenInput>
   }
 
-  export type UserUpdateOneRequiredWithoutResourceNestedInput = {
-    create?: XOR<UserCreateWithoutResourceInput, UserUncheckedCreateWithoutResourceInput>
-    connectOrCreate?: UserCreateOrConnectWithoutResourceInput
-    upsert?: UserUpsertWithoutResourceInput
+  export type ResourceUpdateManyWithoutParentNestedInput = {
+    create?: XOR<ResourceCreateWithoutParentInput, ResourceUncheckedCreateWithoutParentInput> | ResourceCreateWithoutParentInput[] | ResourceUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutParentInput | ResourceCreateOrConnectWithoutParentInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutParentInput | ResourceUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: ResourceCreateManyParentInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutParentInput | ResourceUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutParentInput | ResourceUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type UserUpdateOneWithoutResourcesNestedInput = {
+    create?: XOR<UserCreateWithoutResourcesInput, UserUncheckedCreateWithoutResourcesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResourcesInput
+    upsert?: UserUpsertWithoutResourcesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResourceInput, UserUpdateWithoutResourceInput>, UserUncheckedUpdateWithoutResourceInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResourcesInput, UserUpdateWithoutResourcesInput>, UserUncheckedUpdateWithoutResourcesInput>
+  }
+
+  export type ResourceUncheckedUpdateManyWithoutParentNestedInput = {
+    create?: XOR<ResourceCreateWithoutParentInput, ResourceUncheckedCreateWithoutParentInput> | ResourceCreateWithoutParentInput[] | ResourceUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutParentInput | ResourceCreateOrConnectWithoutParentInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutParentInput | ResourceUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: ResourceCreateManyParentInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutParentInput | ResourceUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutParentInput | ResourceUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutCreatedGroupsInput = {
@@ -22080,6 +23091,84 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedEnumResourceNodeTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceNodeType | EnumResourceNodeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceNodeType[] | ListEnumResourceNodeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceNodeType[] | ListEnumResourceNodeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceNodeTypeFilter<$PrismaModel> | $Enums.ResourceNodeType
+  }
+
+  export type NestedEnumResourceFolderKindNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceFolderKind | EnumResourceFolderKindFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ResourceFolderKind[] | ListEnumResourceFolderKindFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ResourceFolderKind[] | ListEnumResourceFolderKindFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumResourceFolderKindNullableFilter<$PrismaModel> | $Enums.ResourceFolderKind | null
+  }
+
+  export type NestedEnumResourceMediaTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceMediaType | EnumResourceMediaTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ResourceMediaType[] | ListEnumResourceMediaTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ResourceMediaType[] | ListEnumResourceMediaTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumResourceMediaTypeNullableFilter<$PrismaModel> | $Enums.ResourceMediaType | null
+  }
+
+  export type NestedEnumResourceNodeTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceNodeType | EnumResourceNodeTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceNodeType[] | ListEnumResourceNodeTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceNodeType[] | ListEnumResourceNodeTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceNodeTypeWithAggregatesFilter<$PrismaModel> | $Enums.ResourceNodeType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumResourceNodeTypeFilter<$PrismaModel>
+    _max?: NestedEnumResourceNodeTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumResourceFolderKindNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceFolderKind | EnumResourceFolderKindFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ResourceFolderKind[] | ListEnumResourceFolderKindFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ResourceFolderKind[] | ListEnumResourceFolderKindFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumResourceFolderKindNullableWithAggregatesFilter<$PrismaModel> | $Enums.ResourceFolderKind | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumResourceFolderKindNullableFilter<$PrismaModel>
+    _max?: NestedEnumResourceFolderKindNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumResourceMediaTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceMediaType | EnumResourceMediaTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ResourceMediaType[] | ListEnumResourceMediaTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ResourceMediaType[] | ListEnumResourceMediaTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumResourceMediaTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.ResourceMediaType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumResourceMediaTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumResourceMediaTypeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -22182,18 +23271,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -22210,18 +23301,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -22344,18 +23437,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -22372,18 +23467,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -22470,32 +23567,72 @@ export namespace Prisma {
 
   export type ResourceCreateWithoutUploadedByInput = {
     id?: string
-    title: string
-    createdAt?: Date | string
-    author: string
-    categories?: ResourceCreatecategoriesInput | string[]
-    description: string
-    downloadUrl: string
-    downloads?: number
-    externalUrl?: string | null
-    rating?: number
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
     tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    universityCode?: string | null
+    departmentCode?: string | null
+    courseCode?: string | null
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    createdAt?: Date | string
     updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    parent?: ResourceCreateNestedOneWithoutChildrenInput
+    children?: ResourceCreateNestedManyWithoutParentInput
   }
 
   export type ResourceUncheckedCreateWithoutUploadedByInput = {
     id?: string
-    title: string
-    createdAt?: Date | string
-    author: string
-    categories?: ResourceCreatecategoriesInput | string[]
-    description: string
-    downloadUrl: string
-    downloads?: number
-    externalUrl?: string | null
-    rating?: number
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    parentId?: string | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
     tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    universityCode?: string | null
+    departmentCode?: string | null
+    courseCode?: string | null
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    createdAt?: Date | string
     updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    children?: ResourceUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type ResourceCreateOrConnectWithoutUploadedByInput = {
@@ -22871,18 +24008,37 @@ export namespace Prisma {
     OR?: ResourceScalarWhereInput[]
     NOT?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
     id?: StringFilter<"Resource"> | string
-    title?: StringFilter<"Resource"> | string
-    uploadedById?: StringFilter<"Resource"> | string
-    createdAt?: DateTimeFilter<"Resource"> | Date | string
-    author?: StringFilter<"Resource"> | string
-    categories?: StringNullableListFilter<"Resource">
-    description?: StringFilter<"Resource"> | string
-    downloadUrl?: StringFilter<"Resource"> | string
-    downloads?: IntFilter<"Resource"> | number
-    externalUrl?: StringNullableFilter<"Resource"> | string | null
-    rating?: FloatFilter<"Resource"> | number
+    name?: StringFilter<"Resource"> | string
+    slug?: StringFilter<"Resource"> | string
+    nodeType?: EnumResourceNodeTypeFilter<"Resource"> | $Enums.ResourceNodeType
+    folderKind?: EnumResourceFolderKindNullableFilter<"Resource"> | $Enums.ResourceFolderKind | null
+    mediaType?: EnumResourceMediaTypeNullableFilter<"Resource"> | $Enums.ResourceMediaType | null
+    parentId?: StringNullableFilter<"Resource"> | string | null
+    depth?: IntFilter<"Resource"> | number
+    sortOrder?: IntFilter<"Resource"> | number
+    canonicalPath?: StringFilter<"Resource"> | string
+    description?: StringNullableFilter<"Resource"> | string | null
     tags?: StringNullableListFilter<"Resource">
+    categories?: StringNullableListFilter<"Resource">
+    universityCode?: StringNullableFilter<"Resource"> | string | null
+    departmentCode?: StringNullableFilter<"Resource"> | string | null
+    courseCode?: StringNullableFilter<"Resource"> | string | null
+    fileName?: StringNullableFilter<"Resource"> | string | null
+    fileSize?: IntNullableFilter<"Resource"> | number | null
+    mimeType?: StringNullableFilter<"Resource"> | string | null
+    storageKey?: StringNullableFilter<"Resource"> | string | null
+    downloadUrl?: StringNullableFilter<"Resource"> | string | null
+    externalUrl?: StringNullableFilter<"Resource"> | string | null
+    previewUrl?: StringNullableFilter<"Resource"> | string | null
+    checksum?: StringNullableFilter<"Resource"> | string | null
+    version?: IntFilter<"Resource"> | number
+    downloads?: IntFilter<"Resource"> | number
+    rating?: FloatFilter<"Resource"> | number
+    uploadedById?: StringNullableFilter<"Resource"> | string | null
+    createdAt?: DateTimeFilter<"Resource"> | Date | string
     updatedAt?: DateTimeFilter<"Resource"> | Date | string
+    publishedAt?: DateTimeNullableFilter<"Resource"> | Date | string | null
+    isArchived?: BoolFilter<"Resource"> | boolean
   }
 
   export type OpportunityUpsertWithWhereUniqueWithoutPostedByInput = {
@@ -23124,18 +24280,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -23152,18 +24310,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -23196,18 +24356,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -23224,18 +24386,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -23252,18 +24416,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -23280,18 +24446,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -23324,18 +24492,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -23352,18 +24522,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -23456,18 +24628,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -23484,18 +24658,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -23576,18 +24752,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -23604,18 +24782,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -23632,18 +24812,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -23660,18 +24842,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -23791,18 +24975,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -23819,18 +25005,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -23983,18 +25171,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -24011,18 +25201,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -24118,18 +25310,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -24146,18 +25340,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -24166,7 +25362,162 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type UserCreateWithoutResourceInput = {
+  export type ResourceCreateWithoutChildrenInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    universityCode?: string | null
+    departmentCode?: string | null
+    courseCode?: string | null
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    parent?: ResourceCreateNestedOneWithoutChildrenInput
+    uploadedBy?: UserCreateNestedOneWithoutResourcesInput
+  }
+
+  export type ResourceUncheckedCreateWithoutChildrenInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    parentId?: string | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    universityCode?: string | null
+    departmentCode?: string | null
+    courseCode?: string | null
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    uploadedById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+  }
+
+  export type ResourceCreateOrConnectWithoutChildrenInput = {
+    where: ResourceWhereUniqueInput
+    create: XOR<ResourceCreateWithoutChildrenInput, ResourceUncheckedCreateWithoutChildrenInput>
+  }
+
+  export type ResourceCreateWithoutParentInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    universityCode?: string | null
+    departmentCode?: string | null
+    courseCode?: string | null
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    children?: ResourceCreateNestedManyWithoutParentInput
+    uploadedBy?: UserCreateNestedOneWithoutResourcesInput
+  }
+
+  export type ResourceUncheckedCreateWithoutParentInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    universityCode?: string | null
+    departmentCode?: string | null
+    courseCode?: string | null
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    uploadedById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    children?: ResourceUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type ResourceCreateOrConnectWithoutParentInput = {
+    where: ResourceWhereUniqueInput
+    create: XOR<ResourceCreateWithoutParentInput, ResourceUncheckedCreateWithoutParentInput>
+  }
+
+  export type ResourceCreateManyParentInputEnvelope = {
+    data: ResourceCreateManyParentInput | ResourceCreateManyParentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserCreateWithoutResourcesInput = {
     id: string
     name: string
     email: string
@@ -24174,11 +25525,13 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24194,7 +25547,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutResourceInput = {
+  export type UserUncheckedCreateWithoutResourcesInput = {
     id: string
     name: string
     email: string
@@ -24202,11 +25555,13 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
@@ -24222,23 +25577,120 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutResourceInput = {
+  export type UserCreateOrConnectWithoutResourcesInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutResourceInput, UserUncheckedCreateWithoutResourceInput>
+    create: XOR<UserCreateWithoutResourcesInput, UserUncheckedCreateWithoutResourcesInput>
   }
 
-  export type UserUpsertWithoutResourceInput = {
-    update: XOR<UserUpdateWithoutResourceInput, UserUncheckedUpdateWithoutResourceInput>
-    create: XOR<UserCreateWithoutResourceInput, UserUncheckedCreateWithoutResourceInput>
+  export type ResourceUpsertWithoutChildrenInput = {
+    update: XOR<ResourceUpdateWithoutChildrenInput, ResourceUncheckedUpdateWithoutChildrenInput>
+    create: XOR<ResourceCreateWithoutChildrenInput, ResourceUncheckedCreateWithoutChildrenInput>
+    where?: ResourceWhereInput
+  }
+
+  export type ResourceUpdateToOneWithWhereWithoutChildrenInput = {
+    where?: ResourceWhereInput
+    data: XOR<ResourceUpdateWithoutChildrenInput, ResourceUncheckedUpdateWithoutChildrenInput>
+  }
+
+  export type ResourceUpdateWithoutChildrenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    parent?: ResourceUpdateOneWithoutChildrenNestedInput
+    uploadedBy?: UserUpdateOneWithoutResourcesNestedInput
+  }
+
+  export type ResourceUncheckedUpdateWithoutChildrenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ResourceUpsertWithWhereUniqueWithoutParentInput = {
+    where: ResourceWhereUniqueInput
+    update: XOR<ResourceUpdateWithoutParentInput, ResourceUncheckedUpdateWithoutParentInput>
+    create: XOR<ResourceCreateWithoutParentInput, ResourceUncheckedCreateWithoutParentInput>
+  }
+
+  export type ResourceUpdateWithWhereUniqueWithoutParentInput = {
+    where: ResourceWhereUniqueInput
+    data: XOR<ResourceUpdateWithoutParentInput, ResourceUncheckedUpdateWithoutParentInput>
+  }
+
+  export type ResourceUpdateManyWithWhereWithoutParentInput = {
+    where: ResourceScalarWhereInput
+    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyWithoutParentInput>
+  }
+
+  export type UserUpsertWithoutResourcesInput = {
+    update: XOR<UserUpdateWithoutResourcesInput, UserUncheckedUpdateWithoutResourcesInput>
+    create: XOR<UserCreateWithoutResourcesInput, UserUncheckedCreateWithoutResourcesInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutResourceInput = {
+  export type UserUpdateToOneWithWhereWithoutResourcesInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutResourceInput, UserUncheckedUpdateWithoutResourceInput>
+    data: XOR<UserUpdateWithoutResourcesInput, UserUncheckedUpdateWithoutResourcesInput>
   }
 
-  export type UserUpdateWithoutResourceInput = {
+  export type UserUpdateWithoutResourcesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -24246,11 +25698,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24266,7 +25720,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutResourceInput = {
+  export type UserUncheckedUpdateWithoutResourcesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -24274,11 +25728,13 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
@@ -24302,17 +25758,19 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -24330,17 +25788,19 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -24396,17 +25856,19 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -24424,17 +25886,19 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -24489,17 +25953,19 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -24517,17 +25983,19 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -24588,17 +26056,19 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -24616,17 +26086,19 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -24644,17 +26116,19 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -24672,17 +26146,19 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -24716,17 +26192,19 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -24744,17 +26222,19 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -24772,18 +26252,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
-    Resource?: ResourceCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -24800,18 +26282,20 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
-    about?: string | null
+    bio?: string | null
     location?: string | null
     username?: string | null
     department?: string | null
-    researchFocusSkills?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
     university?: string | null
     yearOfStudy?: string | null
     role?: $Enums.Role
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
-    Resource?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -24844,18 +26328,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -24872,18 +26358,20 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    about?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
     location?: NullableStringFieldUpdateOperationsInput | string | null
     username?: NullableStringFieldUpdateOperationsInput | string | null
     department?: NullableStringFieldUpdateOperationsInput | string | null
-    researchFocusSkills?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
     university?: NullableStringFieldUpdateOperationsInput | string | null
     yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
-    Resource?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -24916,17 +26404,36 @@ export namespace Prisma {
 
   export type ResourceCreateManyUploadedByInput = {
     id?: string
-    title: string
-    createdAt?: Date | string
-    author: string
-    categories?: ResourceCreatecategoriesInput | string[]
-    description: string
-    downloadUrl: string
-    downloads?: number
-    externalUrl?: string | null
-    rating?: number
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    parentId?: string | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
     tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    universityCode?: string | null
+    departmentCode?: string | null
+    courseCode?: string | null
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    createdAt?: Date | string
     updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
   }
 
   export type OpportunityCreateManyPostedByInput = {
@@ -25090,47 +26597,106 @@ export namespace Prisma {
 
   export type ResourceUpdateWithoutUploadedByInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    author?: StringFieldUpdateOperationsInput | string
-    categories?: ResourceUpdatecategoriesInput | string[]
-    description?: StringFieldUpdateOperationsInput | string
-    downloadUrl?: StringFieldUpdateOperationsInput | string
-    downloads?: IntFieldUpdateOperationsInput | number
-    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: FloatFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    parent?: ResourceUpdateOneWithoutChildrenNestedInput
+    children?: ResourceUpdateManyWithoutParentNestedInput
   }
 
   export type ResourceUncheckedUpdateWithoutUploadedByInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    author?: StringFieldUpdateOperationsInput | string
-    categories?: ResourceUpdatecategoriesInput | string[]
-    description?: StringFieldUpdateOperationsInput | string
-    downloadUrl?: StringFieldUpdateOperationsInput | string
-    downloads?: IntFieldUpdateOperationsInput | number
-    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: FloatFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    children?: ResourceUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type ResourceUncheckedUpdateManyWithoutUploadedByInput = {
     id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    author?: StringFieldUpdateOperationsInput | string
-    categories?: ResourceUpdatecategoriesInput | string[]
-    description?: StringFieldUpdateOperationsInput | string
-    downloadUrl?: StringFieldUpdateOperationsInput | string
-    downloads?: IntFieldUpdateOperationsInput | number
-    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: FloatFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type OpportunityUpdateWithoutPostedByInput = {
@@ -25542,6 +27108,144 @@ export namespace Prisma {
     postId?: NullableStringFieldUpdateOperationsInput | string | null
     read?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResourceCreateManyParentInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    universityCode?: string | null
+    departmentCode?: string | null
+    courseCode?: string | null
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    uploadedById?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+  }
+
+  export type ResourceUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    children?: ResourceUpdateManyWithoutParentNestedInput
+    uploadedBy?: UserUpdateOneWithoutResourcesNestedInput
+  }
+
+  export type ResourceUncheckedUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    children?: ResourceUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type ResourceUncheckedUpdateManyWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
+    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type GroupMemberCreateManyGroupInput = {
