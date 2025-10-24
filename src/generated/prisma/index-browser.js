@@ -139,11 +139,13 @@ exports.Prisma.UserScalarFieldEnum = {
   image: 'image',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  about: 'about',
+  bio: 'bio',
   location: 'location',
   username: 'username',
   department: 'department',
-  researchFocusSkills: 'researchFocusSkills',
+  publications: 'publications',
+  researchFocus: 'researchFocus',
+  skills: 'skills',
   university: 'university',
   yearOfStudy: 'yearOfStudy',
   role: 'role'
@@ -225,18 +227,37 @@ exports.Prisma.LikeScalarFieldEnum = {
 
 exports.Prisma.ResourceScalarFieldEnum = {
   id: 'id',
-  title: 'title',
+  name: 'name',
+  slug: 'slug',
+  nodeType: 'nodeType',
+  folderKind: 'folderKind',
+  mediaType: 'mediaType',
+  parentId: 'parentId',
+  depth: 'depth',
+  sortOrder: 'sortOrder',
+  canonicalPath: 'canonicalPath',
+  description: 'description',
+  tags: 'tags',
+  categories: 'categories',
+  universityCode: 'universityCode',
+  departmentCode: 'departmentCode',
+  courseCode: 'courseCode',
+  fileName: 'fileName',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  storageKey: 'storageKey',
+  downloadUrl: 'downloadUrl',
+  externalUrl: 'externalUrl',
+  previewUrl: 'previewUrl',
+  checksum: 'checksum',
+  version: 'version',
+  downloads: 'downloads',
+  rating: 'rating',
   uploadedById: 'uploadedById',
   createdAt: 'createdAt',
-  author: 'author',
-  categories: 'categories',
-  description: 'description',
-  downloadUrl: 'downloadUrl',
-  downloads: 'downloads',
-  externalUrl: 'externalUrl',
-  rating: 'rating',
-  tags: 'tags',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  publishedAt: 'publishedAt',
+  isArchived: 'isArchived'
 };
 
 exports.Prisma.GroupScalarFieldEnum = {
@@ -315,6 +336,25 @@ exports.Role = exports.$Enums.Role = {
   STUDENT: 'STUDENT',
   ADMIN: 'ADMIN',
   TEACHER: 'TEACHER'
+};
+
+exports.ResourceNodeType = exports.$Enums.ResourceNodeType = {
+  FOLDER: 'FOLDER',
+  FILE: 'FILE'
+};
+
+exports.ResourceFolderKind = exports.$Enums.ResourceFolderKind = {
+  UNIVERSITY: 'UNIVERSITY',
+  DEPARTMENT: 'DEPARTMENT',
+  COURSE: 'COURSE',
+  CUSTOM: 'CUSTOM'
+};
+
+exports.ResourceMediaType = exports.$Enums.ResourceMediaType = {
+  DOCUMENT: 'DOCUMENT',
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO',
+  OTHER: 'OTHER'
 };
 
 exports.Prisma.ModelName = {

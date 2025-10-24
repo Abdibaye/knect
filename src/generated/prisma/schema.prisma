@@ -25,32 +25,34 @@ model Notification {
 }
 
 model User {
-  id                  String         @id
-  name                String
-  email               String         @unique
-  emailVerified       Boolean
-  image               String?
-  createdAt           DateTime
-  updatedAt           DateTime
-  about               String?
-  location            String?
-  username            String?
-  department          String?
-  researchFocusSkills String?
-  university          String?
-  yearOfStudy         String?
-  role                Role           @default(STUDENT)
-  Event               Event[]
-  createdGroups       Group[]        @relation("UserCreatedGroups")
-  groupMemberships    GroupMember[]  @relation("UserGroupMemberships")
-  Resource            Resource[]
-  Opportunity         Opportunity[]
-  accounts            Account[]
-  Comments            Comment[]
-  Likes               Like[]
-  notifications       Notification[]
-  Post                Post[]
-  sessions            Session[]
+  id               String         @id
+  name             String
+  email            String         @unique
+  emailVerified    Boolean
+  image            String?
+  createdAt        DateTime
+  updatedAt        DateTime
+  bio              String?
+  location         String?
+  username         String?
+  department       String?
+  publications     String[]       @default([])
+  researchFocus    String?
+  skills           String[]       @default([])
+  university       String?
+  yearOfStudy      String?
+  role             Role           @default(STUDENT)
+  Event            Event[]
+  createdGroups    Group[]        @relation("UserCreatedGroups")
+  groupMemberships GroupMember[]  @relation("UserGroupMemberships")
+  resources        Resource[]     @relation("UserResources")
+  Opportunity      Opportunity[]
+  accounts         Account[]
+  Comments         Comment[]
+  Likes            Like[]
+  notifications    Notification[]
+  Post             Post[]
+  sessions         Session[]
 
   @@map("user")
 }
@@ -154,20 +156,50 @@ model Like {
 }
 
 model Resource {
-  id           String   @id @default(cuid())
-  title        String
-  uploadedById String
-  createdAt    DateTime @default(now())
-  author       String
-  categories   String[]
-  description  String
-  downloadUrl  String
-  downloads    Int      @default(0)
-  externalUrl  String?
-  rating       Float    @default(0)
-  tags         String[]
-  updatedAt    DateTime @updatedAt
-  uploadedBy   User     @relation(fields: [uploadedById], references: [id])
+  id             String              @id @default(cuid())
+  name           String
+  slug           String
+  nodeType       ResourceNodeType
+  folderKind     ResourceFolderKind?
+  mediaType      ResourceMediaType?
+  parentId       String?
+  parent         Resource?           @relation("ResourceHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children       Resource[]          @relation("ResourceHierarchy")
+  depth          Int                 @default(0)
+  sortOrder      Int                 @default(0)
+  canonicalPath  String
+  description    String?
+  tags           String[]            @default([])
+  categories     String[]            @default([])
+  universityCode String?
+  departmentCode String?
+  courseCode     String?
+  fileName       String?
+  fileSize       Int?
+  mimeType       String?
+  storageKey     String?
+  downloadUrl    String?
+  externalUrl    String?
+  previewUrl     String?
+  checksum       String?
+  version        Int                 @default(1)
+  downloads      Int                 @default(0)
+  rating         Float               @default(0)
+  uploadedById   String?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  publishedAt    DateTime?
+  isArchived     Boolean             @default(false)
+  uploadedBy     User?               @relation("UserResources", fields: [uploadedById], references: [id])
+
+  @@unique([parentId, slug])
+  @@unique([canonicalPath])
+  @@index([nodeType])
+  @@index([folderKind])
+  @@index([mediaType])
+  @@index([parentId])
+  @@index([universityCode])
+  @@map("resource")
 }
 
 model Group {
@@ -211,6 +243,25 @@ enum PostCategory {
   QUESTION
   OPPORTUNITY
   EVENT
+}
+
+enum ResourceNodeType {
+  FOLDER
+  FILE
+}
+
+enum ResourceFolderKind {
+  UNIVERSITY
+  DEPARTMENT
+  COURSE
+  CUSTOM
+}
+
+enum ResourceMediaType {
+  DOCUMENT
+  IMAGE
+  VIDEO
+  OTHER
 }
 
 model Opportunity {
