@@ -1,43 +1,50 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
-  TreeExpander,
-  TreeIcon,
-  TreeLabel,
-  TreeNode,
-  TreeNodeContent,
-  TreeNodeTrigger,
-  TreeProvider,
-  TreeView,
+	TreeExpander,
+	TreeIcon,
+	TreeLabel,
+	TreeNode,
+	TreeNodeContent,
+	TreeNodeTrigger,
+	TreeProvider,
+	TreeView,
 } from "@/components/kibo-ui/tree";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
-  FileArchive,
-  FileText,
-  Folder,
-  Image as ImageIcon,
-  Upload,
-  Video as VideoIcon,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useResources } from "@/hooks/use-resources";
+import { cn } from "@/lib/utils";
+import {
+	FileArchive,
+	FileText,
+	Folder,
+	Image as ImageIcon,
+	RefreshCw,
+	Upload,
+	Video as VideoIcon,
 } from "lucide-react";
-import { buildResourceTree, mockResources, ResourceNode } from "./mockResources";
-
-const DEFAULT_EXPANDED_IDS = mockResources
-  .filter((resource) => resource.nodeType === "FOLDER" && (resource.depth ?? 0) <= 1)
-  .map((resource) => resource.id);
-
-const DEFAULT_SELECTED_ID = mockResources.find(
-  (resource) => resource.nodeType === "FOLDER" && resource.parentId === null
-)?.id;
+import type { ResourceNode } from "./tree";
+import type { ResourceStatus } from "@/generated/prisma";
+import { ResourceForm } from "./resources-form";
 
 function getTreeFileIcon(resource: ResourceNode) {
   const hint = (resource.mediaType || resource.mimeType || "").toLowerCase();
@@ -106,11 +113,16 @@ function renderTree(nodes: ResourceNode[], level = 0) {
             hasChildren={hasChildren}
             icon={!hasChildren ? getTreeFileIcon(node) : undefined}
           />
-          <TreeLabel>{node.name}</TreeLabel>
+          <TreeLabel>
+            <span className="flex items-center gap-2">
+              <span className="truncate text-sm font-medium">{node.name}</span>
+              <InlineStatus status={node.status} />
+            </span>
+          </TreeLabel>
         </TreeNodeTrigger>
         {hasChildren ? (
           <TreeNodeContent hasChildren>
-            {renderTree(node.children!, level + 1)}
+            {renderTree(node.children, level + 1)}
           </TreeNodeContent>
         ) : null}
       </TreeNode>
@@ -119,37 +131,50 @@ function renderTree(nodes: ResourceNode[], level = 0) {
 }
 
 export default function ResourcePage() {
-  const tree = useMemo(() => buildResourceTree(mockResources), []);
+  const { tree, nodesById, loading, error, refresh } = useResources();
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [uploadOpen, setUploadOpen] = useState(false);
 
-  const nodeMap = useMemo(() => {
-    const map = new Map<string, ResourceNode>();
+  const defaultExpandedIds = useMemo(() => buildDefaultExpandedIds(tree), [tree]);
+  const providerKey = useMemo(() => tree.map((node) => node.id).join("|"), [tree]);
 
-    const walk = (nodes: ResourceNode[]) => {
-      nodes.forEach((node) => {
-        map.set(node.id, node);
-        if (node.children?.length) {
-          walk(node.children);
-        }
-      });
-    };
+  useEffect(() => {
+    if (!tree.length) {
+      if (selectedIds.length) {
+        setSelectedIds([]);
+      }
+      return;
+    }
 
-    walk(tree);
-    return map;
-  }, [tree]);
+    const activeId = selectedIds[selectedIds.length - 1];
+    if (activeId && nodesById.has(activeId)) {
+      return;
+    }
 
-  const [selectedIds, setSelectedIds] = useState<string[]>(
-    DEFAULT_SELECTED_ID ? [DEFAULT_SELECTED_ID] : []
-  );
+    const fallback = findDefaultSelection(tree);
+    if (!fallback) {
+      if (selectedIds.length) {
+        setSelectedIds([]);
+      }
+      return;
+    }
 
-  const selectedNodeId = selectedIds[selectedIds.length - 1] ?? DEFAULT_SELECTED_ID;
-  const selectedNode = selectedNodeId ? nodeMap.get(selectedNodeId) : undefined;
-  const activeNode = selectedNode ?? (DEFAULT_SELECTED_ID ? nodeMap.get(DEFAULT_SELECTED_ID) : undefined);
+    if (activeId !== fallback.id || selectedIds.length !== 1) {
+      setSelectedIds([fallback.id]);
+    }
+  }, [nodesById, selectedIds, tree]);
 
-  const previewItems = activeNode
-    ? activeNode.nodeType === "FOLDER"
-      ? activeNode.children ?? []
-      : [activeNode]
-    : [];
+  const activeNodeId = selectedIds[selectedIds.length - 1];
+  const activeNode = activeNodeId ? nodesById.get(activeNodeId) : undefined;
+  const activeFolder = activeNode?.nodeType === "FOLDER" ? activeNode : undefined;
+
+  const previewItems = useMemo(() => {
+    if (!activeNode) return [];
+    if (activeNode.nodeType === "FOLDER") {
+      return activeNode.children ?? [];
+    }
+    return [activeNode];
+  }, [activeNode]);
 
   return (
     <div className="grid gap-4 p-6 lg:grid-cols-[320px_minmax(0,1fr)]">
@@ -162,19 +187,40 @@ export default function ResourcePage() {
         </CardHeader>
         <CardContent className="flex-1 overflow-hidden px-0 py-0">
           <ScrollArea className="h-[calc(80vh-120px)]">
-            <TreeProvider
-              className="w-full"
-              defaultExpandedIds={DEFAULT_EXPANDED_IDS}
-              selectedIds={selectedIds}
-              onSelectionChange={(ids) => {
-                const next = ids.length ? [ids[ids.length - 1]] : [];
-                setSelectedIds(next);
-              }}
-            >
-              <TreeView className="px-2 py-3">
-                {renderTree(tree)}
-              </TreeView>
-            </TreeProvider>
+            {error ? (
+              <div className="flex h-full flex-col items-center justify-center gap-4 p-8 text-center">
+                <p className="text-sm text-muted-foreground">{error}</p>
+                <Button onClick={() => refresh()} size="sm">
+                  Try again
+                </Button>
+              </div>
+            ) : loading ? (
+              <div className="space-y-2 p-4">
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <Skeleton key={index.toString()} className="h-8 w-full" />
+                ))}
+              </div>
+            ) : tree.length ? (
+              <TreeProvider
+                key={providerKey}
+                className="w-full"
+                defaultExpandedIds={defaultExpandedIds}
+                selectedIds={selectedIds}
+                onSelectionChange={(ids) => {
+                  const next = ids.length ? [ids[ids.length - 1]] : [];
+                  setSelectedIds(next);
+                }}
+              >
+                <TreeView className="px-2 py-3">
+                  {renderTree(tree)}
+                </TreeView>
+              </TreeProvider>
+            ) : (
+              <EmptyState
+                title="No resources yet"
+                description="Use the upload action to create the first university folder."
+              />
+            )}
           </ScrollArea>
         </CardContent>
       </Card>
@@ -188,27 +234,93 @@ export default function ResourcePage() {
             <CardDescription className="text-sm text-muted-foreground">
               {activeNode?.canonicalPath ?? "Select a folder from the tree to view resources."}
             </CardDescription>
+            {activeNode ? (
+              <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                <StatusBadge status={activeNode.status} />
+                {activeNode.submittedBy ? (
+                  <span>
+                    Submitted by {activeNode.submittedBy.name ?? "Unknown"}
+                  </span>
+                ) : null}
+                {activeNode.approvedBy && activeNode.status === "APPROVED" ? (
+                  <span>
+                    Approved by {activeNode.approvedBy.name ?? "Unknown"}
+                  </span>
+                ) : null}
+              </div>
+            ) : null}
           </div>
-          {activeNode?.nodeType === "FOLDER" ? (
-            <Button size="sm" variant="outline" className="gap-2">
-              <Upload className="h-4 w-4" /> Upload Resource
+          <div className="flex items-center gap-2">
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={() => refresh()}
+              aria-label="Refresh resources"
+              disabled={loading}
+            >
+              <RefreshCw className={cn("h-4 w-4", loading ? "animate-spin" : "")} />
             </Button>
-          ) : null}
+            {activeFolder ? (
+              <Dialog open={uploadOpen} onOpenChange={setUploadOpen}>
+                <DialogTrigger asChild>
+                  <Button size="sm" variant="outline" className="gap-2">
+                    <Upload className="h-4 w-4" /> Upload Resource
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl">
+                  <DialogHeader>
+                    <DialogTitle>Upload resource</DialogTitle>
+                    <DialogDescription>
+                      Files will be added under {activeFolder.name}.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <ResourceForm
+                    parentNode={activeFolder}
+                    onSubmit={(created) => {
+                      setUploadOpen(false);
+                      refresh().then(() => {
+                        if (created?.id) {
+                          setSelectedIds([created.id]);
+                        } else {
+                          setSelectedIds([activeFolder.id]);
+                        }
+                      });
+                    }}
+                    onCancel={() => setUploadOpen(false)}
+                  />
+                </DialogContent>
+              </Dialog>
+            ) : null}
+          </div>
         </CardHeader>
         <Separator />
         <CardContent className="flex-1 overflow-hidden px-0 py-0">
           <ScrollArea className="h-[calc(80vh-140px)]">
-            {previewItems.length ? (
+            {error ? (
+              <div className="flex h-full flex-col items-center justify-center gap-4 p-8 text-center">
+                <p className="text-sm text-muted-foreground">{error}</p>
+                <Button onClick={() => refresh()} size="sm">
+                  Try again
+                </Button>
+              </div>
+            ) : loading ? (
+              <div className="grid gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <Skeleton key={index.toString()} className="h-36 w-full" />
+                ))}
+              </div>
+            ) : previewItems.length ? (
               <div className="grid gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {previewItems.map((item) => (
                   <div
                     key={item.id}
-                    className="flex flex-col items-center justify-center rounded-lg border border-border/60 p-4 text-center transition hover:border-primary/60 hover:bg-muted/40"
+                    className="flex h-full flex-col items-center justify-center rounded-lg border border-border/60 p-4 text-center transition hover:border-primary/60 hover:bg-muted/40"
                   >
                     {getPreviewIcon(item)}
                     <span className="mt-3 line-clamp-2 text-sm font-medium">
                       {item.name}
                     </span>
+                    <StatusBadge status={item.status} className="mt-2" />
                     {item.nodeType === "FILE" ? (
                       <span className="mt-2 text-xs text-muted-foreground">
                         {item.fileName ?? "Unnamed file"}
@@ -217,9 +329,14 @@ export default function ResourcePage() {
                       </span>
                     ) : (
                       <span className="mt-2 text-xs text-muted-foreground">
-                        {(item.children?.length ?? 0).toString()} items
+                        {item.children.length.toString()} items
                       </span>
                     )}
+                    {item.reviewNote && item.status !== "APPROVED" ? (
+                      <p className="mt-2 line-clamp-3 text-xs text-amber-600">
+                        {item.reviewNote}
+                      </p>
+                    ) : null}
                   </div>
                 ))}
               </div>
@@ -239,4 +356,86 @@ export default function ResourcePage() {
       </Card>
     </div>
   );
+}
+
+const STATUS_META: Record<ResourceStatus, { label: string; className: string }> = {
+	APPROVED: {
+		label: "Approved",
+		className: "border-emerald-500/30 bg-emerald-500/10 text-emerald-600",
+	},
+	PENDING: {
+		label: "Pending",
+		className: "border-amber-500/30 bg-amber-400/10 text-amber-600",
+	},
+	REJECTED: {
+		label: "Needs updates",
+		className: "border-rose-500/30 bg-rose-500/10 text-rose-600",
+	},
+	ARCHIVED: {
+		label: "Archived",
+		className: "border-slate-400/40 bg-slate-400/10 text-slate-500",
+	},
+};
+
+function StatusBadge({ status, className }: { status: ResourceStatus; className?: string }) {
+  const meta = STATUS_META[status];
+  return (
+    <Badge variant="outline" className={cn(meta?.className, className)}>
+      {meta?.label ?? status}
+    </Badge>
+  );
+}
+
+function InlineStatus({ status }: { status: ResourceStatus }) {
+	if (status === "APPROVED") {
+		return null;
+	}
+	const meta = STATUS_META[status];
+	return (
+		<span
+			className={cn(
+				"rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase",
+				meta?.className,
+			)}
+		>
+			{meta?.label ?? status}
+		</span>
+	);
+}
+
+function findDefaultSelection(tree: ResourceNode[]) {
+	for (const node of tree) {
+		if (node.nodeType === "FOLDER") {
+			return node;
+		}
+	}
+	return tree[0];
+}
+
+function buildDefaultExpandedIds(tree: ResourceNode[]) {
+	const ids: string[] = [];
+
+	const walk = (nodes: ResourceNode[], depth: number) => {
+		for (const node of nodes) {
+			if (node.nodeType === "FOLDER" && depth < 2) {
+				ids.push(node.id);
+				if (node.children.length) {
+					walk(node.children, depth + 1);
+				}
+			}
+		}
+	};
+
+	walk(tree, 0);
+	return ids;
+}
+
+function EmptyState({ title, description }: { title: string; description: string }) {
+	return (
+		<div className="flex h-full flex-col items-center justify-center gap-2 p-8 text-center text-sm text-muted-foreground">
+			<Folder className="h-10 w-10 text-muted-foreground/70" />
+			<p className="font-medium text-foreground/80">{title}</p>
+			<p className="max-w-xs text-xs">{description}</p>
+		</div>
+	);
 }
