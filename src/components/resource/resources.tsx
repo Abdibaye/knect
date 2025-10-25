@@ -2,14 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
-	TreeExpander,
-	TreeIcon,
-	TreeLabel,
-	TreeNode,
-	TreeNodeContent,
-	TreeNodeTrigger,
-	TreeProvider,
-	TreeView,
+  TreeExpander,
+  TreeIcon,
+  TreeLabel,
+  TreeNode,
+  TreeNodeContent,
+  TreeNodeTrigger,
+  TreeProvider,
+  TreeView,
 } from "@/components/kibo-ui/tree";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -32,19 +32,33 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useResources } from "@/hooks/use-resources";
+import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import {
-	FileArchive,
-	FileText,
-	Folder,
-	Image as ImageIcon,
-	RefreshCw,
-	Upload,
-	Video as VideoIcon,
+  FileArchive,
+  FileText,
+  Folder,
+  FolderPlus,
+  Image as ImageIcon,
+  RefreshCw,
+  Upload,
+  Video as VideoIcon,
 } from "lucide-react";
 import type { ResourceNode } from "./tree";
 import type { ResourceStatus } from "@/generated/prisma";
+import { Role, UniversityRole } from "@/generated/prisma";
 import { ResourceForm } from "./resources-form";
+import { ResourceFolderForm } from "./resource-folder-form";
+
+type SessionMembership = {
+  universityId?: string | null;
+  role?: string | null;
+};
+
+type SessionUser = {
+  role?: string | null;
+  universityMemberships?: SessionMembership[] | null;
+};
 
 function getTreeFileIcon(resource: ResourceNode) {
   const hint = (resource.mediaType || resource.mimeType || "").toLowerCase();
@@ -134,6 +148,9 @@ export default function ResourcePage() {
   const { tree, nodesById, loading, error, refresh } = useResources();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [uploadOpen, setUploadOpen] = useState(false);
+  const [folderOpen, setFolderOpen] = useState(false);
+  const { data: session } = authClient.useSession();
+  const sessionUser = session?.user as SessionUser | undefined;
 
   const defaultExpandedIds = useMemo(() => buildDefaultExpandedIds(tree), [tree]);
   const providerKey = useMemo(() => tree.map((node) => node.id).join("|"), [tree]);
@@ -175,6 +192,30 @@ export default function ResourcePage() {
     }
     return [activeNode];
   }, [activeNode]);
+
+  const canCreateFolder = useMemo(() => {
+    if (!activeFolder || !sessionUser) {
+      return false;
+    }
+    const globalRole = sessionUser.role;
+    if (typeof globalRole === "string" && globalRole.toUpperCase() === Role.ADMIN) {
+      return true;
+    }
+    const memberships = sessionUser.universityMemberships ?? [];
+    return memberships.some((membership) => {
+      if (!membership) return false;
+      const matchesUniversity = (membership.universityId ?? null) === (activeFolder.universityId ?? null);
+      if (!matchesUniversity) return false;
+      const membershipRole = membership.role;
+      return typeof membershipRole === "string" && membershipRole.toUpperCase() === UniversityRole.ADMIN;
+    });
+  }, [activeFolder, sessionUser]);
+
+  useEffect(() => {
+    if (!canCreateFolder && folderOpen) {
+      setFolderOpen(false);
+    }
+  }, [canCreateFolder, folderOpen]);
 
   return (
     <div className="grid gap-4 p-6 lg:grid-cols-[320px_minmax(0,1fr)]">
@@ -261,35 +302,69 @@ export default function ResourcePage() {
               <RefreshCw className={cn("h-4 w-4", loading ? "animate-spin" : "")} />
             </Button>
             {activeFolder ? (
-              <Dialog open={uploadOpen} onOpenChange={setUploadOpen}>
-                <DialogTrigger asChild>
-                  <Button size="sm" variant="outline" className="gap-2">
-                    <Upload className="h-4 w-4" /> Upload Resource
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-2xl">
-                  <DialogHeader>
-                    <DialogTitle>Upload resource</DialogTitle>
-                    <DialogDescription>
-                      Files will be added under {activeFolder.name}.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <ResourceForm
-                    parentNode={activeFolder}
-                    onSubmit={(created) => {
-                      setUploadOpen(false);
-                      refresh().then(() => {
-                        if (created?.id) {
-                          setSelectedIds([created.id]);
-                        } else {
-                          setSelectedIds([activeFolder.id]);
-                        }
-                      });
-                    }}
-                    onCancel={() => setUploadOpen(false)}
-                  />
-                </DialogContent>
-              </Dialog>
+              <>
+                {canCreateFolder ? (
+                  <Dialog open={folderOpen} onOpenChange={setFolderOpen}>
+                    <DialogTrigger asChild>
+                      <Button size="sm" className="gap-2">
+                        <FolderPlus className="h-4 w-4" /> New Folder
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-xl">
+                      <DialogHeader>
+                        <DialogTitle>Create folder</DialogTitle>
+                        <DialogDescription>
+                          Folders help keep {activeFolder.name} organised.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <ResourceFolderForm
+                        parentNode={activeFolder}
+                        canManage={canCreateFolder}
+                        onSubmit={(created) => {
+                          setFolderOpen(false);
+                          refresh().then(() => {
+                            if (created?.id) {
+                              setSelectedIds([created.id]);
+                            } else {
+                              setSelectedIds([activeFolder.id]);
+                            }
+                          });
+                        }}
+                        onCancel={() => setFolderOpen(false)}
+                      />
+                    </DialogContent>
+                  </Dialog>
+                ) : null}
+                <Dialog open={uploadOpen} onOpenChange={setUploadOpen}>
+                  <DialogTrigger asChild>
+                    <Button size="sm" variant="outline" className="gap-2">
+                      <Upload className="h-4 w-4" /> Upload Resource
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-2xl">
+                    <DialogHeader>
+                      <DialogTitle>Upload resource</DialogTitle>
+                      <DialogDescription>
+                        Files will be added under {activeFolder.name}.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <ResourceForm
+                      parentNode={activeFolder}
+                      onSubmit={(created) => {
+                        setUploadOpen(false);
+                        refresh().then(() => {
+                          if (created?.id) {
+                            setSelectedIds([created.id]);
+                          } else {
+                            setSelectedIds([activeFolder.id]);
+                          }
+                        });
+                      }}
+                      onCancel={() => setUploadOpen(false)}
+                    />
+                  </DialogContent>
+                </Dialog>
+              </>
             ) : null}
           </div>
         </CardHeader>
