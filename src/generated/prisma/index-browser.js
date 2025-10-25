@@ -239,9 +239,6 @@ exports.Prisma.ResourceScalarFieldEnum = {
   description: 'description',
   tags: 'tags',
   categories: 'categories',
-  universityCode: 'universityCode',
-  departmentCode: 'departmentCode',
-  courseCode: 'courseCode',
   fileName: 'fileName',
   fileSize: 'fileSize',
   mimeType: 'mimeType',
@@ -253,11 +250,45 @@ exports.Prisma.ResourceScalarFieldEnum = {
   version: 'version',
   downloads: 'downloads',
   rating: 'rating',
+  status: 'status',
+  reviewNote: 'reviewNote',
+  submittedById: 'submittedById',
+  approvedById: 'approvedById',
+  approvedAt: 'approvedAt',
   uploadedById: 'uploadedById',
+  universityId: 'universityId',
+  archivedAt: 'archivedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   publishedAt: 'publishedAt',
   isArchived: 'isArchived'
+};
+
+exports.Prisma.UniversityScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  logoUrl: 'logoUrl',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UniversityMembershipScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  universityId: 'universityId',
+  role: 'role',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ResourceAuditScalarFieldEnum = {
+  id: 'id',
+  resourceId: 'resourceId',
+  actorId: 'actorId',
+  action: 'action',
+  notes: 'notes',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.GroupScalarFieldEnum = {
@@ -357,6 +388,27 @@ exports.ResourceMediaType = exports.$Enums.ResourceMediaType = {
   OTHER: 'OTHER'
 };
 
+exports.ResourceStatus = exports.$Enums.ResourceStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  ARCHIVED: 'ARCHIVED'
+};
+
+exports.UniversityRole = exports.$Enums.UniversityRole = {
+  ADMIN: 'ADMIN',
+  CONTRIBUTOR: 'CONTRIBUTOR',
+  VIEWER: 'VIEWER'
+};
+
+exports.ResourceAuditAction = exports.$Enums.ResourceAuditAction = {
+  SUBMITTED: 'SUBMITTED',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  ARCHIVED: 'ARCHIVED',
+  RESTORED: 'RESTORED'
+};
+
 exports.Prisma.ModelName = {
   Notification: 'Notification',
   User: 'User',
@@ -367,6 +419,9 @@ exports.Prisma.ModelName = {
   Comment: 'Comment',
   Like: 'Like',
   Resource: 'Resource',
+  University: 'University',
+  UniversityMembership: 'UniversityMembership',
+  ResourceAudit: 'ResourceAudit',
   Group: 'Group',
   GroupMember: 'GroupMember',
   Event: 'Event',

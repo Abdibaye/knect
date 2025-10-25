@@ -59,6 +59,21 @@ export type Like = $Result.DefaultSelection<Prisma.$LikePayload>
  */
 export type Resource = $Result.DefaultSelection<Prisma.$ResourcePayload>
 /**
+ * Model University
+ * 
+ */
+export type University = $Result.DefaultSelection<Prisma.$UniversityPayload>
+/**
+ * Model UniversityMembership
+ * 
+ */
+export type UniversityMembership = $Result.DefaultSelection<Prisma.$UniversityMembershipPayload>
+/**
+ * Model ResourceAudit
+ * 
+ */
+export type ResourceAudit = $Result.DefaultSelection<Prisma.$ResourceAuditPayload>
+/**
  * Model Group
  * 
  */
@@ -92,6 +107,15 @@ export namespace $Enums {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const UniversityRole: {
+  ADMIN: 'ADMIN',
+  CONTRIBUTOR: 'CONTRIBUTOR',
+  VIEWER: 'VIEWER'
+};
+
+export type UniversityRole = (typeof UniversityRole)[keyof typeof UniversityRole]
+
+
 export const PostCategory: {
   GENERAL: 'GENERAL',
   QUESTION: 'QUESTION',
@@ -100,6 +124,16 @@ export const PostCategory: {
 };
 
 export type PostCategory = (typeof PostCategory)[keyof typeof PostCategory]
+
+
+export const ResourceStatus: {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  ARCHIVED: 'ARCHIVED'
+};
+
+export type ResourceStatus = (typeof ResourceStatus)[keyof typeof ResourceStatus]
 
 
 export const ResourceNodeType: {
@@ -129,15 +163,34 @@ export const ResourceMediaType: {
 
 export type ResourceMediaType = (typeof ResourceMediaType)[keyof typeof ResourceMediaType]
 
+
+export const ResourceAuditAction: {
+  SUBMITTED: 'SUBMITTED',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  ARCHIVED: 'ARCHIVED',
+  RESTORED: 'RESTORED'
+};
+
+export type ResourceAuditAction = (typeof ResourceAuditAction)[keyof typeof ResourceAuditAction]
+
 }
 
 export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
 
+export type UniversityRole = $Enums.UniversityRole
+
+export const UniversityRole: typeof $Enums.UniversityRole
+
 export type PostCategory = $Enums.PostCategory
 
 export const PostCategory: typeof $Enums.PostCategory
+
+export type ResourceStatus = $Enums.ResourceStatus
+
+export const ResourceStatus: typeof $Enums.ResourceStatus
 
 export type ResourceNodeType = $Enums.ResourceNodeType
 
@@ -150,6 +203,10 @@ export const ResourceFolderKind: typeof $Enums.ResourceFolderKind
 export type ResourceMediaType = $Enums.ResourceMediaType
 
 export const ResourceMediaType: typeof $Enums.ResourceMediaType
+
+export type ResourceAuditAction = $Enums.ResourceAuditAction
+
+export const ResourceAuditAction: typeof $Enums.ResourceAuditAction
 
 /**
  * ##  Prisma Client ʲˢ
@@ -358,6 +415,36 @@ export class PrismaClient<
     * ```
     */
   get resource(): Prisma.ResourceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.university`: Exposes CRUD operations for the **University** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Universities
+    * const universities = await prisma.university.findMany()
+    * ```
+    */
+  get university(): Prisma.UniversityDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.universityMembership`: Exposes CRUD operations for the **UniversityMembership** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UniversityMemberships
+    * const universityMemberships = await prisma.universityMembership.findMany()
+    * ```
+    */
+  get universityMembership(): Prisma.UniversityMembershipDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.resourceAudit`: Exposes CRUD operations for the **ResourceAudit** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ResourceAudits
+    * const resourceAudits = await prisma.resourceAudit.findMany()
+    * ```
+    */
+  get resourceAudit(): Prisma.ResourceAuditDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.group`: Exposes CRUD operations for the **Group** model.
@@ -847,6 +934,9 @@ export namespace Prisma {
     Comment: 'Comment',
     Like: 'Like',
     Resource: 'Resource',
+    University: 'University',
+    UniversityMembership: 'UniversityMembership',
+    ResourceAudit: 'ResourceAudit',
     Group: 'Group',
     GroupMember: 'GroupMember',
     Event: 'Event',
@@ -869,7 +959,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "notification" | "user" | "session" | "account" | "verification" | "post" | "comment" | "like" | "resource" | "group" | "groupMember" | "event" | "opportunity"
+      modelProps: "notification" | "user" | "session" | "account" | "verification" | "post" | "comment" | "like" | "resource" | "university" | "universityMembership" | "resourceAudit" | "group" | "groupMember" | "event" | "opportunity"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1539,6 +1629,228 @@ export namespace Prisma {
           }
         }
       }
+      University: {
+        payload: Prisma.$UniversityPayload<ExtArgs>
+        fields: Prisma.UniversityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UniversityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UniversityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityPayload>
+          }
+          findFirst: {
+            args: Prisma.UniversityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UniversityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityPayload>
+          }
+          findMany: {
+            args: Prisma.UniversityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityPayload>[]
+          }
+          create: {
+            args: Prisma.UniversityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityPayload>
+          }
+          createMany: {
+            args: Prisma.UniversityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UniversityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityPayload>[]
+          }
+          delete: {
+            args: Prisma.UniversityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityPayload>
+          }
+          update: {
+            args: Prisma.UniversityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityPayload>
+          }
+          deleteMany: {
+            args: Prisma.UniversityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UniversityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UniversityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityPayload>[]
+          }
+          upsert: {
+            args: Prisma.UniversityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityPayload>
+          }
+          aggregate: {
+            args: Prisma.UniversityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUniversity>
+          }
+          groupBy: {
+            args: Prisma.UniversityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UniversityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UniversityCountArgs<ExtArgs>
+            result: $Utils.Optional<UniversityCountAggregateOutputType> | number
+          }
+        }
+      }
+      UniversityMembership: {
+        payload: Prisma.$UniversityMembershipPayload<ExtArgs>
+        fields: Prisma.UniversityMembershipFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UniversityMembershipFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityMembershipPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UniversityMembershipFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityMembershipPayload>
+          }
+          findFirst: {
+            args: Prisma.UniversityMembershipFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityMembershipPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UniversityMembershipFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityMembershipPayload>
+          }
+          findMany: {
+            args: Prisma.UniversityMembershipFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityMembershipPayload>[]
+          }
+          create: {
+            args: Prisma.UniversityMembershipCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityMembershipPayload>
+          }
+          createMany: {
+            args: Prisma.UniversityMembershipCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UniversityMembershipCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityMembershipPayload>[]
+          }
+          delete: {
+            args: Prisma.UniversityMembershipDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityMembershipPayload>
+          }
+          update: {
+            args: Prisma.UniversityMembershipUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityMembershipPayload>
+          }
+          deleteMany: {
+            args: Prisma.UniversityMembershipDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UniversityMembershipUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UniversityMembershipUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityMembershipPayload>[]
+          }
+          upsert: {
+            args: Prisma.UniversityMembershipUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UniversityMembershipPayload>
+          }
+          aggregate: {
+            args: Prisma.UniversityMembershipAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUniversityMembership>
+          }
+          groupBy: {
+            args: Prisma.UniversityMembershipGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UniversityMembershipGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UniversityMembershipCountArgs<ExtArgs>
+            result: $Utils.Optional<UniversityMembershipCountAggregateOutputType> | number
+          }
+        }
+      }
+      ResourceAudit: {
+        payload: Prisma.$ResourceAuditPayload<ExtArgs>
+        fields: Prisma.ResourceAuditFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ResourceAuditFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourceAuditPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ResourceAuditFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourceAuditPayload>
+          }
+          findFirst: {
+            args: Prisma.ResourceAuditFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourceAuditPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ResourceAuditFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourceAuditPayload>
+          }
+          findMany: {
+            args: Prisma.ResourceAuditFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourceAuditPayload>[]
+          }
+          create: {
+            args: Prisma.ResourceAuditCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourceAuditPayload>
+          }
+          createMany: {
+            args: Prisma.ResourceAuditCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ResourceAuditCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourceAuditPayload>[]
+          }
+          delete: {
+            args: Prisma.ResourceAuditDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourceAuditPayload>
+          }
+          update: {
+            args: Prisma.ResourceAuditUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourceAuditPayload>
+          }
+          deleteMany: {
+            args: Prisma.ResourceAuditDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ResourceAuditUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ResourceAuditUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourceAuditPayload>[]
+          }
+          upsert: {
+            args: Prisma.ResourceAuditUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResourceAuditPayload>
+          }
+          aggregate: {
+            args: Prisma.ResourceAuditAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateResourceAudit>
+          }
+          groupBy: {
+            args: Prisma.ResourceAuditGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ResourceAuditGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ResourceAuditCountArgs<ExtArgs>
+            result: $Utils.Optional<ResourceAuditCountAggregateOutputType> | number
+          }
+        }
+      }
       Group: {
         payload: Prisma.$GroupPayload<ExtArgs>
         fields: Prisma.GroupFieldRefs
@@ -1936,6 +2248,9 @@ export namespace Prisma {
     comment?: CommentOmit
     like?: LikeOmit
     resource?: ResourceOmit
+    university?: UniversityOmit
+    universityMembership?: UniversityMembershipOmit
+    resourceAudit?: ResourceAuditOmit
     group?: GroupOmit
     groupMember?: GroupMemberOmit
     event?: EventOmit
@@ -2024,6 +2339,10 @@ export namespace Prisma {
     createdGroups: number
     groupMemberships: number
     resources: number
+    submittedResources: number
+    approvedResources: number
+    resourceAudits: number
+    universityMemberships: number
     Opportunity: number
     accounts: number
     Comments: number
@@ -2038,6 +2357,10 @@ export namespace Prisma {
     createdGroups?: boolean | UserCountOutputTypeCountCreatedGroupsArgs
     groupMemberships?: boolean | UserCountOutputTypeCountGroupMembershipsArgs
     resources?: boolean | UserCountOutputTypeCountResourcesArgs
+    submittedResources?: boolean | UserCountOutputTypeCountSubmittedResourcesArgs
+    approvedResources?: boolean | UserCountOutputTypeCountApprovedResourcesArgs
+    resourceAudits?: boolean | UserCountOutputTypeCountResourceAuditsArgs
+    universityMemberships?: boolean | UserCountOutputTypeCountUniversityMembershipsArgs
     Opportunity?: boolean | UserCountOutputTypeCountOpportunityArgs
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     Comments?: boolean | UserCountOutputTypeCountCommentsArgs
@@ -2084,6 +2407,34 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountResourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResourceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSubmittedResourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResourceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountApprovedResourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResourceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountResourceAuditsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResourceAuditWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUniversityMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UniversityMembershipWhereInput
   }
 
   /**
@@ -2222,10 +2573,12 @@ export namespace Prisma {
 
   export type ResourceCountOutputType = {
     children: number
+    audits: number
   }
 
   export type ResourceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     children?: boolean | ResourceCountOutputTypeCountChildrenArgs
+    audits?: boolean | ResourceCountOutputTypeCountAuditsArgs
   }
 
   // Custom InputTypes
@@ -2243,6 +2596,53 @@ export namespace Prisma {
    * ResourceCountOutputType without action
    */
   export type ResourceCountOutputTypeCountChildrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResourceWhereInput
+  }
+
+  /**
+   * ResourceCountOutputType without action
+   */
+  export type ResourceCountOutputTypeCountAuditsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResourceAuditWhereInput
+  }
+
+
+  /**
+   * Count Type UniversityCountOutputType
+   */
+
+  export type UniversityCountOutputType = {
+    memberships: number
+    resources: number
+  }
+
+  export type UniversityCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    memberships?: boolean | UniversityCountOutputTypeCountMembershipsArgs
+    resources?: boolean | UniversityCountOutputTypeCountResourcesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UniversityCountOutputType without action
+   */
+  export type UniversityCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityCountOutputType
+     */
+    select?: UniversityCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UniversityCountOutputType without action
+   */
+  export type UniversityCountOutputTypeCountMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UniversityMembershipWhereInput
+  }
+
+  /**
+   * UniversityCountOutputType without action
+   */
+  export type UniversityCountOutputTypeCountResourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ResourceWhereInput
   }
 
@@ -3689,6 +4089,10 @@ export namespace Prisma {
     createdGroups?: boolean | User$createdGroupsArgs<ExtArgs>
     groupMemberships?: boolean | User$groupMembershipsArgs<ExtArgs>
     resources?: boolean | User$resourcesArgs<ExtArgs>
+    submittedResources?: boolean | User$submittedResourcesArgs<ExtArgs>
+    approvedResources?: boolean | User$approvedResourcesArgs<ExtArgs>
+    resourceAudits?: boolean | User$resourceAuditsArgs<ExtArgs>
+    universityMemberships?: boolean | User$universityMembershipsArgs<ExtArgs>
     Opportunity?: boolean | User$OpportunityArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
     Comments?: boolean | User$CommentsArgs<ExtArgs>
@@ -3765,6 +4169,10 @@ export namespace Prisma {
     createdGroups?: boolean | User$createdGroupsArgs<ExtArgs>
     groupMemberships?: boolean | User$groupMembershipsArgs<ExtArgs>
     resources?: boolean | User$resourcesArgs<ExtArgs>
+    submittedResources?: boolean | User$submittedResourcesArgs<ExtArgs>
+    approvedResources?: boolean | User$approvedResourcesArgs<ExtArgs>
+    resourceAudits?: boolean | User$resourceAuditsArgs<ExtArgs>
+    universityMemberships?: boolean | User$universityMembershipsArgs<ExtArgs>
     Opportunity?: boolean | User$OpportunityArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
     Comments?: boolean | User$CommentsArgs<ExtArgs>
@@ -3784,6 +4192,10 @@ export namespace Prisma {
       createdGroups: Prisma.$GroupPayload<ExtArgs>[]
       groupMemberships: Prisma.$GroupMemberPayload<ExtArgs>[]
       resources: Prisma.$ResourcePayload<ExtArgs>[]
+      submittedResources: Prisma.$ResourcePayload<ExtArgs>[]
+      approvedResources: Prisma.$ResourcePayload<ExtArgs>[]
+      resourceAudits: Prisma.$ResourceAuditPayload<ExtArgs>[]
+      universityMemberships: Prisma.$UniversityMembershipPayload<ExtArgs>[]
       Opportunity: Prisma.$OpportunityPayload<ExtArgs>[]
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       Comments: Prisma.$CommentPayload<ExtArgs>[]
@@ -4208,6 +4620,10 @@ export namespace Prisma {
     createdGroups<T extends User$createdGroupsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdGroupsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     groupMemberships<T extends User$groupMembershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$groupMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GroupMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     resources<T extends User$resourcesArgs<ExtArgs> = {}>(args?: Subset<T, User$resourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    submittedResources<T extends User$submittedResourcesArgs<ExtArgs> = {}>(args?: Subset<T, User$submittedResourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    approvedResources<T extends User$approvedResourcesArgs<ExtArgs> = {}>(args?: Subset<T, User$approvedResourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    resourceAudits<T extends User$resourceAuditsArgs<ExtArgs> = {}>(args?: Subset<T, User$resourceAuditsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    universityMemberships<T extends User$universityMembershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$universityMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Opportunity<T extends User$OpportunityArgs<ExtArgs> = {}>(args?: Subset<T, User$OpportunityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OpportunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Comments<T extends User$CommentsArgs<ExtArgs> = {}>(args?: Subset<T, User$CommentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4742,6 +5158,102 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+  }
+
+  /**
+   * User.submittedResources
+   */
+  export type User$submittedResourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    where?: ResourceWhereInput
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    cursor?: ResourceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+  }
+
+  /**
+   * User.approvedResources
+   */
+  export type User$approvedResourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    where?: ResourceWhereInput
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    cursor?: ResourceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+  }
+
+  /**
+   * User.resourceAudits
+   */
+  export type User$resourceAuditsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditInclude<ExtArgs> | null
+    where?: ResourceAuditWhereInput
+    orderBy?: ResourceAuditOrderByWithRelationInput | ResourceAuditOrderByWithRelationInput[]
+    cursor?: ResourceAuditWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResourceAuditScalarFieldEnum | ResourceAuditScalarFieldEnum[]
+  }
+
+  /**
+   * User.universityMemberships
+   */
+  export type User$universityMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipInclude<ExtArgs> | null
+    where?: UniversityMembershipWhereInput
+    orderBy?: UniversityMembershipOrderByWithRelationInput | UniversityMembershipOrderByWithRelationInput[]
+    cursor?: UniversityMembershipWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UniversityMembershipScalarFieldEnum | UniversityMembershipScalarFieldEnum[]
   }
 
   /**
@@ -11754,9 +12266,6 @@ export namespace Prisma {
     sortOrder: number | null
     canonicalPath: string | null
     description: string | null
-    universityCode: string | null
-    departmentCode: string | null
-    courseCode: string | null
     fileName: string | null
     fileSize: number | null
     mimeType: string | null
@@ -11768,7 +12277,14 @@ export namespace Prisma {
     version: number | null
     downloads: number | null
     rating: number | null
+    status: $Enums.ResourceStatus | null
+    reviewNote: string | null
+    submittedById: string | null
+    approvedById: string | null
+    approvedAt: Date | null
     uploadedById: string | null
+    universityId: string | null
+    archivedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
     publishedAt: Date | null
@@ -11787,9 +12303,6 @@ export namespace Prisma {
     sortOrder: number | null
     canonicalPath: string | null
     description: string | null
-    universityCode: string | null
-    departmentCode: string | null
-    courseCode: string | null
     fileName: string | null
     fileSize: number | null
     mimeType: string | null
@@ -11801,7 +12314,14 @@ export namespace Prisma {
     version: number | null
     downloads: number | null
     rating: number | null
+    status: $Enums.ResourceStatus | null
+    reviewNote: string | null
+    submittedById: string | null
+    approvedById: string | null
+    approvedAt: Date | null
     uploadedById: string | null
+    universityId: string | null
+    archivedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
     publishedAt: Date | null
@@ -11822,9 +12342,6 @@ export namespace Prisma {
     description: number
     tags: number
     categories: number
-    universityCode: number
-    departmentCode: number
-    courseCode: number
     fileName: number
     fileSize: number
     mimeType: number
@@ -11836,7 +12353,14 @@ export namespace Prisma {
     version: number
     downloads: number
     rating: number
+    status: number
+    reviewNote: number
+    submittedById: number
+    approvedById: number
+    approvedAt: number
     uploadedById: number
+    universityId: number
+    archivedAt: number
     createdAt: number
     updatedAt: number
     publishedAt: number
@@ -11875,9 +12399,6 @@ export namespace Prisma {
     sortOrder?: true
     canonicalPath?: true
     description?: true
-    universityCode?: true
-    departmentCode?: true
-    courseCode?: true
     fileName?: true
     fileSize?: true
     mimeType?: true
@@ -11889,7 +12410,14 @@ export namespace Prisma {
     version?: true
     downloads?: true
     rating?: true
+    status?: true
+    reviewNote?: true
+    submittedById?: true
+    approvedById?: true
+    approvedAt?: true
     uploadedById?: true
+    universityId?: true
+    archivedAt?: true
     createdAt?: true
     updatedAt?: true
     publishedAt?: true
@@ -11908,9 +12436,6 @@ export namespace Prisma {
     sortOrder?: true
     canonicalPath?: true
     description?: true
-    universityCode?: true
-    departmentCode?: true
-    courseCode?: true
     fileName?: true
     fileSize?: true
     mimeType?: true
@@ -11922,7 +12447,14 @@ export namespace Prisma {
     version?: true
     downloads?: true
     rating?: true
+    status?: true
+    reviewNote?: true
+    submittedById?: true
+    approvedById?: true
+    approvedAt?: true
     uploadedById?: true
+    universityId?: true
+    archivedAt?: true
     createdAt?: true
     updatedAt?: true
     publishedAt?: true
@@ -11943,9 +12475,6 @@ export namespace Prisma {
     description?: true
     tags?: true
     categories?: true
-    universityCode?: true
-    departmentCode?: true
-    courseCode?: true
     fileName?: true
     fileSize?: true
     mimeType?: true
@@ -11957,7 +12486,14 @@ export namespace Prisma {
     version?: true
     downloads?: true
     rating?: true
+    status?: true
+    reviewNote?: true
+    submittedById?: true
+    approvedById?: true
+    approvedAt?: true
     uploadedById?: true
+    universityId?: true
+    archivedAt?: true
     createdAt?: true
     updatedAt?: true
     publishedAt?: true
@@ -12065,9 +12601,6 @@ export namespace Prisma {
     description: string | null
     tags: string[]
     categories: string[]
-    universityCode: string | null
-    departmentCode: string | null
-    courseCode: string | null
     fileName: string | null
     fileSize: number | null
     mimeType: string | null
@@ -12079,7 +12612,14 @@ export namespace Prisma {
     version: number
     downloads: number
     rating: number
+    status: $Enums.ResourceStatus
+    reviewNote: string | null
+    submittedById: string | null
+    approvedById: string | null
+    approvedAt: Date | null
     uploadedById: string | null
+    universityId: string | null
+    archivedAt: Date | null
     createdAt: Date
     updatedAt: Date
     publishedAt: Date | null
@@ -12119,9 +12659,6 @@ export namespace Prisma {
     description?: boolean
     tags?: boolean
     categories?: boolean
-    universityCode?: boolean
-    departmentCode?: boolean
-    courseCode?: boolean
     fileName?: boolean
     fileSize?: boolean
     mimeType?: boolean
@@ -12133,7 +12670,14 @@ export namespace Prisma {
     version?: boolean
     downloads?: boolean
     rating?: boolean
+    status?: boolean
+    reviewNote?: boolean
+    submittedById?: boolean
+    approvedById?: boolean
+    approvedAt?: boolean
     uploadedById?: boolean
+    universityId?: boolean
+    archivedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     publishedAt?: boolean
@@ -12141,6 +12685,10 @@ export namespace Prisma {
     parent?: boolean | Resource$parentArgs<ExtArgs>
     children?: boolean | Resource$childrenArgs<ExtArgs>
     uploadedBy?: boolean | Resource$uploadedByArgs<ExtArgs>
+    submittedBy?: boolean | Resource$submittedByArgs<ExtArgs>
+    approvedBy?: boolean | Resource$approvedByArgs<ExtArgs>
+    university?: boolean | Resource$universityArgs<ExtArgs>
+    audits?: boolean | Resource$auditsArgs<ExtArgs>
     _count?: boolean | ResourceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["resource"]>
 
@@ -12158,9 +12706,6 @@ export namespace Prisma {
     description?: boolean
     tags?: boolean
     categories?: boolean
-    universityCode?: boolean
-    departmentCode?: boolean
-    courseCode?: boolean
     fileName?: boolean
     fileSize?: boolean
     mimeType?: boolean
@@ -12172,13 +12717,23 @@ export namespace Prisma {
     version?: boolean
     downloads?: boolean
     rating?: boolean
+    status?: boolean
+    reviewNote?: boolean
+    submittedById?: boolean
+    approvedById?: boolean
+    approvedAt?: boolean
     uploadedById?: boolean
+    universityId?: boolean
+    archivedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     publishedAt?: boolean
     isArchived?: boolean
     parent?: boolean | Resource$parentArgs<ExtArgs>
     uploadedBy?: boolean | Resource$uploadedByArgs<ExtArgs>
+    submittedBy?: boolean | Resource$submittedByArgs<ExtArgs>
+    approvedBy?: boolean | Resource$approvedByArgs<ExtArgs>
+    university?: boolean | Resource$universityArgs<ExtArgs>
   }, ExtArgs["result"]["resource"]>
 
   export type ResourceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -12195,9 +12750,6 @@ export namespace Prisma {
     description?: boolean
     tags?: boolean
     categories?: boolean
-    universityCode?: boolean
-    departmentCode?: boolean
-    courseCode?: boolean
     fileName?: boolean
     fileSize?: boolean
     mimeType?: boolean
@@ -12209,13 +12761,23 @@ export namespace Prisma {
     version?: boolean
     downloads?: boolean
     rating?: boolean
+    status?: boolean
+    reviewNote?: boolean
+    submittedById?: boolean
+    approvedById?: boolean
+    approvedAt?: boolean
     uploadedById?: boolean
+    universityId?: boolean
+    archivedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     publishedAt?: boolean
     isArchived?: boolean
     parent?: boolean | Resource$parentArgs<ExtArgs>
     uploadedBy?: boolean | Resource$uploadedByArgs<ExtArgs>
+    submittedBy?: boolean | Resource$submittedByArgs<ExtArgs>
+    approvedBy?: boolean | Resource$approvedByArgs<ExtArgs>
+    university?: boolean | Resource$universityArgs<ExtArgs>
   }, ExtArgs["result"]["resource"]>
 
   export type ResourceSelectScalar = {
@@ -12232,9 +12794,6 @@ export namespace Prisma {
     description?: boolean
     tags?: boolean
     categories?: boolean
-    universityCode?: boolean
-    departmentCode?: boolean
-    courseCode?: boolean
     fileName?: boolean
     fileSize?: boolean
     mimeType?: boolean
@@ -12246,27 +12805,44 @@ export namespace Prisma {
     version?: boolean
     downloads?: boolean
     rating?: boolean
+    status?: boolean
+    reviewNote?: boolean
+    submittedById?: boolean
+    approvedById?: boolean
+    approvedAt?: boolean
     uploadedById?: boolean
+    universityId?: boolean
+    archivedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     publishedAt?: boolean
     isArchived?: boolean
   }
 
-  export type ResourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "nodeType" | "folderKind" | "mediaType" | "parentId" | "depth" | "sortOrder" | "canonicalPath" | "description" | "tags" | "categories" | "universityCode" | "departmentCode" | "courseCode" | "fileName" | "fileSize" | "mimeType" | "storageKey" | "downloadUrl" | "externalUrl" | "previewUrl" | "checksum" | "version" | "downloads" | "rating" | "uploadedById" | "createdAt" | "updatedAt" | "publishedAt" | "isArchived", ExtArgs["result"]["resource"]>
+  export type ResourceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "nodeType" | "folderKind" | "mediaType" | "parentId" | "depth" | "sortOrder" | "canonicalPath" | "description" | "tags" | "categories" | "fileName" | "fileSize" | "mimeType" | "storageKey" | "downloadUrl" | "externalUrl" | "previewUrl" | "checksum" | "version" | "downloads" | "rating" | "status" | "reviewNote" | "submittedById" | "approvedById" | "approvedAt" | "uploadedById" | "universityId" | "archivedAt" | "createdAt" | "updatedAt" | "publishedAt" | "isArchived", ExtArgs["result"]["resource"]>
   export type ResourceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     parent?: boolean | Resource$parentArgs<ExtArgs>
     children?: boolean | Resource$childrenArgs<ExtArgs>
     uploadedBy?: boolean | Resource$uploadedByArgs<ExtArgs>
+    submittedBy?: boolean | Resource$submittedByArgs<ExtArgs>
+    approvedBy?: boolean | Resource$approvedByArgs<ExtArgs>
+    university?: boolean | Resource$universityArgs<ExtArgs>
+    audits?: boolean | Resource$auditsArgs<ExtArgs>
     _count?: boolean | ResourceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ResourceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     parent?: boolean | Resource$parentArgs<ExtArgs>
     uploadedBy?: boolean | Resource$uploadedByArgs<ExtArgs>
+    submittedBy?: boolean | Resource$submittedByArgs<ExtArgs>
+    approvedBy?: boolean | Resource$approvedByArgs<ExtArgs>
+    university?: boolean | Resource$universityArgs<ExtArgs>
   }
   export type ResourceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     parent?: boolean | Resource$parentArgs<ExtArgs>
     uploadedBy?: boolean | Resource$uploadedByArgs<ExtArgs>
+    submittedBy?: boolean | Resource$submittedByArgs<ExtArgs>
+    approvedBy?: boolean | Resource$approvedByArgs<ExtArgs>
+    university?: boolean | Resource$universityArgs<ExtArgs>
   }
 
   export type $ResourcePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12275,6 +12851,10 @@ export namespace Prisma {
       parent: Prisma.$ResourcePayload<ExtArgs> | null
       children: Prisma.$ResourcePayload<ExtArgs>[]
       uploadedBy: Prisma.$UserPayload<ExtArgs> | null
+      submittedBy: Prisma.$UserPayload<ExtArgs> | null
+      approvedBy: Prisma.$UserPayload<ExtArgs> | null
+      university: Prisma.$UniversityPayload<ExtArgs> | null
+      audits: Prisma.$ResourceAuditPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -12290,9 +12870,6 @@ export namespace Prisma {
       description: string | null
       tags: string[]
       categories: string[]
-      universityCode: string | null
-      departmentCode: string | null
-      courseCode: string | null
       fileName: string | null
       fileSize: number | null
       mimeType: string | null
@@ -12304,7 +12881,14 @@ export namespace Prisma {
       version: number
       downloads: number
       rating: number
+      status: $Enums.ResourceStatus
+      reviewNote: string | null
+      submittedById: string | null
+      approvedById: string | null
+      approvedAt: Date | null
       uploadedById: string | null
+      universityId: string | null
+      archivedAt: Date | null
       createdAt: Date
       updatedAt: Date
       publishedAt: Date | null
@@ -12706,6 +13290,10 @@ export namespace Prisma {
     parent<T extends Resource$parentArgs<ExtArgs> = {}>(args?: Subset<T, Resource$parentArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     children<T extends Resource$childrenArgs<ExtArgs> = {}>(args?: Subset<T, Resource$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     uploadedBy<T extends Resource$uploadedByArgs<ExtArgs> = {}>(args?: Subset<T, Resource$uploadedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    submittedBy<T extends Resource$submittedByArgs<ExtArgs> = {}>(args?: Subset<T, Resource$submittedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    approvedBy<T extends Resource$approvedByArgs<ExtArgs> = {}>(args?: Subset<T, Resource$approvedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    university<T extends Resource$universityArgs<ExtArgs> = {}>(args?: Subset<T, Resource$universityArgs<ExtArgs>>): Prisma__UniversityClient<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    audits<T extends Resource$auditsArgs<ExtArgs> = {}>(args?: Subset<T, Resource$auditsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12748,9 +13336,6 @@ export namespace Prisma {
     readonly description: FieldRef<"Resource", 'String'>
     readonly tags: FieldRef<"Resource", 'String[]'>
     readonly categories: FieldRef<"Resource", 'String[]'>
-    readonly universityCode: FieldRef<"Resource", 'String'>
-    readonly departmentCode: FieldRef<"Resource", 'String'>
-    readonly courseCode: FieldRef<"Resource", 'String'>
     readonly fileName: FieldRef<"Resource", 'String'>
     readonly fileSize: FieldRef<"Resource", 'Int'>
     readonly mimeType: FieldRef<"Resource", 'String'>
@@ -12762,7 +13347,14 @@ export namespace Prisma {
     readonly version: FieldRef<"Resource", 'Int'>
     readonly downloads: FieldRef<"Resource", 'Int'>
     readonly rating: FieldRef<"Resource", 'Float'>
+    readonly status: FieldRef<"Resource", 'ResourceStatus'>
+    readonly reviewNote: FieldRef<"Resource", 'String'>
+    readonly submittedById: FieldRef<"Resource", 'String'>
+    readonly approvedById: FieldRef<"Resource", 'String'>
+    readonly approvedAt: FieldRef<"Resource", 'DateTime'>
     readonly uploadedById: FieldRef<"Resource", 'String'>
+    readonly universityId: FieldRef<"Resource", 'String'>
+    readonly archivedAt: FieldRef<"Resource", 'DateTime'>
     readonly createdAt: FieldRef<"Resource", 'DateTime'>
     readonly updatedAt: FieldRef<"Resource", 'DateTime'>
     readonly publishedAt: FieldRef<"Resource", 'DateTime'>
@@ -13225,6 +13817,87 @@ export namespace Prisma {
   }
 
   /**
+   * Resource.submittedBy
+   */
+  export type Resource$submittedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Resource.approvedBy
+   */
+  export type Resource$approvedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Resource.university
+   */
+  export type Resource$universityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityInclude<ExtArgs> | null
+    where?: UniversityWhereInput
+  }
+
+  /**
+   * Resource.audits
+   */
+  export type Resource$auditsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditInclude<ExtArgs> | null
+    where?: ResourceAuditWhereInput
+    orderBy?: ResourceAuditOrderByWithRelationInput | ResourceAuditOrderByWithRelationInput[]
+    cursor?: ResourceAuditWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResourceAuditScalarFieldEnum | ResourceAuditScalarFieldEnum[]
+  }
+
+  /**
    * Resource without action
    */
   export type ResourceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -13240,6 +13913,3271 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ResourceInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model University
+   */
+
+  export type AggregateUniversity = {
+    _count: UniversityCountAggregateOutputType | null
+    _min: UniversityMinAggregateOutputType | null
+    _max: UniversityMaxAggregateOutputType | null
+  }
+
+  export type UniversityMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    logoUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UniversityMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    slug: string | null
+    logoUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UniversityCountAggregateOutputType = {
+    id: number
+    name: number
+    slug: number
+    logoUrl: number
+    metadata: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UniversityMinAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    logoUrl?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UniversityMaxAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    logoUrl?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UniversityCountAggregateInputType = {
+    id?: true
+    name?: true
+    slug?: true
+    logoUrl?: true
+    metadata?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UniversityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which University to aggregate.
+     */
+    where?: UniversityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Universities to fetch.
+     */
+    orderBy?: UniversityOrderByWithRelationInput | UniversityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UniversityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Universities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Universities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Universities
+    **/
+    _count?: true | UniversityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UniversityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UniversityMaxAggregateInputType
+  }
+
+  export type GetUniversityAggregateType<T extends UniversityAggregateArgs> = {
+        [P in keyof T & keyof AggregateUniversity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUniversity[P]>
+      : GetScalarType<T[P], AggregateUniversity[P]>
+  }
+
+
+
+
+  export type UniversityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UniversityWhereInput
+    orderBy?: UniversityOrderByWithAggregationInput | UniversityOrderByWithAggregationInput[]
+    by: UniversityScalarFieldEnum[] | UniversityScalarFieldEnum
+    having?: UniversityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UniversityCountAggregateInputType | true
+    _min?: UniversityMinAggregateInputType
+    _max?: UniversityMaxAggregateInputType
+  }
+
+  export type UniversityGroupByOutputType = {
+    id: string
+    name: string
+    slug: string
+    logoUrl: string | null
+    metadata: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    _count: UniversityCountAggregateOutputType | null
+    _min: UniversityMinAggregateOutputType | null
+    _max: UniversityMaxAggregateOutputType | null
+  }
+
+  type GetUniversityGroupByPayload<T extends UniversityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UniversityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UniversityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UniversityGroupByOutputType[P]>
+            : GetScalarType<T[P], UniversityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UniversitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    logoUrl?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    memberships?: boolean | University$membershipsArgs<ExtArgs>
+    resources?: boolean | University$resourcesArgs<ExtArgs>
+    _count?: boolean | UniversityCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["university"]>
+
+  export type UniversitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    logoUrl?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["university"]>
+
+  export type UniversitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    logoUrl?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["university"]>
+
+  export type UniversitySelectScalar = {
+    id?: boolean
+    name?: boolean
+    slug?: boolean
+    logoUrl?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type UniversityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "logoUrl" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["university"]>
+  export type UniversityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    memberships?: boolean | University$membershipsArgs<ExtArgs>
+    resources?: boolean | University$resourcesArgs<ExtArgs>
+    _count?: boolean | UniversityCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UniversityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UniversityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $UniversityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "University"
+    objects: {
+      memberships: Prisma.$UniversityMembershipPayload<ExtArgs>[]
+      resources: Prisma.$ResourcePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      slug: string
+      logoUrl: string | null
+      metadata: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["university"]>
+    composites: {}
+  }
+
+  type UniversityGetPayload<S extends boolean | null | undefined | UniversityDefaultArgs> = $Result.GetResult<Prisma.$UniversityPayload, S>
+
+  type UniversityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UniversityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UniversityCountAggregateInputType | true
+    }
+
+  export interface UniversityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['University'], meta: { name: 'University' } }
+    /**
+     * Find zero or one University that matches the filter.
+     * @param {UniversityFindUniqueArgs} args - Arguments to find a University
+     * @example
+     * // Get one University
+     * const university = await prisma.university.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UniversityFindUniqueArgs>(args: SelectSubset<T, UniversityFindUniqueArgs<ExtArgs>>): Prisma__UniversityClient<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one University that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UniversityFindUniqueOrThrowArgs} args - Arguments to find a University
+     * @example
+     * // Get one University
+     * const university = await prisma.university.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UniversityFindUniqueOrThrowArgs>(args: SelectSubset<T, UniversityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UniversityClient<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first University that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityFindFirstArgs} args - Arguments to find a University
+     * @example
+     * // Get one University
+     * const university = await prisma.university.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UniversityFindFirstArgs>(args?: SelectSubset<T, UniversityFindFirstArgs<ExtArgs>>): Prisma__UniversityClient<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first University that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityFindFirstOrThrowArgs} args - Arguments to find a University
+     * @example
+     * // Get one University
+     * const university = await prisma.university.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UniversityFindFirstOrThrowArgs>(args?: SelectSubset<T, UniversityFindFirstOrThrowArgs<ExtArgs>>): Prisma__UniversityClient<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Universities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Universities
+     * const universities = await prisma.university.findMany()
+     * 
+     * // Get first 10 Universities
+     * const universities = await prisma.university.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const universityWithIdOnly = await prisma.university.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UniversityFindManyArgs>(args?: SelectSubset<T, UniversityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a University.
+     * @param {UniversityCreateArgs} args - Arguments to create a University.
+     * @example
+     * // Create one University
+     * const University = await prisma.university.create({
+     *   data: {
+     *     // ... data to create a University
+     *   }
+     * })
+     * 
+     */
+    create<T extends UniversityCreateArgs>(args: SelectSubset<T, UniversityCreateArgs<ExtArgs>>): Prisma__UniversityClient<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Universities.
+     * @param {UniversityCreateManyArgs} args - Arguments to create many Universities.
+     * @example
+     * // Create many Universities
+     * const university = await prisma.university.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UniversityCreateManyArgs>(args?: SelectSubset<T, UniversityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Universities and returns the data saved in the database.
+     * @param {UniversityCreateManyAndReturnArgs} args - Arguments to create many Universities.
+     * @example
+     * // Create many Universities
+     * const university = await prisma.university.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Universities and only return the `id`
+     * const universityWithIdOnly = await prisma.university.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UniversityCreateManyAndReturnArgs>(args?: SelectSubset<T, UniversityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a University.
+     * @param {UniversityDeleteArgs} args - Arguments to delete one University.
+     * @example
+     * // Delete one University
+     * const University = await prisma.university.delete({
+     *   where: {
+     *     // ... filter to delete one University
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UniversityDeleteArgs>(args: SelectSubset<T, UniversityDeleteArgs<ExtArgs>>): Prisma__UniversityClient<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one University.
+     * @param {UniversityUpdateArgs} args - Arguments to update one University.
+     * @example
+     * // Update one University
+     * const university = await prisma.university.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UniversityUpdateArgs>(args: SelectSubset<T, UniversityUpdateArgs<ExtArgs>>): Prisma__UniversityClient<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Universities.
+     * @param {UniversityDeleteManyArgs} args - Arguments to filter Universities to delete.
+     * @example
+     * // Delete a few Universities
+     * const { count } = await prisma.university.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UniversityDeleteManyArgs>(args?: SelectSubset<T, UniversityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Universities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Universities
+     * const university = await prisma.university.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UniversityUpdateManyArgs>(args: SelectSubset<T, UniversityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Universities and returns the data updated in the database.
+     * @param {UniversityUpdateManyAndReturnArgs} args - Arguments to update many Universities.
+     * @example
+     * // Update many Universities
+     * const university = await prisma.university.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Universities and only return the `id`
+     * const universityWithIdOnly = await prisma.university.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UniversityUpdateManyAndReturnArgs>(args: SelectSubset<T, UniversityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one University.
+     * @param {UniversityUpsertArgs} args - Arguments to update or create a University.
+     * @example
+     * // Update or create a University
+     * const university = await prisma.university.upsert({
+     *   create: {
+     *     // ... data to create a University
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the University we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UniversityUpsertArgs>(args: SelectSubset<T, UniversityUpsertArgs<ExtArgs>>): Prisma__UniversityClient<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Universities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityCountArgs} args - Arguments to filter Universities to count.
+     * @example
+     * // Count the number of Universities
+     * const count = await prisma.university.count({
+     *   where: {
+     *     // ... the filter for the Universities we want to count
+     *   }
+     * })
+    **/
+    count<T extends UniversityCountArgs>(
+      args?: Subset<T, UniversityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UniversityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a University.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UniversityAggregateArgs>(args: Subset<T, UniversityAggregateArgs>): Prisma.PrismaPromise<GetUniversityAggregateType<T>>
+
+    /**
+     * Group by University.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UniversityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UniversityGroupByArgs['orderBy'] }
+        : { orderBy?: UniversityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UniversityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUniversityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the University model
+   */
+  readonly fields: UniversityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for University.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UniversityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    memberships<T extends University$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, University$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    resources<T extends University$resourcesArgs<ExtArgs> = {}>(args?: Subset<T, University$resourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the University model
+   */
+  interface UniversityFieldRefs {
+    readonly id: FieldRef<"University", 'String'>
+    readonly name: FieldRef<"University", 'String'>
+    readonly slug: FieldRef<"University", 'String'>
+    readonly logoUrl: FieldRef<"University", 'String'>
+    readonly metadata: FieldRef<"University", 'Json'>
+    readonly createdAt: FieldRef<"University", 'DateTime'>
+    readonly updatedAt: FieldRef<"University", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * University findUnique
+   */
+  export type UniversityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityInclude<ExtArgs> | null
+    /**
+     * Filter, which University to fetch.
+     */
+    where: UniversityWhereUniqueInput
+  }
+
+  /**
+   * University findUniqueOrThrow
+   */
+  export type UniversityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityInclude<ExtArgs> | null
+    /**
+     * Filter, which University to fetch.
+     */
+    where: UniversityWhereUniqueInput
+  }
+
+  /**
+   * University findFirst
+   */
+  export type UniversityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityInclude<ExtArgs> | null
+    /**
+     * Filter, which University to fetch.
+     */
+    where?: UniversityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Universities to fetch.
+     */
+    orderBy?: UniversityOrderByWithRelationInput | UniversityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Universities.
+     */
+    cursor?: UniversityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Universities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Universities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Universities.
+     */
+    distinct?: UniversityScalarFieldEnum | UniversityScalarFieldEnum[]
+  }
+
+  /**
+   * University findFirstOrThrow
+   */
+  export type UniversityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityInclude<ExtArgs> | null
+    /**
+     * Filter, which University to fetch.
+     */
+    where?: UniversityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Universities to fetch.
+     */
+    orderBy?: UniversityOrderByWithRelationInput | UniversityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Universities.
+     */
+    cursor?: UniversityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Universities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Universities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Universities.
+     */
+    distinct?: UniversityScalarFieldEnum | UniversityScalarFieldEnum[]
+  }
+
+  /**
+   * University findMany
+   */
+  export type UniversityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityInclude<ExtArgs> | null
+    /**
+     * Filter, which Universities to fetch.
+     */
+    where?: UniversityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Universities to fetch.
+     */
+    orderBy?: UniversityOrderByWithRelationInput | UniversityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Universities.
+     */
+    cursor?: UniversityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Universities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Universities.
+     */
+    skip?: number
+    distinct?: UniversityScalarFieldEnum | UniversityScalarFieldEnum[]
+  }
+
+  /**
+   * University create
+   */
+  export type UniversityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a University.
+     */
+    data: XOR<UniversityCreateInput, UniversityUncheckedCreateInput>
+  }
+
+  /**
+   * University createMany
+   */
+  export type UniversityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Universities.
+     */
+    data: UniversityCreateManyInput | UniversityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * University createManyAndReturn
+   */
+  export type UniversityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * The data used to create many Universities.
+     */
+    data: UniversityCreateManyInput | UniversityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * University update
+   */
+  export type UniversityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a University.
+     */
+    data: XOR<UniversityUpdateInput, UniversityUncheckedUpdateInput>
+    /**
+     * Choose, which University to update.
+     */
+    where: UniversityWhereUniqueInput
+  }
+
+  /**
+   * University updateMany
+   */
+  export type UniversityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Universities.
+     */
+    data: XOR<UniversityUpdateManyMutationInput, UniversityUncheckedUpdateManyInput>
+    /**
+     * Filter which Universities to update
+     */
+    where?: UniversityWhereInput
+    /**
+     * Limit how many Universities to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * University updateManyAndReturn
+   */
+  export type UniversityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * The data used to update Universities.
+     */
+    data: XOR<UniversityUpdateManyMutationInput, UniversityUncheckedUpdateManyInput>
+    /**
+     * Filter which Universities to update
+     */
+    where?: UniversityWhereInput
+    /**
+     * Limit how many Universities to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * University upsert
+   */
+  export type UniversityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the University to update in case it exists.
+     */
+    where: UniversityWhereUniqueInput
+    /**
+     * In case the University found by the `where` argument doesn't exist, create a new University with this data.
+     */
+    create: XOR<UniversityCreateInput, UniversityUncheckedCreateInput>
+    /**
+     * In case the University was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UniversityUpdateInput, UniversityUncheckedUpdateInput>
+  }
+
+  /**
+   * University delete
+   */
+  export type UniversityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityInclude<ExtArgs> | null
+    /**
+     * Filter which University to delete.
+     */
+    where: UniversityWhereUniqueInput
+  }
+
+  /**
+   * University deleteMany
+   */
+  export type UniversityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Universities to delete
+     */
+    where?: UniversityWhereInput
+    /**
+     * Limit how many Universities to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * University.memberships
+   */
+  export type University$membershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipInclude<ExtArgs> | null
+    where?: UniversityMembershipWhereInput
+    orderBy?: UniversityMembershipOrderByWithRelationInput | UniversityMembershipOrderByWithRelationInput[]
+    cursor?: UniversityMembershipWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UniversityMembershipScalarFieldEnum | UniversityMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * University.resources
+   */
+  export type University$resourcesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Resource
+     */
+    select?: ResourceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Resource
+     */
+    omit?: ResourceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceInclude<ExtArgs> | null
+    where?: ResourceWhereInput
+    orderBy?: ResourceOrderByWithRelationInput | ResourceOrderByWithRelationInput[]
+    cursor?: ResourceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResourceScalarFieldEnum | ResourceScalarFieldEnum[]
+  }
+
+  /**
+   * University without action
+   */
+  export type UniversityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the University
+     */
+    select?: UniversitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the University
+     */
+    omit?: UniversityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UniversityMembership
+   */
+
+  export type AggregateUniversityMembership = {
+    _count: UniversityMembershipCountAggregateOutputType | null
+    _min: UniversityMembershipMinAggregateOutputType | null
+    _max: UniversityMembershipMaxAggregateOutputType | null
+  }
+
+  export type UniversityMembershipMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    universityId: string | null
+    role: $Enums.UniversityRole | null
+    createdAt: Date | null
+  }
+
+  export type UniversityMembershipMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    universityId: string | null
+    role: $Enums.UniversityRole | null
+    createdAt: Date | null
+  }
+
+  export type UniversityMembershipCountAggregateOutputType = {
+    id: number
+    userId: number
+    universityId: number
+    role: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type UniversityMembershipMinAggregateInputType = {
+    id?: true
+    userId?: true
+    universityId?: true
+    role?: true
+    createdAt?: true
+  }
+
+  export type UniversityMembershipMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    universityId?: true
+    role?: true
+    createdAt?: true
+  }
+
+  export type UniversityMembershipCountAggregateInputType = {
+    id?: true
+    userId?: true
+    universityId?: true
+    role?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type UniversityMembershipAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UniversityMembership to aggregate.
+     */
+    where?: UniversityMembershipWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UniversityMemberships to fetch.
+     */
+    orderBy?: UniversityMembershipOrderByWithRelationInput | UniversityMembershipOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UniversityMembershipWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UniversityMemberships from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UniversityMemberships.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UniversityMemberships
+    **/
+    _count?: true | UniversityMembershipCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UniversityMembershipMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UniversityMembershipMaxAggregateInputType
+  }
+
+  export type GetUniversityMembershipAggregateType<T extends UniversityMembershipAggregateArgs> = {
+        [P in keyof T & keyof AggregateUniversityMembership]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUniversityMembership[P]>
+      : GetScalarType<T[P], AggregateUniversityMembership[P]>
+  }
+
+
+
+
+  export type UniversityMembershipGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UniversityMembershipWhereInput
+    orderBy?: UniversityMembershipOrderByWithAggregationInput | UniversityMembershipOrderByWithAggregationInput[]
+    by: UniversityMembershipScalarFieldEnum[] | UniversityMembershipScalarFieldEnum
+    having?: UniversityMembershipScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UniversityMembershipCountAggregateInputType | true
+    _min?: UniversityMembershipMinAggregateInputType
+    _max?: UniversityMembershipMaxAggregateInputType
+  }
+
+  export type UniversityMembershipGroupByOutputType = {
+    id: string
+    userId: string
+    universityId: string
+    role: $Enums.UniversityRole
+    createdAt: Date
+    _count: UniversityMembershipCountAggregateOutputType | null
+    _min: UniversityMembershipMinAggregateOutputType | null
+    _max: UniversityMembershipMaxAggregateOutputType | null
+  }
+
+  type GetUniversityMembershipGroupByPayload<T extends UniversityMembershipGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UniversityMembershipGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UniversityMembershipGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UniversityMembershipGroupByOutputType[P]>
+            : GetScalarType<T[P], UniversityMembershipGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UniversityMembershipSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    universityId?: boolean
+    role?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    university?: boolean | UniversityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["universityMembership"]>
+
+  export type UniversityMembershipSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    universityId?: boolean
+    role?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    university?: boolean | UniversityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["universityMembership"]>
+
+  export type UniversityMembershipSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    universityId?: boolean
+    role?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    university?: boolean | UniversityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["universityMembership"]>
+
+  export type UniversityMembershipSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    universityId?: boolean
+    role?: boolean
+    createdAt?: boolean
+  }
+
+  export type UniversityMembershipOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "universityId" | "role" | "createdAt", ExtArgs["result"]["universityMembership"]>
+  export type UniversityMembershipInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    university?: boolean | UniversityDefaultArgs<ExtArgs>
+  }
+  export type UniversityMembershipIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    university?: boolean | UniversityDefaultArgs<ExtArgs>
+  }
+  export type UniversityMembershipIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    university?: boolean | UniversityDefaultArgs<ExtArgs>
+  }
+
+  export type $UniversityMembershipPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UniversityMembership"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      university: Prisma.$UniversityPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      universityId: string
+      role: $Enums.UniversityRole
+      createdAt: Date
+    }, ExtArgs["result"]["universityMembership"]>
+    composites: {}
+  }
+
+  type UniversityMembershipGetPayload<S extends boolean | null | undefined | UniversityMembershipDefaultArgs> = $Result.GetResult<Prisma.$UniversityMembershipPayload, S>
+
+  type UniversityMembershipCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UniversityMembershipFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UniversityMembershipCountAggregateInputType | true
+    }
+
+  export interface UniversityMembershipDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UniversityMembership'], meta: { name: 'UniversityMembership' } }
+    /**
+     * Find zero or one UniversityMembership that matches the filter.
+     * @param {UniversityMembershipFindUniqueArgs} args - Arguments to find a UniversityMembership
+     * @example
+     * // Get one UniversityMembership
+     * const universityMembership = await prisma.universityMembership.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UniversityMembershipFindUniqueArgs>(args: SelectSubset<T, UniversityMembershipFindUniqueArgs<ExtArgs>>): Prisma__UniversityMembershipClient<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UniversityMembership that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UniversityMembershipFindUniqueOrThrowArgs} args - Arguments to find a UniversityMembership
+     * @example
+     * // Get one UniversityMembership
+     * const universityMembership = await prisma.universityMembership.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UniversityMembershipFindUniqueOrThrowArgs>(args: SelectSubset<T, UniversityMembershipFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UniversityMembershipClient<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UniversityMembership that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityMembershipFindFirstArgs} args - Arguments to find a UniversityMembership
+     * @example
+     * // Get one UniversityMembership
+     * const universityMembership = await prisma.universityMembership.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UniversityMembershipFindFirstArgs>(args?: SelectSubset<T, UniversityMembershipFindFirstArgs<ExtArgs>>): Prisma__UniversityMembershipClient<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UniversityMembership that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityMembershipFindFirstOrThrowArgs} args - Arguments to find a UniversityMembership
+     * @example
+     * // Get one UniversityMembership
+     * const universityMembership = await prisma.universityMembership.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UniversityMembershipFindFirstOrThrowArgs>(args?: SelectSubset<T, UniversityMembershipFindFirstOrThrowArgs<ExtArgs>>): Prisma__UniversityMembershipClient<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UniversityMemberships that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityMembershipFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UniversityMemberships
+     * const universityMemberships = await prisma.universityMembership.findMany()
+     * 
+     * // Get first 10 UniversityMemberships
+     * const universityMemberships = await prisma.universityMembership.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const universityMembershipWithIdOnly = await prisma.universityMembership.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UniversityMembershipFindManyArgs>(args?: SelectSubset<T, UniversityMembershipFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UniversityMembership.
+     * @param {UniversityMembershipCreateArgs} args - Arguments to create a UniversityMembership.
+     * @example
+     * // Create one UniversityMembership
+     * const UniversityMembership = await prisma.universityMembership.create({
+     *   data: {
+     *     // ... data to create a UniversityMembership
+     *   }
+     * })
+     * 
+     */
+    create<T extends UniversityMembershipCreateArgs>(args: SelectSubset<T, UniversityMembershipCreateArgs<ExtArgs>>): Prisma__UniversityMembershipClient<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UniversityMemberships.
+     * @param {UniversityMembershipCreateManyArgs} args - Arguments to create many UniversityMemberships.
+     * @example
+     * // Create many UniversityMemberships
+     * const universityMembership = await prisma.universityMembership.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UniversityMembershipCreateManyArgs>(args?: SelectSubset<T, UniversityMembershipCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UniversityMemberships and returns the data saved in the database.
+     * @param {UniversityMembershipCreateManyAndReturnArgs} args - Arguments to create many UniversityMemberships.
+     * @example
+     * // Create many UniversityMemberships
+     * const universityMembership = await prisma.universityMembership.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UniversityMemberships and only return the `id`
+     * const universityMembershipWithIdOnly = await prisma.universityMembership.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UniversityMembershipCreateManyAndReturnArgs>(args?: SelectSubset<T, UniversityMembershipCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UniversityMembership.
+     * @param {UniversityMembershipDeleteArgs} args - Arguments to delete one UniversityMembership.
+     * @example
+     * // Delete one UniversityMembership
+     * const UniversityMembership = await prisma.universityMembership.delete({
+     *   where: {
+     *     // ... filter to delete one UniversityMembership
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UniversityMembershipDeleteArgs>(args: SelectSubset<T, UniversityMembershipDeleteArgs<ExtArgs>>): Prisma__UniversityMembershipClient<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UniversityMembership.
+     * @param {UniversityMembershipUpdateArgs} args - Arguments to update one UniversityMembership.
+     * @example
+     * // Update one UniversityMembership
+     * const universityMembership = await prisma.universityMembership.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UniversityMembershipUpdateArgs>(args: SelectSubset<T, UniversityMembershipUpdateArgs<ExtArgs>>): Prisma__UniversityMembershipClient<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UniversityMemberships.
+     * @param {UniversityMembershipDeleteManyArgs} args - Arguments to filter UniversityMemberships to delete.
+     * @example
+     * // Delete a few UniversityMemberships
+     * const { count } = await prisma.universityMembership.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UniversityMembershipDeleteManyArgs>(args?: SelectSubset<T, UniversityMembershipDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UniversityMemberships.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityMembershipUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UniversityMemberships
+     * const universityMembership = await prisma.universityMembership.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UniversityMembershipUpdateManyArgs>(args: SelectSubset<T, UniversityMembershipUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UniversityMemberships and returns the data updated in the database.
+     * @param {UniversityMembershipUpdateManyAndReturnArgs} args - Arguments to update many UniversityMemberships.
+     * @example
+     * // Update many UniversityMemberships
+     * const universityMembership = await prisma.universityMembership.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UniversityMemberships and only return the `id`
+     * const universityMembershipWithIdOnly = await prisma.universityMembership.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UniversityMembershipUpdateManyAndReturnArgs>(args: SelectSubset<T, UniversityMembershipUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UniversityMembership.
+     * @param {UniversityMembershipUpsertArgs} args - Arguments to update or create a UniversityMembership.
+     * @example
+     * // Update or create a UniversityMembership
+     * const universityMembership = await prisma.universityMembership.upsert({
+     *   create: {
+     *     // ... data to create a UniversityMembership
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UniversityMembership we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UniversityMembershipUpsertArgs>(args: SelectSubset<T, UniversityMembershipUpsertArgs<ExtArgs>>): Prisma__UniversityMembershipClient<$Result.GetResult<Prisma.$UniversityMembershipPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UniversityMemberships.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityMembershipCountArgs} args - Arguments to filter UniversityMemberships to count.
+     * @example
+     * // Count the number of UniversityMemberships
+     * const count = await prisma.universityMembership.count({
+     *   where: {
+     *     // ... the filter for the UniversityMemberships we want to count
+     *   }
+     * })
+    **/
+    count<T extends UniversityMembershipCountArgs>(
+      args?: Subset<T, UniversityMembershipCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UniversityMembershipCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UniversityMembership.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityMembershipAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UniversityMembershipAggregateArgs>(args: Subset<T, UniversityMembershipAggregateArgs>): Prisma.PrismaPromise<GetUniversityMembershipAggregateType<T>>
+
+    /**
+     * Group by UniversityMembership.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UniversityMembershipGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UniversityMembershipGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UniversityMembershipGroupByArgs['orderBy'] }
+        : { orderBy?: UniversityMembershipGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UniversityMembershipGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUniversityMembershipGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UniversityMembership model
+   */
+  readonly fields: UniversityMembershipFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UniversityMembership.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UniversityMembershipClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    university<T extends UniversityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UniversityDefaultArgs<ExtArgs>>): Prisma__UniversityClient<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UniversityMembership model
+   */
+  interface UniversityMembershipFieldRefs {
+    readonly id: FieldRef<"UniversityMembership", 'String'>
+    readonly userId: FieldRef<"UniversityMembership", 'String'>
+    readonly universityId: FieldRef<"UniversityMembership", 'String'>
+    readonly role: FieldRef<"UniversityMembership", 'UniversityRole'>
+    readonly createdAt: FieldRef<"UniversityMembership", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UniversityMembership findUnique
+   */
+  export type UniversityMembershipFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which UniversityMembership to fetch.
+     */
+    where: UniversityMembershipWhereUniqueInput
+  }
+
+  /**
+   * UniversityMembership findUniqueOrThrow
+   */
+  export type UniversityMembershipFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which UniversityMembership to fetch.
+     */
+    where: UniversityMembershipWhereUniqueInput
+  }
+
+  /**
+   * UniversityMembership findFirst
+   */
+  export type UniversityMembershipFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which UniversityMembership to fetch.
+     */
+    where?: UniversityMembershipWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UniversityMemberships to fetch.
+     */
+    orderBy?: UniversityMembershipOrderByWithRelationInput | UniversityMembershipOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UniversityMemberships.
+     */
+    cursor?: UniversityMembershipWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UniversityMemberships from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UniversityMemberships.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UniversityMemberships.
+     */
+    distinct?: UniversityMembershipScalarFieldEnum | UniversityMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * UniversityMembership findFirstOrThrow
+   */
+  export type UniversityMembershipFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which UniversityMembership to fetch.
+     */
+    where?: UniversityMembershipWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UniversityMemberships to fetch.
+     */
+    orderBy?: UniversityMembershipOrderByWithRelationInput | UniversityMembershipOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UniversityMemberships.
+     */
+    cursor?: UniversityMembershipWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UniversityMemberships from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UniversityMemberships.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UniversityMemberships.
+     */
+    distinct?: UniversityMembershipScalarFieldEnum | UniversityMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * UniversityMembership findMany
+   */
+  export type UniversityMembershipFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which UniversityMemberships to fetch.
+     */
+    where?: UniversityMembershipWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UniversityMemberships to fetch.
+     */
+    orderBy?: UniversityMembershipOrderByWithRelationInput | UniversityMembershipOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UniversityMemberships.
+     */
+    cursor?: UniversityMembershipWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UniversityMemberships from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UniversityMemberships.
+     */
+    skip?: number
+    distinct?: UniversityMembershipScalarFieldEnum | UniversityMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * UniversityMembership create
+   */
+  export type UniversityMembershipCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UniversityMembership.
+     */
+    data: XOR<UniversityMembershipCreateInput, UniversityMembershipUncheckedCreateInput>
+  }
+
+  /**
+   * UniversityMembership createMany
+   */
+  export type UniversityMembershipCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UniversityMemberships.
+     */
+    data: UniversityMembershipCreateManyInput | UniversityMembershipCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UniversityMembership createManyAndReturn
+   */
+  export type UniversityMembershipCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * The data used to create many UniversityMemberships.
+     */
+    data: UniversityMembershipCreateManyInput | UniversityMembershipCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UniversityMembership update
+   */
+  export type UniversityMembershipUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UniversityMembership.
+     */
+    data: XOR<UniversityMembershipUpdateInput, UniversityMembershipUncheckedUpdateInput>
+    /**
+     * Choose, which UniversityMembership to update.
+     */
+    where: UniversityMembershipWhereUniqueInput
+  }
+
+  /**
+   * UniversityMembership updateMany
+   */
+  export type UniversityMembershipUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UniversityMemberships.
+     */
+    data: XOR<UniversityMembershipUpdateManyMutationInput, UniversityMembershipUncheckedUpdateManyInput>
+    /**
+     * Filter which UniversityMemberships to update
+     */
+    where?: UniversityMembershipWhereInput
+    /**
+     * Limit how many UniversityMemberships to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UniversityMembership updateManyAndReturn
+   */
+  export type UniversityMembershipUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * The data used to update UniversityMemberships.
+     */
+    data: XOR<UniversityMembershipUpdateManyMutationInput, UniversityMembershipUncheckedUpdateManyInput>
+    /**
+     * Filter which UniversityMemberships to update
+     */
+    where?: UniversityMembershipWhereInput
+    /**
+     * Limit how many UniversityMemberships to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UniversityMembership upsert
+   */
+  export type UniversityMembershipUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UniversityMembership to update in case it exists.
+     */
+    where: UniversityMembershipWhereUniqueInput
+    /**
+     * In case the UniversityMembership found by the `where` argument doesn't exist, create a new UniversityMembership with this data.
+     */
+    create: XOR<UniversityMembershipCreateInput, UniversityMembershipUncheckedCreateInput>
+    /**
+     * In case the UniversityMembership was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UniversityMembershipUpdateInput, UniversityMembershipUncheckedUpdateInput>
+  }
+
+  /**
+   * UniversityMembership delete
+   */
+  export type UniversityMembershipDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipInclude<ExtArgs> | null
+    /**
+     * Filter which UniversityMembership to delete.
+     */
+    where: UniversityMembershipWhereUniqueInput
+  }
+
+  /**
+   * UniversityMembership deleteMany
+   */
+  export type UniversityMembershipDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UniversityMemberships to delete
+     */
+    where?: UniversityMembershipWhereInput
+    /**
+     * Limit how many UniversityMemberships to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UniversityMembership without action
+   */
+  export type UniversityMembershipDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UniversityMembership
+     */
+    select?: UniversityMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UniversityMembership
+     */
+    omit?: UniversityMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UniversityMembershipInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ResourceAudit
+   */
+
+  export type AggregateResourceAudit = {
+    _count: ResourceAuditCountAggregateOutputType | null
+    _min: ResourceAuditMinAggregateOutputType | null
+    _max: ResourceAuditMaxAggregateOutputType | null
+  }
+
+  export type ResourceAuditMinAggregateOutputType = {
+    id: string | null
+    resourceId: string | null
+    actorId: string | null
+    action: $Enums.ResourceAuditAction | null
+    notes: string | null
+    createdAt: Date | null
+  }
+
+  export type ResourceAuditMaxAggregateOutputType = {
+    id: string | null
+    resourceId: string | null
+    actorId: string | null
+    action: $Enums.ResourceAuditAction | null
+    notes: string | null
+    createdAt: Date | null
+  }
+
+  export type ResourceAuditCountAggregateOutputType = {
+    id: number
+    resourceId: number
+    actorId: number
+    action: number
+    notes: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ResourceAuditMinAggregateInputType = {
+    id?: true
+    resourceId?: true
+    actorId?: true
+    action?: true
+    notes?: true
+    createdAt?: true
+  }
+
+  export type ResourceAuditMaxAggregateInputType = {
+    id?: true
+    resourceId?: true
+    actorId?: true
+    action?: true
+    notes?: true
+    createdAt?: true
+  }
+
+  export type ResourceAuditCountAggregateInputType = {
+    id?: true
+    resourceId?: true
+    actorId?: true
+    action?: true
+    notes?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ResourceAuditAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ResourceAudit to aggregate.
+     */
+    where?: ResourceAuditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResourceAudits to fetch.
+     */
+    orderBy?: ResourceAuditOrderByWithRelationInput | ResourceAuditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ResourceAuditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResourceAudits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResourceAudits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ResourceAudits
+    **/
+    _count?: true | ResourceAuditCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ResourceAuditMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ResourceAuditMaxAggregateInputType
+  }
+
+  export type GetResourceAuditAggregateType<T extends ResourceAuditAggregateArgs> = {
+        [P in keyof T & keyof AggregateResourceAudit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateResourceAudit[P]>
+      : GetScalarType<T[P], AggregateResourceAudit[P]>
+  }
+
+
+
+
+  export type ResourceAuditGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResourceAuditWhereInput
+    orderBy?: ResourceAuditOrderByWithAggregationInput | ResourceAuditOrderByWithAggregationInput[]
+    by: ResourceAuditScalarFieldEnum[] | ResourceAuditScalarFieldEnum
+    having?: ResourceAuditScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ResourceAuditCountAggregateInputType | true
+    _min?: ResourceAuditMinAggregateInputType
+    _max?: ResourceAuditMaxAggregateInputType
+  }
+
+  export type ResourceAuditGroupByOutputType = {
+    id: string
+    resourceId: string
+    actorId: string
+    action: $Enums.ResourceAuditAction
+    notes: string | null
+    createdAt: Date
+    _count: ResourceAuditCountAggregateOutputType | null
+    _min: ResourceAuditMinAggregateOutputType | null
+    _max: ResourceAuditMaxAggregateOutputType | null
+  }
+
+  type GetResourceAuditGroupByPayload<T extends ResourceAuditGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ResourceAuditGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ResourceAuditGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ResourceAuditGroupByOutputType[P]>
+            : GetScalarType<T[P], ResourceAuditGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ResourceAuditSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    resourceId?: boolean
+    actorId?: boolean
+    action?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    resource?: boolean | ResourceDefaultArgs<ExtArgs>
+    actor?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["resourceAudit"]>
+
+  export type ResourceAuditSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    resourceId?: boolean
+    actorId?: boolean
+    action?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    resource?: boolean | ResourceDefaultArgs<ExtArgs>
+    actor?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["resourceAudit"]>
+
+  export type ResourceAuditSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    resourceId?: boolean
+    actorId?: boolean
+    action?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    resource?: boolean | ResourceDefaultArgs<ExtArgs>
+    actor?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["resourceAudit"]>
+
+  export type ResourceAuditSelectScalar = {
+    id?: boolean
+    resourceId?: boolean
+    actorId?: boolean
+    action?: boolean
+    notes?: boolean
+    createdAt?: boolean
+  }
+
+  export type ResourceAuditOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "resourceId" | "actorId" | "action" | "notes" | "createdAt", ExtArgs["result"]["resourceAudit"]>
+  export type ResourceAuditInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    resource?: boolean | ResourceDefaultArgs<ExtArgs>
+    actor?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ResourceAuditIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    resource?: boolean | ResourceDefaultArgs<ExtArgs>
+    actor?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ResourceAuditIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    resource?: boolean | ResourceDefaultArgs<ExtArgs>
+    actor?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ResourceAuditPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ResourceAudit"
+    objects: {
+      resource: Prisma.$ResourcePayload<ExtArgs>
+      actor: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      resourceId: string
+      actorId: string
+      action: $Enums.ResourceAuditAction
+      notes: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["resourceAudit"]>
+    composites: {}
+  }
+
+  type ResourceAuditGetPayload<S extends boolean | null | undefined | ResourceAuditDefaultArgs> = $Result.GetResult<Prisma.$ResourceAuditPayload, S>
+
+  type ResourceAuditCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ResourceAuditFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ResourceAuditCountAggregateInputType | true
+    }
+
+  export interface ResourceAuditDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ResourceAudit'], meta: { name: 'ResourceAudit' } }
+    /**
+     * Find zero or one ResourceAudit that matches the filter.
+     * @param {ResourceAuditFindUniqueArgs} args - Arguments to find a ResourceAudit
+     * @example
+     * // Get one ResourceAudit
+     * const resourceAudit = await prisma.resourceAudit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ResourceAuditFindUniqueArgs>(args: SelectSubset<T, ResourceAuditFindUniqueArgs<ExtArgs>>): Prisma__ResourceAuditClient<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ResourceAudit that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ResourceAuditFindUniqueOrThrowArgs} args - Arguments to find a ResourceAudit
+     * @example
+     * // Get one ResourceAudit
+     * const resourceAudit = await prisma.resourceAudit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ResourceAuditFindUniqueOrThrowArgs>(args: SelectSubset<T, ResourceAuditFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ResourceAuditClient<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ResourceAudit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceAuditFindFirstArgs} args - Arguments to find a ResourceAudit
+     * @example
+     * // Get one ResourceAudit
+     * const resourceAudit = await prisma.resourceAudit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ResourceAuditFindFirstArgs>(args?: SelectSubset<T, ResourceAuditFindFirstArgs<ExtArgs>>): Prisma__ResourceAuditClient<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ResourceAudit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceAuditFindFirstOrThrowArgs} args - Arguments to find a ResourceAudit
+     * @example
+     * // Get one ResourceAudit
+     * const resourceAudit = await prisma.resourceAudit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ResourceAuditFindFirstOrThrowArgs>(args?: SelectSubset<T, ResourceAuditFindFirstOrThrowArgs<ExtArgs>>): Prisma__ResourceAuditClient<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ResourceAudits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceAuditFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ResourceAudits
+     * const resourceAudits = await prisma.resourceAudit.findMany()
+     * 
+     * // Get first 10 ResourceAudits
+     * const resourceAudits = await prisma.resourceAudit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const resourceAuditWithIdOnly = await prisma.resourceAudit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ResourceAuditFindManyArgs>(args?: SelectSubset<T, ResourceAuditFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ResourceAudit.
+     * @param {ResourceAuditCreateArgs} args - Arguments to create a ResourceAudit.
+     * @example
+     * // Create one ResourceAudit
+     * const ResourceAudit = await prisma.resourceAudit.create({
+     *   data: {
+     *     // ... data to create a ResourceAudit
+     *   }
+     * })
+     * 
+     */
+    create<T extends ResourceAuditCreateArgs>(args: SelectSubset<T, ResourceAuditCreateArgs<ExtArgs>>): Prisma__ResourceAuditClient<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ResourceAudits.
+     * @param {ResourceAuditCreateManyArgs} args - Arguments to create many ResourceAudits.
+     * @example
+     * // Create many ResourceAudits
+     * const resourceAudit = await prisma.resourceAudit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ResourceAuditCreateManyArgs>(args?: SelectSubset<T, ResourceAuditCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ResourceAudits and returns the data saved in the database.
+     * @param {ResourceAuditCreateManyAndReturnArgs} args - Arguments to create many ResourceAudits.
+     * @example
+     * // Create many ResourceAudits
+     * const resourceAudit = await prisma.resourceAudit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ResourceAudits and only return the `id`
+     * const resourceAuditWithIdOnly = await prisma.resourceAudit.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ResourceAuditCreateManyAndReturnArgs>(args?: SelectSubset<T, ResourceAuditCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ResourceAudit.
+     * @param {ResourceAuditDeleteArgs} args - Arguments to delete one ResourceAudit.
+     * @example
+     * // Delete one ResourceAudit
+     * const ResourceAudit = await prisma.resourceAudit.delete({
+     *   where: {
+     *     // ... filter to delete one ResourceAudit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ResourceAuditDeleteArgs>(args: SelectSubset<T, ResourceAuditDeleteArgs<ExtArgs>>): Prisma__ResourceAuditClient<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ResourceAudit.
+     * @param {ResourceAuditUpdateArgs} args - Arguments to update one ResourceAudit.
+     * @example
+     * // Update one ResourceAudit
+     * const resourceAudit = await prisma.resourceAudit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ResourceAuditUpdateArgs>(args: SelectSubset<T, ResourceAuditUpdateArgs<ExtArgs>>): Prisma__ResourceAuditClient<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ResourceAudits.
+     * @param {ResourceAuditDeleteManyArgs} args - Arguments to filter ResourceAudits to delete.
+     * @example
+     * // Delete a few ResourceAudits
+     * const { count } = await prisma.resourceAudit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ResourceAuditDeleteManyArgs>(args?: SelectSubset<T, ResourceAuditDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ResourceAudits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceAuditUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ResourceAudits
+     * const resourceAudit = await prisma.resourceAudit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ResourceAuditUpdateManyArgs>(args: SelectSubset<T, ResourceAuditUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ResourceAudits and returns the data updated in the database.
+     * @param {ResourceAuditUpdateManyAndReturnArgs} args - Arguments to update many ResourceAudits.
+     * @example
+     * // Update many ResourceAudits
+     * const resourceAudit = await prisma.resourceAudit.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ResourceAudits and only return the `id`
+     * const resourceAuditWithIdOnly = await prisma.resourceAudit.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ResourceAuditUpdateManyAndReturnArgs>(args: SelectSubset<T, ResourceAuditUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ResourceAudit.
+     * @param {ResourceAuditUpsertArgs} args - Arguments to update or create a ResourceAudit.
+     * @example
+     * // Update or create a ResourceAudit
+     * const resourceAudit = await prisma.resourceAudit.upsert({
+     *   create: {
+     *     // ... data to create a ResourceAudit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ResourceAudit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ResourceAuditUpsertArgs>(args: SelectSubset<T, ResourceAuditUpsertArgs<ExtArgs>>): Prisma__ResourceAuditClient<$Result.GetResult<Prisma.$ResourceAuditPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ResourceAudits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceAuditCountArgs} args - Arguments to filter ResourceAudits to count.
+     * @example
+     * // Count the number of ResourceAudits
+     * const count = await prisma.resourceAudit.count({
+     *   where: {
+     *     // ... the filter for the ResourceAudits we want to count
+     *   }
+     * })
+    **/
+    count<T extends ResourceAuditCountArgs>(
+      args?: Subset<T, ResourceAuditCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ResourceAuditCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ResourceAudit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceAuditAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ResourceAuditAggregateArgs>(args: Subset<T, ResourceAuditAggregateArgs>): Prisma.PrismaPromise<GetResourceAuditAggregateType<T>>
+
+    /**
+     * Group by ResourceAudit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResourceAuditGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ResourceAuditGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ResourceAuditGroupByArgs['orderBy'] }
+        : { orderBy?: ResourceAuditGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ResourceAuditGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetResourceAuditGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ResourceAudit model
+   */
+  readonly fields: ResourceAuditFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ResourceAudit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ResourceAuditClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    resource<T extends ResourceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ResourceDefaultArgs<ExtArgs>>): Prisma__ResourceClient<$Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    actor<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ResourceAudit model
+   */
+  interface ResourceAuditFieldRefs {
+    readonly id: FieldRef<"ResourceAudit", 'String'>
+    readonly resourceId: FieldRef<"ResourceAudit", 'String'>
+    readonly actorId: FieldRef<"ResourceAudit", 'String'>
+    readonly action: FieldRef<"ResourceAudit", 'ResourceAuditAction'>
+    readonly notes: FieldRef<"ResourceAudit", 'String'>
+    readonly createdAt: FieldRef<"ResourceAudit", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ResourceAudit findUnique
+   */
+  export type ResourceAuditFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditInclude<ExtArgs> | null
+    /**
+     * Filter, which ResourceAudit to fetch.
+     */
+    where: ResourceAuditWhereUniqueInput
+  }
+
+  /**
+   * ResourceAudit findUniqueOrThrow
+   */
+  export type ResourceAuditFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditInclude<ExtArgs> | null
+    /**
+     * Filter, which ResourceAudit to fetch.
+     */
+    where: ResourceAuditWhereUniqueInput
+  }
+
+  /**
+   * ResourceAudit findFirst
+   */
+  export type ResourceAuditFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditInclude<ExtArgs> | null
+    /**
+     * Filter, which ResourceAudit to fetch.
+     */
+    where?: ResourceAuditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResourceAudits to fetch.
+     */
+    orderBy?: ResourceAuditOrderByWithRelationInput | ResourceAuditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ResourceAudits.
+     */
+    cursor?: ResourceAuditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResourceAudits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResourceAudits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ResourceAudits.
+     */
+    distinct?: ResourceAuditScalarFieldEnum | ResourceAuditScalarFieldEnum[]
+  }
+
+  /**
+   * ResourceAudit findFirstOrThrow
+   */
+  export type ResourceAuditFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditInclude<ExtArgs> | null
+    /**
+     * Filter, which ResourceAudit to fetch.
+     */
+    where?: ResourceAuditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResourceAudits to fetch.
+     */
+    orderBy?: ResourceAuditOrderByWithRelationInput | ResourceAuditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ResourceAudits.
+     */
+    cursor?: ResourceAuditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResourceAudits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResourceAudits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ResourceAudits.
+     */
+    distinct?: ResourceAuditScalarFieldEnum | ResourceAuditScalarFieldEnum[]
+  }
+
+  /**
+   * ResourceAudit findMany
+   */
+  export type ResourceAuditFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditInclude<ExtArgs> | null
+    /**
+     * Filter, which ResourceAudits to fetch.
+     */
+    where?: ResourceAuditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResourceAudits to fetch.
+     */
+    orderBy?: ResourceAuditOrderByWithRelationInput | ResourceAuditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ResourceAudits.
+     */
+    cursor?: ResourceAuditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResourceAudits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResourceAudits.
+     */
+    skip?: number
+    distinct?: ResourceAuditScalarFieldEnum | ResourceAuditScalarFieldEnum[]
+  }
+
+  /**
+   * ResourceAudit create
+   */
+  export type ResourceAuditCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ResourceAudit.
+     */
+    data: XOR<ResourceAuditCreateInput, ResourceAuditUncheckedCreateInput>
+  }
+
+  /**
+   * ResourceAudit createMany
+   */
+  export type ResourceAuditCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ResourceAudits.
+     */
+    data: ResourceAuditCreateManyInput | ResourceAuditCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ResourceAudit createManyAndReturn
+   */
+  export type ResourceAuditCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * The data used to create many ResourceAudits.
+     */
+    data: ResourceAuditCreateManyInput | ResourceAuditCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ResourceAudit update
+   */
+  export type ResourceAuditUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ResourceAudit.
+     */
+    data: XOR<ResourceAuditUpdateInput, ResourceAuditUncheckedUpdateInput>
+    /**
+     * Choose, which ResourceAudit to update.
+     */
+    where: ResourceAuditWhereUniqueInput
+  }
+
+  /**
+   * ResourceAudit updateMany
+   */
+  export type ResourceAuditUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ResourceAudits.
+     */
+    data: XOR<ResourceAuditUpdateManyMutationInput, ResourceAuditUncheckedUpdateManyInput>
+    /**
+     * Filter which ResourceAudits to update
+     */
+    where?: ResourceAuditWhereInput
+    /**
+     * Limit how many ResourceAudits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ResourceAudit updateManyAndReturn
+   */
+  export type ResourceAuditUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * The data used to update ResourceAudits.
+     */
+    data: XOR<ResourceAuditUpdateManyMutationInput, ResourceAuditUncheckedUpdateManyInput>
+    /**
+     * Filter which ResourceAudits to update
+     */
+    where?: ResourceAuditWhereInput
+    /**
+     * Limit how many ResourceAudits to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ResourceAudit upsert
+   */
+  export type ResourceAuditUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ResourceAudit to update in case it exists.
+     */
+    where: ResourceAuditWhereUniqueInput
+    /**
+     * In case the ResourceAudit found by the `where` argument doesn't exist, create a new ResourceAudit with this data.
+     */
+    create: XOR<ResourceAuditCreateInput, ResourceAuditUncheckedCreateInput>
+    /**
+     * In case the ResourceAudit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ResourceAuditUpdateInput, ResourceAuditUncheckedUpdateInput>
+  }
+
+  /**
+   * ResourceAudit delete
+   */
+  export type ResourceAuditDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditInclude<ExtArgs> | null
+    /**
+     * Filter which ResourceAudit to delete.
+     */
+    where: ResourceAuditWhereUniqueInput
+  }
+
+  /**
+   * ResourceAudit deleteMany
+   */
+  export type ResourceAuditDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ResourceAudits to delete
+     */
+    where?: ResourceAuditWhereInput
+    /**
+     * Limit how many ResourceAudits to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ResourceAudit without action
+   */
+  export type ResourceAuditDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResourceAudit
+     */
+    select?: ResourceAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResourceAudit
+     */
+    omit?: ResourceAuditOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResourceAuditInclude<ExtArgs> | null
   }
 
 
@@ -17899,9 +21837,6 @@ export namespace Prisma {
     description: 'description',
     tags: 'tags',
     categories: 'categories',
-    universityCode: 'universityCode',
-    departmentCode: 'departmentCode',
-    courseCode: 'courseCode',
     fileName: 'fileName',
     fileSize: 'fileSize',
     mimeType: 'mimeType',
@@ -17913,7 +21848,14 @@ export namespace Prisma {
     version: 'version',
     downloads: 'downloads',
     rating: 'rating',
+    status: 'status',
+    reviewNote: 'reviewNote',
+    submittedById: 'submittedById',
+    approvedById: 'approvedById',
+    approvedAt: 'approvedAt',
     uploadedById: 'uploadedById',
+    universityId: 'universityId',
+    archivedAt: 'archivedAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     publishedAt: 'publishedAt',
@@ -17921,6 +21863,42 @@ export namespace Prisma {
   };
 
   export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
+
+
+  export const UniversityScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    slug: 'slug',
+    logoUrl: 'logoUrl',
+    metadata: 'metadata',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UniversityScalarFieldEnum = (typeof UniversityScalarFieldEnum)[keyof typeof UniversityScalarFieldEnum]
+
+
+  export const UniversityMembershipScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    universityId: 'universityId',
+    role: 'role',
+    createdAt: 'createdAt'
+  };
+
+  export type UniversityMembershipScalarFieldEnum = (typeof UniversityMembershipScalarFieldEnum)[keyof typeof UniversityMembershipScalarFieldEnum]
+
+
+  export const ResourceAuditScalarFieldEnum: {
+    id: 'id',
+    resourceId: 'resourceId',
+    actorId: 'actorId',
+    action: 'action',
+    notes: 'notes',
+    createdAt: 'createdAt'
+  };
+
+  export type ResourceAuditScalarFieldEnum = (typeof ResourceAuditScalarFieldEnum)[keyof typeof ResourceAuditScalarFieldEnum]
 
 
   export const GroupScalarFieldEnum: {
@@ -18159,6 +22137,48 @@ export namespace Prisma {
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
+
+
+  /**
+   * Reference to a field of type 'ResourceStatus'
+   */
+  export type EnumResourceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ResourceStatus[]'
+   */
+  export type ListEnumResourceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'UniversityRole'
+   */
+  export type EnumUniversityRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UniversityRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'UniversityRole[]'
+   */
+  export type ListEnumUniversityRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UniversityRole[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ResourceAuditAction'
+   */
+  export type EnumResourceAuditActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceAuditAction'>
+    
+
+
+  /**
+   * Reference to a field of type 'ResourceAuditAction[]'
+   */
+  export type ListEnumResourceAuditActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResourceAuditAction[]'>
+    
   /**
    * Deep Input Types
    */
@@ -18265,6 +22285,10 @@ export namespace Prisma {
     createdGroups?: GroupListRelationFilter
     groupMemberships?: GroupMemberListRelationFilter
     resources?: ResourceListRelationFilter
+    submittedResources?: ResourceListRelationFilter
+    approvedResources?: ResourceListRelationFilter
+    resourceAudits?: ResourceAuditListRelationFilter
+    universityMemberships?: UniversityMembershipListRelationFilter
     Opportunity?: OpportunityListRelationFilter
     accounts?: AccountListRelationFilter
     Comments?: CommentListRelationFilter
@@ -18296,6 +22320,10 @@ export namespace Prisma {
     createdGroups?: GroupOrderByRelationAggregateInput
     groupMemberships?: GroupMemberOrderByRelationAggregateInput
     resources?: ResourceOrderByRelationAggregateInput
+    submittedResources?: ResourceOrderByRelationAggregateInput
+    approvedResources?: ResourceOrderByRelationAggregateInput
+    resourceAudits?: ResourceAuditOrderByRelationAggregateInput
+    universityMemberships?: UniversityMembershipOrderByRelationAggregateInput
     Opportunity?: OpportunityOrderByRelationAggregateInput
     accounts?: AccountOrderByRelationAggregateInput
     Comments?: CommentOrderByRelationAggregateInput
@@ -18330,6 +22358,10 @@ export namespace Prisma {
     createdGroups?: GroupListRelationFilter
     groupMemberships?: GroupMemberListRelationFilter
     resources?: ResourceListRelationFilter
+    submittedResources?: ResourceListRelationFilter
+    approvedResources?: ResourceListRelationFilter
+    resourceAudits?: ResourceAuditListRelationFilter
+    universityMemberships?: UniversityMembershipListRelationFilter
     Opportunity?: OpportunityListRelationFilter
     accounts?: AccountListRelationFilter
     Comments?: CommentListRelationFilter
@@ -18880,9 +22912,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"Resource"> | string | null
     tags?: StringNullableListFilter<"Resource">
     categories?: StringNullableListFilter<"Resource">
-    universityCode?: StringNullableFilter<"Resource"> | string | null
-    departmentCode?: StringNullableFilter<"Resource"> | string | null
-    courseCode?: StringNullableFilter<"Resource"> | string | null
     fileName?: StringNullableFilter<"Resource"> | string | null
     fileSize?: IntNullableFilter<"Resource"> | number | null
     mimeType?: StringNullableFilter<"Resource"> | string | null
@@ -18894,7 +22923,14 @@ export namespace Prisma {
     version?: IntFilter<"Resource"> | number
     downloads?: IntFilter<"Resource"> | number
     rating?: FloatFilter<"Resource"> | number
+    status?: EnumResourceStatusFilter<"Resource"> | $Enums.ResourceStatus
+    reviewNote?: StringNullableFilter<"Resource"> | string | null
+    submittedById?: StringNullableFilter<"Resource"> | string | null
+    approvedById?: StringNullableFilter<"Resource"> | string | null
+    approvedAt?: DateTimeNullableFilter<"Resource"> | Date | string | null
     uploadedById?: StringNullableFilter<"Resource"> | string | null
+    universityId?: StringNullableFilter<"Resource"> | string | null
+    archivedAt?: DateTimeNullableFilter<"Resource"> | Date | string | null
     createdAt?: DateTimeFilter<"Resource"> | Date | string
     updatedAt?: DateTimeFilter<"Resource"> | Date | string
     publishedAt?: DateTimeNullableFilter<"Resource"> | Date | string | null
@@ -18902,6 +22938,10 @@ export namespace Prisma {
     parent?: XOR<ResourceNullableScalarRelationFilter, ResourceWhereInput> | null
     children?: ResourceListRelationFilter
     uploadedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    submittedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    approvedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    university?: XOR<UniversityNullableScalarRelationFilter, UniversityWhereInput> | null
+    audits?: ResourceAuditListRelationFilter
   }
 
   export type ResourceOrderByWithRelationInput = {
@@ -18918,9 +22958,6 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     tags?: SortOrder
     categories?: SortOrder
-    universityCode?: SortOrderInput | SortOrder
-    departmentCode?: SortOrderInput | SortOrder
-    courseCode?: SortOrderInput | SortOrder
     fileName?: SortOrderInput | SortOrder
     fileSize?: SortOrderInput | SortOrder
     mimeType?: SortOrderInput | SortOrder
@@ -18932,7 +22969,14 @@ export namespace Prisma {
     version?: SortOrder
     downloads?: SortOrder
     rating?: SortOrder
+    status?: SortOrder
+    reviewNote?: SortOrderInput | SortOrder
+    submittedById?: SortOrderInput | SortOrder
+    approvedById?: SortOrderInput | SortOrder
+    approvedAt?: SortOrderInput | SortOrder
     uploadedById?: SortOrderInput | SortOrder
+    universityId?: SortOrderInput | SortOrder
+    archivedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     publishedAt?: SortOrderInput | SortOrder
@@ -18940,6 +22984,10 @@ export namespace Prisma {
     parent?: ResourceOrderByWithRelationInput
     children?: ResourceOrderByRelationAggregateInput
     uploadedBy?: UserOrderByWithRelationInput
+    submittedBy?: UserOrderByWithRelationInput
+    approvedBy?: UserOrderByWithRelationInput
+    university?: UniversityOrderByWithRelationInput
+    audits?: ResourceAuditOrderByRelationAggregateInput
   }
 
   export type ResourceWhereUniqueInput = Prisma.AtLeast<{
@@ -18960,9 +23008,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"Resource"> | string | null
     tags?: StringNullableListFilter<"Resource">
     categories?: StringNullableListFilter<"Resource">
-    universityCode?: StringNullableFilter<"Resource"> | string | null
-    departmentCode?: StringNullableFilter<"Resource"> | string | null
-    courseCode?: StringNullableFilter<"Resource"> | string | null
     fileName?: StringNullableFilter<"Resource"> | string | null
     fileSize?: IntNullableFilter<"Resource"> | number | null
     mimeType?: StringNullableFilter<"Resource"> | string | null
@@ -18974,7 +23019,14 @@ export namespace Prisma {
     version?: IntFilter<"Resource"> | number
     downloads?: IntFilter<"Resource"> | number
     rating?: FloatFilter<"Resource"> | number
+    status?: EnumResourceStatusFilter<"Resource"> | $Enums.ResourceStatus
+    reviewNote?: StringNullableFilter<"Resource"> | string | null
+    submittedById?: StringNullableFilter<"Resource"> | string | null
+    approvedById?: StringNullableFilter<"Resource"> | string | null
+    approvedAt?: DateTimeNullableFilter<"Resource"> | Date | string | null
     uploadedById?: StringNullableFilter<"Resource"> | string | null
+    universityId?: StringNullableFilter<"Resource"> | string | null
+    archivedAt?: DateTimeNullableFilter<"Resource"> | Date | string | null
     createdAt?: DateTimeFilter<"Resource"> | Date | string
     updatedAt?: DateTimeFilter<"Resource"> | Date | string
     publishedAt?: DateTimeNullableFilter<"Resource"> | Date | string | null
@@ -18982,6 +23034,10 @@ export namespace Prisma {
     parent?: XOR<ResourceNullableScalarRelationFilter, ResourceWhereInput> | null
     children?: ResourceListRelationFilter
     uploadedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    submittedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    approvedBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    university?: XOR<UniversityNullableScalarRelationFilter, UniversityWhereInput> | null
+    audits?: ResourceAuditListRelationFilter
   }, "id" | "parentId_slug" | "canonicalPath">
 
   export type ResourceOrderByWithAggregationInput = {
@@ -18998,9 +23054,6 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     tags?: SortOrder
     categories?: SortOrder
-    universityCode?: SortOrderInput | SortOrder
-    departmentCode?: SortOrderInput | SortOrder
-    courseCode?: SortOrderInput | SortOrder
     fileName?: SortOrderInput | SortOrder
     fileSize?: SortOrderInput | SortOrder
     mimeType?: SortOrderInput | SortOrder
@@ -19012,7 +23065,14 @@ export namespace Prisma {
     version?: SortOrder
     downloads?: SortOrder
     rating?: SortOrder
+    status?: SortOrder
+    reviewNote?: SortOrderInput | SortOrder
+    submittedById?: SortOrderInput | SortOrder
+    approvedById?: SortOrderInput | SortOrder
+    approvedAt?: SortOrderInput | SortOrder
     uploadedById?: SortOrderInput | SortOrder
+    universityId?: SortOrderInput | SortOrder
+    archivedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     publishedAt?: SortOrderInput | SortOrder
@@ -19041,9 +23101,6 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"Resource"> | string | null
     tags?: StringNullableListFilter<"Resource">
     categories?: StringNullableListFilter<"Resource">
-    universityCode?: StringNullableWithAggregatesFilter<"Resource"> | string | null
-    departmentCode?: StringNullableWithAggregatesFilter<"Resource"> | string | null
-    courseCode?: StringNullableWithAggregatesFilter<"Resource"> | string | null
     fileName?: StringNullableWithAggregatesFilter<"Resource"> | string | null
     fileSize?: IntNullableWithAggregatesFilter<"Resource"> | number | null
     mimeType?: StringNullableWithAggregatesFilter<"Resource"> | string | null
@@ -19055,11 +23112,208 @@ export namespace Prisma {
     version?: IntWithAggregatesFilter<"Resource"> | number
     downloads?: IntWithAggregatesFilter<"Resource"> | number
     rating?: FloatWithAggregatesFilter<"Resource"> | number
+    status?: EnumResourceStatusWithAggregatesFilter<"Resource"> | $Enums.ResourceStatus
+    reviewNote?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    submittedById?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    approvedById?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    approvedAt?: DateTimeNullableWithAggregatesFilter<"Resource"> | Date | string | null
     uploadedById?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    universityId?: StringNullableWithAggregatesFilter<"Resource"> | string | null
+    archivedAt?: DateTimeNullableWithAggregatesFilter<"Resource"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Resource"> | Date | string
     publishedAt?: DateTimeNullableWithAggregatesFilter<"Resource"> | Date | string | null
     isArchived?: BoolWithAggregatesFilter<"Resource"> | boolean
+  }
+
+  export type UniversityWhereInput = {
+    AND?: UniversityWhereInput | UniversityWhereInput[]
+    OR?: UniversityWhereInput[]
+    NOT?: UniversityWhereInput | UniversityWhereInput[]
+    id?: StringFilter<"University"> | string
+    name?: StringFilter<"University"> | string
+    slug?: StringFilter<"University"> | string
+    logoUrl?: StringNullableFilter<"University"> | string | null
+    metadata?: JsonNullableFilter<"University">
+    createdAt?: DateTimeFilter<"University"> | Date | string
+    updatedAt?: DateTimeFilter<"University"> | Date | string
+    memberships?: UniversityMembershipListRelationFilter
+    resources?: ResourceListRelationFilter
+  }
+
+  export type UniversityOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    memberships?: UniversityMembershipOrderByRelationAggregateInput
+    resources?: ResourceOrderByRelationAggregateInput
+  }
+
+  export type UniversityWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    slug?: string
+    AND?: UniversityWhereInput | UniversityWhereInput[]
+    OR?: UniversityWhereInput[]
+    NOT?: UniversityWhereInput | UniversityWhereInput[]
+    name?: StringFilter<"University"> | string
+    logoUrl?: StringNullableFilter<"University"> | string | null
+    metadata?: JsonNullableFilter<"University">
+    createdAt?: DateTimeFilter<"University"> | Date | string
+    updatedAt?: DateTimeFilter<"University"> | Date | string
+    memberships?: UniversityMembershipListRelationFilter
+    resources?: ResourceListRelationFilter
+  }, "id" | "slug">
+
+  export type UniversityOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    logoUrl?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UniversityCountOrderByAggregateInput
+    _max?: UniversityMaxOrderByAggregateInput
+    _min?: UniversityMinOrderByAggregateInput
+  }
+
+  export type UniversityScalarWhereWithAggregatesInput = {
+    AND?: UniversityScalarWhereWithAggregatesInput | UniversityScalarWhereWithAggregatesInput[]
+    OR?: UniversityScalarWhereWithAggregatesInput[]
+    NOT?: UniversityScalarWhereWithAggregatesInput | UniversityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"University"> | string
+    name?: StringWithAggregatesFilter<"University"> | string
+    slug?: StringWithAggregatesFilter<"University"> | string
+    logoUrl?: StringNullableWithAggregatesFilter<"University"> | string | null
+    metadata?: JsonNullableWithAggregatesFilter<"University">
+    createdAt?: DateTimeWithAggregatesFilter<"University"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"University"> | Date | string
+  }
+
+  export type UniversityMembershipWhereInput = {
+    AND?: UniversityMembershipWhereInput | UniversityMembershipWhereInput[]
+    OR?: UniversityMembershipWhereInput[]
+    NOT?: UniversityMembershipWhereInput | UniversityMembershipWhereInput[]
+    id?: StringFilter<"UniversityMembership"> | string
+    userId?: StringFilter<"UniversityMembership"> | string
+    universityId?: StringFilter<"UniversityMembership"> | string
+    role?: EnumUniversityRoleFilter<"UniversityMembership"> | $Enums.UniversityRole
+    createdAt?: DateTimeFilter<"UniversityMembership"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    university?: XOR<UniversityScalarRelationFilter, UniversityWhereInput>
+  }
+
+  export type UniversityMembershipOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    universityId?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    university?: UniversityOrderByWithRelationInput
+  }
+
+  export type UniversityMembershipWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_universityId?: UniversityMembershipUserIdUniversityIdCompoundUniqueInput
+    AND?: UniversityMembershipWhereInput | UniversityMembershipWhereInput[]
+    OR?: UniversityMembershipWhereInput[]
+    NOT?: UniversityMembershipWhereInput | UniversityMembershipWhereInput[]
+    userId?: StringFilter<"UniversityMembership"> | string
+    universityId?: StringFilter<"UniversityMembership"> | string
+    role?: EnumUniversityRoleFilter<"UniversityMembership"> | $Enums.UniversityRole
+    createdAt?: DateTimeFilter<"UniversityMembership"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    university?: XOR<UniversityScalarRelationFilter, UniversityWhereInput>
+  }, "id" | "userId_universityId">
+
+  export type UniversityMembershipOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    universityId?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    _count?: UniversityMembershipCountOrderByAggregateInput
+    _max?: UniversityMembershipMaxOrderByAggregateInput
+    _min?: UniversityMembershipMinOrderByAggregateInput
+  }
+
+  export type UniversityMembershipScalarWhereWithAggregatesInput = {
+    AND?: UniversityMembershipScalarWhereWithAggregatesInput | UniversityMembershipScalarWhereWithAggregatesInput[]
+    OR?: UniversityMembershipScalarWhereWithAggregatesInput[]
+    NOT?: UniversityMembershipScalarWhereWithAggregatesInput | UniversityMembershipScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UniversityMembership"> | string
+    userId?: StringWithAggregatesFilter<"UniversityMembership"> | string
+    universityId?: StringWithAggregatesFilter<"UniversityMembership"> | string
+    role?: EnumUniversityRoleWithAggregatesFilter<"UniversityMembership"> | $Enums.UniversityRole
+    createdAt?: DateTimeWithAggregatesFilter<"UniversityMembership"> | Date | string
+  }
+
+  export type ResourceAuditWhereInput = {
+    AND?: ResourceAuditWhereInput | ResourceAuditWhereInput[]
+    OR?: ResourceAuditWhereInput[]
+    NOT?: ResourceAuditWhereInput | ResourceAuditWhereInput[]
+    id?: StringFilter<"ResourceAudit"> | string
+    resourceId?: StringFilter<"ResourceAudit"> | string
+    actorId?: StringFilter<"ResourceAudit"> | string
+    action?: EnumResourceAuditActionFilter<"ResourceAudit"> | $Enums.ResourceAuditAction
+    notes?: StringNullableFilter<"ResourceAudit"> | string | null
+    createdAt?: DateTimeFilter<"ResourceAudit"> | Date | string
+    resource?: XOR<ResourceScalarRelationFilter, ResourceWhereInput>
+    actor?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ResourceAuditOrderByWithRelationInput = {
+    id?: SortOrder
+    resourceId?: SortOrder
+    actorId?: SortOrder
+    action?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    resource?: ResourceOrderByWithRelationInput
+    actor?: UserOrderByWithRelationInput
+  }
+
+  export type ResourceAuditWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ResourceAuditWhereInput | ResourceAuditWhereInput[]
+    OR?: ResourceAuditWhereInput[]
+    NOT?: ResourceAuditWhereInput | ResourceAuditWhereInput[]
+    resourceId?: StringFilter<"ResourceAudit"> | string
+    actorId?: StringFilter<"ResourceAudit"> | string
+    action?: EnumResourceAuditActionFilter<"ResourceAudit"> | $Enums.ResourceAuditAction
+    notes?: StringNullableFilter<"ResourceAudit"> | string | null
+    createdAt?: DateTimeFilter<"ResourceAudit"> | Date | string
+    resource?: XOR<ResourceScalarRelationFilter, ResourceWhereInput>
+    actor?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ResourceAuditOrderByWithAggregationInput = {
+    id?: SortOrder
+    resourceId?: SortOrder
+    actorId?: SortOrder
+    action?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: ResourceAuditCountOrderByAggregateInput
+    _max?: ResourceAuditMaxOrderByAggregateInput
+    _min?: ResourceAuditMinOrderByAggregateInput
+  }
+
+  export type ResourceAuditScalarWhereWithAggregatesInput = {
+    AND?: ResourceAuditScalarWhereWithAggregatesInput | ResourceAuditScalarWhereWithAggregatesInput[]
+    OR?: ResourceAuditScalarWhereWithAggregatesInput[]
+    NOT?: ResourceAuditScalarWhereWithAggregatesInput | ResourceAuditScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ResourceAudit"> | string
+    resourceId?: StringWithAggregatesFilter<"ResourceAudit"> | string
+    actorId?: StringWithAggregatesFilter<"ResourceAudit"> | string
+    action?: EnumResourceAuditActionWithAggregatesFilter<"ResourceAudit"> | $Enums.ResourceAuditAction
+    notes?: StringNullableWithAggregatesFilter<"ResourceAudit"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ResourceAudit"> | Date | string
   }
 
   export type GroupWhereInput = {
@@ -19461,6 +23715,10 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -19492,6 +23750,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -19523,6 +23785,10 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -19554,6 +23820,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -20163,9 +24433,6 @@ export namespace Prisma {
     description?: string | null
     tags?: ResourceCreatetagsInput | string[]
     categories?: ResourceCreatecategoriesInput | string[]
-    universityCode?: string | null
-    departmentCode?: string | null
-    courseCode?: string | null
     fileName?: string | null
     fileSize?: number | null
     mimeType?: string | null
@@ -20177,6 +24444,10 @@ export namespace Prisma {
     version?: number
     downloads?: number
     rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    approvedAt?: Date | string | null
+    archivedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     publishedAt?: Date | string | null
@@ -20184,6 +24455,10 @@ export namespace Prisma {
     parent?: ResourceCreateNestedOneWithoutChildrenInput
     children?: ResourceCreateNestedManyWithoutParentInput
     uploadedBy?: UserCreateNestedOneWithoutResourcesInput
+    submittedBy?: UserCreateNestedOneWithoutSubmittedResourcesInput
+    approvedBy?: UserCreateNestedOneWithoutApprovedResourcesInput
+    university?: UniversityCreateNestedOneWithoutResourcesInput
+    audits?: ResourceAuditCreateNestedManyWithoutResourceInput
   }
 
   export type ResourceUncheckedCreateInput = {
@@ -20200,9 +24475,6 @@ export namespace Prisma {
     description?: string | null
     tags?: ResourceCreatetagsInput | string[]
     categories?: ResourceCreatecategoriesInput | string[]
-    universityCode?: string | null
-    departmentCode?: string | null
-    courseCode?: string | null
     fileName?: string | null
     fileSize?: number | null
     mimeType?: string | null
@@ -20214,12 +24486,20 @@ export namespace Prisma {
     version?: number
     downloads?: number
     rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    submittedById?: string | null
+    approvedById?: string | null
+    approvedAt?: Date | string | null
     uploadedById?: string | null
+    universityId?: string | null
+    archivedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     publishedAt?: Date | string | null
     isArchived?: boolean
     children?: ResourceUncheckedCreateNestedManyWithoutParentInput
+    audits?: ResourceAuditUncheckedCreateNestedManyWithoutResourceInput
   }
 
   export type ResourceUpdateInput = {
@@ -20235,9 +24515,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
     categories?: ResourceUpdatecategoriesInput | string[]
-    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
-    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
     fileName?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20249,6 +24526,10 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
     downloads?: IntFieldUpdateOperationsInput | number
     rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -20256,6 +24537,10 @@ export namespace Prisma {
     parent?: ResourceUpdateOneWithoutChildrenNestedInput
     children?: ResourceUpdateManyWithoutParentNestedInput
     uploadedBy?: UserUpdateOneWithoutResourcesNestedInput
+    submittedBy?: UserUpdateOneWithoutSubmittedResourcesNestedInput
+    approvedBy?: UserUpdateOneWithoutApprovedResourcesNestedInput
+    university?: UniversityUpdateOneWithoutResourcesNestedInput
+    audits?: ResourceAuditUpdateManyWithoutResourceNestedInput
   }
 
   export type ResourceUncheckedUpdateInput = {
@@ -20272,9 +24557,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
     categories?: ResourceUpdatecategoriesInput | string[]
-    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
-    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
     fileName?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20286,12 +24568,20 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
     downloads?: IntFieldUpdateOperationsInput | number
     rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    submittedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    universityId?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isArchived?: BoolFieldUpdateOperationsInput | boolean
     children?: ResourceUncheckedUpdateManyWithoutParentNestedInput
+    audits?: ResourceAuditUncheckedUpdateManyWithoutResourceNestedInput
   }
 
   export type ResourceCreateManyInput = {
@@ -20308,9 +24598,6 @@ export namespace Prisma {
     description?: string | null
     tags?: ResourceCreatetagsInput | string[]
     categories?: ResourceCreatecategoriesInput | string[]
-    universityCode?: string | null
-    departmentCode?: string | null
-    courseCode?: string | null
     fileName?: string | null
     fileSize?: number | null
     mimeType?: string | null
@@ -20322,7 +24609,14 @@ export namespace Prisma {
     version?: number
     downloads?: number
     rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    submittedById?: string | null
+    approvedById?: string | null
+    approvedAt?: Date | string | null
     uploadedById?: string | null
+    universityId?: string | null
+    archivedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     publishedAt?: Date | string | null
@@ -20342,9 +24636,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
     categories?: ResourceUpdatecategoriesInput | string[]
-    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
-    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
     fileName?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20356,6 +24647,10 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
     downloads?: IntFieldUpdateOperationsInput | number
     rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -20376,9 +24671,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
     categories?: ResourceUpdatecategoriesInput | string[]
-    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
-    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
     fileName?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20390,11 +24682,211 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
     downloads?: IntFieldUpdateOperationsInput | number
     rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    submittedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    universityId?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type UniversityCreateInput = {
+    id?: string
+    name: string
+    slug: string
+    logoUrl?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: UniversityMembershipCreateNestedManyWithoutUniversityInput
+    resources?: ResourceCreateNestedManyWithoutUniversityInput
+  }
+
+  export type UniversityUncheckedCreateInput = {
+    id?: string
+    name: string
+    slug: string
+    logoUrl?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUniversityInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUniversityInput
+  }
+
+  export type UniversityUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: UniversityMembershipUpdateManyWithoutUniversityNestedInput
+    resources?: ResourceUpdateManyWithoutUniversityNestedInput
+  }
+
+  export type UniversityUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: UniversityMembershipUncheckedUpdateManyWithoutUniversityNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUniversityNestedInput
+  }
+
+  export type UniversityCreateManyInput = {
+    id?: string
+    name: string
+    slug: string
+    logoUrl?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UniversityUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityMembershipCreateInput = {
+    id?: string
+    role: $Enums.UniversityRole
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutUniversityMembershipsInput
+    university: UniversityCreateNestedOneWithoutMembershipsInput
+  }
+
+  export type UniversityMembershipUncheckedCreateInput = {
+    id?: string
+    userId: string
+    universityId: string
+    role: $Enums.UniversityRole
+    createdAt?: Date | string
+  }
+
+  export type UniversityMembershipUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumUniversityRoleFieldUpdateOperationsInput | $Enums.UniversityRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUniversityMembershipsNestedInput
+    university?: UniversityUpdateOneRequiredWithoutMembershipsNestedInput
+  }
+
+  export type UniversityMembershipUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    universityId?: StringFieldUpdateOperationsInput | string
+    role?: EnumUniversityRoleFieldUpdateOperationsInput | $Enums.UniversityRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityMembershipCreateManyInput = {
+    id?: string
+    userId: string
+    universityId: string
+    role: $Enums.UniversityRole
+    createdAt?: Date | string
+  }
+
+  export type UniversityMembershipUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumUniversityRoleFieldUpdateOperationsInput | $Enums.UniversityRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityMembershipUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    universityId?: StringFieldUpdateOperationsInput | string
+    role?: EnumUniversityRoleFieldUpdateOperationsInput | $Enums.UniversityRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResourceAuditCreateInput = {
+    id?: string
+    action: $Enums.ResourceAuditAction
+    notes?: string | null
+    createdAt?: Date | string
+    resource: ResourceCreateNestedOneWithoutAuditsInput
+    actor: UserCreateNestedOneWithoutResourceAuditsInput
+  }
+
+  export type ResourceAuditUncheckedCreateInput = {
+    id?: string
+    resourceId: string
+    actorId: string
+    action: $Enums.ResourceAuditAction
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ResourceAuditUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: EnumResourceAuditActionFieldUpdateOperationsInput | $Enums.ResourceAuditAction
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resource?: ResourceUpdateOneRequiredWithoutAuditsNestedInput
+    actor?: UserUpdateOneRequiredWithoutResourceAuditsNestedInput
+  }
+
+  export type ResourceAuditUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    actorId?: StringFieldUpdateOperationsInput | string
+    action?: EnumResourceAuditActionFieldUpdateOperationsInput | $Enums.ResourceAuditAction
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResourceAuditCreateManyInput = {
+    id?: string
+    resourceId: string
+    actorId: string
+    action: $Enums.ResourceAuditAction
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ResourceAuditUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: EnumResourceAuditActionFieldUpdateOperationsInput | $Enums.ResourceAuditAction
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResourceAuditUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    actorId?: StringFieldUpdateOperationsInput | string
+    action?: EnumResourceAuditActionFieldUpdateOperationsInput | $Enums.ResourceAuditAction
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type GroupCreateInput = {
@@ -20921,6 +25413,18 @@ export namespace Prisma {
     none?: ResourceWhereInput
   }
 
+  export type ResourceAuditListRelationFilter = {
+    every?: ResourceAuditWhereInput
+    some?: ResourceAuditWhereInput
+    none?: ResourceAuditWhereInput
+  }
+
+  export type UniversityMembershipListRelationFilter = {
+    every?: UniversityMembershipWhereInput
+    some?: UniversityMembershipWhereInput
+    none?: UniversityMembershipWhereInput
+  }
+
   export type OpportunityListRelationFilter = {
     every?: OpportunityWhereInput
     some?: OpportunityWhereInput
@@ -20976,6 +25480,14 @@ export namespace Prisma {
   }
 
   export type ResourceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ResourceAuditOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UniversityMembershipOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -21453,6 +25965,13 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type EnumResourceStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceStatus | EnumResourceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceStatus[] | ListEnumResourceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceStatus[] | ListEnumResourceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceStatusFilter<$PrismaModel> | $Enums.ResourceStatus
+  }
+
   export type ResourceNullableScalarRelationFilter = {
     is?: ResourceWhereInput | null
     isNot?: ResourceWhereInput | null
@@ -21461,6 +25980,11 @@ export namespace Prisma {
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
+  }
+
+  export type UniversityNullableScalarRelationFilter = {
+    is?: UniversityWhereInput | null
+    isNot?: UniversityWhereInput | null
   }
 
   export type ResourceParentIdSlugCompoundUniqueInput = {
@@ -21482,9 +26006,6 @@ export namespace Prisma {
     description?: SortOrder
     tags?: SortOrder
     categories?: SortOrder
-    universityCode?: SortOrder
-    departmentCode?: SortOrder
-    courseCode?: SortOrder
     fileName?: SortOrder
     fileSize?: SortOrder
     mimeType?: SortOrder
@@ -21496,7 +26017,14 @@ export namespace Prisma {
     version?: SortOrder
     downloads?: SortOrder
     rating?: SortOrder
+    status?: SortOrder
+    reviewNote?: SortOrder
+    submittedById?: SortOrder
+    approvedById?: SortOrder
+    approvedAt?: SortOrder
     uploadedById?: SortOrder
+    universityId?: SortOrder
+    archivedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     publishedAt?: SortOrder
@@ -21524,9 +26052,6 @@ export namespace Prisma {
     sortOrder?: SortOrder
     canonicalPath?: SortOrder
     description?: SortOrder
-    universityCode?: SortOrder
-    departmentCode?: SortOrder
-    courseCode?: SortOrder
     fileName?: SortOrder
     fileSize?: SortOrder
     mimeType?: SortOrder
@@ -21538,7 +26063,14 @@ export namespace Prisma {
     version?: SortOrder
     downloads?: SortOrder
     rating?: SortOrder
+    status?: SortOrder
+    reviewNote?: SortOrder
+    submittedById?: SortOrder
+    approvedById?: SortOrder
+    approvedAt?: SortOrder
     uploadedById?: SortOrder
+    universityId?: SortOrder
+    archivedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     publishedAt?: SortOrder
@@ -21557,9 +26089,6 @@ export namespace Prisma {
     sortOrder?: SortOrder
     canonicalPath?: SortOrder
     description?: SortOrder
-    universityCode?: SortOrder
-    departmentCode?: SortOrder
-    courseCode?: SortOrder
     fileName?: SortOrder
     fileSize?: SortOrder
     mimeType?: SortOrder
@@ -21571,7 +26100,14 @@ export namespace Prisma {
     version?: SortOrder
     downloads?: SortOrder
     rating?: SortOrder
+    status?: SortOrder
+    reviewNote?: SortOrder
+    submittedById?: SortOrder
+    approvedById?: SortOrder
+    approvedAt?: SortOrder
     uploadedById?: SortOrder
+    universityId?: SortOrder
+    archivedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     publishedAt?: SortOrder
@@ -21647,6 +26183,144 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type EnumResourceStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceStatus | EnumResourceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceStatus[] | ListEnumResourceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceStatus[] | ListEnumResourceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceStatusWithAggregatesFilter<$PrismaModel> | $Enums.ResourceStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumResourceStatusFilter<$PrismaModel>
+    _max?: NestedEnumResourceStatusFilter<$PrismaModel>
+  }
+
+  export type UniversityCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    logoUrl?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UniversityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    logoUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UniversityMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    slug?: SortOrder
+    logoUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumUniversityRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UniversityRole | EnumUniversityRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UniversityRole[] | ListEnumUniversityRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UniversityRole[] | ListEnumUniversityRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUniversityRoleFilter<$PrismaModel> | $Enums.UniversityRole
+  }
+
+  export type UniversityScalarRelationFilter = {
+    is?: UniversityWhereInput
+    isNot?: UniversityWhereInput
+  }
+
+  export type UniversityMembershipUserIdUniversityIdCompoundUniqueInput = {
+    userId: string
+    universityId: string
+  }
+
+  export type UniversityMembershipCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    universityId?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UniversityMembershipMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    universityId?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UniversityMembershipMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    universityId?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type EnumUniversityRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UniversityRole | EnumUniversityRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UniversityRole[] | ListEnumUniversityRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UniversityRole[] | ListEnumUniversityRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUniversityRoleWithAggregatesFilter<$PrismaModel> | $Enums.UniversityRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUniversityRoleFilter<$PrismaModel>
+    _max?: NestedEnumUniversityRoleFilter<$PrismaModel>
+  }
+
+  export type EnumResourceAuditActionFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceAuditAction | EnumResourceAuditActionFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceAuditAction[] | ListEnumResourceAuditActionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceAuditAction[] | ListEnumResourceAuditActionFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceAuditActionFilter<$PrismaModel> | $Enums.ResourceAuditAction
+  }
+
+  export type ResourceScalarRelationFilter = {
+    is?: ResourceWhereInput
+    isNot?: ResourceWhereInput
+  }
+
+  export type ResourceAuditCountOrderByAggregateInput = {
+    id?: SortOrder
+    resourceId?: SortOrder
+    actorId?: SortOrder
+    action?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ResourceAuditMaxOrderByAggregateInput = {
+    id?: SortOrder
+    resourceId?: SortOrder
+    actorId?: SortOrder
+    action?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ResourceAuditMinOrderByAggregateInput = {
+    id?: SortOrder
+    resourceId?: SortOrder
+    actorId?: SortOrder
+    action?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type EnumResourceAuditActionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceAuditAction | EnumResourceAuditActionFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceAuditAction[] | ListEnumResourceAuditActionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceAuditAction[] | ListEnumResourceAuditActionFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceAuditActionWithAggregatesFilter<$PrismaModel> | $Enums.ResourceAuditAction
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumResourceAuditActionFilter<$PrismaModel>
+    _max?: NestedEnumResourceAuditActionFilter<$PrismaModel>
   }
 
   export type GroupCountOrderByAggregateInput = {
@@ -21901,6 +26575,34 @@ export namespace Prisma {
     connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
   }
 
+  export type ResourceCreateNestedManyWithoutSubmittedByInput = {
+    create?: XOR<ResourceCreateWithoutSubmittedByInput, ResourceUncheckedCreateWithoutSubmittedByInput> | ResourceCreateWithoutSubmittedByInput[] | ResourceUncheckedCreateWithoutSubmittedByInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutSubmittedByInput | ResourceCreateOrConnectWithoutSubmittedByInput[]
+    createMany?: ResourceCreateManySubmittedByInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type ResourceCreateNestedManyWithoutApprovedByInput = {
+    create?: XOR<ResourceCreateWithoutApprovedByInput, ResourceUncheckedCreateWithoutApprovedByInput> | ResourceCreateWithoutApprovedByInput[] | ResourceUncheckedCreateWithoutApprovedByInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutApprovedByInput | ResourceCreateOrConnectWithoutApprovedByInput[]
+    createMany?: ResourceCreateManyApprovedByInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type ResourceAuditCreateNestedManyWithoutActorInput = {
+    create?: XOR<ResourceAuditCreateWithoutActorInput, ResourceAuditUncheckedCreateWithoutActorInput> | ResourceAuditCreateWithoutActorInput[] | ResourceAuditUncheckedCreateWithoutActorInput[]
+    connectOrCreate?: ResourceAuditCreateOrConnectWithoutActorInput | ResourceAuditCreateOrConnectWithoutActorInput[]
+    createMany?: ResourceAuditCreateManyActorInputEnvelope
+    connect?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+  }
+
+  export type UniversityMembershipCreateNestedManyWithoutUserInput = {
+    create?: XOR<UniversityMembershipCreateWithoutUserInput, UniversityMembershipUncheckedCreateWithoutUserInput> | UniversityMembershipCreateWithoutUserInput[] | UniversityMembershipUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UniversityMembershipCreateOrConnectWithoutUserInput | UniversityMembershipCreateOrConnectWithoutUserInput[]
+    createMany?: UniversityMembershipCreateManyUserInputEnvelope
+    connect?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+  }
+
   export type OpportunityCreateNestedManyWithoutPostedByInput = {
     create?: XOR<OpportunityCreateWithoutPostedByInput, OpportunityUncheckedCreateWithoutPostedByInput> | OpportunityCreateWithoutPostedByInput[] | OpportunityUncheckedCreateWithoutPostedByInput[]
     connectOrCreate?: OpportunityCreateOrConnectWithoutPostedByInput | OpportunityCreateOrConnectWithoutPostedByInput[]
@@ -21976,6 +26678,34 @@ export namespace Prisma {
     connectOrCreate?: ResourceCreateOrConnectWithoutUploadedByInput | ResourceCreateOrConnectWithoutUploadedByInput[]
     createMany?: ResourceCreateManyUploadedByInputEnvelope
     connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type ResourceUncheckedCreateNestedManyWithoutSubmittedByInput = {
+    create?: XOR<ResourceCreateWithoutSubmittedByInput, ResourceUncheckedCreateWithoutSubmittedByInput> | ResourceCreateWithoutSubmittedByInput[] | ResourceUncheckedCreateWithoutSubmittedByInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutSubmittedByInput | ResourceCreateOrConnectWithoutSubmittedByInput[]
+    createMany?: ResourceCreateManySubmittedByInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type ResourceUncheckedCreateNestedManyWithoutApprovedByInput = {
+    create?: XOR<ResourceCreateWithoutApprovedByInput, ResourceUncheckedCreateWithoutApprovedByInput> | ResourceCreateWithoutApprovedByInput[] | ResourceUncheckedCreateWithoutApprovedByInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutApprovedByInput | ResourceCreateOrConnectWithoutApprovedByInput[]
+    createMany?: ResourceCreateManyApprovedByInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type ResourceAuditUncheckedCreateNestedManyWithoutActorInput = {
+    create?: XOR<ResourceAuditCreateWithoutActorInput, ResourceAuditUncheckedCreateWithoutActorInput> | ResourceAuditCreateWithoutActorInput[] | ResourceAuditUncheckedCreateWithoutActorInput[]
+    connectOrCreate?: ResourceAuditCreateOrConnectWithoutActorInput | ResourceAuditCreateOrConnectWithoutActorInput[]
+    createMany?: ResourceAuditCreateManyActorInputEnvelope
+    connect?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+  }
+
+  export type UniversityMembershipUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UniversityMembershipCreateWithoutUserInput, UniversityMembershipUncheckedCreateWithoutUserInput> | UniversityMembershipCreateWithoutUserInput[] | UniversityMembershipUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UniversityMembershipCreateOrConnectWithoutUserInput | UniversityMembershipCreateOrConnectWithoutUserInput[]
+    createMany?: UniversityMembershipCreateManyUserInputEnvelope
+    connect?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
   }
 
   export type OpportunityUncheckedCreateNestedManyWithoutPostedByInput = {
@@ -22095,6 +26825,62 @@ export namespace Prisma {
     update?: ResourceUpdateWithWhereUniqueWithoutUploadedByInput | ResourceUpdateWithWhereUniqueWithoutUploadedByInput[]
     updateMany?: ResourceUpdateManyWithWhereWithoutUploadedByInput | ResourceUpdateManyWithWhereWithoutUploadedByInput[]
     deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type ResourceUpdateManyWithoutSubmittedByNestedInput = {
+    create?: XOR<ResourceCreateWithoutSubmittedByInput, ResourceUncheckedCreateWithoutSubmittedByInput> | ResourceCreateWithoutSubmittedByInput[] | ResourceUncheckedCreateWithoutSubmittedByInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutSubmittedByInput | ResourceCreateOrConnectWithoutSubmittedByInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutSubmittedByInput | ResourceUpsertWithWhereUniqueWithoutSubmittedByInput[]
+    createMany?: ResourceCreateManySubmittedByInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutSubmittedByInput | ResourceUpdateWithWhereUniqueWithoutSubmittedByInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutSubmittedByInput | ResourceUpdateManyWithWhereWithoutSubmittedByInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type ResourceUpdateManyWithoutApprovedByNestedInput = {
+    create?: XOR<ResourceCreateWithoutApprovedByInput, ResourceUncheckedCreateWithoutApprovedByInput> | ResourceCreateWithoutApprovedByInput[] | ResourceUncheckedCreateWithoutApprovedByInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutApprovedByInput | ResourceCreateOrConnectWithoutApprovedByInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutApprovedByInput | ResourceUpsertWithWhereUniqueWithoutApprovedByInput[]
+    createMany?: ResourceCreateManyApprovedByInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutApprovedByInput | ResourceUpdateWithWhereUniqueWithoutApprovedByInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutApprovedByInput | ResourceUpdateManyWithWhereWithoutApprovedByInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type ResourceAuditUpdateManyWithoutActorNestedInput = {
+    create?: XOR<ResourceAuditCreateWithoutActorInput, ResourceAuditUncheckedCreateWithoutActorInput> | ResourceAuditCreateWithoutActorInput[] | ResourceAuditUncheckedCreateWithoutActorInput[]
+    connectOrCreate?: ResourceAuditCreateOrConnectWithoutActorInput | ResourceAuditCreateOrConnectWithoutActorInput[]
+    upsert?: ResourceAuditUpsertWithWhereUniqueWithoutActorInput | ResourceAuditUpsertWithWhereUniqueWithoutActorInput[]
+    createMany?: ResourceAuditCreateManyActorInputEnvelope
+    set?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    disconnect?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    delete?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    connect?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    update?: ResourceAuditUpdateWithWhereUniqueWithoutActorInput | ResourceAuditUpdateWithWhereUniqueWithoutActorInput[]
+    updateMany?: ResourceAuditUpdateManyWithWhereWithoutActorInput | ResourceAuditUpdateManyWithWhereWithoutActorInput[]
+    deleteMany?: ResourceAuditScalarWhereInput | ResourceAuditScalarWhereInput[]
+  }
+
+  export type UniversityMembershipUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UniversityMembershipCreateWithoutUserInput, UniversityMembershipUncheckedCreateWithoutUserInput> | UniversityMembershipCreateWithoutUserInput[] | UniversityMembershipUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UniversityMembershipCreateOrConnectWithoutUserInput | UniversityMembershipCreateOrConnectWithoutUserInput[]
+    upsert?: UniversityMembershipUpsertWithWhereUniqueWithoutUserInput | UniversityMembershipUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UniversityMembershipCreateManyUserInputEnvelope
+    set?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    disconnect?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    delete?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    connect?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    update?: UniversityMembershipUpdateWithWhereUniqueWithoutUserInput | UniversityMembershipUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UniversityMembershipUpdateManyWithWhereWithoutUserInput | UniversityMembershipUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UniversityMembershipScalarWhereInput | UniversityMembershipScalarWhereInput[]
   }
 
   export type OpportunityUpdateManyWithoutPostedByNestedInput = {
@@ -22249,6 +27035,62 @@ export namespace Prisma {
     update?: ResourceUpdateWithWhereUniqueWithoutUploadedByInput | ResourceUpdateWithWhereUniqueWithoutUploadedByInput[]
     updateMany?: ResourceUpdateManyWithWhereWithoutUploadedByInput | ResourceUpdateManyWithWhereWithoutUploadedByInput[]
     deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput = {
+    create?: XOR<ResourceCreateWithoutSubmittedByInput, ResourceUncheckedCreateWithoutSubmittedByInput> | ResourceCreateWithoutSubmittedByInput[] | ResourceUncheckedCreateWithoutSubmittedByInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutSubmittedByInput | ResourceCreateOrConnectWithoutSubmittedByInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutSubmittedByInput | ResourceUpsertWithWhereUniqueWithoutSubmittedByInput[]
+    createMany?: ResourceCreateManySubmittedByInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutSubmittedByInput | ResourceUpdateWithWhereUniqueWithoutSubmittedByInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutSubmittedByInput | ResourceUpdateManyWithWhereWithoutSubmittedByInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type ResourceUncheckedUpdateManyWithoutApprovedByNestedInput = {
+    create?: XOR<ResourceCreateWithoutApprovedByInput, ResourceUncheckedCreateWithoutApprovedByInput> | ResourceCreateWithoutApprovedByInput[] | ResourceUncheckedCreateWithoutApprovedByInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutApprovedByInput | ResourceCreateOrConnectWithoutApprovedByInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutApprovedByInput | ResourceUpsertWithWhereUniqueWithoutApprovedByInput[]
+    createMany?: ResourceCreateManyApprovedByInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutApprovedByInput | ResourceUpdateWithWhereUniqueWithoutApprovedByInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutApprovedByInput | ResourceUpdateManyWithWhereWithoutApprovedByInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type ResourceAuditUncheckedUpdateManyWithoutActorNestedInput = {
+    create?: XOR<ResourceAuditCreateWithoutActorInput, ResourceAuditUncheckedCreateWithoutActorInput> | ResourceAuditCreateWithoutActorInput[] | ResourceAuditUncheckedCreateWithoutActorInput[]
+    connectOrCreate?: ResourceAuditCreateOrConnectWithoutActorInput | ResourceAuditCreateOrConnectWithoutActorInput[]
+    upsert?: ResourceAuditUpsertWithWhereUniqueWithoutActorInput | ResourceAuditUpsertWithWhereUniqueWithoutActorInput[]
+    createMany?: ResourceAuditCreateManyActorInputEnvelope
+    set?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    disconnect?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    delete?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    connect?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    update?: ResourceAuditUpdateWithWhereUniqueWithoutActorInput | ResourceAuditUpdateWithWhereUniqueWithoutActorInput[]
+    updateMany?: ResourceAuditUpdateManyWithWhereWithoutActorInput | ResourceAuditUpdateManyWithWhereWithoutActorInput[]
+    deleteMany?: ResourceAuditScalarWhereInput | ResourceAuditScalarWhereInput[]
+  }
+
+  export type UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UniversityMembershipCreateWithoutUserInput, UniversityMembershipUncheckedCreateWithoutUserInput> | UniversityMembershipCreateWithoutUserInput[] | UniversityMembershipUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UniversityMembershipCreateOrConnectWithoutUserInput | UniversityMembershipCreateOrConnectWithoutUserInput[]
+    upsert?: UniversityMembershipUpsertWithWhereUniqueWithoutUserInput | UniversityMembershipUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UniversityMembershipCreateManyUserInputEnvelope
+    set?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    disconnect?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    delete?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    connect?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    update?: UniversityMembershipUpdateWithWhereUniqueWithoutUserInput | UniversityMembershipUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UniversityMembershipUpdateManyWithWhereWithoutUserInput | UniversityMembershipUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UniversityMembershipScalarWhereInput | UniversityMembershipScalarWhereInput[]
   }
 
   export type OpportunityUncheckedUpdateManyWithoutPostedByNestedInput = {
@@ -22663,11 +27505,43 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type UserCreateNestedOneWithoutSubmittedResourcesInput = {
+    create?: XOR<UserCreateWithoutSubmittedResourcesInput, UserUncheckedCreateWithoutSubmittedResourcesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSubmittedResourcesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutApprovedResourcesInput = {
+    create?: XOR<UserCreateWithoutApprovedResourcesInput, UserUncheckedCreateWithoutApprovedResourcesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutApprovedResourcesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UniversityCreateNestedOneWithoutResourcesInput = {
+    create?: XOR<UniversityCreateWithoutResourcesInput, UniversityUncheckedCreateWithoutResourcesInput>
+    connectOrCreate?: UniversityCreateOrConnectWithoutResourcesInput
+    connect?: UniversityWhereUniqueInput
+  }
+
+  export type ResourceAuditCreateNestedManyWithoutResourceInput = {
+    create?: XOR<ResourceAuditCreateWithoutResourceInput, ResourceAuditUncheckedCreateWithoutResourceInput> | ResourceAuditCreateWithoutResourceInput[] | ResourceAuditUncheckedCreateWithoutResourceInput[]
+    connectOrCreate?: ResourceAuditCreateOrConnectWithoutResourceInput | ResourceAuditCreateOrConnectWithoutResourceInput[]
+    createMany?: ResourceAuditCreateManyResourceInputEnvelope
+    connect?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+  }
+
   export type ResourceUncheckedCreateNestedManyWithoutParentInput = {
     create?: XOR<ResourceCreateWithoutParentInput, ResourceUncheckedCreateWithoutParentInput> | ResourceCreateWithoutParentInput[] | ResourceUncheckedCreateWithoutParentInput[]
     connectOrCreate?: ResourceCreateOrConnectWithoutParentInput | ResourceCreateOrConnectWithoutParentInput[]
     createMany?: ResourceCreateManyParentInputEnvelope
     connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type ResourceAuditUncheckedCreateNestedManyWithoutResourceInput = {
+    create?: XOR<ResourceAuditCreateWithoutResourceInput, ResourceAuditUncheckedCreateWithoutResourceInput> | ResourceAuditCreateWithoutResourceInput[] | ResourceAuditUncheckedCreateWithoutResourceInput[]
+    connectOrCreate?: ResourceAuditCreateOrConnectWithoutResourceInput | ResourceAuditCreateOrConnectWithoutResourceInput[]
+    createMany?: ResourceAuditCreateManyResourceInputEnvelope
+    connect?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
   }
 
   export type EnumResourceNodeTypeFieldUpdateOperationsInput = {
@@ -22708,6 +27582,10 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type EnumResourceStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ResourceStatus
+  }
+
   export type ResourceUpdateOneWithoutChildrenNestedInput = {
     create?: XOR<ResourceCreateWithoutChildrenInput, ResourceUncheckedCreateWithoutChildrenInput>
     connectOrCreate?: ResourceCreateOrConnectWithoutChildrenInput
@@ -22742,6 +27620,50 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResourcesInput, UserUpdateWithoutResourcesInput>, UserUncheckedUpdateWithoutResourcesInput>
   }
 
+  export type UserUpdateOneWithoutSubmittedResourcesNestedInput = {
+    create?: XOR<UserCreateWithoutSubmittedResourcesInput, UserUncheckedCreateWithoutSubmittedResourcesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSubmittedResourcesInput
+    upsert?: UserUpsertWithoutSubmittedResourcesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSubmittedResourcesInput, UserUpdateWithoutSubmittedResourcesInput>, UserUncheckedUpdateWithoutSubmittedResourcesInput>
+  }
+
+  export type UserUpdateOneWithoutApprovedResourcesNestedInput = {
+    create?: XOR<UserCreateWithoutApprovedResourcesInput, UserUncheckedCreateWithoutApprovedResourcesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutApprovedResourcesInput
+    upsert?: UserUpsertWithoutApprovedResourcesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutApprovedResourcesInput, UserUpdateWithoutApprovedResourcesInput>, UserUncheckedUpdateWithoutApprovedResourcesInput>
+  }
+
+  export type UniversityUpdateOneWithoutResourcesNestedInput = {
+    create?: XOR<UniversityCreateWithoutResourcesInput, UniversityUncheckedCreateWithoutResourcesInput>
+    connectOrCreate?: UniversityCreateOrConnectWithoutResourcesInput
+    upsert?: UniversityUpsertWithoutResourcesInput
+    disconnect?: UniversityWhereInput | boolean
+    delete?: UniversityWhereInput | boolean
+    connect?: UniversityWhereUniqueInput
+    update?: XOR<XOR<UniversityUpdateToOneWithWhereWithoutResourcesInput, UniversityUpdateWithoutResourcesInput>, UniversityUncheckedUpdateWithoutResourcesInput>
+  }
+
+  export type ResourceAuditUpdateManyWithoutResourceNestedInput = {
+    create?: XOR<ResourceAuditCreateWithoutResourceInput, ResourceAuditUncheckedCreateWithoutResourceInput> | ResourceAuditCreateWithoutResourceInput[] | ResourceAuditUncheckedCreateWithoutResourceInput[]
+    connectOrCreate?: ResourceAuditCreateOrConnectWithoutResourceInput | ResourceAuditCreateOrConnectWithoutResourceInput[]
+    upsert?: ResourceAuditUpsertWithWhereUniqueWithoutResourceInput | ResourceAuditUpsertWithWhereUniqueWithoutResourceInput[]
+    createMany?: ResourceAuditCreateManyResourceInputEnvelope
+    set?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    disconnect?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    delete?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    connect?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    update?: ResourceAuditUpdateWithWhereUniqueWithoutResourceInput | ResourceAuditUpdateWithWhereUniqueWithoutResourceInput[]
+    updateMany?: ResourceAuditUpdateManyWithWhereWithoutResourceInput | ResourceAuditUpdateManyWithWhereWithoutResourceInput[]
+    deleteMany?: ResourceAuditScalarWhereInput | ResourceAuditScalarWhereInput[]
+  }
+
   export type ResourceUncheckedUpdateManyWithoutParentNestedInput = {
     create?: XOR<ResourceCreateWithoutParentInput, ResourceUncheckedCreateWithoutParentInput> | ResourceCreateWithoutParentInput[] | ResourceUncheckedCreateWithoutParentInput[]
     connectOrCreate?: ResourceCreateOrConnectWithoutParentInput | ResourceCreateOrConnectWithoutParentInput[]
@@ -22754,6 +27676,168 @@ export namespace Prisma {
     update?: ResourceUpdateWithWhereUniqueWithoutParentInput | ResourceUpdateWithWhereUniqueWithoutParentInput[]
     updateMany?: ResourceUpdateManyWithWhereWithoutParentInput | ResourceUpdateManyWithWhereWithoutParentInput[]
     deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type ResourceAuditUncheckedUpdateManyWithoutResourceNestedInput = {
+    create?: XOR<ResourceAuditCreateWithoutResourceInput, ResourceAuditUncheckedCreateWithoutResourceInput> | ResourceAuditCreateWithoutResourceInput[] | ResourceAuditUncheckedCreateWithoutResourceInput[]
+    connectOrCreate?: ResourceAuditCreateOrConnectWithoutResourceInput | ResourceAuditCreateOrConnectWithoutResourceInput[]
+    upsert?: ResourceAuditUpsertWithWhereUniqueWithoutResourceInput | ResourceAuditUpsertWithWhereUniqueWithoutResourceInput[]
+    createMany?: ResourceAuditCreateManyResourceInputEnvelope
+    set?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    disconnect?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    delete?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    connect?: ResourceAuditWhereUniqueInput | ResourceAuditWhereUniqueInput[]
+    update?: ResourceAuditUpdateWithWhereUniqueWithoutResourceInput | ResourceAuditUpdateWithWhereUniqueWithoutResourceInput[]
+    updateMany?: ResourceAuditUpdateManyWithWhereWithoutResourceInput | ResourceAuditUpdateManyWithWhereWithoutResourceInput[]
+    deleteMany?: ResourceAuditScalarWhereInput | ResourceAuditScalarWhereInput[]
+  }
+
+  export type UniversityMembershipCreateNestedManyWithoutUniversityInput = {
+    create?: XOR<UniversityMembershipCreateWithoutUniversityInput, UniversityMembershipUncheckedCreateWithoutUniversityInput> | UniversityMembershipCreateWithoutUniversityInput[] | UniversityMembershipUncheckedCreateWithoutUniversityInput[]
+    connectOrCreate?: UniversityMembershipCreateOrConnectWithoutUniversityInput | UniversityMembershipCreateOrConnectWithoutUniversityInput[]
+    createMany?: UniversityMembershipCreateManyUniversityInputEnvelope
+    connect?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+  }
+
+  export type ResourceCreateNestedManyWithoutUniversityInput = {
+    create?: XOR<ResourceCreateWithoutUniversityInput, ResourceUncheckedCreateWithoutUniversityInput> | ResourceCreateWithoutUniversityInput[] | ResourceUncheckedCreateWithoutUniversityInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutUniversityInput | ResourceCreateOrConnectWithoutUniversityInput[]
+    createMany?: ResourceCreateManyUniversityInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type UniversityMembershipUncheckedCreateNestedManyWithoutUniversityInput = {
+    create?: XOR<UniversityMembershipCreateWithoutUniversityInput, UniversityMembershipUncheckedCreateWithoutUniversityInput> | UniversityMembershipCreateWithoutUniversityInput[] | UniversityMembershipUncheckedCreateWithoutUniversityInput[]
+    connectOrCreate?: UniversityMembershipCreateOrConnectWithoutUniversityInput | UniversityMembershipCreateOrConnectWithoutUniversityInput[]
+    createMany?: UniversityMembershipCreateManyUniversityInputEnvelope
+    connect?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+  }
+
+  export type ResourceUncheckedCreateNestedManyWithoutUniversityInput = {
+    create?: XOR<ResourceCreateWithoutUniversityInput, ResourceUncheckedCreateWithoutUniversityInput> | ResourceCreateWithoutUniversityInput[] | ResourceUncheckedCreateWithoutUniversityInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutUniversityInput | ResourceCreateOrConnectWithoutUniversityInput[]
+    createMany?: ResourceCreateManyUniversityInputEnvelope
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+  }
+
+  export type UniversityMembershipUpdateManyWithoutUniversityNestedInput = {
+    create?: XOR<UniversityMembershipCreateWithoutUniversityInput, UniversityMembershipUncheckedCreateWithoutUniversityInput> | UniversityMembershipCreateWithoutUniversityInput[] | UniversityMembershipUncheckedCreateWithoutUniversityInput[]
+    connectOrCreate?: UniversityMembershipCreateOrConnectWithoutUniversityInput | UniversityMembershipCreateOrConnectWithoutUniversityInput[]
+    upsert?: UniversityMembershipUpsertWithWhereUniqueWithoutUniversityInput | UniversityMembershipUpsertWithWhereUniqueWithoutUniversityInput[]
+    createMany?: UniversityMembershipCreateManyUniversityInputEnvelope
+    set?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    disconnect?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    delete?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    connect?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    update?: UniversityMembershipUpdateWithWhereUniqueWithoutUniversityInput | UniversityMembershipUpdateWithWhereUniqueWithoutUniversityInput[]
+    updateMany?: UniversityMembershipUpdateManyWithWhereWithoutUniversityInput | UniversityMembershipUpdateManyWithWhereWithoutUniversityInput[]
+    deleteMany?: UniversityMembershipScalarWhereInput | UniversityMembershipScalarWhereInput[]
+  }
+
+  export type ResourceUpdateManyWithoutUniversityNestedInput = {
+    create?: XOR<ResourceCreateWithoutUniversityInput, ResourceUncheckedCreateWithoutUniversityInput> | ResourceCreateWithoutUniversityInput[] | ResourceUncheckedCreateWithoutUniversityInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutUniversityInput | ResourceCreateOrConnectWithoutUniversityInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutUniversityInput | ResourceUpsertWithWhereUniqueWithoutUniversityInput[]
+    createMany?: ResourceCreateManyUniversityInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutUniversityInput | ResourceUpdateWithWhereUniqueWithoutUniversityInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutUniversityInput | ResourceUpdateManyWithWhereWithoutUniversityInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type UniversityMembershipUncheckedUpdateManyWithoutUniversityNestedInput = {
+    create?: XOR<UniversityMembershipCreateWithoutUniversityInput, UniversityMembershipUncheckedCreateWithoutUniversityInput> | UniversityMembershipCreateWithoutUniversityInput[] | UniversityMembershipUncheckedCreateWithoutUniversityInput[]
+    connectOrCreate?: UniversityMembershipCreateOrConnectWithoutUniversityInput | UniversityMembershipCreateOrConnectWithoutUniversityInput[]
+    upsert?: UniversityMembershipUpsertWithWhereUniqueWithoutUniversityInput | UniversityMembershipUpsertWithWhereUniqueWithoutUniversityInput[]
+    createMany?: UniversityMembershipCreateManyUniversityInputEnvelope
+    set?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    disconnect?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    delete?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    connect?: UniversityMembershipWhereUniqueInput | UniversityMembershipWhereUniqueInput[]
+    update?: UniversityMembershipUpdateWithWhereUniqueWithoutUniversityInput | UniversityMembershipUpdateWithWhereUniqueWithoutUniversityInput[]
+    updateMany?: UniversityMembershipUpdateManyWithWhereWithoutUniversityInput | UniversityMembershipUpdateManyWithWhereWithoutUniversityInput[]
+    deleteMany?: UniversityMembershipScalarWhereInput | UniversityMembershipScalarWhereInput[]
+  }
+
+  export type ResourceUncheckedUpdateManyWithoutUniversityNestedInput = {
+    create?: XOR<ResourceCreateWithoutUniversityInput, ResourceUncheckedCreateWithoutUniversityInput> | ResourceCreateWithoutUniversityInput[] | ResourceUncheckedCreateWithoutUniversityInput[]
+    connectOrCreate?: ResourceCreateOrConnectWithoutUniversityInput | ResourceCreateOrConnectWithoutUniversityInput[]
+    upsert?: ResourceUpsertWithWhereUniqueWithoutUniversityInput | ResourceUpsertWithWhereUniqueWithoutUniversityInput[]
+    createMany?: ResourceCreateManyUniversityInputEnvelope
+    set?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    disconnect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    delete?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    connect?: ResourceWhereUniqueInput | ResourceWhereUniqueInput[]
+    update?: ResourceUpdateWithWhereUniqueWithoutUniversityInput | ResourceUpdateWithWhereUniqueWithoutUniversityInput[]
+    updateMany?: ResourceUpdateManyWithWhereWithoutUniversityInput | ResourceUpdateManyWithWhereWithoutUniversityInput[]
+    deleteMany?: ResourceScalarWhereInput | ResourceScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutUniversityMembershipsInput = {
+    create?: XOR<UserCreateWithoutUniversityMembershipsInput, UserUncheckedCreateWithoutUniversityMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUniversityMembershipsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UniversityCreateNestedOneWithoutMembershipsInput = {
+    create?: XOR<UniversityCreateWithoutMembershipsInput, UniversityUncheckedCreateWithoutMembershipsInput>
+    connectOrCreate?: UniversityCreateOrConnectWithoutMembershipsInput
+    connect?: UniversityWhereUniqueInput
+  }
+
+  export type EnumUniversityRoleFieldUpdateOperationsInput = {
+    set?: $Enums.UniversityRole
+  }
+
+  export type UserUpdateOneRequiredWithoutUniversityMembershipsNestedInput = {
+    create?: XOR<UserCreateWithoutUniversityMembershipsInput, UserUncheckedCreateWithoutUniversityMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUniversityMembershipsInput
+    upsert?: UserUpsertWithoutUniversityMembershipsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUniversityMembershipsInput, UserUpdateWithoutUniversityMembershipsInput>, UserUncheckedUpdateWithoutUniversityMembershipsInput>
+  }
+
+  export type UniversityUpdateOneRequiredWithoutMembershipsNestedInput = {
+    create?: XOR<UniversityCreateWithoutMembershipsInput, UniversityUncheckedCreateWithoutMembershipsInput>
+    connectOrCreate?: UniversityCreateOrConnectWithoutMembershipsInput
+    upsert?: UniversityUpsertWithoutMembershipsInput
+    connect?: UniversityWhereUniqueInput
+    update?: XOR<XOR<UniversityUpdateToOneWithWhereWithoutMembershipsInput, UniversityUpdateWithoutMembershipsInput>, UniversityUncheckedUpdateWithoutMembershipsInput>
+  }
+
+  export type ResourceCreateNestedOneWithoutAuditsInput = {
+    create?: XOR<ResourceCreateWithoutAuditsInput, ResourceUncheckedCreateWithoutAuditsInput>
+    connectOrCreate?: ResourceCreateOrConnectWithoutAuditsInput
+    connect?: ResourceWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutResourceAuditsInput = {
+    create?: XOR<UserCreateWithoutResourceAuditsInput, UserUncheckedCreateWithoutResourceAuditsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResourceAuditsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumResourceAuditActionFieldUpdateOperationsInput = {
+    set?: $Enums.ResourceAuditAction
+  }
+
+  export type ResourceUpdateOneRequiredWithoutAuditsNestedInput = {
+    create?: XOR<ResourceCreateWithoutAuditsInput, ResourceUncheckedCreateWithoutAuditsInput>
+    connectOrCreate?: ResourceCreateOrConnectWithoutAuditsInput
+    upsert?: ResourceUpsertWithoutAuditsInput
+    connect?: ResourceWhereUniqueInput
+    update?: XOR<XOR<ResourceUpdateToOneWithWhereWithoutAuditsInput, ResourceUpdateWithoutAuditsInput>, ResourceUncheckedUpdateWithoutAuditsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutResourceAuditsNestedInput = {
+    create?: XOR<UserCreateWithoutResourceAuditsInput, UserUncheckedCreateWithoutResourceAuditsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResourceAuditsInput
+    upsert?: UserUpsertWithoutResourceAuditsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResourceAuditsInput, UserUpdateWithoutResourceAuditsInput>, UserUncheckedUpdateWithoutResourceAuditsInput>
   }
 
   export type UserCreateNestedOneWithoutCreatedGroupsInput = {
@@ -23112,6 +28196,13 @@ export namespace Prisma {
     not?: NestedEnumResourceMediaTypeNullableFilter<$PrismaModel> | $Enums.ResourceMediaType | null
   }
 
+  export type NestedEnumResourceStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceStatus | EnumResourceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceStatus[] | ListEnumResourceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceStatus[] | ListEnumResourceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceStatusFilter<$PrismaModel> | $Enums.ResourceStatus
+  }
+
   export type NestedEnumResourceNodeTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.ResourceNodeType | EnumResourceNodeTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ResourceNodeType[] | ListEnumResourceNodeTypeFieldRefInput<$PrismaModel>
@@ -23183,6 +28274,50 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedEnumResourceStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceStatus | EnumResourceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceStatus[] | ListEnumResourceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceStatus[] | ListEnumResourceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceStatusWithAggregatesFilter<$PrismaModel> | $Enums.ResourceStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumResourceStatusFilter<$PrismaModel>
+    _max?: NestedEnumResourceStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumUniversityRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UniversityRole | EnumUniversityRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UniversityRole[] | ListEnumUniversityRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UniversityRole[] | ListEnumUniversityRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUniversityRoleFilter<$PrismaModel> | $Enums.UniversityRole
+  }
+
+  export type NestedEnumUniversityRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UniversityRole | EnumUniversityRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UniversityRole[] | ListEnumUniversityRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UniversityRole[] | ListEnumUniversityRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUniversityRoleWithAggregatesFilter<$PrismaModel> | $Enums.UniversityRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUniversityRoleFilter<$PrismaModel>
+    _max?: NestedEnumUniversityRoleFilter<$PrismaModel>
+  }
+
+  export type NestedEnumResourceAuditActionFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceAuditAction | EnumResourceAuditActionFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceAuditAction[] | ListEnumResourceAuditActionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceAuditAction[] | ListEnumResourceAuditActionFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceAuditActionFilter<$PrismaModel> | $Enums.ResourceAuditAction
+  }
+
+  export type NestedEnumResourceAuditActionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ResourceAuditAction | EnumResourceAuditActionFieldRefInput<$PrismaModel>
+    in?: $Enums.ResourceAuditAction[] | ListEnumResourceAuditActionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ResourceAuditAction[] | ListEnumResourceAuditActionFieldRefInput<$PrismaModel>
+    not?: NestedEnumResourceAuditActionWithAggregatesFilter<$PrismaModel> | $Enums.ResourceAuditAction
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumResourceAuditActionFilter<$PrismaModel>
+    _max?: NestedEnumResourceAuditActionFilter<$PrismaModel>
   }
 
   export type CommentCreateWithoutNotificationsInput = {
@@ -23285,6 +28420,10 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -23315,6 +28454,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -23451,6 +28594,10 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -23481,6 +28628,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -23578,9 +28729,6 @@ export namespace Prisma {
     description?: string | null
     tags?: ResourceCreatetagsInput | string[]
     categories?: ResourceCreatecategoriesInput | string[]
-    universityCode?: string | null
-    departmentCode?: string | null
-    courseCode?: string | null
     fileName?: string | null
     fileSize?: number | null
     mimeType?: string | null
@@ -23592,12 +28740,20 @@ export namespace Prisma {
     version?: number
     downloads?: number
     rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    approvedAt?: Date | string | null
+    archivedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     publishedAt?: Date | string | null
     isArchived?: boolean
     parent?: ResourceCreateNestedOneWithoutChildrenInput
     children?: ResourceCreateNestedManyWithoutParentInput
+    submittedBy?: UserCreateNestedOneWithoutSubmittedResourcesInput
+    approvedBy?: UserCreateNestedOneWithoutApprovedResourcesInput
+    university?: UniversityCreateNestedOneWithoutResourcesInput
+    audits?: ResourceAuditCreateNestedManyWithoutResourceInput
   }
 
   export type ResourceUncheckedCreateWithoutUploadedByInput = {
@@ -23614,9 +28770,6 @@ export namespace Prisma {
     description?: string | null
     tags?: ResourceCreatetagsInput | string[]
     categories?: ResourceCreatecategoriesInput | string[]
-    universityCode?: string | null
-    departmentCode?: string | null
-    courseCode?: string | null
     fileName?: string | null
     fileSize?: number | null
     mimeType?: string | null
@@ -23628,11 +28781,19 @@ export namespace Prisma {
     version?: number
     downloads?: number
     rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    submittedById?: string | null
+    approvedById?: string | null
+    approvedAt?: Date | string | null
+    universityId?: string | null
+    archivedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     publishedAt?: Date | string | null
     isArchived?: boolean
     children?: ResourceUncheckedCreateNestedManyWithoutParentInput
+    audits?: ResourceAuditUncheckedCreateNestedManyWithoutResourceInput
   }
 
   export type ResourceCreateOrConnectWithoutUploadedByInput = {
@@ -23642,6 +28803,236 @@ export namespace Prisma {
 
   export type ResourceCreateManyUploadedByInputEnvelope = {
     data: ResourceCreateManyUploadedByInput | ResourceCreateManyUploadedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ResourceCreateWithoutSubmittedByInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    approvedAt?: Date | string | null
+    archivedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    parent?: ResourceCreateNestedOneWithoutChildrenInput
+    children?: ResourceCreateNestedManyWithoutParentInput
+    uploadedBy?: UserCreateNestedOneWithoutResourcesInput
+    approvedBy?: UserCreateNestedOneWithoutApprovedResourcesInput
+    university?: UniversityCreateNestedOneWithoutResourcesInput
+    audits?: ResourceAuditCreateNestedManyWithoutResourceInput
+  }
+
+  export type ResourceUncheckedCreateWithoutSubmittedByInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    parentId?: string | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    approvedById?: string | null
+    approvedAt?: Date | string | null
+    uploadedById?: string | null
+    universityId?: string | null
+    archivedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    children?: ResourceUncheckedCreateNestedManyWithoutParentInput
+    audits?: ResourceAuditUncheckedCreateNestedManyWithoutResourceInput
+  }
+
+  export type ResourceCreateOrConnectWithoutSubmittedByInput = {
+    where: ResourceWhereUniqueInput
+    create: XOR<ResourceCreateWithoutSubmittedByInput, ResourceUncheckedCreateWithoutSubmittedByInput>
+  }
+
+  export type ResourceCreateManySubmittedByInputEnvelope = {
+    data: ResourceCreateManySubmittedByInput | ResourceCreateManySubmittedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ResourceCreateWithoutApprovedByInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    approvedAt?: Date | string | null
+    archivedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    parent?: ResourceCreateNestedOneWithoutChildrenInput
+    children?: ResourceCreateNestedManyWithoutParentInput
+    uploadedBy?: UserCreateNestedOneWithoutResourcesInput
+    submittedBy?: UserCreateNestedOneWithoutSubmittedResourcesInput
+    university?: UniversityCreateNestedOneWithoutResourcesInput
+    audits?: ResourceAuditCreateNestedManyWithoutResourceInput
+  }
+
+  export type ResourceUncheckedCreateWithoutApprovedByInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    parentId?: string | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    submittedById?: string | null
+    approvedAt?: Date | string | null
+    uploadedById?: string | null
+    universityId?: string | null
+    archivedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    children?: ResourceUncheckedCreateNestedManyWithoutParentInput
+    audits?: ResourceAuditUncheckedCreateNestedManyWithoutResourceInput
+  }
+
+  export type ResourceCreateOrConnectWithoutApprovedByInput = {
+    where: ResourceWhereUniqueInput
+    create: XOR<ResourceCreateWithoutApprovedByInput, ResourceUncheckedCreateWithoutApprovedByInput>
+  }
+
+  export type ResourceCreateManyApprovedByInputEnvelope = {
+    data: ResourceCreateManyApprovedByInput | ResourceCreateManyApprovedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ResourceAuditCreateWithoutActorInput = {
+    id?: string
+    action: $Enums.ResourceAuditAction
+    notes?: string | null
+    createdAt?: Date | string
+    resource: ResourceCreateNestedOneWithoutAuditsInput
+  }
+
+  export type ResourceAuditUncheckedCreateWithoutActorInput = {
+    id?: string
+    resourceId: string
+    action: $Enums.ResourceAuditAction
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ResourceAuditCreateOrConnectWithoutActorInput = {
+    where: ResourceAuditWhereUniqueInput
+    create: XOR<ResourceAuditCreateWithoutActorInput, ResourceAuditUncheckedCreateWithoutActorInput>
+  }
+
+  export type ResourceAuditCreateManyActorInputEnvelope = {
+    data: ResourceAuditCreateManyActorInput | ResourceAuditCreateManyActorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UniversityMembershipCreateWithoutUserInput = {
+    id?: string
+    role: $Enums.UniversityRole
+    createdAt?: Date | string
+    university: UniversityCreateNestedOneWithoutMembershipsInput
+  }
+
+  export type UniversityMembershipUncheckedCreateWithoutUserInput = {
+    id?: string
+    universityId: string
+    role: $Enums.UniversityRole
+    createdAt?: Date | string
+  }
+
+  export type UniversityMembershipCreateOrConnectWithoutUserInput = {
+    where: UniversityMembershipWhereUniqueInput
+    create: XOR<UniversityMembershipCreateWithoutUserInput, UniversityMembershipUncheckedCreateWithoutUserInput>
+  }
+
+  export type UniversityMembershipCreateManyUserInputEnvelope = {
+    data: UniversityMembershipCreateManyUserInput | UniversityMembershipCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -24020,9 +29411,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"Resource"> | string | null
     tags?: StringNullableListFilter<"Resource">
     categories?: StringNullableListFilter<"Resource">
-    universityCode?: StringNullableFilter<"Resource"> | string | null
-    departmentCode?: StringNullableFilter<"Resource"> | string | null
-    courseCode?: StringNullableFilter<"Resource"> | string | null
     fileName?: StringNullableFilter<"Resource"> | string | null
     fileSize?: IntNullableFilter<"Resource"> | number | null
     mimeType?: StringNullableFilter<"Resource"> | string | null
@@ -24034,11 +29422,105 @@ export namespace Prisma {
     version?: IntFilter<"Resource"> | number
     downloads?: IntFilter<"Resource"> | number
     rating?: FloatFilter<"Resource"> | number
+    status?: EnumResourceStatusFilter<"Resource"> | $Enums.ResourceStatus
+    reviewNote?: StringNullableFilter<"Resource"> | string | null
+    submittedById?: StringNullableFilter<"Resource"> | string | null
+    approvedById?: StringNullableFilter<"Resource"> | string | null
+    approvedAt?: DateTimeNullableFilter<"Resource"> | Date | string | null
     uploadedById?: StringNullableFilter<"Resource"> | string | null
+    universityId?: StringNullableFilter<"Resource"> | string | null
+    archivedAt?: DateTimeNullableFilter<"Resource"> | Date | string | null
     createdAt?: DateTimeFilter<"Resource"> | Date | string
     updatedAt?: DateTimeFilter<"Resource"> | Date | string
     publishedAt?: DateTimeNullableFilter<"Resource"> | Date | string | null
     isArchived?: BoolFilter<"Resource"> | boolean
+  }
+
+  export type ResourceUpsertWithWhereUniqueWithoutSubmittedByInput = {
+    where: ResourceWhereUniqueInput
+    update: XOR<ResourceUpdateWithoutSubmittedByInput, ResourceUncheckedUpdateWithoutSubmittedByInput>
+    create: XOR<ResourceCreateWithoutSubmittedByInput, ResourceUncheckedCreateWithoutSubmittedByInput>
+  }
+
+  export type ResourceUpdateWithWhereUniqueWithoutSubmittedByInput = {
+    where: ResourceWhereUniqueInput
+    data: XOR<ResourceUpdateWithoutSubmittedByInput, ResourceUncheckedUpdateWithoutSubmittedByInput>
+  }
+
+  export type ResourceUpdateManyWithWhereWithoutSubmittedByInput = {
+    where: ResourceScalarWhereInput
+    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyWithoutSubmittedByInput>
+  }
+
+  export type ResourceUpsertWithWhereUniqueWithoutApprovedByInput = {
+    where: ResourceWhereUniqueInput
+    update: XOR<ResourceUpdateWithoutApprovedByInput, ResourceUncheckedUpdateWithoutApprovedByInput>
+    create: XOR<ResourceCreateWithoutApprovedByInput, ResourceUncheckedCreateWithoutApprovedByInput>
+  }
+
+  export type ResourceUpdateWithWhereUniqueWithoutApprovedByInput = {
+    where: ResourceWhereUniqueInput
+    data: XOR<ResourceUpdateWithoutApprovedByInput, ResourceUncheckedUpdateWithoutApprovedByInput>
+  }
+
+  export type ResourceUpdateManyWithWhereWithoutApprovedByInput = {
+    where: ResourceScalarWhereInput
+    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyWithoutApprovedByInput>
+  }
+
+  export type ResourceAuditUpsertWithWhereUniqueWithoutActorInput = {
+    where: ResourceAuditWhereUniqueInput
+    update: XOR<ResourceAuditUpdateWithoutActorInput, ResourceAuditUncheckedUpdateWithoutActorInput>
+    create: XOR<ResourceAuditCreateWithoutActorInput, ResourceAuditUncheckedCreateWithoutActorInput>
+  }
+
+  export type ResourceAuditUpdateWithWhereUniqueWithoutActorInput = {
+    where: ResourceAuditWhereUniqueInput
+    data: XOR<ResourceAuditUpdateWithoutActorInput, ResourceAuditUncheckedUpdateWithoutActorInput>
+  }
+
+  export type ResourceAuditUpdateManyWithWhereWithoutActorInput = {
+    where: ResourceAuditScalarWhereInput
+    data: XOR<ResourceAuditUpdateManyMutationInput, ResourceAuditUncheckedUpdateManyWithoutActorInput>
+  }
+
+  export type ResourceAuditScalarWhereInput = {
+    AND?: ResourceAuditScalarWhereInput | ResourceAuditScalarWhereInput[]
+    OR?: ResourceAuditScalarWhereInput[]
+    NOT?: ResourceAuditScalarWhereInput | ResourceAuditScalarWhereInput[]
+    id?: StringFilter<"ResourceAudit"> | string
+    resourceId?: StringFilter<"ResourceAudit"> | string
+    actorId?: StringFilter<"ResourceAudit"> | string
+    action?: EnumResourceAuditActionFilter<"ResourceAudit"> | $Enums.ResourceAuditAction
+    notes?: StringNullableFilter<"ResourceAudit"> | string | null
+    createdAt?: DateTimeFilter<"ResourceAudit"> | Date | string
+  }
+
+  export type UniversityMembershipUpsertWithWhereUniqueWithoutUserInput = {
+    where: UniversityMembershipWhereUniqueInput
+    update: XOR<UniversityMembershipUpdateWithoutUserInput, UniversityMembershipUncheckedUpdateWithoutUserInput>
+    create: XOR<UniversityMembershipCreateWithoutUserInput, UniversityMembershipUncheckedCreateWithoutUserInput>
+  }
+
+  export type UniversityMembershipUpdateWithWhereUniqueWithoutUserInput = {
+    where: UniversityMembershipWhereUniqueInput
+    data: XOR<UniversityMembershipUpdateWithoutUserInput, UniversityMembershipUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UniversityMembershipUpdateManyWithWhereWithoutUserInput = {
+    where: UniversityMembershipScalarWhereInput
+    data: XOR<UniversityMembershipUpdateManyMutationInput, UniversityMembershipUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UniversityMembershipScalarWhereInput = {
+    AND?: UniversityMembershipScalarWhereInput | UniversityMembershipScalarWhereInput[]
+    OR?: UniversityMembershipScalarWhereInput[]
+    NOT?: UniversityMembershipScalarWhereInput | UniversityMembershipScalarWhereInput[]
+    id?: StringFilter<"UniversityMembership"> | string
+    userId?: StringFilter<"UniversityMembership"> | string
+    universityId?: StringFilter<"UniversityMembership"> | string
+    role?: EnumUniversityRoleFilter<"UniversityMembership"> | $Enums.UniversityRole
+    createdAt?: DateTimeFilter<"UniversityMembership"> | Date | string
   }
 
   export type OpportunityUpsertWithWhereUniqueWithoutPostedByInput = {
@@ -24294,6 +29776,10 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -24324,6 +29810,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -24370,6 +29860,10 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -24400,6 +29894,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -24430,6 +29928,10 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -24460,6 +29962,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -24506,6 +30012,10 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -24536,6 +30046,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -24642,6 +30156,10 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -24672,6 +30190,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -24766,6 +30288,10 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -24796,6 +30322,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -24826,6 +30356,10 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -24856,6 +30390,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -24989,6 +30527,10 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -25019,6 +30561,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -25185,6 +30731,10 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -25215,6 +30765,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -25324,6 +30878,10 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -25354,6 +30912,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -25375,9 +30937,6 @@ export namespace Prisma {
     description?: string | null
     tags?: ResourceCreatetagsInput | string[]
     categories?: ResourceCreatecategoriesInput | string[]
-    universityCode?: string | null
-    departmentCode?: string | null
-    courseCode?: string | null
     fileName?: string | null
     fileSize?: number | null
     mimeType?: string | null
@@ -25389,12 +30948,20 @@ export namespace Prisma {
     version?: number
     downloads?: number
     rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    approvedAt?: Date | string | null
+    archivedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     publishedAt?: Date | string | null
     isArchived?: boolean
     parent?: ResourceCreateNestedOneWithoutChildrenInput
     uploadedBy?: UserCreateNestedOneWithoutResourcesInput
+    submittedBy?: UserCreateNestedOneWithoutSubmittedResourcesInput
+    approvedBy?: UserCreateNestedOneWithoutApprovedResourcesInput
+    university?: UniversityCreateNestedOneWithoutResourcesInput
+    audits?: ResourceAuditCreateNestedManyWithoutResourceInput
   }
 
   export type ResourceUncheckedCreateWithoutChildrenInput = {
@@ -25411,9 +30978,6 @@ export namespace Prisma {
     description?: string | null
     tags?: ResourceCreatetagsInput | string[]
     categories?: ResourceCreatecategoriesInput | string[]
-    universityCode?: string | null
-    departmentCode?: string | null
-    courseCode?: string | null
     fileName?: string | null
     fileSize?: number | null
     mimeType?: string | null
@@ -25425,11 +30989,19 @@ export namespace Prisma {
     version?: number
     downloads?: number
     rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    submittedById?: string | null
+    approvedById?: string | null
+    approvedAt?: Date | string | null
     uploadedById?: string | null
+    universityId?: string | null
+    archivedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     publishedAt?: Date | string | null
     isArchived?: boolean
+    audits?: ResourceAuditUncheckedCreateNestedManyWithoutResourceInput
   }
 
   export type ResourceCreateOrConnectWithoutChildrenInput = {
@@ -25450,9 +31022,6 @@ export namespace Prisma {
     description?: string | null
     tags?: ResourceCreatetagsInput | string[]
     categories?: ResourceCreatecategoriesInput | string[]
-    universityCode?: string | null
-    departmentCode?: string | null
-    courseCode?: string | null
     fileName?: string | null
     fileSize?: number | null
     mimeType?: string | null
@@ -25464,12 +31033,20 @@ export namespace Prisma {
     version?: number
     downloads?: number
     rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    approvedAt?: Date | string | null
+    archivedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     publishedAt?: Date | string | null
     isArchived?: boolean
     children?: ResourceCreateNestedManyWithoutParentInput
     uploadedBy?: UserCreateNestedOneWithoutResourcesInput
+    submittedBy?: UserCreateNestedOneWithoutSubmittedResourcesInput
+    approvedBy?: UserCreateNestedOneWithoutApprovedResourcesInput
+    university?: UniversityCreateNestedOneWithoutResourcesInput
+    audits?: ResourceAuditCreateNestedManyWithoutResourceInput
   }
 
   export type ResourceUncheckedCreateWithoutParentInput = {
@@ -25485,9 +31062,6 @@ export namespace Prisma {
     description?: string | null
     tags?: ResourceCreatetagsInput | string[]
     categories?: ResourceCreatecategoriesInput | string[]
-    universityCode?: string | null
-    departmentCode?: string | null
-    courseCode?: string | null
     fileName?: string | null
     fileSize?: number | null
     mimeType?: string | null
@@ -25499,12 +31073,20 @@ export namespace Prisma {
     version?: number
     downloads?: number
     rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    submittedById?: string | null
+    approvedById?: string | null
+    approvedAt?: Date | string | null
     uploadedById?: string | null
+    universityId?: string | null
+    archivedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     publishedAt?: Date | string | null
     isArchived?: boolean
     children?: ResourceUncheckedCreateNestedManyWithoutParentInput
+    audits?: ResourceAuditUncheckedCreateNestedManyWithoutResourceInput
   }
 
   export type ResourceCreateOrConnectWithoutParentInput = {
@@ -25538,6 +31120,10 @@ export namespace Prisma {
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -25568,6 +31154,10 @@ export namespace Prisma {
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -25580,6 +31170,205 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutResourcesInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutResourcesInput, UserUncheckedCreateWithoutResourcesInput>
+  }
+
+  export type UserCreateWithoutSubmittedResourcesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    Comments?: CommentCreateNestedManyWithoutAuthorInput
+    Likes?: LikeCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutSubmittedResourcesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutSubmittedResourcesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSubmittedResourcesInput, UserUncheckedCreateWithoutSubmittedResourcesInput>
+  }
+
+  export type UserCreateWithoutApprovedResourcesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    Comments?: CommentCreateNestedManyWithoutAuthorInput
+    Likes?: LikeCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutApprovedResourcesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutApprovedResourcesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutApprovedResourcesInput, UserUncheckedCreateWithoutApprovedResourcesInput>
+  }
+
+  export type UniversityCreateWithoutResourcesInput = {
+    id?: string
+    name: string
+    slug: string
+    logoUrl?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: UniversityMembershipCreateNestedManyWithoutUniversityInput
+  }
+
+  export type UniversityUncheckedCreateWithoutResourcesInput = {
+    id?: string
+    name: string
+    slug: string
+    logoUrl?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    memberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUniversityInput
+  }
+
+  export type UniversityCreateOrConnectWithoutResourcesInput = {
+    where: UniversityWhereUniqueInput
+    create: XOR<UniversityCreateWithoutResourcesInput, UniversityUncheckedCreateWithoutResourcesInput>
+  }
+
+  export type ResourceAuditCreateWithoutResourceInput = {
+    id?: string
+    action: $Enums.ResourceAuditAction
+    notes?: string | null
+    createdAt?: Date | string
+    actor: UserCreateNestedOneWithoutResourceAuditsInput
+  }
+
+  export type ResourceAuditUncheckedCreateWithoutResourceInput = {
+    id?: string
+    actorId: string
+    action: $Enums.ResourceAuditAction
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ResourceAuditCreateOrConnectWithoutResourceInput = {
+    where: ResourceAuditWhereUniqueInput
+    create: XOR<ResourceAuditCreateWithoutResourceInput, ResourceAuditUncheckedCreateWithoutResourceInput>
+  }
+
+  export type ResourceAuditCreateManyResourceInputEnvelope = {
+    data: ResourceAuditCreateManyResourceInput | ResourceAuditCreateManyResourceInput[]
+    skipDuplicates?: boolean
   }
 
   export type ResourceUpsertWithoutChildrenInput = {
@@ -25606,9 +31395,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
     categories?: ResourceUpdatecategoriesInput | string[]
-    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
-    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
     fileName?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25620,12 +31406,20 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
     downloads?: IntFieldUpdateOperationsInput | number
     rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isArchived?: BoolFieldUpdateOperationsInput | boolean
     parent?: ResourceUpdateOneWithoutChildrenNestedInput
     uploadedBy?: UserUpdateOneWithoutResourcesNestedInput
+    submittedBy?: UserUpdateOneWithoutSubmittedResourcesNestedInput
+    approvedBy?: UserUpdateOneWithoutApprovedResourcesNestedInput
+    university?: UniversityUpdateOneWithoutResourcesNestedInput
+    audits?: ResourceAuditUpdateManyWithoutResourceNestedInput
   }
 
   export type ResourceUncheckedUpdateWithoutChildrenInput = {
@@ -25642,9 +31436,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
     categories?: ResourceUpdatecategoriesInput | string[]
-    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
-    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
     fileName?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25656,11 +31447,19 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
     downloads?: IntFieldUpdateOperationsInput | number
     rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    submittedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    universityId?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+    audits?: ResourceAuditUncheckedUpdateManyWithoutResourceNestedInput
   }
 
   export type ResourceUpsertWithWhereUniqueWithoutParentInput = {
@@ -25711,6 +31510,10 @@ export namespace Prisma {
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -25741,6 +31544,903 @@ export namespace Prisma {
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUpsertWithoutSubmittedResourcesInput = {
+    update: XOR<UserUpdateWithoutSubmittedResourcesInput, UserUncheckedUpdateWithoutSubmittedResourcesInput>
+    create: XOR<UserCreateWithoutSubmittedResourcesInput, UserUncheckedCreateWithoutSubmittedResourcesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSubmittedResourcesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSubmittedResourcesInput, UserUncheckedUpdateWithoutSubmittedResourcesInput>
+  }
+
+  export type UserUpdateWithoutSubmittedResourcesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    Comments?: CommentUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSubmittedResourcesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUpsertWithoutApprovedResourcesInput = {
+    update: XOR<UserUpdateWithoutApprovedResourcesInput, UserUncheckedUpdateWithoutApprovedResourcesInput>
+    create: XOR<UserCreateWithoutApprovedResourcesInput, UserUncheckedCreateWithoutApprovedResourcesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutApprovedResourcesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutApprovedResourcesInput, UserUncheckedUpdateWithoutApprovedResourcesInput>
+  }
+
+  export type UserUpdateWithoutApprovedResourcesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    Comments?: CommentUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutApprovedResourcesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UniversityUpsertWithoutResourcesInput = {
+    update: XOR<UniversityUpdateWithoutResourcesInput, UniversityUncheckedUpdateWithoutResourcesInput>
+    create: XOR<UniversityCreateWithoutResourcesInput, UniversityUncheckedCreateWithoutResourcesInput>
+    where?: UniversityWhereInput
+  }
+
+  export type UniversityUpdateToOneWithWhereWithoutResourcesInput = {
+    where?: UniversityWhereInput
+    data: XOR<UniversityUpdateWithoutResourcesInput, UniversityUncheckedUpdateWithoutResourcesInput>
+  }
+
+  export type UniversityUpdateWithoutResourcesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: UniversityMembershipUpdateManyWithoutUniversityNestedInput
+  }
+
+  export type UniversityUncheckedUpdateWithoutResourcesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    memberships?: UniversityMembershipUncheckedUpdateManyWithoutUniversityNestedInput
+  }
+
+  export type ResourceAuditUpsertWithWhereUniqueWithoutResourceInput = {
+    where: ResourceAuditWhereUniqueInput
+    update: XOR<ResourceAuditUpdateWithoutResourceInput, ResourceAuditUncheckedUpdateWithoutResourceInput>
+    create: XOR<ResourceAuditCreateWithoutResourceInput, ResourceAuditUncheckedCreateWithoutResourceInput>
+  }
+
+  export type ResourceAuditUpdateWithWhereUniqueWithoutResourceInput = {
+    where: ResourceAuditWhereUniqueInput
+    data: XOR<ResourceAuditUpdateWithoutResourceInput, ResourceAuditUncheckedUpdateWithoutResourceInput>
+  }
+
+  export type ResourceAuditUpdateManyWithWhereWithoutResourceInput = {
+    where: ResourceAuditScalarWhereInput
+    data: XOR<ResourceAuditUpdateManyMutationInput, ResourceAuditUncheckedUpdateManyWithoutResourceInput>
+  }
+
+  export type UniversityMembershipCreateWithoutUniversityInput = {
+    id?: string
+    role: $Enums.UniversityRole
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutUniversityMembershipsInput
+  }
+
+  export type UniversityMembershipUncheckedCreateWithoutUniversityInput = {
+    id?: string
+    userId: string
+    role: $Enums.UniversityRole
+    createdAt?: Date | string
+  }
+
+  export type UniversityMembershipCreateOrConnectWithoutUniversityInput = {
+    where: UniversityMembershipWhereUniqueInput
+    create: XOR<UniversityMembershipCreateWithoutUniversityInput, UniversityMembershipUncheckedCreateWithoutUniversityInput>
+  }
+
+  export type UniversityMembershipCreateManyUniversityInputEnvelope = {
+    data: UniversityMembershipCreateManyUniversityInput | UniversityMembershipCreateManyUniversityInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ResourceCreateWithoutUniversityInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    approvedAt?: Date | string | null
+    archivedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    parent?: ResourceCreateNestedOneWithoutChildrenInput
+    children?: ResourceCreateNestedManyWithoutParentInput
+    uploadedBy?: UserCreateNestedOneWithoutResourcesInput
+    submittedBy?: UserCreateNestedOneWithoutSubmittedResourcesInput
+    approvedBy?: UserCreateNestedOneWithoutApprovedResourcesInput
+    audits?: ResourceAuditCreateNestedManyWithoutResourceInput
+  }
+
+  export type ResourceUncheckedCreateWithoutUniversityInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    parentId?: string | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    submittedById?: string | null
+    approvedById?: string | null
+    approvedAt?: Date | string | null
+    uploadedById?: string | null
+    archivedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    children?: ResourceUncheckedCreateNestedManyWithoutParentInput
+    audits?: ResourceAuditUncheckedCreateNestedManyWithoutResourceInput
+  }
+
+  export type ResourceCreateOrConnectWithoutUniversityInput = {
+    where: ResourceWhereUniqueInput
+    create: XOR<ResourceCreateWithoutUniversityInput, ResourceUncheckedCreateWithoutUniversityInput>
+  }
+
+  export type ResourceCreateManyUniversityInputEnvelope = {
+    data: ResourceCreateManyUniversityInput | ResourceCreateManyUniversityInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UniversityMembershipUpsertWithWhereUniqueWithoutUniversityInput = {
+    where: UniversityMembershipWhereUniqueInput
+    update: XOR<UniversityMembershipUpdateWithoutUniversityInput, UniversityMembershipUncheckedUpdateWithoutUniversityInput>
+    create: XOR<UniversityMembershipCreateWithoutUniversityInput, UniversityMembershipUncheckedCreateWithoutUniversityInput>
+  }
+
+  export type UniversityMembershipUpdateWithWhereUniqueWithoutUniversityInput = {
+    where: UniversityMembershipWhereUniqueInput
+    data: XOR<UniversityMembershipUpdateWithoutUniversityInput, UniversityMembershipUncheckedUpdateWithoutUniversityInput>
+  }
+
+  export type UniversityMembershipUpdateManyWithWhereWithoutUniversityInput = {
+    where: UniversityMembershipScalarWhereInput
+    data: XOR<UniversityMembershipUpdateManyMutationInput, UniversityMembershipUncheckedUpdateManyWithoutUniversityInput>
+  }
+
+  export type ResourceUpsertWithWhereUniqueWithoutUniversityInput = {
+    where: ResourceWhereUniqueInput
+    update: XOR<ResourceUpdateWithoutUniversityInput, ResourceUncheckedUpdateWithoutUniversityInput>
+    create: XOR<ResourceCreateWithoutUniversityInput, ResourceUncheckedCreateWithoutUniversityInput>
+  }
+
+  export type ResourceUpdateWithWhereUniqueWithoutUniversityInput = {
+    where: ResourceWhereUniqueInput
+    data: XOR<ResourceUpdateWithoutUniversityInput, ResourceUncheckedUpdateWithoutUniversityInput>
+  }
+
+  export type ResourceUpdateManyWithWhereWithoutUniversityInput = {
+    where: ResourceScalarWhereInput
+    data: XOR<ResourceUpdateManyMutationInput, ResourceUncheckedUpdateManyWithoutUniversityInput>
+  }
+
+  export type UserCreateWithoutUniversityMembershipsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    Comments?: CommentCreateNestedManyWithoutAuthorInput
+    Likes?: LikeCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUniversityMembershipsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUniversityMembershipsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUniversityMembershipsInput, UserUncheckedCreateWithoutUniversityMembershipsInput>
+  }
+
+  export type UniversityCreateWithoutMembershipsInput = {
+    id?: string
+    name: string
+    slug: string
+    logoUrl?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    resources?: ResourceCreateNestedManyWithoutUniversityInput
+  }
+
+  export type UniversityUncheckedCreateWithoutMembershipsInput = {
+    id?: string
+    name: string
+    slug: string
+    logoUrl?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    resources?: ResourceUncheckedCreateNestedManyWithoutUniversityInput
+  }
+
+  export type UniversityCreateOrConnectWithoutMembershipsInput = {
+    where: UniversityWhereUniqueInput
+    create: XOR<UniversityCreateWithoutMembershipsInput, UniversityUncheckedCreateWithoutMembershipsInput>
+  }
+
+  export type UserUpsertWithoutUniversityMembershipsInput = {
+    update: XOR<UserUpdateWithoutUniversityMembershipsInput, UserUncheckedUpdateWithoutUniversityMembershipsInput>
+    create: XOR<UserCreateWithoutUniversityMembershipsInput, UserUncheckedCreateWithoutUniversityMembershipsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUniversityMembershipsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUniversityMembershipsInput, UserUncheckedUpdateWithoutUniversityMembershipsInput>
+  }
+
+  export type UserUpdateWithoutUniversityMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    Comments?: CommentUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUniversityMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    Post?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UniversityUpsertWithoutMembershipsInput = {
+    update: XOR<UniversityUpdateWithoutMembershipsInput, UniversityUncheckedUpdateWithoutMembershipsInput>
+    create: XOR<UniversityCreateWithoutMembershipsInput, UniversityUncheckedCreateWithoutMembershipsInput>
+    where?: UniversityWhereInput
+  }
+
+  export type UniversityUpdateToOneWithWhereWithoutMembershipsInput = {
+    where?: UniversityWhereInput
+    data: XOR<UniversityUpdateWithoutMembershipsInput, UniversityUncheckedUpdateWithoutMembershipsInput>
+  }
+
+  export type UniversityUpdateWithoutMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resources?: ResourceUpdateManyWithoutUniversityNestedInput
+  }
+
+  export type UniversityUncheckedUpdateWithoutMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resources?: ResourceUncheckedUpdateManyWithoutUniversityNestedInput
+  }
+
+  export type ResourceCreateWithoutAuditsInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    approvedAt?: Date | string | null
+    archivedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    parent?: ResourceCreateNestedOneWithoutChildrenInput
+    children?: ResourceCreateNestedManyWithoutParentInput
+    uploadedBy?: UserCreateNestedOneWithoutResourcesInput
+    submittedBy?: UserCreateNestedOneWithoutSubmittedResourcesInput
+    approvedBy?: UserCreateNestedOneWithoutApprovedResourcesInput
+    university?: UniversityCreateNestedOneWithoutResourcesInput
+  }
+
+  export type ResourceUncheckedCreateWithoutAuditsInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    parentId?: string | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    submittedById?: string | null
+    approvedById?: string | null
+    approvedAt?: Date | string | null
+    uploadedById?: string | null
+    universityId?: string | null
+    archivedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+    children?: ResourceUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type ResourceCreateOrConnectWithoutAuditsInput = {
+    where: ResourceWhereUniqueInput
+    create: XOR<ResourceCreateWithoutAuditsInput, ResourceUncheckedCreateWithoutAuditsInput>
+  }
+
+  export type UserCreateWithoutResourceAuditsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
+    resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
+    Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    Comments?: CommentCreateNestedManyWithoutAuthorInput
+    Likes?: LikeCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    Post?: PostCreateNestedManyWithoutAuthorInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutResourceAuditsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified: boolean
+    image?: string | null
+    createdAt: Date | string
+    updatedAt: Date | string
+    bio?: string | null
+    location?: string | null
+    username?: string | null
+    department?: string | null
+    publications?: UserCreatepublicationsInput | string[]
+    researchFocus?: string | null
+    skills?: UserCreateskillsInput | string[]
+    university?: string | null
+    yearOfStudy?: string | null
+    role?: $Enums.Role
+    Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
+    groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
+    resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
+    Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    Post?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutResourceAuditsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutResourceAuditsInput, UserUncheckedCreateWithoutResourceAuditsInput>
+  }
+
+  export type ResourceUpsertWithoutAuditsInput = {
+    update: XOR<ResourceUpdateWithoutAuditsInput, ResourceUncheckedUpdateWithoutAuditsInput>
+    create: XOR<ResourceCreateWithoutAuditsInput, ResourceUncheckedCreateWithoutAuditsInput>
+    where?: ResourceWhereInput
+  }
+
+  export type ResourceUpdateToOneWithWhereWithoutAuditsInput = {
+    where?: ResourceWhereInput
+    data: XOR<ResourceUpdateWithoutAuditsInput, ResourceUncheckedUpdateWithoutAuditsInput>
+  }
+
+  export type ResourceUpdateWithoutAuditsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    parent?: ResourceUpdateOneWithoutChildrenNestedInput
+    children?: ResourceUpdateManyWithoutParentNestedInput
+    uploadedBy?: UserUpdateOneWithoutResourcesNestedInput
+    submittedBy?: UserUpdateOneWithoutSubmittedResourcesNestedInput
+    approvedBy?: UserUpdateOneWithoutApprovedResourcesNestedInput
+    university?: UniversityUpdateOneWithoutResourcesNestedInput
+  }
+
+  export type ResourceUncheckedUpdateWithoutAuditsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    submittedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    universityId?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    children?: ResourceUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type UserUpsertWithoutResourceAuditsInput = {
+    update: XOR<UserUpdateWithoutResourceAuditsInput, UserUncheckedUpdateWithoutResourceAuditsInput>
+    create: XOR<UserCreateWithoutResourceAuditsInput, UserUncheckedCreateWithoutResourceAuditsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutResourceAuditsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutResourceAuditsInput, UserUncheckedUpdateWithoutResourceAuditsInput>
+  }
+
+  export type UserUpdateWithoutResourceAuditsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
+    resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
+    Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    Comments?: CommentUpdateManyWithoutAuthorNestedInput
+    Likes?: LikeUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    Post?: PostUpdateManyWithoutAuthorNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutResourceAuditsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: NullableStringFieldUpdateOperationsInput | string | null
+    publications?: UserUpdatepublicationsInput | string[]
+    researchFocus?: NullableStringFieldUpdateOperationsInput | string | null
+    skills?: UserUpdateskillsInput | string[]
+    university?: NullableStringFieldUpdateOperationsInput | string | null
+    yearOfStudy?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
+    groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
+    resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -25771,6 +32471,10 @@ export namespace Prisma {
     Event?: EventCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -25801,6 +32505,10 @@ export namespace Prisma {
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -25869,6 +32577,10 @@ export namespace Prisma {
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -25899,6 +32611,10 @@ export namespace Prisma {
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -25966,6 +32682,10 @@ export namespace Prisma {
     Event?: EventCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -25996,6 +32716,10 @@ export namespace Prisma {
     Event?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -26069,6 +32793,10 @@ export namespace Prisma {
     Event?: EventUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -26099,6 +32827,10 @@ export namespace Prisma {
     Event?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -26129,6 +32861,10 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityCreateNestedManyWithoutPostedByInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
@@ -26159,6 +32895,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
     Opportunity?: OpportunityUncheckedCreateNestedManyWithoutPostedByInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
@@ -26205,6 +32945,10 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
@@ -26235,6 +32979,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
     Opportunity?: OpportunityUncheckedUpdateManyWithoutPostedByNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
@@ -26266,6 +33014,10 @@ export namespace Prisma {
     createdGroups?: GroupCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberCreateNestedManyWithoutUserInput
     resources?: ResourceCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
     Comments?: CommentCreateNestedManyWithoutAuthorInput
     Likes?: LikeCreateNestedManyWithoutUserInput
@@ -26296,6 +33048,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedCreateNestedManyWithoutCreatedByInput
     groupMemberships?: GroupMemberUncheckedCreateNestedManyWithoutUserInput
     resources?: ResourceUncheckedCreateNestedManyWithoutUploadedByInput
+    submittedResources?: ResourceUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedResources?: ResourceUncheckedCreateNestedManyWithoutApprovedByInput
+    resourceAudits?: ResourceAuditUncheckedCreateNestedManyWithoutActorInput
+    universityMemberships?: UniversityMembershipUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     Comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     Likes?: LikeUncheckedCreateNestedManyWithoutUserInput
@@ -26342,6 +33098,10 @@ export namespace Prisma {
     createdGroups?: GroupUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUpdateManyWithoutUserNestedInput
     resources?: ResourceUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
     Comments?: CommentUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUpdateManyWithoutUserNestedInput
@@ -26372,6 +33132,10 @@ export namespace Prisma {
     createdGroups?: GroupUncheckedUpdateManyWithoutCreatedByNestedInput
     groupMemberships?: GroupMemberUncheckedUpdateManyWithoutUserNestedInput
     resources?: ResourceUncheckedUpdateManyWithoutUploadedByNestedInput
+    submittedResources?: ResourceUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedResources?: ResourceUncheckedUpdateManyWithoutApprovedByNestedInput
+    resourceAudits?: ResourceAuditUncheckedUpdateManyWithoutActorNestedInput
+    universityMemberships?: UniversityMembershipUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     Comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     Likes?: LikeUncheckedUpdateManyWithoutUserNestedInput
@@ -26416,9 +33180,6 @@ export namespace Prisma {
     description?: string | null
     tags?: ResourceCreatetagsInput | string[]
     categories?: ResourceCreatecategoriesInput | string[]
-    universityCode?: string | null
-    departmentCode?: string | null
-    courseCode?: string | null
     fileName?: string | null
     fileSize?: number | null
     mimeType?: string | null
@@ -26430,10 +33191,108 @@ export namespace Prisma {
     version?: number
     downloads?: number
     rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    submittedById?: string | null
+    approvedById?: string | null
+    approvedAt?: Date | string | null
+    universityId?: string | null
+    archivedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     publishedAt?: Date | string | null
     isArchived?: boolean
+  }
+
+  export type ResourceCreateManySubmittedByInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    parentId?: string | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    approvedById?: string | null
+    approvedAt?: Date | string | null
+    uploadedById?: string | null
+    universityId?: string | null
+    archivedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+  }
+
+  export type ResourceCreateManyApprovedByInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    parentId?: string | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    submittedById?: string | null
+    approvedAt?: Date | string | null
+    uploadedById?: string | null
+    universityId?: string | null
+    archivedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+  }
+
+  export type ResourceAuditCreateManyActorInput = {
+    id?: string
+    resourceId: string
+    action: $Enums.ResourceAuditAction
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type UniversityMembershipCreateManyUserInput = {
+    id?: string
+    universityId: string
+    role: $Enums.UniversityRole
+    createdAt?: Date | string
   }
 
   export type OpportunityCreateManyPostedByInput = {
@@ -26608,9 +33467,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
     categories?: ResourceUpdatecategoriesInput | string[]
-    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
-    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
     fileName?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26622,12 +33478,20 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
     downloads?: IntFieldUpdateOperationsInput | number
     rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isArchived?: BoolFieldUpdateOperationsInput | boolean
     parent?: ResourceUpdateOneWithoutChildrenNestedInput
     children?: ResourceUpdateManyWithoutParentNestedInput
+    submittedBy?: UserUpdateOneWithoutSubmittedResourcesNestedInput
+    approvedBy?: UserUpdateOneWithoutApprovedResourcesNestedInput
+    university?: UniversityUpdateOneWithoutResourcesNestedInput
+    audits?: ResourceAuditUpdateManyWithoutResourceNestedInput
   }
 
   export type ResourceUncheckedUpdateWithoutUploadedByInput = {
@@ -26644,9 +33508,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
     categories?: ResourceUpdatecategoriesInput | string[]
-    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
-    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
     fileName?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26658,11 +33519,19 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
     downloads?: IntFieldUpdateOperationsInput | number
     rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    submittedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    universityId?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isArchived?: BoolFieldUpdateOperationsInput | boolean
     children?: ResourceUncheckedUpdateManyWithoutParentNestedInput
+    audits?: ResourceAuditUncheckedUpdateManyWithoutResourceNestedInput
   }
 
   export type ResourceUncheckedUpdateManyWithoutUploadedByInput = {
@@ -26679,9 +33548,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
     categories?: ResourceUpdatecategoriesInput | string[]
-    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
-    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
     fileName?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26693,10 +33559,298 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
     downloads?: IntFieldUpdateOperationsInput | number
     rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    submittedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    universityId?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isArchived?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ResourceUpdateWithoutSubmittedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    parent?: ResourceUpdateOneWithoutChildrenNestedInput
+    children?: ResourceUpdateManyWithoutParentNestedInput
+    uploadedBy?: UserUpdateOneWithoutResourcesNestedInput
+    approvedBy?: UserUpdateOneWithoutApprovedResourcesNestedInput
+    university?: UniversityUpdateOneWithoutResourcesNestedInput
+    audits?: ResourceAuditUpdateManyWithoutResourceNestedInput
+  }
+
+  export type ResourceUncheckedUpdateWithoutSubmittedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    universityId?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    children?: ResourceUncheckedUpdateManyWithoutParentNestedInput
+    audits?: ResourceAuditUncheckedUpdateManyWithoutResourceNestedInput
+  }
+
+  export type ResourceUncheckedUpdateManyWithoutSubmittedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    universityId?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ResourceUpdateWithoutApprovedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    parent?: ResourceUpdateOneWithoutChildrenNestedInput
+    children?: ResourceUpdateManyWithoutParentNestedInput
+    uploadedBy?: UserUpdateOneWithoutResourcesNestedInput
+    submittedBy?: UserUpdateOneWithoutSubmittedResourcesNestedInput
+    university?: UniversityUpdateOneWithoutResourcesNestedInput
+    audits?: ResourceAuditUpdateManyWithoutResourceNestedInput
+  }
+
+  export type ResourceUncheckedUpdateWithoutApprovedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    submittedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    universityId?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    children?: ResourceUncheckedUpdateManyWithoutParentNestedInput
+    audits?: ResourceAuditUncheckedUpdateManyWithoutResourceNestedInput
+  }
+
+  export type ResourceUncheckedUpdateManyWithoutApprovedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    submittedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    universityId?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ResourceAuditUpdateWithoutActorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: EnumResourceAuditActionFieldUpdateOperationsInput | $Enums.ResourceAuditAction
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resource?: ResourceUpdateOneRequiredWithoutAuditsNestedInput
+  }
+
+  export type ResourceAuditUncheckedUpdateWithoutActorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    action?: EnumResourceAuditActionFieldUpdateOperationsInput | $Enums.ResourceAuditAction
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResourceAuditUncheckedUpdateManyWithoutActorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    action?: EnumResourceAuditActionFieldUpdateOperationsInput | $Enums.ResourceAuditAction
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityMembershipUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumUniversityRoleFieldUpdateOperationsInput | $Enums.UniversityRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    university?: UniversityUpdateOneRequiredWithoutMembershipsNestedInput
+  }
+
+  export type UniversityMembershipUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    universityId?: StringFieldUpdateOperationsInput | string
+    role?: EnumUniversityRoleFieldUpdateOperationsInput | $Enums.UniversityRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityMembershipUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    universityId?: StringFieldUpdateOperationsInput | string
+    role?: EnumUniversityRoleFieldUpdateOperationsInput | $Enums.UniversityRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OpportunityUpdateWithoutPostedByInput = {
@@ -27123,9 +34277,6 @@ export namespace Prisma {
     description?: string | null
     tags?: ResourceCreatetagsInput | string[]
     categories?: ResourceCreatecategoriesInput | string[]
-    universityCode?: string | null
-    departmentCode?: string | null
-    courseCode?: string | null
     fileName?: string | null
     fileSize?: number | null
     mimeType?: string | null
@@ -27137,11 +34288,26 @@ export namespace Prisma {
     version?: number
     downloads?: number
     rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    submittedById?: string | null
+    approvedById?: string | null
+    approvedAt?: Date | string | null
     uploadedById?: string | null
+    universityId?: string | null
+    archivedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     publishedAt?: Date | string | null
     isArchived?: boolean
+  }
+
+  export type ResourceAuditCreateManyResourceInput = {
+    id?: string
+    actorId: string
+    action: $Enums.ResourceAuditAction
+    notes?: string | null
+    createdAt?: Date | string
   }
 
   export type ResourceUpdateWithoutParentInput = {
@@ -27157,9 +34323,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
     categories?: ResourceUpdatecategoriesInput | string[]
-    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
-    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
     fileName?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27171,12 +34334,20 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
     downloads?: IntFieldUpdateOperationsInput | number
     rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isArchived?: BoolFieldUpdateOperationsInput | boolean
     children?: ResourceUpdateManyWithoutParentNestedInput
     uploadedBy?: UserUpdateOneWithoutResourcesNestedInput
+    submittedBy?: UserUpdateOneWithoutSubmittedResourcesNestedInput
+    approvedBy?: UserUpdateOneWithoutApprovedResourcesNestedInput
+    university?: UniversityUpdateOneWithoutResourcesNestedInput
+    audits?: ResourceAuditUpdateManyWithoutResourceNestedInput
   }
 
   export type ResourceUncheckedUpdateWithoutParentInput = {
@@ -27192,9 +34363,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
     categories?: ResourceUpdatecategoriesInput | string[]
-    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
-    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
     fileName?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27206,12 +34374,20 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
     downloads?: IntFieldUpdateOperationsInput | number
     rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    submittedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    universityId?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isArchived?: BoolFieldUpdateOperationsInput | boolean
     children?: ResourceUncheckedUpdateManyWithoutParentNestedInput
+    audits?: ResourceAuditUncheckedUpdateManyWithoutResourceNestedInput
   }
 
   export type ResourceUncheckedUpdateManyWithoutParentInput = {
@@ -27227,9 +34403,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ResourceUpdatetagsInput | string[]
     categories?: ResourceUpdatecategoriesInput | string[]
-    universityCode?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentCode?: NullableStringFieldUpdateOperationsInput | string | null
-    courseCode?: NullableStringFieldUpdateOperationsInput | string | null
     fileName?: NullableStringFieldUpdateOperationsInput | string | null
     fileSize?: NullableIntFieldUpdateOperationsInput | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27241,7 +34414,222 @@ export namespace Prisma {
     version?: IntFieldUpdateOperationsInput | number
     downloads?: IntFieldUpdateOperationsInput | number
     rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    submittedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    universityId?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ResourceAuditUpdateWithoutResourceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: EnumResourceAuditActionFieldUpdateOperationsInput | $Enums.ResourceAuditAction
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    actor?: UserUpdateOneRequiredWithoutResourceAuditsNestedInput
+  }
+
+  export type ResourceAuditUncheckedUpdateWithoutResourceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actorId?: StringFieldUpdateOperationsInput | string
+    action?: EnumResourceAuditActionFieldUpdateOperationsInput | $Enums.ResourceAuditAction
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResourceAuditUncheckedUpdateManyWithoutResourceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actorId?: StringFieldUpdateOperationsInput | string
+    action?: EnumResourceAuditActionFieldUpdateOperationsInput | $Enums.ResourceAuditAction
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityMembershipCreateManyUniversityInput = {
+    id?: string
+    userId: string
+    role: $Enums.UniversityRole
+    createdAt?: Date | string
+  }
+
+  export type ResourceCreateManyUniversityInput = {
+    id?: string
+    name: string
+    slug: string
+    nodeType: $Enums.ResourceNodeType
+    folderKind?: $Enums.ResourceFolderKind | null
+    mediaType?: $Enums.ResourceMediaType | null
+    parentId?: string | null
+    depth?: number
+    sortOrder?: number
+    canonicalPath: string
+    description?: string | null
+    tags?: ResourceCreatetagsInput | string[]
+    categories?: ResourceCreatecategoriesInput | string[]
+    fileName?: string | null
+    fileSize?: number | null
+    mimeType?: string | null
+    storageKey?: string | null
+    downloadUrl?: string | null
+    externalUrl?: string | null
+    previewUrl?: string | null
+    checksum?: string | null
+    version?: number
+    downloads?: number
+    rating?: number
+    status?: $Enums.ResourceStatus
+    reviewNote?: string | null
+    submittedById?: string | null
+    approvedById?: string | null
+    approvedAt?: Date | string | null
+    uploadedById?: string | null
+    archivedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    publishedAt?: Date | string | null
+    isArchived?: boolean
+  }
+
+  export type UniversityMembershipUpdateWithoutUniversityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumUniversityRoleFieldUpdateOperationsInput | $Enums.UniversityRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutUniversityMembershipsNestedInput
+  }
+
+  export type UniversityMembershipUncheckedUpdateWithoutUniversityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    role?: EnumUniversityRoleFieldUpdateOperationsInput | $Enums.UniversityRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UniversityMembershipUncheckedUpdateManyWithoutUniversityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    role?: EnumUniversityRoleFieldUpdateOperationsInput | $Enums.UniversityRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ResourceUpdateWithoutUniversityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    parent?: ResourceUpdateOneWithoutChildrenNestedInput
+    children?: ResourceUpdateManyWithoutParentNestedInput
+    uploadedBy?: UserUpdateOneWithoutResourcesNestedInput
+    submittedBy?: UserUpdateOneWithoutSubmittedResourcesNestedInput
+    approvedBy?: UserUpdateOneWithoutApprovedResourcesNestedInput
+    audits?: ResourceAuditUpdateManyWithoutResourceNestedInput
+  }
+
+  export type ResourceUncheckedUpdateWithoutUniversityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    submittedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isArchived?: BoolFieldUpdateOperationsInput | boolean
+    children?: ResourceUncheckedUpdateManyWithoutParentNestedInput
+    audits?: ResourceAuditUncheckedUpdateManyWithoutResourceNestedInput
+  }
+
+  export type ResourceUncheckedUpdateManyWithoutUniversityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    nodeType?: EnumResourceNodeTypeFieldUpdateOperationsInput | $Enums.ResourceNodeType
+    folderKind?: NullableEnumResourceFolderKindFieldUpdateOperationsInput | $Enums.ResourceFolderKind | null
+    mediaType?: NullableEnumResourceMediaTypeFieldUpdateOperationsInput | $Enums.ResourceMediaType | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    depth?: IntFieldUpdateOperationsInput | number
+    sortOrder?: IntFieldUpdateOperationsInput | number
+    canonicalPath?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ResourceUpdatetagsInput | string[]
+    categories?: ResourceUpdatecategoriesInput | string[]
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableIntFieldUpdateOperationsInput | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    storageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    downloadUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    externalUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    previewUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    checksum?: NullableStringFieldUpdateOperationsInput | string | null
+    version?: IntFieldUpdateOperationsInput | number
+    downloads?: IntFieldUpdateOperationsInput | number
+    rating?: FloatFieldUpdateOperationsInput | number
+    status?: EnumResourceStatusFieldUpdateOperationsInput | $Enums.ResourceStatus
+    reviewNote?: NullableStringFieldUpdateOperationsInput | string | null
+    submittedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    uploadedById?: NullableStringFieldUpdateOperationsInput | string | null
+    archivedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

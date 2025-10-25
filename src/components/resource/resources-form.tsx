@@ -19,14 +19,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import type { ResourceNode } from "./tree";
+import { ResourceMediaType } from "@/generated/prisma";
 
 const resourceSchema = z.object({
-  title: z.string().min(2, "Title is required"),
-  description: z.string().min(5, "Description is required"),
-  // Free-text inputs; always required as string (default to empty)
+  name: z.string().min(2, "Name is required"),
+  description: z.string().default("").catch(""),
   categoriesText: z.string().default("").catch(""),
   tagsText: z.string().default("").catch(""),
-  author: z.string().min(2, "Author is required"),
   downloadUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
   externalUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")),
 });
@@ -35,20 +35,29 @@ type ResourceFormInput = z.input<typeof resourceSchema>;
 type ResourceFormValues = z.output<typeof resourceSchema>;
 
 type ResourceFormProps = {
+  parentNode: ResourceNode | null | undefined;
   onSubmit?: (created: any) => void;
   onCancel?: () => void;
   className?: string;
 };
 
-export function ResourceForm({ onSubmit, onCancel, className }: ResourceFormProps) {
+type UploadInfo = {
+  downloadUrl: string;
+  fileName: string;
+  fileSize: number;
+  mimeType: string;
+  storageKey?: string;
+  mediaType?: ResourceMediaType;
+};
+
+export function ResourceForm({ parentNode, onSubmit, onCancel, className }: ResourceFormProps) {
   const form = useForm<ResourceFormInput, any, ResourceFormValues>({
     resolver: zodResolver(resourceSchema),
     defaultValues: {
-      title: "",
+      name: "",
       description: "",
       categoriesText: "",
       tagsText: "",
-      author: "",
       downloadUrl: "",
       externalUrl: "",
     },
@@ -57,6 +66,7 @@ export function ResourceForm({ onSubmit, onCancel, className }: ResourceFormProp
   const [uploading, setUploading] = React.useState(false);
   const [submitting, setSubmitting] = React.useState(false);
   const [fileName, setFileName] = React.useState<string>("");
+  const [uploadInfo, setUploadInfo] = React.useState<UploadInfo | null>(null);
 
   const uploadToS3 = async (file: File) => {
     const fd = new FormData();
@@ -84,11 +94,22 @@ export function ResourceForm({ onSubmit, onCancel, className }: ResourceFormProp
       setFileName(file.name);
       const url = await uploadToS3(file);
       form.setValue("downloadUrl", url, { shouldDirty: true, shouldValidate: true });
+      const storageKey = extractStorageKey(url);
+      const mediaType = detectMediaType(file.type);
+      setUploadInfo({
+        downloadUrl: url,
+        fileName: file.name,
+        fileSize: file.size,
+        mimeType: file.type || "application/octet-stream",
+        storageKey,
+        mediaType,
+      });
       toast.success("File uploaded");
       return url;
     } catch (err: any) {
       toast.error(err?.message || "Upload failed");
       setFileName("");
+      setUploadInfo(null);
       throw err;
     } finally {
       setUploading(false);
@@ -98,9 +119,13 @@ export function ResourceForm({ onSubmit, onCancel, className }: ResourceFormProp
   const submitToApi = async (values: ResourceFormValues) => {
     setSubmitting(true);
     try {
-      // Model requires downloadUrl
-      if (!values.downloadUrl) {
-        throw new Error("Please upload a file or provide a Download URL");
+      if (!parentNode || parentNode.nodeType !== "FOLDER") {
+        throw new Error("Select a folder to upload into.");
+      }
+
+      const downloadUrl = (values.downloadUrl || uploadInfo?.downloadUrl || "").trim();
+      if (!downloadUrl) {
+        throw new Error("Please upload a file or provide a download URL");
       }
 
       const categories = values.categoriesText
@@ -111,13 +136,20 @@ export function ResourceForm({ onSubmit, onCancel, className }: ResourceFormProp
         : [];
 
       const payload = {
-        title: values.title,
-        description: values.description,
+        name: values.name,
+        description: values.description?.trim() || undefined,
         categories,
         tags,
-        author: values.author,
-        downloadUrl: values.downloadUrl,
-        externalUrl: values.externalUrl || undefined,
+        parentId: parentNode.id,
+        universityId: parentNode.universityId ?? undefined,
+        nodeType: "FILE",
+        downloadUrl,
+        externalUrl: values.externalUrl?.trim() || undefined,
+        fileName: uploadInfo?.fileName || inferFileName(downloadUrl),
+        fileSize: uploadInfo?.fileSize ?? undefined,
+        mimeType: uploadInfo?.mimeType ?? undefined,
+        mediaType: uploadInfo?.mediaType ?? undefined,
+        storageKey: uploadInfo?.storageKey ?? undefined,
       };
 
       const res = await fetch("/api/resources", {
@@ -133,15 +165,15 @@ export function ResourceForm({ onSubmit, onCancel, className }: ResourceFormProp
       onSubmit?.(data);
 
       form.reset({
-        title: "",
+        name: "",
         description: "",
         categoriesText: "",
         tagsText: "",
-        author: "",
         downloadUrl: "",
         externalUrl: "",
       });
       setFileName("");
+      setUploadInfo(null);
     } catch (err: any) {
       toast.error(err?.message || "Error creating resource");
     } finally {
@@ -153,7 +185,10 @@ export function ResourceForm({ onSubmit, onCancel, className }: ResourceFormProp
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(submitToApi)}
-        className={cn("space-y-6 max-w-md mx-auto bg-muted/30 p-6 rounded-lg", className)}
+        className={cn(
+          "space-y-6 max-w-md mx-auto bg-muted/30 p-6 rounded-lg max-h-[70vh] overflow-y-auto",
+          className
+        )}
       >
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold">Create Resource</h3>
@@ -164,14 +199,27 @@ export function ResourceForm({ onSubmit, onCancel, className }: ResourceFormProp
           )}
         </div>
 
+        {parentNode ? (
+          <div className="rounded-md border border-dashed border-border/60 bg-background/60 px-3 py-2 text-xs text-muted-foreground">
+            Uploading into <span className="font-medium text-foreground">{parentNode.name}</span>
+            {parentNode.canonicalPath ? (
+              <span className="ml-2 text-[11px] text-muted-foreground/80">{parentNode.canonicalPath}</span>
+            ) : null}
+          </div>
+        ) : (
+          <div className="rounded-md border border-amber-400/60 bg-amber-50 px-3 py-2 text-xs text-amber-600">
+            Select a folder first to enable uploads.
+          </div>
+        )}
+
         <FormField
           control={form.control}
-          name="title"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="React Hooks Guide" {...field} />
+                <Input placeholder="Circuit Theory Lab Manual" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -186,7 +234,7 @@ export function ResourceForm({ onSubmit, onCancel, className }: ResourceFormProp
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="A comprehensive guide with practical examples and best practices."
+                  placeholder="Provide context for reviewers and learners"
                   rows={4}
                   {...field}
                 />
@@ -228,20 +276,6 @@ export function ResourceForm({ onSubmit, onCancel, className }: ResourceFormProp
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="author"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Author</FormLabel>
-              <FormControl>
-                <Input placeholder="Tech Academy" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         {/* File upload (to S3) */}
         <div className="space-y-2">
           <FormLabel>Upload File (creates Download URL)</FormLabel>
@@ -252,9 +286,14 @@ export function ResourceForm({ onSubmit, onCancel, className }: ResourceFormProp
               const file = e.target.files?.[0];
               if (file) await handleFilePick(file);
             }}
-            disabled={uploading || submitting}
+            disabled={uploading || submitting || !parentNode}
           />
           {fileName ? <p className="text-sm text-muted-foreground">Uploaded: {fileName}</p> : null}
+          {uploadInfo?.mediaType ? (
+            <p className="text-xs text-muted-foreground">
+              Detected type: {uploadInfo.mediaType.toLowerCase()}
+            </p>
+          ) : null}
         </div>
 
         {/* Manual Download URL (optional if uploaded above) */}
@@ -287,10 +326,45 @@ export function ResourceForm({ onSubmit, onCancel, className }: ResourceFormProp
           )}
         />
 
-        <Button type="submit" className="w-full" disabled={submitting || uploading}>
+        <Button type="submit" className="w-full" disabled={submitting || uploading || !parentNode}>
           {submitting ? "Creating..." : uploading ? "Uploading..." : "Create Resource"}
         </Button>
       </form>
     </Form>
   );
+}
+
+function extractStorageKey(url: string) {
+  try {
+    const { pathname } = new URL(url);
+    return pathname.replace(/^\//, "");
+  } catch {
+    return undefined;
+  }
+}
+
+function inferFileName(url: string) {
+  try {
+    const { pathname } = new URL(url);
+    const parts = pathname.split("/");
+    return parts[parts.length - 1] || undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function detectMediaType(mimeType: string | undefined | null): ResourceMediaType | undefined {
+  if (!mimeType) return undefined;
+  if (mimeType.startsWith("image/")) return ResourceMediaType.IMAGE;
+  if (mimeType.startsWith("video/")) return ResourceMediaType.VIDEO;
+  if (
+    mimeType === "application/pdf" ||
+    mimeType.includes("word") ||
+    mimeType.includes("text") ||
+    mimeType.includes("presentation") ||
+    mimeType.includes("sheet")
+  ) {
+    return ResourceMediaType.DOCUMENT;
+  }
+  return ResourceMediaType.OTHER;
 }
