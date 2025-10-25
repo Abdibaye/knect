@@ -25,34 +25,38 @@ model Notification {
 }
 
 model User {
-  id               String         @id
-  name             String
-  email            String         @unique
-  emailVerified    Boolean
-  image            String?
-  createdAt        DateTime
-  updatedAt        DateTime
-  bio              String?
-  location         String?
-  username         String?
-  department       String?
-  publications     String[]       @default([])
-  researchFocus    String?
-  skills           String[]       @default([])
-  university       String?
-  yearOfStudy      String?
-  role             Role           @default(STUDENT)
-  Event            Event[]
-  createdGroups    Group[]        @relation("UserCreatedGroups")
-  groupMemberships GroupMember[]  @relation("UserGroupMemberships")
-  resources        Resource[]     @relation("UserResources")
-  Opportunity      Opportunity[]
-  accounts         Account[]
-  Comments         Comment[]
-  Likes            Like[]
-  notifications    Notification[]
-  Post             Post[]
-  sessions         Session[]
+  id                    String                 @id
+  name                  String
+  email                 String                 @unique
+  emailVerified         Boolean
+  image                 String?
+  createdAt             DateTime
+  updatedAt             DateTime
+  bio                   String?
+  location              String?
+  username              String?
+  department            String?
+  publications          String[]               @default([])
+  researchFocus         String?
+  skills                String[]               @default([])
+  university            String?
+  yearOfStudy           String?
+  role                  Role                   @default(STUDENT)
+  Event                 Event[]
+  createdGroups         Group[]                @relation("UserCreatedGroups")
+  groupMemberships      GroupMember[]          @relation("UserGroupMemberships")
+  resources             Resource[]             @relation("UserResources")
+  submittedResources    Resource[]             @relation("ResourceSubmittedBy")
+  approvedResources     Resource[]             @relation("ResourceApprovedBy")
+  resourceAudits        ResourceAudit[]        @relation("ResourceAuditActor")
+  universityMemberships UniversityMembership[]
+  Opportunity           Opportunity[]
+  accounts              Account[]
+  Comments              Comment[]
+  Likes                 Like[]
+  notifications         Notification[]
+  Post                  Post[]
+  sessions              Session[]
 
   @@map("user")
 }
@@ -156,41 +160,49 @@ model Like {
 }
 
 model Resource {
-  id             String              @id @default(cuid())
-  name           String
-  slug           String
-  nodeType       ResourceNodeType
-  folderKind     ResourceFolderKind?
-  mediaType      ResourceMediaType?
-  parentId       String?
-  parent         Resource?           @relation("ResourceHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
-  children       Resource[]          @relation("ResourceHierarchy")
-  depth          Int                 @default(0)
-  sortOrder      Int                 @default(0)
-  canonicalPath  String
-  description    String?
-  tags           String[]            @default([])
-  categories     String[]            @default([])
-  universityCode String?
-  departmentCode String?
-  courseCode     String?
-  fileName       String?
-  fileSize       Int?
-  mimeType       String?
-  storageKey     String?
-  downloadUrl    String?
-  externalUrl    String?
-  previewUrl     String?
-  checksum       String?
-  version        Int                 @default(1)
-  downloads      Int                 @default(0)
-  rating         Float               @default(0)
-  uploadedById   String?
-  createdAt      DateTime            @default(now())
-  updatedAt      DateTime            @updatedAt
-  publishedAt    DateTime?
-  isArchived     Boolean             @default(false)
-  uploadedBy     User?               @relation("UserResources", fields: [uploadedById], references: [id])
+  id            String              @id @default(cuid())
+  name          String
+  slug          String
+  nodeType      ResourceNodeType
+  folderKind    ResourceFolderKind?
+  mediaType     ResourceMediaType?
+  parentId      String?
+  parent        Resource?           @relation("ResourceHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children      Resource[]          @relation("ResourceHierarchy")
+  depth         Int                 @default(0)
+  sortOrder     Int                 @default(0)
+  canonicalPath String
+  description   String?
+  tags          String[]            @default([])
+  categories    String[]            @default([])
+  fileName      String?
+  fileSize      Int?
+  mimeType      String?
+  storageKey    String?
+  downloadUrl   String?
+  externalUrl   String?
+  previewUrl    String?
+  checksum      String?
+  version       Int                 @default(1)
+  downloads     Int                 @default(0)
+  rating        Float               @default(0)
+  status        ResourceStatus      @default(PENDING)
+  reviewNote    String?
+  submittedById String?
+  approvedById  String?
+  approvedAt    DateTime?
+  uploadedById  String?
+  universityId  String?
+  archivedAt    DateTime?
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  publishedAt   DateTime?
+  isArchived    Boolean             @default(false)
+  uploadedBy    User?               @relation("UserResources", fields: [uploadedById], references: [id])
+  submittedBy   User?               @relation("ResourceSubmittedBy", fields: [submittedById], references: [id])
+  approvedBy    User?               @relation("ResourceApprovedBy", fields: [approvedById], references: [id])
+  university    University?         @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  audits        ResourceAudit[]
 
   @@unique([parentId, slug])
   @@unique([canonicalPath])
@@ -198,8 +210,53 @@ model Resource {
   @@index([folderKind])
   @@index([mediaType])
   @@index([parentId])
-  @@index([universityCode])
+  @@index([status])
+  @@index([universityId])
   @@map("resource")
+}
+
+model University {
+  id          String                 @id @default(cuid())
+  name        String
+  slug        String                 @unique
+  logoUrl     String?
+  metadata    Json?
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+  memberships UniversityMembership[]
+  resources   Resource[]
+
+  @@map("university")
+}
+
+model UniversityMembership {
+  id           String         @id @default(cuid())
+  userId       String
+  universityId String
+  role         UniversityRole
+  createdAt    DateTime       @default(now())
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  university   University     @relation(fields: [universityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, universityId])
+  @@index([universityId])
+  @@index([role])
+  @@map("university_membership")
+}
+
+model ResourceAudit {
+  id         String              @id @default(cuid())
+  resourceId String
+  actorId    String
+  action     ResourceAuditAction
+  notes      String?
+  createdAt  DateTime            @default(now())
+  resource   Resource            @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  actor      User                @relation("ResourceAuditActor", fields: [actorId], references: [id], onDelete: Cascade)
+
+  @@index([resourceId])
+  @@index([actorId])
+  @@map("resource_audit")
 }
 
 model Group {
@@ -238,11 +295,24 @@ enum Role {
   TEACHER
 }
 
+enum UniversityRole {
+  ADMIN
+  CONTRIBUTOR
+  VIEWER
+}
+
 enum PostCategory {
   GENERAL
   QUESTION
   OPPORTUNITY
   EVENT
+}
+
+enum ResourceStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  ARCHIVED
 }
 
 enum ResourceNodeType {
@@ -262,6 +332,14 @@ enum ResourceMediaType {
   IMAGE
   VIDEO
   OTHER
+}
+
+enum ResourceAuditAction {
+  SUBMITTED
+  APPROVED
+  REJECTED
+  ARCHIVED
+  RESTORED
 }
 
 model Opportunity {
