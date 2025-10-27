@@ -23,6 +23,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { LoaderThree, LoaderTwo } from "@/components/ui/loader";
 import {
   Dialog,
   DialogContent,
@@ -402,10 +403,11 @@ export default function ResourcePage() {
                 </Button>
               </div>
             ) : loading ? (
-              <div className="grid gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <Skeleton key={index.toString()} className="h-36 w-full" />
-                ))}
+              <div className="flex h-full min-h-[320px] flex-col items-center justify-center gap-4 p-6 text-center">
+                <LoaderTwo />
+                <p className="text-sm text-muted-foreground">
+                  Loading university repository…
+                </p>
               </div>
             ) : previewItems.length ? (
               <div className="grid gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
