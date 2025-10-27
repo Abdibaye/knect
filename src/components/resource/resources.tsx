@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   TreeExpander,
   TreeIcon,
@@ -34,6 +34,7 @@ import {
 import { useResources } from "@/hooks/use-resources";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 import {
   FileArchive,
   FileText,
@@ -192,6 +193,28 @@ export default function ResourcePage() {
     }
     return [activeNode];
   }, [activeNode]);
+
+  const handleResourceActivate = useCallback(
+    (resource: ResourceNode) => {
+      setSelectedIds([resource.id]);
+      if (resource.nodeType === "FOLDER") {
+        return;
+      }
+
+      const downloadUrl = typeof resource.downloadUrl === "string" ? resource.downloadUrl.trim() : "";
+      const externalUrl = typeof resource.externalUrl === "string" ? resource.externalUrl.trim() : "";
+      const targetUrl = downloadUrl || externalUrl;
+
+      if (!targetUrl) {
+        toast.error("No link available for this file yet.");
+        return;
+      }
+
+      const opened = window.open(targetUrl, "_blank", "noopener,noreferrer");
+      
+    },
+    [setSelectedIds],
+  );
 
   const canCreateFolder = useMemo(() => {
     if (!activeFolder || !sessionUser) {
@@ -387,9 +410,16 @@ export default function ResourcePage() {
             ) : previewItems.length ? (
               <div className="grid gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {previewItems.map((item) => (
-                  <div
+                  <button
                     key={item.id}
-                    className="flex h-full flex-col items-center justify-center rounded-lg border border-border/60 p-4 text-center transition hover:border-primary/60 hover:bg-muted/40"
+                    type="button"
+                    onClick={() => handleResourceActivate(item)}
+                    className={cn(
+                      "flex h-full flex-col items-center justify-center rounded-lg border border-border/60 p-4 text-center transition",
+                      "hover:border-primary/60 hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+                      "cursor-pointer",
+                    )}
+                    aria-label={item.nodeType === "FOLDER" ? `Open folder ${item.name}` : `Open file ${item.name}`}
                   >
                     {getPreviewIcon(item)}
                     <span className="mt-3 line-clamp-2 text-sm font-medium">
@@ -412,7 +442,7 @@ export default function ResourcePage() {
                         {item.reviewNote}
                       </p>
                     ) : null}
-                  </div>
+                  </button>
                 ))}
               </div>
             ) : (
