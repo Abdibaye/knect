@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Knect
 
-## Getting Started
+**Knect** is a modern community and social networking platform built with [Next.js](https://nextjs.org/). It is designed to help users connect, join groups, discover events, and share resources efficiently.
 
-First, run the development server:
+## 🚀 Features
 
+- **Authentication**: Secure Login and Registration pages with support for OAuth providers (Google/GitHub).
+- **Community Hub**: Dedicated spaces for community interactions.
+- **Groups**: Create and join interest-based groups.
+- **Events**: Discover and manage community events.
+- **Resources**: Share and access helpful resources.
+- **Modern UI**: Built with a responsive and accessible design system using Tailwind CSS and Radix UI.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components**: [Radix UI](https://www.radix-ui.com/) & [Lucide React](https://lucide.dev/) (Icons)
+- **Utilities**: `clsx`, `class-variance-authority` (for component variants)
+
+## 📂 Project Structure
+
+```bash
+src/
+├── app/                  # Next.js App Router pages
+│   ├── auth/             # Authentication routes (Login, Register)
+│   ├── community/        # Community main page
+│   ├── events/           # Events page
+│   ├── groups/           # Groups page
+│   └── settings/         # User settings
+├── components/           # Reusable UI components
+│   ├── auth/             # Auth-specific forms
+│   ├── ui/               # Base UI elements (Button, Input, Card, etc.)
+│   └── shared/           # Shared layout components (Navbar, Sidebar, Footer)
+└── lib/                  # Utility functions
+```
+
+## ⚡ Getting Started
+
+Follow these steps to set up the project locally.
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/Abdibaye/knect.git
+cd knect
+```
+
+### 2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+### 3. Run the development server
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🤝 Contributing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## Learn More
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License.
